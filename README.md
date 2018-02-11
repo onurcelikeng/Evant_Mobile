@@ -2,9 +2,9 @@
 
 ### [Evant](https://github.com/peacecwz/aktuel-listesi) Apps (iOS & Android)
 
-| iOS | Android |
+| Android | iOS |
 | :-----: | :-: |
-| [![Build status]([![Build status](https://build.appcenter.ms/v0.1/apps/ba987fee-ae21-4954-9300-a920a18f103b/branches/master/badge)](https://appcenter.ms)) | [![Build status]([![Build status](https://build.appcenter.ms/v0.1/apps/446d131e-2d1c-4c61-837c-5207e06a4550/branches/master/badge)](https://appcenter.ms)) |
+| [![Build status](https://build.appcenter.ms/v0.1/apps/5ab44258-f0b5-4bc3-84ba-fca893c38ace/branches/master/badge)](https://appcenter.ms) | [![Build status](https://build.appcenter.ms/v0.1/apps/202a8bca-d76c-45be-8e8d-c6c29888a14e/branches/master/badge)](https://appcenter.ms) |
 |         |     | 
 
 ## Get Started

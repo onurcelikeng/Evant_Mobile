@@ -1,6 +1,6 @@
 ## Evant
 
-### [Evant](https://github.com/peacecwz/aktuel-listesi) Apps (iOS & Android)
+### [Evant](https://github.com/onurcelikeng/Evant_Mobile) Apps (iOS & Android)
 
 | Android | iOS |
 | :-----: | :-: |
@@ -15,16 +15,3 @@
 
 * Globally installed [react-native CLI](https://facebook.github.io/react-native/docs/getting-started.html)
 
-### 2. Installation
-
-On the command prompt run the following commands
-
-```sh
-$ git clone https://github.com/peacecwz/aktuel-listesi-app.git aktuel-listesi-app
-
-$ cd aktuel-listesi-app/
-
-$ npm install
-  or
-  yarn install
-```

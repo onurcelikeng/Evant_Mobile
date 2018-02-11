@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -41,6 +42,7 @@
 		54A78425F9424B50B1A4BCCE /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D637E4500484246997F3828 /* AppCenter-Config.plist */; };
 		5995762272DD456B8A180DBC /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29BF1D20ACBF440D9A03E011 /* icomoon.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		602E34FC2030C9720035B9A0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		6808E4D255214852A85A2BFA /* fontawesome_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B948EB9024D4A0981D00420 /* fontawesome_regular.ttf */; };
 		69904AE9EE574E91A484C8A3 /* fontawesome_solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6316715DCBEE48CAAF93B296 /* fontawesome_solid.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -1299,6 +1301,7 @@
 				6808E4D255214852A85A2BFA /* fontawesome_regular.ttf in Resources */,
 				69904AE9EE574E91A484C8A3 /* fontawesome_solid.ttf in Resources */,
 				A4D4DEE3B96847D3AE290BFA /* fontawesome.ttf in Resources */,
+				602E34FC2030C9720035B9A0 /* Info.plist in Resources */,
 				5995762272DD456B8A180DBC /* icomoon.ttf in Resources */,
 				2CEBAD3376FC4325848ECF6B /* Righteous-Regular.ttf in Resources */,
 				3FA9D9F5B90D48C18F5EC5E7 /* Roboto-Bold.ttf in Resources */,

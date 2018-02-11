@@ -6,7 +6,7 @@ import {data} from './src/data'
 
 bootstrap();
 data.populateData();
-
+// App
 export default class App extends React.Component {
   render() {
     return (

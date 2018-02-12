@@ -26,7 +26,7 @@ export default class Events extends React.Component {
 		  <TouchableOpacity
 			delayPressIn={70}
 			activeOpacity={1}
-			onPress={() => { Actions.notifications() }}>
+			onPress={() => { Actions.eventDetail({id: info.item.id}) }}>
 			<RkCard rkType='imgBlock' style={styles.card}>
 			  <Image rkCardImg source={info.item.photo}/>
 	

@@ -16,13 +16,13 @@ const propTypes = {
 
 const TabIcon = (props) => {
   if(props.title == "Events")
-    return <RkText style={{color: props.focused ? 'red' : 'black', fontSize: 25}} rkType='awesome'>{ FontAwesome.home }</RkText> 
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/home.png')}/>
   else if(props.title == "Discover")
-    return <RkText style={{color: props.focused ? 'red' : 'black', fontSize: 25}} rkType='awesome'>{ FontAwesome.discover }</RkText> 
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/search.png')}/>
   else if(props.title == "Notifications")
-    return <RkText style={{color: props.focused ? 'red' : 'black', fontSize: 25}} rkType='awesome'>{ FontAwesome.notification }</RkText> 
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/notification.png')}/>
   else if(props.title == "Profile")
-    return <RkText style={{color: props.focused ? 'red' : 'black', fontSize: 25}} rkType='awesome'>{ FontAwesome.profile }</RkText> 
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/profile.png')}/>
 };
 
 TabIcon.propTypes = propTypes;

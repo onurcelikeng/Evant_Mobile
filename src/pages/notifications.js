@@ -39,9 +39,9 @@ export default class Notifications extends React.Component {
 				else if(row.type == "follow") {
 					Actions.otherProfile({id: row.user.id})
 				}
-			} }>
+			}}>
 				<View style={styles.container}>
-					<TouchableHighlight style={{borderRadius: 30}} activeOpacity={0.6} onPress={() => { Actions.otherProfile({id: row.user.id}) }}>
+					<TouchableHighlight style={{borderRadius: 20}} activeOpacity={0.6} onPress={() => { Actions.otherProfile({id: row.user.id}) }}>
 						<Avatar img={row.user.photo}
 							rkType='circle'
 							badge={row.type}/>

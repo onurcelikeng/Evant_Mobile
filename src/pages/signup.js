@@ -24,11 +24,11 @@ export default class Signup extends React.Component {
         </View>
         <View style={styles.content}>
           <View>
-            <RkTextInput style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Name'/>
-            <RkTextInput style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Surname'/>
-            <RkTextInput style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
-            <RkTextInput style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
-            <RkTextInput style={{marginHorizontal: 10}} rkType='rounded' placeholder='Confirm Password' secureTextEntry={true}/>
+            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Name'/>
+            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Surname'/>
+            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
+            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
+            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Confirm Password' secureTextEntry={true}/>
             <RkButton onPress={ () => Actions.home() } rkType='medium stretch rounded' style={styles.save}>SIGN UP</RkButton>
           </View>
           <View style={styles.footer}>

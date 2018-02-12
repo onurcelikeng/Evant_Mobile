@@ -42,8 +42,8 @@ export default class Login extends React.Component {
               <RkText rkType='awesome hero accentColor'>{FontAwesome.facebook}</RkText>
             </RkButton>
           </View>
-          <RkTextInput style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
-          <RkTextInput style={{marginHorizontal: 10}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
+          <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
+          <RkTextInput autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
           <RkButton onPress={() => Actions.home()} rkType='medium stretch rounded' style={styles.save}>LOGIN</RkButton>
           <View style={styles.footer}>
             <View style={styles.textRow}>

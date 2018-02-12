@@ -50,7 +50,7 @@ export default class Chat extends React.Component {
 
     return (
         <View style={styles.item}>
-            <TouchableOpacity onPress={() => Actions.otherUser({id: info.item.user.id})}>
+            <TouchableOpacity onPress={() => Actions.otherProfile({id: info.item.user.id})}>
                 <Avatar rkType='circle' style={styles.avatar} img={info.item.user.photo}/>
             </TouchableOpacity>
             <View style={styles.content}>

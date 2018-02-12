@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Scene, Router, Actions, Reducer, ActionConst, Overlay, Tabs, Modal, Drawer, Stack, Lightbox } from 'react-native-router-flux';
+import { Scene, Router, Actions, Reducer, Overlay, Tabs, Stack } from 'react-native-router-flux';
 import { Platform, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { RkText, RkButton, RkStyleSheet } from 'react-native-ui-kitten';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
-import {withRkTheme} from 'react-native-ui-kitten'
+import { withRkTheme } from 'react-native-ui-kitten'
 
 import Login from './pages/login';
 import Signup from './pages/signup';
@@ -24,7 +24,7 @@ import GoingList from './pages/user/goingList';
 import OtherProfile from './pages/user/otherProfile';
 
 import TabIcon from './components/tabIcon';
-import {NavBar} from './components/navBar';
+import { NavBar } from './components/navBar';
 import { FontAwesome } from './assets/icon';
 
 const styles = StyleSheet.create({
@@ -64,14 +64,17 @@ export default class Routes extends React.Component {
                             <Scene key="signup" component={Signup} title="Register"/>
                         </Stack>
                         <Stack key="home" hideNavBar={true}>
-                            <Tabs key="tabbar"
+                            <Tabs 
+                                key="tabbar"
                                 showLabel={false}
+                                lazy
                             >
                                 <Stack
                                     key="tab1"
                                     title="Events"
                                     tabBarLabel="Events"
                                     icon={TabIcon}
+                                    initial={true}
                                 >
                                     <Scene
                                         key="events"

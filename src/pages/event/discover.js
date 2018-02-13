@@ -1,16 +1,30 @@
 import React from 'react';
 import { FlatList, Image, View, TouchableOpacity, TouchableHighlight } from 'react-native';
-import { RkText, RkCard, RkStyleSheet } from 'react-native-ui-kitten';
+import { RkText, RkCard, RkStyleSheet, RkTextInput } from 'react-native-ui-kitten';
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
 
 import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
+import {FontAwesome} from '../../assets/icon';
 
 let moment = require('moment');
 
 export default class Events extends React.Component {
 	
+	static navigationOptions = {
+		header: (headerProps) => { 
+			return <View style={styles.searchContainer}>
+					<RkTextInput
+								style={styles.search} 
+								autoCapitalize='none'
+								autoCorrect={false}
+								label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
+								rkType='row'
+								placeholder='Search'/>
+			</View> }
+	};
+
 	constructor(props) {
 		super(props);
 	
@@ -61,5 +75,18 @@ let styles = RkStyleSheet.create(theme => ({
 	},
 	footer: {
 		width: 240
-	}
+	},
+    searchContainer: {
+		backgroundColor: theme.colors.screen.base,
+		paddingHorizontal: 16,
+		paddingTop: 25,
+		paddingBottom: 7,
+		height: 64,
+		alignItems: 'center',
+		borderBottomWidth: 0.3,
+		borderBottomColor: theme.colors.border.base
+	},
+	search: {
+		backgroundColor: theme.colors.screen.bold
+	},
 }));

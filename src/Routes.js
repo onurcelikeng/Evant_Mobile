@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Scene, Router, Actions, Reducer, Overlay, Tabs, Stack } from 'react-native-router-flux';
 import { Platform, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { RkText, RkButton, RkStyleSheet } from 'react-native-ui-kitten';
+import { RkText, RkButton, RkStyleSheet, RkTextInput } from 'react-native-ui-kitten';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
 import { withRkTheme } from 'react-native-ui-kitten'
 
@@ -27,12 +27,15 @@ import TabIcon from './components/tabIcon';
 import { NavBar } from './components/navBar';
 import { FontAwesome } from './assets/icon';
 
-const styles = StyleSheet.create({
+const styles =  RkStyleSheet.create(theme => ({
     container: {
       flex: 1, backgroundColor: 'transparent', justifyContent: 'center',
       alignItems: 'center',
+    },
+    menu: {
+      width: 40
     }
-});
+}));
 
 const reducerCreate = params => {
     const defaultReducer = new Reducer(params);
@@ -104,12 +107,6 @@ export default class Routes extends React.Component {
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
-                                        key="comments"
-                                        component={withRkTheme(Comments)}
-                                        title="Comments"
-                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                    />
-                                    <Scene
                                         key="followerList"
                                         component={withRkTheme(FollowerList)}
                                         title="Followers"
@@ -129,12 +126,12 @@ export default class Routes extends React.Component {
                                     icon={TabIcon}
                                 >
                                     <Scene
+                                        hideNavBar={true}
                                         key="discover"
                                         component={withRkTheme(Discover)}
                                         title="Discover"
                                         initial={true}
                                         panHandlers={null}
-                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
                                         hideNavBar={true}
@@ -147,12 +144,6 @@ export default class Routes extends React.Component {
                                         key="goingList"
                                         component={withRkTheme(GoingList)}
                                         title="Goings"
-                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                    />
-                                    <Scene
-                                        key="comments"
-                                        component={withRkTheme(Comments)}
-                                        title="Comments"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -171,12 +162,6 @@ export default class Routes extends React.Component {
                                         key="followingList"
                                         component={withRkTheme(FollowingList)}
                                         title="Followings"
-                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                    />
-                                    <Scene
-                                        key="comments"
-                                        component={withRkTheme(Comments)}
-                                        title="Comments"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                 </Stack>
@@ -217,12 +202,6 @@ export default class Routes extends React.Component {
                                         key="eventDetail"
                                         component={withRkTheme(EventDetail)}
                                         title="Event"
-                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                    />
-                                    <Scene
-                                        key="comments"
-                                        component={withRkTheme(Comments)}
-                                        title="Comments"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -291,12 +270,6 @@ export default class Routes extends React.Component {
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
-                                        key="comments"
-                                        component={withRkTheme(Comments)}
-                                        title="Comments"
-                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                    />
-                                    <Scene
                                         key="goingList"
                                         component={withRkTheme(GoingList)}
                                         title="Goings"
@@ -304,10 +277,27 @@ export default class Routes extends React.Component {
                                     />
                                 </Stack>
                             </Tabs>
+                            <Stack  
+                                key="comments"  
+                            >
+                                <Scene
+                                    title="Comments"
+                                    component={withRkTheme(Comments)}
+                                    renderBackButton={() => { return <RkButton
+                                        rkType='clear'
+                                        style={styles.menu}
+                                        onPress={() => {
+                                          Actions.pop()
+                                        }}>
+                                        <RkText rkType='awesome hero'>{FontAwesome.chevronLeft}</RkText>
+                                      </RkButton>}}
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                            </Stack>
                         </Stack>
                     </Scene>
                 </Overlay>
-			 </Router>
+			</Router>
 		)
 	}
 }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Image, Dimensions, Keyboard } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
-import { FontAwesome } from './../assets/icon';
 import {Actions} from 'react-native-router-flux';
-import {scale, scaleModerate, scaleVertical} from './../utils/scale';
+
+import { FontAwesome } from '../assets/icon';
+import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 
 export default class Login extends React.Component {
 

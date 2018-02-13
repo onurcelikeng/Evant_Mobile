@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Image, Keyboard } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme, RkAvoidKeyboard } from 'react-native-ui-kitten';
-import {scale, scaleModerate, scaleVertical} from '../utils/scale';
-
 import {Actions} from 'react-native-router-flux';
+
+import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 
 export default class Signup extends React.Component {
 

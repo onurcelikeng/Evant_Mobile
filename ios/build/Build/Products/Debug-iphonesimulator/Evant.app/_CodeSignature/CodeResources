@@ -6,7 +6,7 @@
 	<dict>
 		<key>AppCenter-Config.plist</key>
 		<data>
-		RSUOfYuj/wmgTIlETyxBLk9M1AY=
+		OHghECIZVCn3MPgpyzkxV0wWKzg=
 		</data>
 		<key>AppIcon60x60@2x.png</key>
 		<data>
@@ -20,13 +20,74 @@
 		<data>
 		zX5wsp2UYT4UsHL9+q4206B8ZZA=
 		</data>
+		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
+		<data>
+		ooz0sIAaLKBGoFU5iKq8DR11NmY=
+		</data>
+		<key>Frameworks/IDEBundleInjection.framework/Info.plist</key>
+		<data>
+		R/knOPjsjrJNiVtUa2S4kYE749M=
+		</data>
+		<key>Frameworks/IDEBundleInjection.framework/_CodeSignature/CodeResources</key>
+		<data>
+		qcVgsOCxIzxwcNXLWXgRrNjnuT8=
+		</data>
+		<key>Frameworks/IDEBundleInjection.framework/version.plist</key>
+		<data>
+		K7jOt4uC+lqy/StneXlQVk21axY=
+		</data>
+		<key>Frameworks/XCTest.framework/Info.plist</key>
+		<data>
+		CYfyvPIGUR84QvCD7SuNDvG6Bxc=
+		</data>
+		<key>Frameworks/XCTest.framework/XCTest</key>
+		<data>
+		M3EBma1BpAxt7iGIjYcrm9BnNOc=
+		</data>
+		<key>Frameworks/XCTest.framework/_CodeSignature/CodeResources</key>
+		<data>
+		5EUn1qFgVTwSkfSLCubcLwgrx0c=
+		</data>
+		<key>Frameworks/XCTest.framework/en.lproj/InfoPlist.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			TuBj57ZP6zBqcL9HttO2Rucaw9E=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>Frameworks/XCTest.framework/version.plist</key>
+		<data>
+		Etc/8BPenX54rv1uBx24u4bnqTg=
+		</data>
 		<key>Info.plist</key>
 		<data>
-		kcjTroLK8CFD5JZYAvcdXb2clEU=
+		czXz8lnwY+iFRqMsLRUBQzpXgWY=
 		</data>
 		<key>PkgInfo</key>
 		<data>
 		n57qDP4tZfLD1rCS43W0B4LQjzE=
+		</data>
+		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Info.plist</key>
+		<data>
+		gX6xu18QmW1Xo5UviaDEnVAAJ/8=
+		</data>
+		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Resources/DWARF/EvantTests</key>
+		<data>
+		shaAGnhJeNzYI4eNj7W8ZKAfYac=
+		</data>
+		<key>PlugIns/EvantTests.xctest/EvantTests</key>
+		<data>
+		7llw0qVDuarb2K/0a+LNPCzKvY8=
+		</data>
+		<key>PlugIns/EvantTests.xctest/Info.plist</key>
+		<data>
+		gDx/lr5FDBMSV157t4ijX/KsidU=
+		</data>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeResources</key>
+		<data>
+		optkYsv7+E7htv+0f2o3Ki4Owo0=
 		</data>
 		<key>Righteous-Regular.ttf</key>
 		<data>
@@ -75,11 +136,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RSUOfYuj/wmgTIlETyxBLk9M1AY=
+			OHghECIZVCn3MPgpyzkxV0wWKzg=
 			</data>
 			<key>hash2</key>
 			<data>
-			/yO2qQl8qTkpDXlAOEw9+xD0PYUGYfhrEVXq3FNJ8NA=
+			sK2qBtaAYUcH6wdeihgnsld8/CAJVo9A2lrl3HkBHBo=
 			</data>
 		</dict>
 		<key>AppIcon60x60@2x.png</key>
@@ -113,6 +174,162 @@
 			<key>hash2</key>
 			<data>
 			ljlbFnzsZyDNLdzST/qg0jeQVqADRFgVeEIckOPz+Ss=
+			</data>
+		</dict>
+		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ooz0sIAaLKBGoFU5iKq8DR11NmY=
+			</data>
+			<key>hash2</key>
+			<data>
+			QTZkTlnemyTcrFMb3v3GdQcfmpRodaOjtevd5TjxiiY=
+			</data>
+		</dict>
+		<key>Frameworks/IDEBundleInjection.framework/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			R/knOPjsjrJNiVtUa2S4kYE749M=
+			</data>
+			<key>hash2</key>
+			<data>
+			wLDjbULmM78l0rN5jh2/yPax234qVZL29OQBQmdYmOU=
+			</data>
+		</dict>
+		<key>Frameworks/IDEBundleInjection.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			qcVgsOCxIzxwcNXLWXgRrNjnuT8=
+			</data>
+			<key>hash2</key>
+			<data>
+			ZARlo4LD/z4nYhaCEocjb6nPjuZDCrLsQzn0n4GVr3s=
+			</data>
+		</dict>
+		<key>Frameworks/IDEBundleInjection.framework/version.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			K7jOt4uC+lqy/StneXlQVk21axY=
+			</data>
+			<key>hash2</key>
+			<data>
+			VzM0aDQjkmLy+IyPasdn9DeGkOOTuNMbKUMz+3efAaU=
+			</data>
+		</dict>
+		<key>Frameworks/XCTest.framework/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			CYfyvPIGUR84QvCD7SuNDvG6Bxc=
+			</data>
+			<key>hash2</key>
+			<data>
+			Xsgm2dBly62EneiB04ryti89smi53XIXAOtYLFyW4ZE=
+			</data>
+		</dict>
+		<key>Frameworks/XCTest.framework/XCTest</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			M3EBma1BpAxt7iGIjYcrm9BnNOc=
+			</data>
+			<key>hash2</key>
+			<data>
+			qAlGOWS6ltLA/WrYd4Rz6EHPivttCiNu41NTW7ulBAI=
+			</data>
+		</dict>
+		<key>Frameworks/XCTest.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			5EUn1qFgVTwSkfSLCubcLwgrx0c=
+			</data>
+			<key>hash2</key>
+			<data>
+			55ZdMLgNGz7Q67XNAv/M4f4uXy0R2d5+tlHRhlkL8t4=
+			</data>
+		</dict>
+		<key>Frameworks/XCTest.framework/en.lproj/InfoPlist.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			TuBj57ZP6zBqcL9HttO2Rucaw9E=
+			</data>
+			<key>hash2</key>
+			<data>
+			89RGkjZaKuewYnjpzwhIswhqfrU8+pcEXqM/DHVrUmo=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>Frameworks/XCTest.framework/version.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Etc/8BPenX54rv1uBx24u4bnqTg=
+			</data>
+			<key>hash2</key>
+			<data>
+			Jh5i9giCFfo5GhN25CjMKdDJ6Kdlz/p4L95RITR+WeA=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gX6xu18QmW1Xo5UviaDEnVAAJ/8=
+			</data>
+			<key>hash2</key>
+			<data>
+			Sbx6cEH2Q5PMSla+0io52J9+3W5w6wdNB84ihgCdWvs=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Resources/DWARF/EvantTests</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			shaAGnhJeNzYI4eNj7W8ZKAfYac=
+			</data>
+			<key>hash2</key>
+			<data>
+			pBs3IgP9+2r/RQYILByg+U+lBH8iNCqSb9P7JeByTIU=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest/EvantTests</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			7llw0qVDuarb2K/0a+LNPCzKvY8=
+			</data>
+			<key>hash2</key>
+			<data>
+			vdEKBXYWdk9LbPapdwHLHlBslfPaAPWUhxLipNlmc7w=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gDx/lr5FDBMSV157t4ijX/KsidU=
+			</data>
+			<key>hash2</key>
+			<data>
+			4YUcORfASxXqo61TB7rcFCSbtZLE5nt8W4krj/jz4U0=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			optkYsv7+E7htv+0f2o3Ki4Owo0=
+			</data>
+			<key>hash2</key>
+			<data>
+			fAs6RbRAeky7toid4obBrtvPWXzQnCE5fZfZkmzyStA=
 			</data>
 		</dict>
 		<key>Righteous-Regular.ttf</key>

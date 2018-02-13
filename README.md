@@ -4,7 +4,7 @@
 
 | Android | iOS |
 | :-----: | :-: |
-| [![Build status](https://build.appcenter.ms/v0.1/apps/446d131e-2d1c-4c61-837c-5207e06a4550/branches/master/badge)](https://appcenter.ms) | [![Build status](https://build.appcenter.ms/v0.1/apps/ba987fee-ae21-4954-9300-a920a18f103b/branches/master/badge)](https://appcenter.ms) |
+| [![Build status](https://build.appcenter.ms/v0.1/apps/446d131e-2d1c-4c61-837c-5207e06a4550/branches/master/badge)](https://appcenter.ms) | [![Build status](https://build.appcenter.ms/v0.1/apps/bf1aa66a-0132-48ba-9918-60f8f020a15c/branches/master/badge)](https://appcenter.ms) |
 |         |     | 
 
 ## Get Started

@@ -1,4 +1,4 @@
-import { API_ENDPOINT } from './config';
+import { AsyncStorage } from 'react-native';
 import React from 'react';
 import axios from 'axios';
 
@@ -36,9 +36,13 @@ export function register(credentials) {
         .then(res => { return res; });
 }
 
-export function all(loginCredentials, registerCredentials) {
-    axios.all([login(loginCredentials), register(registerCredentials)])
-    .then(axios.spread(function (acct, perms) {
-        // Both requests are now complete
-    }));
+export function getMe(credentials) {
+    var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+    
+    return axios.get('account/me', {headers: headers})
+    .then(res => res.data)
+    .then(res => { return res; });
 }

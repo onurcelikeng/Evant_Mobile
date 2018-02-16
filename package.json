@@ -16,6 +16,7 @@
     "appcenter-analytics": "^1.2.0",
     "appcenter-crashes": "^1.2.0",
     "axios": "^0.17.1",
+    "d3-interpolate": "^1.1.6",
     "moment": "^2.20.1",
     "react": "16.2.0",
     "react-native": "0.52.2",
@@ -26,6 +27,7 @@
     "react-native-linear-gradient": "^2.4.0",
     "react-native-progress-bar": "^0.1.2",
     "react-native-router-flux": "^4.0.0-beta.28",
+    "react-native-svg": "^6.2.1",
     "react-native-switch-pro": "^0.4.8",
     "react-native-ui-kitten": "^3.0.0",
     "react-navigation": "^1.0.0-beta.29"

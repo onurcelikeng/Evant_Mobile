@@ -10,7 +10,7 @@ target 'Evant' do
   pod 'AppCenter/Analytics', '~> 1.3.0'
   pod 'AppCenterReactNativeShared', '~> 1.2.0'
 
-  
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
   target 'EvantTests' do
     inherit! :search_paths

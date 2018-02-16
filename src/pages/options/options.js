@@ -1,7 +1,7 @@
 import React from 'react';
-import { ScrollView, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage } from 'react-native';
 import { RkText, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
-import {Actions} from 'react-native-router-flux';
+import {Actions, ActionConst} from 'react-native-router-flux';
 
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
@@ -19,6 +19,11 @@ export default class Options extends React.Component {
       googleEnabled: false,
       facebookEnabled: true
     }
+  }
+
+  logout() {
+    AsyncStorage.removeItem("token");
+    Actions.reset("root")
   }
 
   render() {
@@ -103,7 +108,7 @@ export default class Options extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
+            <TouchableOpacity onPress={() => this.logout()} style={styles.rowButton}>
               <RkText rkType='header6'>Log Out</RkText>
             </TouchableOpacity>
           </View>

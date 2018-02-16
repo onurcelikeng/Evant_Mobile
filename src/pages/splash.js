@@ -1,14 +1,18 @@
 import React from 'react';
-import { StyleSheet, Image, View, Dimensions, StatusBar } from 'react-native';
+import { StyleSheet, Image, View, Dimensions, StatusBar, AsyncStorage } from 'react-native';
 import { RkText, RkTheme } from 'react-native-ui-kitten'
 import { NavigationActions } from 'react-navigation';
+import {Actions} from 'react-native-router-flux';
+import axios from 'axios';
 
 import {ProgressBar} from '../components/progressBar';
 import { KittenTheme } from '../config/theme';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 import {data} from '../data'
+import * as accountProvider from '../providers/account';
+import Login from './login'
 
-let timeFrame = 500;
+let timeFrame = 250;
 
 export class SplashScreen extends React.Component {
 
@@ -22,17 +26,42 @@ export class SplashScreen extends React.Component {
   componentDidMount() {
     StatusBar.setHidden(true, 'none');
     RkTheme.setTheme(KittenTheme);
+    let route = ''
+    try {
+      AsyncStorage.getItem('token').then((token) => {
+        if (token !== null){
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          route = 'home'
+        }
+        else {
+          route = 'login'
+        }
+      }); 
+    } catch (error) {
+      console.log(error);
+    }
 
     this.timer = setInterval(() => {
       if (this.state.progress == 1) {
         clearInterval(this.timer);
         setTimeout(() => {
           StatusBar.setHidden(false, 'slide');
-          let toHome = NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({routeName: 'login'})]
-          });
-          this.props.navigation.dispatch(toHome)
+          if(route == 'home') {
+            accountProvider.getMe().then((responseJson) => {
+              if(responseJson.isSuccess) {
+                Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
+                Login.currentUser.photo = responseJson.data.photoUrl;
+                
+                Actions.home();
+              }
+              else {
+                Actions.login();
+              }
+            })
+          }
+          else if(route == 'login') {
+            Actions.login();
+          }
         }, timeFrame);
       } else {
         let random = Math.random() * 0.5;
@@ -47,20 +76,11 @@ export class SplashScreen extends React.Component {
   }
 
   render() {
-    let width = Dimensions.get('window').width;
     return (
       <View style={styles.container}>
         <View>
-          <Image style={[styles.image, {width}]} source={require('../assets/images/splashBack.png')}/>
-          <View style={styles.text}>
-            <RkText rkType='light' style={styles.hero}>React Native</RkText>
-            <RkText rkType='logo' style={styles.appName}>Evant</RkText>
-          </View>
+          <Image style={[styles.image]} source={require('../assets/images/evant_logo.png')}/>
         </View>
-        <ProgressBar
-          color={RkTheme.current.colors.accent}
-          style={styles.progress}
-          progress={this.state.progress} width={scale(320)}/>
       </View>
     )
   }
@@ -69,25 +89,13 @@ export class SplashScreen extends React.Component {
 let styles = StyleSheet.create({
   container: {
     backgroundColor: KittenTheme.colors.screen.base,
-    justifyContent: 'space-between',
-    flex: 1
+    flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center'
   },
   image: {
-    resizeMode: 'cover',
-    height: scaleVertical(430),
-  },
-  text: {
-    alignItems: 'center'
-  },
-  hero: {
-    fontSize: 37,
-  },
-  appName: {
-    fontSize: 62,
-  },
-  progress: {
-    alignSelf: 'center',
-    marginBottom: 35,
-    backgroundColor: '#e5e5e5'
+    height: scale(200),
+    width: scale(200)
   }
 });

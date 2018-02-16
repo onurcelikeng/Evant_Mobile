@@ -14,11 +14,11 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		EB8gJVeX9boMm5YQm8gpT4HUQUk=
+		H3GmDDUkgEOQ0Z+Wh+neiXItY7s=
 		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		PbKAuxPz3IZnPBtmKEu5SEMbo9M=
+		vM6qhmBhHnP72OTPQ5bKmGuHY4c=
 		</data>
 		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
 		<data>
@@ -75,11 +75,11 @@
 		</data>
 		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Resources/DWARF/EvantTests</key>
 		<data>
-		shaAGnhJeNzYI4eNj7W8ZKAfYac=
+		qS3vfeb2fOrJ+oLzsyGTKpccq2E=
 		</data>
 		<key>PlugIns/EvantTests.xctest/EvantTests</key>
 		<data>
-		9k22eUzZ5EbAGQHJDBAEKXG5OPs=
+		fjjaRNgT093D6qkA2cTa9GqzNVY=
 		</data>
 		<key>PlugIns/EvantTests.xctest/Info.plist</key>
 		<data>
@@ -87,7 +87,7 @@
 		</data>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeDirectory</key>
 		<data>
-		RKKZ9UmCL9GXQmAci+8wlnNoASU=
+		UuKUlcVuIMT77kaZPMWumqNGdKc=
 		</data>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeRequirements</key>
 		<data>
@@ -95,11 +95,11 @@
 		</data>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeRequirements-1</key>
 		<data>
-		8SJCfoLgxpsU9UANa430FD6lalg=
+		2Ai8uFb5P3MR5Q4Bj9RULUWxEOg=
 		</data>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
-		eqes2rYj8sdfv0HdfvUVXkHteN8=
+		hLzNmlpp97ILsTI1bTl8+fqgyo0=
 		</data>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeSignature</key>
 		<data>
@@ -174,22 +174,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EB8gJVeX9boMm5YQm8gpT4HUQUk=
+			H3GmDDUkgEOQ0Z+Wh+neiXItY7s=
 			</data>
 			<key>hash2</key>
 			<data>
-			lkA8/87dSzj6GJunfb6eLBlcF4NMj7oPEo1CHb8a+50=
+			ewGhbpM5I7dE5Nq8KR2cI2BkRQrY14C0VS9ugI8ZuO8=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			PbKAuxPz3IZnPBtmKEu5SEMbo9M=
+			vM6qhmBhHnP72OTPQ5bKmGuHY4c=
 			</data>
 			<key>hash2</key>
 			<data>
-			gjHjwHAj9Sy1ne+R6CWewCX6Bz+ddzIDQpjNHCDNHQM=
+			ApDa4MKF0J1MqV0eLuhSDfTEXbuicN7Bih5oLCWGC4U=
 			</data>
 		</dict>
 		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
@@ -308,22 +308,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			shaAGnhJeNzYI4eNj7W8ZKAfYac=
+			qS3vfeb2fOrJ+oLzsyGTKpccq2E=
 			</data>
 			<key>hash2</key>
 			<data>
-			pBs3IgP9+2r/RQYILByg+U+lBH8iNCqSb9P7JeByTIU=
+			o47CysWTw3po7ZmFjG9LlziyJtODYggLj7SNJsIi+m4=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/EvantTests</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9k22eUzZ5EbAGQHJDBAEKXG5OPs=
+			fjjaRNgT093D6qkA2cTa9GqzNVY=
 			</data>
 			<key>hash2</key>
 			<data>
-			lJNlHvHufS6ugQxser6XvRuIoMuumf0fq8zo0DSDYo8=
+			HTJTL6EJAV5y04711mPlQfgljr0mT0wcWDBKXTBC96c=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/Info.plist</key>
@@ -341,11 +341,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RKKZ9UmCL9GXQmAci+8wlnNoASU=
+			UuKUlcVuIMT77kaZPMWumqNGdKc=
 			</data>
 			<key>hash2</key>
 			<data>
-			A8QV3tjBzlQVwLtnB3SUTN1rb4roAOyZiFe4LnqNjqY=
+			xMPAWqqBH9Np2cQce36BPHqRcOPSG4S/VUJrGVMAXws=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeRequirements</key>
@@ -363,22 +363,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			8SJCfoLgxpsU9UANa430FD6lalg=
+			2Ai8uFb5P3MR5Q4Bj9RULUWxEOg=
 			</data>
 			<key>hash2</key>
 			<data>
-			vzodOzpG6MMBmJ6ktcYr7aGHhTUajzj5s+YLX+J13TM=
+			JTWz7sd2gbcITpa8KvEaiWdHcKzr2BSY6chRQBsOwEE=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			eqes2rYj8sdfv0HdfvUVXkHteN8=
+			hLzNmlpp97ILsTI1bTl8+fqgyo0=
 			</data>
 			<key>hash2</key>
 			<data>
-			+htGA7MkqmfKrzJE0J8VsdWOkdq+sX+ULzFA4/0UFKk=
+			O6j91BD56kqRbZC4GGjTemxrNcj03RQrnDFq+wBl2mw=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeSignature</key>

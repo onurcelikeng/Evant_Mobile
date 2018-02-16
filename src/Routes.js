@@ -62,6 +62,9 @@ export default class Routes extends React.Component {
                 >
                 <Overlay key="overlay">
                     <Scene>
+                        <Stack key="splash" hideNavBar={true}>
+                            <Scene key="splashScreen" component={SplashScreen} title="Splash"/>
+                        </Stack>
                         <Stack key="root" hideNavBar={true}>
                             <Scene key="login" component={Login} title="Login" initial={true}/>
                             <Scene key="signup" component={Signup} title="Register"/>

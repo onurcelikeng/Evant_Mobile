@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Keyboard } from 'react-native';
+import { View, Image, Keyboard, AsyncStorage } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme, RkAvoidKeyboard } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
@@ -41,7 +41,11 @@ export default class Signup extends React.Component {
               this.setState({
                 token: responseJson.data,
                 }, function() {
-                  axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(this.state.token);
+                  AsyncStorage.setItem('@app:token', this.state.token);
+                  AsyncStorage.getItem('@app:session').then(token => {
+                    axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(token);
+                  });
+                  
                   Actions.home();
               });
             }

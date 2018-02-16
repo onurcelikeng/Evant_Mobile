@@ -3,6 +3,24 @@ import { FlatList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIn
 import { RkText, RkCard, RkStyleSheet, RkTextInput } from 'react-native-ui-kitten';
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
+import ContentLoader from '../../config/contentLoader'
+import Svg,{
+    Circle,
+    Ellipse,
+    G,
+    LinearGradient,
+    RadialGradient,
+    Line,
+    Path,
+    Polygon,
+    Polyline,
+    Rect,
+    Symbol,
+    Text,
+    Use,
+    Defs,
+    Stop
+} from 'react-native-svg';
 
 import * as categoryProvider from '../../providers/category';
 import {SocialBar} from '../../components/socialBar';
@@ -83,8 +101,20 @@ export default class Events extends React.Component {
 	render() {
 		if (this.state.isLoading) {
 			return (
-			  <View style={{flex: 1, paddingTop: 20}}>
-				<ActivityIndicator />
+			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff"}}>
+				<ContentLoader
+					primaryColor="#f3f3f3"
+					secondaryColor="#ecebeb"
+					speed={2}
+					height={140}>
+					<Rect x="0" y="0" rx="5" ry="5" width="70" height="70"/>
+					<Rect x="80" y="17" rx="4" ry="4" width="300" height="13"/>
+					<Rect x="80" y="40" rx="3" ry="3" width="250" height="10"/>
+					<Rect x="0" y="80" rx="3" ry="3" width="350" height="10"/>
+					<Rect x="0" y="100" rx="3" ry="3" width="200" height="10"/>
+					<Rect x="0" y="120" rx="3" ry="3" width="360" height="10"/>
+
+				</ContentLoader>
 			  </View>
 			);
 		}

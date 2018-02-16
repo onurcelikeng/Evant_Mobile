@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Dimensions, Keyboard } from 'react-native';
+import { View, Image, Dimensions, Keyboard, AsyncStorage } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
@@ -19,6 +19,11 @@ export default class Login extends React.Component {
     };
   }
 
+  static currentUser = {
+    name: '',
+    photo: ''
+  };
+
   login() {
     var credentials = {
       email: this.state.email,
@@ -31,8 +36,16 @@ export default class Login extends React.Component {
 				this.setState({
 					token: responseJson.data,
 				  }, function() {
-            axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(this.state.token);
-					  Actions.home()
+            AsyncStorage.setItem("token", this.state.token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
+            
+            accountProvider.getMe().then((responseJson) => {
+              if(responseJson.isSuccess) {
+                Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
+                Login.currentUser.photo = responseJson.data.photoUrl;
+                Actions.home();
+              }
+            })
 				});
 			} else {
 				console.error("cannot login");
@@ -41,6 +54,10 @@ export default class Login extends React.Component {
 		.catch((error) => {
 		  console.error(error);
 		});
+  }
+
+  static getCurrentUser() {
+    return Login.currentUser;
   }
 
   _renderImage(image) {
@@ -80,7 +97,11 @@ export default class Login extends React.Component {
           </View>
           <RkTextInput autoCapitalize='none' value={this.state.email} onChangeText={(text) => this.setState({ email: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
           <RkTextInput autoCapitalize='none' value={this.state.password} onChangeText={(text) => this.setState({ password: text })} autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
-          <RkButton onPress={() => this.login()} rkType='medium stretch rounded' style={styles.save}>LOGIN</RkButton>
+          <RkButton onPress={() => { 
+              if(this.state.email != '' && this.state.password != '') {
+                this.login()
+              }
+            }} rkType='medium stretch rounded' style={styles.save}>LOGIN</RkButton>
           <View style={styles.footer}>
             <View style={styles.textRow}>
               <RkText rkType='primary3'>Don’t have an account?</RkText>

@@ -2,11 +2,47 @@ import React, { Component } from 'react';
 import { View, Image, Dimensions, Keyboard } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import axios from 'axios';
 
+import * as accountProvider from '../providers/account';
 import { FontAwesome } from '../assets/icon';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 
 export default class Login extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
+        email: '',
+        password: ''
+    };
+  }
+
+  login() {
+    var credentials = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    return accountProvider.login(credentials)
+		.then((responseJson) => {
+      console.log(responseJson);
+			if(responseJson.isSuccess) {
+				this.setState({
+					token: responseJson.data,
+				  }, function() {
+            axios.defaults.headers.common['Authorization'] = this.state.token;
+            console.log(this.state.token);
+					  Actions.home()
+				});
+			} else {
+				console.error("error");
+			}
+		})
+		.catch((error) => {
+		  console.error(error);
+		});
+  }
 
   _renderImage(image) {
     let contentHeight = scaleModerate(375, 1);
@@ -24,7 +60,7 @@ export default class Login extends React.Component {
 
 	render() {
     let image = this._renderImage();
-
+    
     return (
       <RkAvoidKeyboard
         onStartShouldSetResponder={ (e) => true}
@@ -43,9 +79,9 @@ export default class Login extends React.Component {
               <RkText rkType='awesome hero accentColor'>{FontAwesome.facebook}</RkText>
             </RkButton>
           </View>
-          <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
-          <RkTextInput autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
-          <RkButton onPress={() => Actions.home()} rkType='medium stretch rounded' style={styles.save}>LOGIN</RkButton>
+          <RkTextInput autoCapitalize='none' value={this.state.email} onChangeText={(text) => this.setState({ email: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
+          <RkTextInput autoCapitalize='none' value={this.state.password} onChangeText={(text) => this.setState({ password: text })} autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
+          <RkButton onPress={() => this.login()} rkType='medium stretch rounded' style={styles.save}>LOGIN</RkButton>
           <View style={styles.footer}>
             <View style={styles.textRow}>
               <RkText rkType='primary3'>Don’t have an account?</RkText>

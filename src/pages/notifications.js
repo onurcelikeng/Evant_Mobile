@@ -56,14 +56,17 @@ export default class Notifications extends React.Component {
 							</View>
 							<RkText rkType='secondary5 hintColor'>{moment().add(row.time, 'seconds').fromNow()}</RkText>
 						</View>
-						<TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {
+						
+							
+						
+						{(row.type == "comment" || row.type == "like") ? <TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {
 							if(row.type == "comment") {
 								Actions.comments()
 							}
 							else if(row.type == "like") {
 								Actions.eventDetail({id: row.user.id})
 							}
-						} }>{attachment}</TouchableHighlight>
+						} }>{attachment}</TouchableHighlight> : null }
 					</View>
 				</View>
 		  	</TouchableOpacity>

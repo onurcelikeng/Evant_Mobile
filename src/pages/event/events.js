@@ -31,8 +31,8 @@ export default class Events extends React.Component {
 			  <Image rkCardImg source={info.item.photo}/>
 	
 			  <View rkCardImgOverlay rkCardContent style={styles.overlay}>
-				<RkText rkType='header4 inverseColor'>{info.item.header}</RkText>
-				<RkText style={styles.time}
+					<RkText rkType='header4 inverseColor'>{info.item.header}</RkText>
+					<RkText style={styles.time}
 						rkType='secondary2 inverseColor'>{moment().add(info.item.time, 'seconds').fromNow()}</RkText>
 			  </View>
 			  <View rkCardFooter>
@@ -44,14 +44,14 @@ export default class Events extends React.Component {
 	  }
 	
 	  render() {
-		return (
-		  <FlatList
-			data={this.data}
-			renderItem={this.renderItem}
-			keyExtractor={this._keyExtractor}
-			style={styles.container}/>
-	
-		)
+			return (
+				<FlatList
+				data={this.data}
+				renderItem={this.renderItem}
+				keyExtractor={this._keyExtractor}
+				style={styles.container}/>
+		
+			)
 	  }
 	}
 	
@@ -66,5 +66,8 @@ export default class Events extends React.Component {
 	  },
 	  time: {
 		marginTop: 5
-	  }
+	  },
+		overlay: {
+			justifyContent: 'flex-end'
+		},
 	}));

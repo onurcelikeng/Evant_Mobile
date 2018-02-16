@@ -8,6 +8,7 @@ import * as accountProvider from '../providers/account';
 import { FontAwesome } from '../assets/icon';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 
+
 export default class Login extends React.Component {
 
   constructor (props) {
@@ -26,17 +27,15 @@ export default class Login extends React.Component {
 
     return accountProvider.login(credentials)
 		.then((responseJson) => {
-      console.log(responseJson);
 			if(responseJson.isSuccess) {
 				this.setState({
 					token: responseJson.data,
 				  }, function() {
-            axios.defaults.headers.common['Authorization'] = this.state.token;
-            console.log(this.state.token);
+            axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(this.state.token);
 					  Actions.home()
 				});
 			} else {
-				console.error("error");
+				console.error("cannot login");
 			}
 		})
 		.catch((error) => {

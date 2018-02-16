@@ -8,16 +8,37 @@ export function login(credentials) {
         password: credentials.password
     };
 
-    //const token = 'Bearer '.concat(this.state.token);
     var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
-        //'Authorization': token
     }
 
-    return axios.post('account/token/', body, {headers: headers})
+    return axios.post('account/token', body, {headers: headers})
         .then(res => res.data)
-        .then(token => {
-            return token;
-        });
+        .then(token => { return token; });
+}
+
+export function register(credentials) {
+    var body = {
+        firstName: credentials.firstName,
+        lastName: credentials.lastName,
+        email: credentials.email,
+        password: credentials.password
+    };
+
+    var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    return axios.post('account/register', body, {headers: headers})
+        .then(res => res.data)
+        .then(res => { return res; });
+}
+
+export function all(loginCredentials, registerCredentials) {
+    axios.all([login(loginCredentials), register(registerCredentials)])
+    .then(axios.spread(function (acct, perms) {
+        // Both requests are now complete
+    }));
 }

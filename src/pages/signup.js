@@ -2,10 +2,65 @@ import React from 'react';
 import { View, Image, Keyboard } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme, RkAvoidKeyboard } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import axios from 'axios';
 
+import * as accountProvider from '../providers/account';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 
 export default class Signup extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        passwordRepeat: ''
+    };
+  }
+
+  signup() {
+    var credentials = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    if(this.state.password == this.state.passwordRepeat) {
+      return accountProvider.register(credentials)
+      .then((responseJson) => {
+        if(responseJson.isSuccess) {
+          var loginCredentials = {
+            email: this.state.email,
+            password: this.state.password
+          }
+          accountProvider.login(loginCredentials).then((responseJson) => {
+            if(responseJson.isSuccess) {
+              this.setState({
+                token: responseJson.data,
+                }, function() {
+                  axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(this.state.token);
+                  Actions.home();
+              });
+            }
+            else {
+              console.error("cannot login");
+            }
+          }) 
+        } else {
+          console.error("cannot register");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+    else {
+      console.log("passwords are not same");
+    }
+  }
 
 	render() {
     let renderIcon = () => {
@@ -24,12 +79,12 @@ export default class Signup extends React.Component {
         </View>
         <View style={styles.content}>
           <View>
-            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Name'/>
-            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Surname'/>
-            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
-            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
-            <RkTextInput autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Confirm Password' secureTextEntry={true}/>
-            <RkButton onPress={ () => Actions.home() } rkType='medium stretch rounded' style={styles.save}>SIGN UP</RkButton>
+            <RkTextInput autoCapitalize='none' value={this.state.firstName} onChangeText={(text) => this.setState({ firstName: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Name'/>
+            <RkTextInput autoCapitalize='none' value={this.state.lastName} onChangeText={(text) => this.setState({ lastName: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Surname'/>
+            <RkTextInput autoCapitalize='none' value={this.state.email} onChangeText={(text) => this.setState({ email: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
+            <RkTextInput autoCapitalize='none' value={this.state.password} onChangeText={(text) => this.setState({ password: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
+            <RkTextInput autoCapitalize='none' value={this.state.passwordRepeat} onChangeText={(text) => this.setState({ passwordRepeat: text })} autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Confirm Password' secureTextEntry={true}/>
+            <RkButton onPress={ () => this.signup() } rkType='medium stretch rounded' style={styles.save}>SIGN UP</RkButton>
           </View>
           <View style={styles.footer}>
             <View style={styles.textRow}>

@@ -35,7 +35,7 @@ export default class FollowingList extends React.Component {
   _renderRow(row) {
     let name = `${row.firstName} ${row.lastName}`;
     return (
-      <TouchableOpacity onPress={() => { Actions.otherProfile({id: row.id}) }}>
+      <TouchableOpacity onPress={() => { Actions.push("otherProfile",{id: row.id}) }}>
         <View style={styles.container}>
           <Avatar rkType='circle' style={styles.avatar} img={row.photo}/>
           <RkText>{name}</RkText>

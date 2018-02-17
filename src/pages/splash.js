@@ -51,16 +51,24 @@ export class SplashScreen extends React.Component {
               if(responseJson.isSuccess) {
                 Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
                 Login.currentUser.photo = responseJson.data.photoUrl;
-                
                 Actions.home();
               }
               else {
-                Actions.login();
+                let toHome = NavigationActions.reset({
+                  index: 0,
+                  actions: [NavigationActions.navigate({routeName: 'login'})]
+                });
+                this.props.navigation.dispatch(toHome)
               }
             })
           }
           else if(route == 'login') {
-            Actions.login();
+            
+            let toHome = NavigationActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({routeName: 'login'})]
+            });
+            this.props.navigation.dispatch(toHome)
           }
         }, timeFrame);
       } else {

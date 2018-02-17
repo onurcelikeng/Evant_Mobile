@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { FlatList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, Dimensions } from 'react-native';
 import { RkText, RkCard, RkStyleSheet, RkTextInput } from 'react-native-ui-kitten';
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
@@ -100,20 +100,41 @@ export default class Events extends React.Component {
 	
 	render() {
 		if (this.state.isLoading) {
-			return (
-			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff"}}>
-				<ContentLoader
-					primaryColor="#f3f3f3"
-					secondaryColor="#ecebeb"
-					speed={2}
-					height={140}>
-					<Rect x="0" y="0" rx="5" ry="5" width="70" height="70"/>
-					<Rect x="80" y="17" rx="4" ry="4" width="300" height="13"/>
-					<Rect x="80" y="40" rx="3" ry="3" width="250" height="10"/>
-					<Rect x="0" y="80" rx="3" ry="3" width="350" height="10"/>
-					<Rect x="0" y="100" rx="3" ry="3" width="200" height="10"/>
-					<Rect x="0" y="120" rx="3" ry="3" width="360" height="10"/>
+			var width = require('Dimensions').get('window').width - 50;
 
+			return (
+			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
+				<ContentLoader height={150}>
+					<Circle cx="30" cy="30" r="30"/>
+					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
+					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
+				</ContentLoader>
+				<ContentLoader height={150}>
+					<Circle cx="30" cy="30" r="30"/>
+					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
+					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
+				</ContentLoader>
+				<ContentLoader height={150}>
+					<Circle cx="30" cy="30" r="30"/>
+					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
+					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
+				</ContentLoader>
+				<ContentLoader height={150}>
+					<Circle cx="30" cy="30" r="30"/>
+					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
+					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
 				</ContentLoader>
 			  </View>
 			);

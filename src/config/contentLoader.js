@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Animated} from 'react-native';
+import {View, StyleSheet, Animated, Dimensions} from 'react-native';
 import Svg,{
     Circle,
     Ellipse,
@@ -143,6 +143,8 @@ export default class ContentLoader extends React.Component {
         );
     }
 }
+var width = require('Dimensions').get('window').width;
+
 ContentLoader.propTypes = {
     primaryColor: PropTypes.string,
     secondaryColor: PropTypes.string,
@@ -158,7 +160,7 @@ ContentLoader.defaultProps = {
     primaryColor: '#eeeeee',
     secondaryColor: '#dddddd',
     duration: 2000,
-    width: 300,
+    width: width - 50,
     height: 200,
     x1: '0',
     y1: '0',

@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import * as accountProvider from '../providers/account';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
+import Login from './login'
 
 export default class Signup extends React.Component {
 
@@ -41,12 +42,16 @@ export default class Signup extends React.Component {
               this.setState({
                 token: responseJson.data,
                 }, function() {
-                  AsyncStorage.setItem('@app:token', this.state.token);
-                  AsyncStorage.getItem('@app:session').then(token => {
-                    axios.defaults.headers.common['Authorization'] = 'Bearer '.concat(token);
-                  });
-                  
-                  Actions.home();
+                  AsyncStorage.setItem('token', this.state.token);
+                  axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
+            
+                  accountProvider.getMe().then((responseJson) => {
+                    if(responseJson.isSuccess) {
+                      Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
+                      Login.currentUser.photo = responseJson.data.photoUrl;
+                      Actions.home();
+                    }
+                  })
               });
             }
             else {

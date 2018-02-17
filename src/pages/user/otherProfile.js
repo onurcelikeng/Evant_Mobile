@@ -19,7 +19,7 @@ export default class OtherProfile extends React.Component {
 		super(props);
 		let {params} = this.props.navigation.state;
     let id = params ? params.id : 1;
-    this.user = data.getUser(id);
+		this.user = data.getUser(id);
 	}
 
 	render() {
@@ -52,7 +52,7 @@ export default class OtherProfile extends React.Component {
 						</View>
 					</TouchableOpacity>
 				</View>
-				<Gallery items={images}/>
+				<Gallery items={this.user.images}/>
 			</ScrollView>
 		)
 	}

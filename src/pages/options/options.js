@@ -1,11 +1,13 @@
 import React from 'react';
-import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage } from 'react-native';
-import { RkText, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
+import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage, Modal } from 'react-native';
+import { RkText, RkStyleSheet, RkTheme, RkButton } from 'react-native-ui-kitten';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
 import { FontAwesome } from '../../assets/icon';
+import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
+import {UIConstants} from '../../config/appConstants';
 
 export default class Options extends React.Component {
 
@@ -17,13 +19,19 @@ export default class Options extends React.Component {
       shouldRefresh: false,
       twitterEnabled: true,
       googleEnabled: false,
-      facebookEnabled: true
+      facebookEnabled: true,
+      modalVisible: false
     }
   }
 
   logout() {
     AsyncStorage.removeItem("token");
+    this._setModalVisible(false);
     Actions.reset("root")
+  }
+
+  _setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   }
 
   render() {
@@ -108,11 +116,39 @@ export default class Options extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => this.logout()} style={styles.rowButton}>
+            <TouchableOpacity onPress={() => this._setModalVisible(true)} style={styles.rowButton}>
               <RkText rkType='header6'>Log Out</RkText>
             </TouchableOpacity>
           </View>
         </View>
+
+        <Modal
+          animationType={'fade'}
+          transparent={true}
+          onRequestClose={() => this._setModalVisible(false)}
+          visible={this.state.modalVisible}>
+          <View style={styles.popupOverlay}>
+            <View style={styles.popup}>
+              <View style={styles.popupContent}>
+                <RkText style={styles.popupHeader} rkType='header4'>LOGOUT</RkText>
+                <RkText>Are you sure you want to log out? You won't be able to get any notification.</RkText>
+              </View>
+              <View style={styles.popupButtons}>
+                <RkButton onPress={() => this._setModalVisible(false)}
+                          style={styles.popupButton}
+                          rkType='clear'>
+                  <RkText rkType='light'>CANCEL</RkText>
+                </RkButton>
+                <View style={styles.separator}/>
+                <RkButton onPress={() => this.logout()}
+                          style={styles.popupButton}
+                          rkType='clear'>
+                  <RkText>OK</RkText>
+                </RkButton>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     )
   }
@@ -148,4 +184,32 @@ let styles = RkStyleSheet.create(theme => ({
   switch: {
     marginVertical: 14
   },
+  popup: {
+    backgroundColor: theme.colors.screen.base,
+    marginTop: scaleVertical(70),
+    marginHorizontal: 37,
+    borderRadius: 7
+  },
+  popupOverlay: {
+    backgroundColor: theme.colors.screen.overlay,
+    flex: 1,
+    marginTop: UIConstants.HeaderHeight
+  },
+  popupContent: {
+    alignItems: 'center',
+    margin: 16
+  },
+  popupHeader: {
+    marginBottom: scaleVertical(45)
+  },
+  popupButtons: {
+    marginTop: 15,
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderColor: theme.colors.border.base
+  },
+  popupButton: {
+    flex: 1,
+    marginVertical: 16
+  }
 }));

@@ -22,6 +22,7 @@
     "react-native": "0.52.2",
     "react-native-animatable": "^1.2.4",
     "react-native-button": "^2.2.0",
+    "react-native-device-info": "^0.15.3",
     "react-native-image-header-scroll-view": "^0.8.0",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-linear-gradient": "^2.4.0",

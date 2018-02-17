@@ -3,6 +3,7 @@ import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage, Modal } f
 import { RkText, RkStyleSheet, RkTheme, RkButton } from 'react-native-ui-kitten';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
+import * as deviceProvider from '../../providers/devices';
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
 import { FontAwesome } from '../../assets/icon';
@@ -25,9 +26,20 @@ export default class Options extends React.Component {
   }
 
   logout() {
+    /*
+      deviceProvider.logout()
+      .then((responseJson) => {
+        if(responseJson.isSuccess) {
+          AsyncStorage.removeItem("token");
+          AsyncStorage.removeItem("deviceId");
+          this._setModalVisible(false);
+          Actions.reset("root");
+        }
+      });
+    */
     AsyncStorage.removeItem("token");
     this._setModalVisible(false);
-    Actions.reset("root")
+    Actions.reset("root");
   }
 
   _setModalVisible(visible) {

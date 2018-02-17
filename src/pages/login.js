@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Image, Dimensions, Keyboard, AsyncStorage } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 
+import * as deviceProvider from '../providers/devices';
 import * as accountProvider from '../providers/account';
 import { FontAwesome } from '../assets/icon';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
@@ -38,14 +40,45 @@ export default class Login extends React.Component {
 				  }, function() {
             AsyncStorage.setItem("token", this.state.token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
-            
+
+            const brand = DeviceInfo.getBrand();
+            console.log(brand);
+            const model = DeviceInfo.getModel();
+            console.log(model);
+            const systemName = DeviceInfo.getSystemName();
+            const systemVersion = DeviceInfo.getSystemVersion();
+            console.log(systemName + " " + systemVersion);
+            const uniqueId = DeviceInfo.getUniqueID();
+            AsyncStorage.setItem("deviceId", uniqueId);
+            console.log(uniqueId);
+
+            let deviceProperties = {
+              deviceId: uniqueId,
+              brand: brand,
+              model: model,
+              os: systemName + " " + systemVersion
+            }
+
+            /*deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
+              if(responseJson.isSuccess) {
+                console.log(responseJson.data);
+                accountProvider.getMe().then((responseJson) => {
+                  if(responseJson.isSuccess) {
+                    Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
+                    Login.currentUser.photo = responseJson.data.photoUrl;
+                    Actions.home();
+                  }
+                });
+              }
+            });*/
+
             accountProvider.getMe().then((responseJson) => {
               if(responseJson.isSuccess) {
                 Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
                 Login.currentUser.photo = responseJson.data.photoUrl;
                 Actions.home();
               }
-            })
+            });
 				});
 			} else {
 				console.error("cannot login");

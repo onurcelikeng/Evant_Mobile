@@ -36,7 +36,7 @@ export function register(credentials) {
         .then(res => { return res; });
 }
 
-export function getMe(credentials) {
+export function getMe() {
     var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'

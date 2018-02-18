@@ -14,8 +14,8 @@ export function login(credentials) {
     }
 
     return axios.post('account/token', body, {headers: headers})
-        .then(res => res.data)
-        .then(token => { return token; });
+    .then(res => res.data)
+    .then(token => { return token; });
 }
 
 export function register(credentials) {
@@ -32,8 +32,8 @@ export function register(credentials) {
     }
 
     return axios.post('account/register', body, {headers: headers})
-        .then(res => res.data)
-        .then(res => { return res; });
+    .then(res => res.data)
+    .then(res => { return res; });
 }
 
 export function getMe() {

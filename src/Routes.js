@@ -295,6 +295,12 @@ export default class Routes extends React.Component {
                                       </RkButton>}}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
+                                <Scene
+                                        key="otherProfile"
+                                        component={withRkTheme(OtherProfile)}
+                                        title="Profile"
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
                             </Stack>
                         </Stack>
                     </Scene>

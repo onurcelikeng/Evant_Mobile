@@ -61,7 +61,6 @@ export default class Events extends React.Component {
 	getCategories() {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
-			console.log(responseJson)
 			if(responseJson.isSuccess) {
 				this.setState({
 					isLoading: false,
@@ -70,11 +69,11 @@ export default class Events extends React.Component {
 					// do something with new state
 				});
 			} else {
-				console.error("error");
+				console.log(responseJson.message);
 			}
 		})
 		.catch((error) => {
-		  console.error(error);
+		  console.log(error);
 		});
 	}  
 

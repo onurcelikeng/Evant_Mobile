@@ -54,7 +54,6 @@ export default class Profile extends React.Component {
 	}
 }
 	
-	
 let styles = RkStyleSheet.create(theme => ({
 	root: {
 	  backgroundColor: theme.colors.screen.base

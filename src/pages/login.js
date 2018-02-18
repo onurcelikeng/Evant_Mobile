@@ -34,6 +34,7 @@ export default class Login extends React.Component {
 
     return accountProvider.login(credentials)
 		.then((responseJson) => {
+      console.log(responseJson)
 			if(responseJson.isSuccess) {
 				this.setState({
 					token: responseJson.data,

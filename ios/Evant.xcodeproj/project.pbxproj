@@ -48,6 +48,7 @@
 		602E35292030CB560035B9A0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		60378B2320389B1800BD981D /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60378B1E20389AEA00BD981D /* libRNDeviceInfo.a */; };
 		6090A5982036FB8100DC081F /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6090A5952036FAFC00DC081F /* libRNSVG.a */; };
+		60F317EC203A2544006E1614 /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F317CE203A252C006E1614 /* libRCTOneSignal.a */; };
 		6808E4D255214852A85A2BFA /* fontawesome_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B948EB9024D4A0981D00420 /* fontawesome_regular.ttf */; };
 		69904AE9EE574E91A484C8A3 /* fontawesome_solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6316715DCBEE48CAAF93B296 /* fontawesome_solid.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -359,6 +360,13 @@
 			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
 			remoteInfo = "RNSVG-tvOS";
 		};
+		60F317CD203A252C006E1614 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 60F317B8203A252C006E1614 /* RCTOneSignal.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3245CDED1BFEE35C00EABF68;
+			remoteInfo = RCTOneSignal;
+		};
 		60F61B9720305C2B002C4502 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 44E8665DD32144439D03EF71 /* AppCenterReactNativeAnalytics.xcodeproj */;
@@ -439,6 +447,8 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		60378AEE20389AEA00BD981D /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		6090A5652036FAFC00DC081F /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
+		60F317A5203A22BB006E1614 /* Evant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Evant.entitlements; path = Evant/Evant.entitlements; sourceTree = "<group>"; };
+		60F317B8203A252C006E1614 /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOneSignal.xcodeproj; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; };
 		6316715DCBEE48CAAF93B296 /* fontawesome_solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = fontawesome_solid.ttf; path = ../src/assets/fonts/fontawesome_solid.ttf; sourceTree = "<group>"; };
 		6B948EB9024D4A0981D00420 /* fontawesome_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = fontawesome_regular.ttf; path = ../src/assets/fonts/fontawesome_regular.ttf; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -479,6 +489,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60F317EC203A2544006E1614 /* libRCTOneSignal.a in Frameworks */,
 				6090A5982036FB8100DC081F /* libRNSVG.a in Frameworks */,
 				60378B2320389B1800BD981D /* libRNDeviceInfo.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -611,6 +622,7 @@
 		13B07FAE1A68108700A75B9A /* Evant */ = {
 			isa = PBXGroup;
 			children = (
+				60F317A5203A22BB006E1614 /* Evant.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -704,6 +716,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		60F317B9203A252C006E1614 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				60F317CE203A252C006E1614 /* libRCTOneSignal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		60F61B9420305C2B002C4502 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -740,6 +760,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				60F317B8203A252C006E1614 /* RCTOneSignal.xcodeproj */,
 				60378AEE20389AEA00BD981D /* RNDeviceInfo.xcodeproj */,
 				6090A5652036FAFC00DC081F /* RNSVG.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -939,12 +960,20 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = Y9BJGDH56U;
+						DevelopmentTeam = 7S7K8Z75EQ;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 7S7K8Z75EQ;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1013,6 +1042,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 60F317B9203A252C006E1614 /* Products */;
+					ProjectRef = 60F317B8203A252C006E1614 /* RCTOneSignal.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1332,6 +1365,13 @@
 			fileType = archive.ar;
 			path = "libRNSVG-tvOS.a";
 			remoteRef = 6090A5962036FAFC00DC081F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		60F317CE203A252C006E1614 /* libRCTOneSignal.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTOneSignal.a;
+			remoteRef = 60F317CD203A252C006E1614 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		60F61B9820305C2B002C4502 /* libAppCenterReactNativeAnalytics.a */ = {
@@ -1718,7 +1758,7 @@
 			baseConfigurationReference = 53C7BE50B3168221E1759595 /* Pods-EvantTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = Y9BJGDH56U;
+				DEVELOPMENT_TEAM = 7S7K8Z75EQ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1755,7 +1795,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = Y9BJGDH56U;
+				DEVELOPMENT_TEAM = 7S7K8Z75EQ;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
@@ -1787,6 +1827,7 @@
 			baseConfigurationReference = A7050062186DBC56F5DB7F41 /* Pods-Evant.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Evant/Evant.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1798,6 +1839,7 @@
 					"$(SRCROOT)/../node_modules/appcenter/ios/AppCenterReactNative",
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
+					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
 				);
 				INFOPLIST_FILE = Evant/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -1820,6 +1862,7 @@
 			baseConfigurationReference = 58401EC4C1406B481FE81BE0 /* Pods-Evant.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Evant/Evant.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1830,6 +1873,7 @@
 					"$(SRCROOT)/../node_modules/appcenter/ios/AppCenterReactNative",
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
+					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
 				);
 				INFOPLIST_FILE = Evant/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;

@@ -3,10 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>Y9BJGDH56U.com.ersinnyildizz.evant</string>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>Y9BJGDH56U.com.ersinnyildizz.evant</string>
-	</array>
+	<string>7S7K8Z75EQ.com.onurcelikeng.evant</string>
+	<key>aps-environment</key>
+	<string>development</string>
 </dict>
 </plist>

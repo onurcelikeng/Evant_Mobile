@@ -5,6 +5,7 @@ import {Actions} from 'react-native-router-flux';
 import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 
+import App from '../../App';
 import * as deviceProvider from '../providers/devices';
 import * as accountProvider from '../providers/account';
 import { FontAwesome } from '../assets/icon';
@@ -17,7 +18,8 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
         email: '',
-        password: ''
+        password: '',
+        appId: App.getId()
     };
   }
 
@@ -51,39 +53,41 @@ export default class Login extends React.Component {
             const systemVersion = DeviceInfo.getSystemVersion();
             console.log(systemName + " " + systemVersion);
             const uniqueId = DeviceInfo.getUniqueID();
-            AsyncStorage.setItem("deviceId", uniqueId);
             console.log(uniqueId);
 
+            var i = 0, strLength = this.state.appId.length;
+ 
+            for(i; i < strLength; i++) {
+            
+              this.state.appId = this.state.appId.replace("-", "");
+            
+            }
+
             let deviceProperties = {
-              deviceId: uniqueId,
+              deviceId: this.state.appId,
               brand: brand,
               model: model,
               os: systemName + " " + systemVersion
             }
-
-            /*deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
+            console.log(deviceProperties);
+            deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
+              console.log(responseJson);
               if(responseJson.isSuccess) {
-                console.log(responseJson.data);
                 accountProvider.getMe().then((responseJson) => {
                   if(responseJson.isSuccess) {
                     Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
                     Login.currentUser.photo = responseJson.data.photoUrl;
+                    Login.currentUser.followersCount = responseJson.data.followersCount;
+                    Login.currentUser.followingsCount = responseJson.data.followingsCount;
                     Actions.home();
                   }
                 });
               }
-            });*/
-
-            accountProvider.getMe().then((responseJson) => {
-              console.log(responseJson.data)
-              if(responseJson.isSuccess) {
-                Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
-                Login.currentUser.photo = responseJson.data.photoUrl;
-                Login.currentUser.followersCount = responseJson.data.followersCount;
-                Login.currentUser.followingsCount = responseJson.data.followingsCount;
-                Actions.home();
+              else {
+                alert(this.state.appId);
               }
-            });
+            })
+            .catch(error => console.log(error));
 				});
 			} else {
 				console.error("cannot login");

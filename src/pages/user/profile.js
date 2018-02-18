@@ -37,13 +37,13 @@ export default class Profile extends React.Component {
 					</View>
 					<TouchableOpacity onPress={() => {Actions.followerList()}} style={styles.section}>
 						<View style={styles.section}>
-							<RkText rkType='header3' style={styles.space}>{formatNumber(this.data.followersCount)}</RkText>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
 							<RkText rkType='secondary1 hintColor'>Followers</RkText>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => {Actions.followingList()}}  style={styles.section}>
+					<TouchableOpacity onPress={() => {Actions.followingList()}} style={styles.section}>
 						<View style={styles.section}>
-							<RkText rkType='header3' style={styles.space}>{this.data.followingCount}</RkText>
+							<RkText rkType='header3' style={styles.space}>{this.user.followingsCount}</RkText>
 							<RkText rkType='secondary1 hintColor'>Following</RkText>
 						</View>
 					</TouchableOpacity>

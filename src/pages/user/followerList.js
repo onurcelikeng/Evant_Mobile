@@ -1,9 +1,28 @@
 import React from 'react';
-import { ListView, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { ListView, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import _ from 'lodash';
 import { RkStyleSheet, RkText, RkTextInput } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import ContentLoader from '../../config/contentLoader'
+import Svg,{
+  Circle,
+  Ellipse,
+  G,
+  LinearGradient,
+  RadialGradient,
+  Line,
+  Path,
+  Polygon,
+  Polyline,
+  Rect,
+  Symbol,
+  Text,
+  Use,
+  Defs,
+  Stop
+} from 'react-native-svg';
 
+import * as friendProvider from '../../providers/friendOperations';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
@@ -12,11 +31,9 @@ export default class FollowerList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.users = data.getUsers();
-
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      data: ds.cloneWithRows(this.users)
+      isLoading: true
     };
 
     this.filter = this._filter.bind(this);
@@ -24,6 +41,32 @@ export default class FollowerList extends React.Component {
     this.renderHeader = this._renderHeader.bind(this);
     this.renderRow = this._renderRow.bind(this);
   }
+
+  componentDidMount() {
+		this.getFollowers();
+	}
+	
+	getFollowers() {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		return friendProvider.getFollowers()
+		.then((responseJson) => {
+			if(responseJson.isSuccess) {
+        this.users = responseJson.data
+				this.setState({
+					isLoading: false,
+          data: ds.cloneWithRows(responseJson.data),
+          users: responseJson.data
+				  }, function() {
+					// do something with new state
+				});
+			} else {
+				console.log(responseJson.message);
+			}
+		})
+		.catch((error) => {
+		  console.log(error);
+		});
+	}  
 
   _setData(data) {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -35,9 +78,9 @@ export default class FollowerList extends React.Component {
   _renderRow(row) {
     let name = `${row.firstName} ${row.lastName}`;
     return (
-      <TouchableOpacity onPress={() => { Actions.otherProfile({id: row.id}) }}>
+      <TouchableOpacity onPress={() => { Actions.push("otherProfile",{id: row.userId}) }}>
         <View style={styles.container}>
-          <Avatar rkType='circle' style={styles.avatar} img={row.photo}/>
+        <Image source={{uri: row.photoUrl}} style={styles.circle} />
           <RkText>{name}</RkText>
         </View>
       </TouchableOpacity>
@@ -65,8 +108,7 @@ export default class FollowerList extends React.Component {
 
   _filter(text) {
     let pattern = new RegExp(text, 'i');
-    let users = _.filter(this.users, (user) => {
-
+    let users = _.filter(this.state.users, (user) => {
       if (user.firstName.search(pattern) != -1
         || user.lastName.search(pattern) != -1)
         return user;
@@ -76,6 +118,31 @@ export default class FollowerList extends React.Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+			var width = require('Dimensions').get('window').width - 50;
+
+			return (
+			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+			  </View>
+			);
+    }
+    
     return (
       <ListView
         style={styles.root}
@@ -111,5 +178,13 @@ let styles = RkStyleSheet.create(theme => ({
     flex: 1,
     height: StyleSheet.hairlineWidth,
     backgroundColor: theme.colors.border.base
+  },
+  circle: {
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginRight: 16
   }
 }));

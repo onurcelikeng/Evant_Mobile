@@ -23,7 +23,9 @@ export default class Login extends React.Component {
 
   static currentUser = {
     name: '',
-    photo: ''
+    photo: '',
+    followersCount: 0,
+    followingsCount: 0
   };
 
   login() {
@@ -34,7 +36,6 @@ export default class Login extends React.Component {
 
     return accountProvider.login(credentials)
 		.then((responseJson) => {
-      console.log(responseJson)
 			if(responseJson.isSuccess) {
 				this.setState({
 					token: responseJson.data,
@@ -74,9 +75,12 @@ export default class Login extends React.Component {
             });*/
 
             accountProvider.getMe().then((responseJson) => {
+              console.log(responseJson.data)
               if(responseJson.isSuccess) {
                 Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
                 Login.currentUser.photo = responseJson.data.photoUrl;
+                Login.currentUser.followersCount = responseJson.data.followersCount;
+                Login.currentUser.followingsCount = responseJson.data.followingsCount;
                 Actions.home();
               }
             });

@@ -35,15 +35,15 @@ export default class Profile extends React.Component {
 						<RkText rkType='header3' style={styles.space}>{this.data.postCount}</RkText>
 						<RkText rkType='secondary1 hintColor'>Events</RkText>
 					</View>
-					<TouchableOpacity onPress={() => {Actions.followerList()}} style={styles.section}>
+					<TouchableOpacity onPress={() => {if(this.user.followersCount != 0) { Actions.followerList()}}} style={styles.section}>
 						<View style={styles.section}>
 							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
 							<RkText rkType='secondary1 hintColor'>Followers</RkText>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => {Actions.followingList()}} style={styles.section}>
+					<TouchableOpacity onPress={() => {if(this.user.followingsCount != 0) {Actions.followingList()}}} style={styles.section}>
 						<View style={styles.section}>
-							<RkText rkType='header3' style={styles.space}>{this.user.followingsCount}</RkText>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)}</RkText>
 							<RkText rkType='secondary1 hintColor'>Following</RkText>
 						</View>
 					</TouchableOpacity>

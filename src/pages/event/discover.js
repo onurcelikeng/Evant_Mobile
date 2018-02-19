@@ -100,41 +100,22 @@ export default class Events extends React.Component {
 	render() {
 		if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
-
+			var loaders = [];
+			for(let i = 0; i < 10; i++){
+			  loaders.push(
+				<ContentLoader height={150}>
+					<Circle cx="30" cy="30" r="30"/>
+					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
+					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
+				</ContentLoader>
+			  )
+			}
 			return (
 			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-				<ContentLoader height={150}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
-					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
-				</ContentLoader>
-				<ContentLoader height={150}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
-					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
-				</ContentLoader>
-				<ContentLoader height={150}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
-					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
-				</ContentLoader>
-				<ContentLoader height={150}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
-					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
-				</ContentLoader>
+				{loaders}
 			  </View>
 			);
 		}

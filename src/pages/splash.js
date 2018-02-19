@@ -59,7 +59,7 @@ export class SplashScreen extends React.Component {
               else {
                 let toHome = NavigationActions.reset({
                   index: 0,
-                  actions: [NavigationActions.navigate({routeName: 'login'})]
+                  actions: [NavigationActions.navigate({routeName: 'root'})]
                 });
                 this.props.navigation.dispatch(toHome)
               }
@@ -69,7 +69,7 @@ export class SplashScreen extends React.Component {
             
             let toHome = NavigationActions.reset({
               index: 0,
-              actions: [NavigationActions.navigate({routeName: 'login'})]
+              actions: [NavigationActions.navigate({routeName: 'root'})]
             });
             this.props.navigation.dispatch(toHome)
           }

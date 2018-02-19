@@ -62,12 +62,12 @@ export default class Routes extends React.Component {
                 >
                 <Overlay key="overlay">
                     <Scene>
+                        <Scene key="splashScreen" component={SplashScreen} title="Splash" hideNavBar="true"/>
                         <Stack key="root" hideNavBar={true}>                       
-                            <Scene key="splashScreen" component={SplashScreen} title="Splash" initial={true}/>
-                            <Scene key="login" component={Login} title="Login"/>
+                            <Scene key="login" component={Login} title="Login" initial={true}/>
                             <Scene key="signup" component={Signup} title="Register"/>
                         </Stack>
-                        <Stack key="home" hideNavBar={true}>
+                        <Stack key="home" hideNavBar={true} headerMode="screen">
                             <Tabs 
                                 key="tabbar"
                                 showLabel={false}
@@ -120,6 +120,13 @@ export default class Routes extends React.Component {
                                         title="Followings"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
+                                    <Scene
+                                        key="comments"
+                                        title="Comments"
+                                        component={withRkTheme(Comments)}
+                                        hideTabBar="true"
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
                                 </Stack>
                                 <Stack
                                     key="tab2"
@@ -166,6 +173,13 @@ export default class Routes extends React.Component {
                                         title="Followings"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
+                                    <Scene
+                                        key="comments"
+                                        title="Comments"
+                                        component={withRkTheme(Comments)}
+                                        hideTabBar="true"
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
                                 </Stack>
                                 <Stack
                                     key="tab3"
@@ -210,6 +224,13 @@ export default class Routes extends React.Component {
                                         key="goingList"
                                         component={withRkTheme(GoingList)}
                                         title="Goings"
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
+                                    <Scene
+                                        key="comments"
+                                        title="Comments"
+                                        component={withRkTheme(Comments)}
+                                        hideTabBar="true"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                 </Stack>
@@ -277,31 +298,15 @@ export default class Routes extends React.Component {
                                         title="Goings"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
-                                </Stack>
-                            </Tabs>
-                            <Stack  
-                                key="comments"  
-                            >
-                                <Scene
-                                    title="Comments"
-                                    component={withRkTheme(Comments)}
-                                    renderBackButton={() => { return <RkButton
-                                        rkType='clear'
-                                        style={styles.menu}
-                                        onPress={() => {
-                                          Actions.pop()
-                                        }}>
-                                        <RkText rkType='awesome hero'>{FontAwesome.chevronLeft}</RkText>
-                                      </RkButton>}}
-                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                />
-                                <Scene
-                                        key="otherProfile"
-                                        component={withRkTheme(OtherProfile)}
-                                        title="Profile"
+                                    <Scene
+                                        key="comments"
+                                        title="Comments"
+                                        component={withRkTheme(Comments)}
+                                        hideTabBar="true"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
-                            </Stack>
+                                </Stack>
+                            </Tabs>
                         </Stack>
                     </Scene>
                 </Overlay>

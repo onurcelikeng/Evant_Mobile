@@ -60,10 +60,7 @@ export default class Login extends React.Component {
   }
 
   onIds(device) {
-    console.log('Device info: ', device);
-    AsyncStorage.setItem("deviceId", device.userId);
-    appId = device.userId;
-    console.log(appId);
+    playerId = device.userId;
   }
 
   login() {
@@ -78,25 +75,17 @@ export default class Login extends React.Component {
 				this.setState({
 					token: responseJson.data,
 				  }, function() {
+            console.log(this.state.token)
             AsyncStorage.setItem("token", this.state.token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
 
             const brand = DeviceInfo.getBrand();
-            console.log(brand);
             const model = DeviceInfo.getModel();
-            console.log(model);
             const systemName = DeviceInfo.getSystemName();
             const systemVersion = DeviceInfo.getSystemVersion();
-            console.log(systemName + " " + systemVersion);
-
-            /*var i = 0, strLength = this.state.appId.length;
- 
-            for(i; i < strLength; i++) {
-              this.state.appId = this.state.appId.replace("-", "");
-            }*/
 
             let deviceProperties = {
-              deviceId: appId,
+              deviceId: playerId,
               brand: brand,
               model: model,
               os: systemName + " " + systemVersion

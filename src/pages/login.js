@@ -4,6 +4,7 @@ import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme }
 import {Actions} from 'react-native-router-flux';
 import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
+import OneSignal from 'react-native-onesignal';
 
 import App from '../../App';
 import * as deviceProvider from '../providers/devices';
@@ -11,15 +12,14 @@ import * as accountProvider from '../providers/account';
 import { FontAwesome } from '../assets/icon';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 
-
+var appId = '';
 export default class Login extends React.Component {
 
   constructor (props) {
     super(props);
     this.state = {
         email: '',
-        password: '',
-        appId: App.getId()
+        password: ''
     };
   }
 
@@ -29,6 +29,42 @@ export default class Login extends React.Component {
     followersCount: 0,
     followingsCount: 0
   };
+
+  componentWillMount() {
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('registered', this.onRegistered);
+    OneSignal.addEventListener('ids', this.onIds);
+  }
+
+  componentWillUnmount() {
+    OneSignal.removeEventListener('received', this.onReceived);
+    OneSignal.removeEventListener('opened', this.onOpened);
+    OneSignal.removeEventListener('registered', this.onRegistered);
+    OneSignal.removeEventListener('ids', this.onIds);
+  }
+
+  onReceived(notification) {
+      console.log("Notification received: ", notification);
+  }
+
+  onOpened(openResult) {
+    console.log('Message: ', openResult.notification.payload.body);
+    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('isActive: ', openResult.notification.isAppInFocus);
+    console.log('openResult: ', openResult);
+  }
+
+  onRegistered(notifData) {
+      console.log("Device had been registered for push notifications!", notifData);
+  }
+
+  onIds(device) {
+    console.log('Device info: ', device);
+    AsyncStorage.setItem("deviceId", device.userId);
+    appId = device.userId;
+    console.log(appId);
+  }
 
   login() {
     var credentials = {
@@ -52,24 +88,20 @@ export default class Login extends React.Component {
             const systemName = DeviceInfo.getSystemName();
             const systemVersion = DeviceInfo.getSystemVersion();
             console.log(systemName + " " + systemVersion);
-            const uniqueId = DeviceInfo.getUniqueID();
-            console.log(uniqueId);
 
-            var i = 0, strLength = this.state.appId.length;
+            /*var i = 0, strLength = this.state.appId.length;
  
             for(i; i < strLength; i++) {
-            
               this.state.appId = this.state.appId.replace("-", "");
-            
-            }
+            }*/
 
             let deviceProperties = {
-              deviceId: this.state.appId,
+              deviceId: appId,
               brand: brand,
               model: model,
               os: systemName + " " + systemVersion
             }
-            console.log(deviceProperties);
+
             deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
               console.log(responseJson);
               if(responseJson.isSuccess) {

@@ -45,12 +45,12 @@ export default class FollowingList extends React.Component {
   }
 
   componentDidMount() {
-		this.getFollowings();
+		this.getFollowings(this.props.id);
 	}
 	
-	getFollowings() {
+	getFollowings(id) {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		return friendProvider.getFollowings()
+		return friendProvider.getFollowings(id)
 		.then((responseJson) => {
 			if(responseJson.isSuccess) {
 				this.setState({

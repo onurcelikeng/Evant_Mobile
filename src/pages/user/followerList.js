@@ -43,12 +43,13 @@ export default class FollowerList extends React.Component {
   }
 
   componentDidMount() {
-		this.getFollowers();
+		this.getFollowers(this.props.id);
 	}
 	
-	getFollowers() {
+	getFollowers(id) {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		return friendProvider.getFollowers()
+    console.log(id)
+		return friendProvider.getFollowers(id)
 		.then((responseJson) => {
 			if(responseJson.isSuccess) {
         this.users = responseJson.data

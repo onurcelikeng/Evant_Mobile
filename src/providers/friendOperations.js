@@ -1,36 +1,36 @@
 import React from 'react';
 import axios from 'axios';
 
-export function getFollowings() {
-    return axios.get('friendoperations/followings')
+export function getFollowings(id) {
+    return axios.get('friendoperations/followings/' + id)
     .then(res => res.data).then(friends => {
         return friends;
     });
 }
 
-export function getFollowers() {
-    return axios.get('friendoperations/followers')
+export function getFollowers(id) {
+    return axios.get('friendoperations/followers/' + id)
     .then(res => res.data).then(friends => {
         return friends;
     });
 }
 
-export function isFollowing(id) {
-    return axios.get('friendoperations/' + id)
+export function isFollowing(friendId) {
+    return axios.get('friendoperations/' + friendId)
     .then(res => res.data).then(isFollowing => {
         return isFollowing;
     });
 }
 
-export function follow(id) {
-    return axios.post('friendoperations/' + id)
+export function follow(friendId) {
+    return axios.post('friendoperations/' + friendId)
     .then(res => res.data).then(follow => {
         return follow;
     })
 }
 
-export function unfollow(id) {
-    return axios.delete('friendoperations/' + id)
+export function unfollow(friendId) {
+    return axios.delete('friendoperations/' + friendId)
     .then(res => res.data).then(unfollow => {
         return unfollow;
     })

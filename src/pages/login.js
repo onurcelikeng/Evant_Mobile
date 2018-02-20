@@ -27,7 +27,12 @@ export default class Login extends React.Component {
     name: '',
     photo: '',
     followersCount: 0,
-    followingsCount: 0
+    followingsCount: 0,
+    userId: '',
+    settings: {
+      language: '',
+      theme: ''
+    }
   };
 
   componentWillMount() {
@@ -96,10 +101,14 @@ export default class Login extends React.Component {
               if(responseJson.isSuccess) {
                 accountProvider.getMe().then((responseJson) => {
                   if(responseJson.isSuccess) {
+                    console.log(responseJson.data)
+                    Login.currentUser.userId = responseJson.data.userId;
                     Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
                     Login.currentUser.photo = responseJson.data.photoUrl;
                     Login.currentUser.followersCount = responseJson.data.followersCount;
                     Login.currentUser.followingsCount = responseJson.data.followingsCount;
+                    Login.currentUser.settings.theme = responseJson.data.settings.theme;
+                    Login.currentUser.settings.language = responseJson.data.settings.language;
                     Actions.home();
                   }
                 });

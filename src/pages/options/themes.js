@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Image, StatusBar, Platform } from 'react-native';
 import { RkText, RkButton, RkTheme, RkStyleSheet } from 'react-native-ui-kitten';
 
+import * as userSettingsProvider from '../../providers/userSettings';
+import Options from './options'; 
 import { DarkKittenTheme } from '../../config/darkTheme';
 import { KittenTheme } from '../../config/theme';
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
@@ -9,6 +11,20 @@ import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 export default class Themes extends React.Component {
   constructor(props) {
     super(props);
+
+    this.userSettings = Options.getSettings();
+  }
+
+  updateUserSettings() {
+    userSettingsProvider.updateUserSettings(Options.getSettings())
+    .then((responseJson) => { 
+      if(responseJson.isSuccess) { 
+        console.log(responseJson.message);
+      }
+      else {
+        console.log(responseJson.message)
+      }
+    });
   }
 
   render() {
@@ -22,6 +38,8 @@ export default class Themes extends React.Component {
               StatusBar.setBarStyle('dark-content', true);
               Platform.OS == 'android' && StatusBar.setBackgroundColor(KittenTheme.colors.screen.base);
               RkTheme.setTheme(KittenTheme);
+              Options.getSettings().theme = 'light';
+              this.updateUserSettings();
             }}>APPLY</RkButton>
         </View>
         <View style={styles.container}>
@@ -32,6 +50,8 @@ export default class Themes extends React.Component {
               RkTheme.setTheme(DarkKittenTheme);
               StatusBar.setBarStyle('light-content', true);
               Platform.OS == 'android' && StatusBar.setBackgroundColor(DarkKittenTheme.colors.screen.base);
+              Options.getSettings().theme = 'dark';
+              this.updateUserSettings();
             }}>APPLY</RkButton>
 
         </View>

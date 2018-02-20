@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, Platform, FlatList } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Platform, FlatList, Image } from 'react-native';
 import { RkText, RkButton, RkStyleSheet } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
@@ -22,6 +22,7 @@ import Svg,{
 } from 'react-native-svg';
 
 import * as friendProvider from '../../providers/friendOperations';
+import * as userProvider from '../../providers/users';
 import {Avatar} from '../../components/avatar';
 import {Gallery} from '../../components/gallery';
 import {FontIcons} from '../../assets/icon';
@@ -50,10 +51,16 @@ export default class OtherProfile extends React.Component {
 	componentWillMount() {
 		friendProvider.isFollowing(this.props.id).then(following => {
 			this.setState({
-				isLoading: false,
 				isFollowing: following.isSuccess
 			})
 		});
+
+		userProvider.getUserInfo(this.props.id).then(user => {
+			this.setState({
+				isLoading: false,
+				user: user.data
+			})
+		})
 	}
 
 	follow() {
@@ -76,9 +83,6 @@ export default class OtherProfile extends React.Component {
 	}
 
 	render() {
-		let name = `${this.user.firstName} ${this.user.lastName}`;
-		let images = this.user.images;
-
 		if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
 
@@ -104,10 +108,14 @@ export default class OtherProfile extends React.Component {
 			);
 		}
 
+		console.log(this.state.user.photoUrl);
+		let name = `${this.state.user.firstName} ${this.state.user.lastName}`;
+		let images = this.user.images;
+
 		return (
 			<ScrollView style={styles.root} key={this.state.isFollowing}>
 				<View style={[styles.header, styles.bordered]}>
-					<Avatar img={this.user.photo} rkType='big'/>
+					<Image source={{uri: this.state.user.photoUrl}} style={styles.big} />
 					<RkText rkType='header2'>{name}</RkText>          
 					{this.state.isFollowing === false ? <RkButton onPress={() => {this.follow()}} style={styles.button} rkType='small stretch rounded'>FOLLOW</RkButton>: <RkButton onPress={() => {this.unfollow()}} style={styles.button} rkType='small stretch rounded'>UNFOLLOW</RkButton>}
 				</View>
@@ -117,20 +125,20 @@ export default class OtherProfile extends React.Component {
 						<RkText rkType='header3' style={styles.space}>{this.user.postCount}</RkText>
 						<RkText rkType='secondary1 hintColor'>Events</RkText>
 					</View>
-					<TouchableOpacity onPress={() => {Actions.followerList()}}  style={styles.section}>
+					<TouchableOpacity onPress={() => {if(this.state.user.followersCount != 0) { Actions.followerList({id: this.state.user.userId})}}}  style={styles.section}>
 						<View style={styles.section}>
-							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followersCount)}</RkText>
 							<RkText rkType='secondary1 hintColor'>Followers</RkText>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => {Actions.followingList()}}  style={styles.section}>
+					<TouchableOpacity onPress={() => {if(this.state.user.followingsCount != 0) { Actions.followingList({id: this.state.user.userId})}}}  style={styles.section}>
 						<View style={styles.section}>
-							<RkText rkType='header3' style={styles.space}>{this.user.followingCount}</RkText>
+							<RkText rkType='header3' style={styles.space}>{this.state.user.followingsCount}</RkText>
 							<RkText rkType='secondary1 hintColor'>Following</RkText>
 						</View>
 					</TouchableOpacity>
 				</View>
-				<Gallery items={this.user.images}/>
+				<Gallery items={images}/>
 			</ScrollView>
 		)
 	}
@@ -178,5 +186,12 @@ let styles = RkStyleSheet.create(theme => ({
 	  alignSelf: 'center',
 	  width: 140,
 	  backgroundColor: '#FF5E20',
-	}  
+	},
+	big: {
+			width: 110,
+			height: 110,
+			borderRadius: 55,
+			marginBottom: 19,
+			flexDirection: 'column'
+	}, 
 }));

@@ -4,6 +4,7 @@ import { RkText, RkStyleSheet, RkTheme, RkButton } from 'react-native-ui-kitten'
 import {Actions, ActionConst} from 'react-native-router-flux';
 
 import * as deviceProvider from '../../providers/devices';
+import * as userSettingsProvider from '../../providers/userSettings';
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
 import { FontAwesome } from '../../assets/icon';
@@ -11,6 +12,16 @@ import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
 import {UIConstants} from '../../config/appConstants';
 
 export default class Options extends React.Component {
+
+  static userSettings = {
+    isCommentNotif: true,
+    isEventNewComerNotif: true,
+    isEventUpdateNotif: true,
+    isFriendshipNotif: true,
+    language: '',
+    theme: '',
+    userSettingId: ''
+  };
 
   constructor(props) {
     super(props);
@@ -26,20 +37,41 @@ export default class Options extends React.Component {
   }
 
   logout() {
-    /*
-      deviceProvider.logout()
-      .then((responseJson) => {
-        if(responseJson.isSuccess) {
-          AsyncStorage.removeItem("token");
-          AsyncStorage.removeItem("deviceId");
-          this._setModalVisible(false);
-          Actions.reset("root");
-        }
-      });
-    */
+    deviceProvider.logout()
+    .then((responseJson) => {
+      if(responseJson.isSuccess) {
+        AsyncStorage.removeItem("token");
+        AsyncStorage.removeItem("deviceId");
+        this._setModalVisible(false);
+        Actions.reset("root");
+      }
+    });
+
     AsyncStorage.removeItem("token");
     this._setModalVisible(false);
     Actions.reset("root");
+  }
+
+  componentDidMount() {
+		this.getUserSettings();
+  }
+  
+  getUserSettings() {
+		return userSettingsProvider.getUserSettings()
+		.then((responseJson) => {
+			if(responseJson.isSuccess) {
+        Options.userSettings = responseJson.data;
+			} else {
+				console.log(responseJson.message);
+			}
+		})
+		.catch((error) => {
+		  console.log(error);
+		});
+  }
+  
+  static getSettings() {
+    return Options.userSettings;
   }
 
   _setModalVisible(visible) {

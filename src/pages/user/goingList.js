@@ -1,9 +1,29 @@
 import React from 'react';
-import { ListView, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { ListView, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import _ from 'lodash';
 import { RkStyleSheet, RkText, RkTextInput } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import ContentLoader from '../../config/contentLoader'
+import Svg,{
+  Circle,
+  Ellipse,
+  G,
+  LinearGradient,
+  RadialGradient,
+  Line,
+  Path,
+  Polygon,
+  Polyline,
+  Rect,
+  Symbol,
+  Text,
+  Use,
+  Defs,
+  Stop
+} from 'react-native-svg';
 
+import Login from '../login';
+import * as userProvider from '../../providers/users';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
@@ -16,7 +36,8 @@ export default class GoingList extends React.Component {
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      data: ds.cloneWithRows(this.users)
+      data: ds.cloneWithRows(this.users),
+      isLoading: true
     };
 
     this.filter = this._filter.bind(this);
@@ -24,6 +45,17 @@ export default class GoingList extends React.Component {
     this.renderHeader = this._renderHeader.bind(this);
     this.renderRow = this._renderRow.bind(this);
   }
+
+  componentWillMount() {   
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    userProvider.getUsers().then(responseJson => {
+      this.setState({
+        isLoading: false,
+        data: ds.cloneWithRows(responseJson.data),
+        users: responseJson.data
+      })
+    });
+	}
 
   _setData(data) {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -35,9 +67,9 @@ export default class GoingList extends React.Component {
   _renderRow(row) {
     let name = `${row.firstName} ${row.lastName}`;
     return (
-      <TouchableOpacity onPress={() => { Actions.otherProfile({id: row.id}) }}>
+      <TouchableOpacity onPress={() => { if(row.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: row.userId})} }}>
         <View style={styles.container}>
-          <Avatar rkType='circle' style={styles.avatar} img={row.photo}/>
+          <Image source={{uri: row.photoUrl}} style={styles.circle} />
           <RkText>{name}</RkText>
         </View>
       </TouchableOpacity>
@@ -76,6 +108,24 @@ export default class GoingList extends React.Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+			var width = require('Dimensions').get('window').width - 50;
+      var loaders = [];
+      for(let i = 0; i < 10; i++){
+        loaders.push(
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+        )
+      }
+			return (
+			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
+          {loaders}
+			  </View>
+			);
+		}
+
     return (
       <ListView
         style={styles.root}
@@ -104,12 +154,17 @@ let styles = RkStyleSheet.create(theme => ({
     padding: 16,
     alignItems: 'center'
   },
-  avatar: {
-    marginRight: 16
-  },
   separator: {
     flex: 1,
     height: StyleSheet.hairlineWidth,
     backgroundColor: theme.colors.border.base
+  },
+  circle: {
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginRight: 16
   }
 }));

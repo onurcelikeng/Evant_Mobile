@@ -24,8 +24,11 @@ export default class Login extends React.Component {
   }
 
   static currentUser = {
+    firstName: '',
+    lastName: '',
     name: '',
     photo: '',
+    email: '',
     followersCount: 0,
     followingsCount: 0,
     userId: '',
@@ -104,6 +107,9 @@ export default class Login extends React.Component {
                     console.log(responseJson.data)
                     Login.currentUser.userId = responseJson.data.userId;
                     Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
+                    Login.currentUser.firstName = responseJson.data.firstName;
+                    Login.currentUser.lastName = responseJson.data.lastName;
+                    Login.currentUser.email = responseJson.data.email;
                     Login.currentUser.photo = responseJson.data.photoUrl;
                     Login.currentUser.followersCount = responseJson.data.followersCount;
                     Login.currentUser.followingsCount = responseJson.data.followingsCount;

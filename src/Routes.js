@@ -16,6 +16,7 @@ import Notifications from './pages/notifications';
 import Options from './pages/options/options';
 import Themes from './pages/options/themes';
 import EditProfile from './pages/options/editProfile';
+import ChangePassword from './pages/options/changePassword';
 import NotificationSettings from './pages/options/notificationSettings';
 import Profile from './pages/user/profile';
 import FollowerList from './pages/user/followerList';
@@ -106,6 +107,14 @@ export default class Routes extends React.Component {
                                         key="otherProfile"
                                         component={withRkTheme(OtherProfile)}
                                         title="Profile"
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
+                                    <Scene
+                                        key="profile"
+                                        component={withRkTheme(Profile)}
+                                        title="Profile"
+                                        onRight={() => Actions.options()}
+                                        rightTitle={() => <RkText style={{fontSize: 25}} rkType='awesome'>{ FontAwesome.setting }</RkText> }
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -278,6 +287,12 @@ export default class Routes extends React.Component {
                                         key="themes"
                                         component={withRkTheme(Themes)}
                                         title="Themes"
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
+                                    <Scene
+                                        key="password"
+                                        component={withRkTheme(ChangePassword)}
+                                        title="Change Password"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene

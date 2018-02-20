@@ -7,3 +7,10 @@ export function getUserInfo(userId) {
         return user;
     });
 }
+
+export function getUsers() {
+    return axios.get('users')
+    .then(res => res.data).then(users => {
+        return users;
+    });
+}

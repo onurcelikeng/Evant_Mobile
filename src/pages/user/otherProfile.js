@@ -60,7 +60,15 @@ export default class OtherProfile extends React.Component {
 				isLoading: false,
 				user: user.data
 			})
-		})
+		});
+	}
+
+	getUserInfo() {
+		userProvider.getUserInfo(this.props.id).then(user => {
+			this.setState({
+				user: user.data
+			})
+		});
 	}
 
 	follow() {
@@ -69,7 +77,9 @@ export default class OtherProfile extends React.Component {
 			console.log(follow);
 			this.setState({
 				isFollowing: true
-			})
+			});
+			
+			this.getUserInfo();
 		})
 	}
 
@@ -78,7 +88,9 @@ export default class OtherProfile extends React.Component {
 			console.log(unfollow);
 			this.setState({
 				isFollowing: false
-			})
+			});
+			
+			this.getUserInfo();
 		})
 	}
 
@@ -125,18 +137,36 @@ export default class OtherProfile extends React.Component {
 						<RkText rkType='header3' style={styles.space}>{this.user.postCount}</RkText>
 						<RkText rkType='secondary1 hintColor'>Events</RkText>
 					</View>
-					<TouchableOpacity onPress={() => {if(this.state.user.followersCount != 0) { Actions.followerList({id: this.state.user.userId})}}}  style={styles.section}>
+					{this.state.user.followersCount != 0 ?
+					<TouchableOpacity onPress={() => {Actions.followerList({id: this.state.user.userId})}}  style={styles.section}>
 						<View style={styles.section}>
 							<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followersCount)}</RkText>
 							<RkText rkType='secondary1 hintColor'>Followers</RkText>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => {if(this.state.user.followingsCount != 0) { Actions.followingList({id: this.state.user.userId})}}}  style={styles.section}>
+					:
+					<TouchableOpacity activeOpacity={1} style={styles.section}>
 						<View style={styles.section}>
-							<RkText rkType='header3' style={styles.space}>{this.state.user.followingsCount}</RkText>
-							<RkText rkType='secondary1 hintColor'>Following</RkText>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followersCount)}</RkText>
+							<RkText rkType='secondary1 hintColor'>Followers</RkText>
 						</View>
 					</TouchableOpacity>
+					}
+					{this.state.user.followingsCount != 0 ?
+					<TouchableOpacity onPress={() => {Actions.followingList({id: this.state.user.userId})}}  style={styles.section}>
+						<View style={styles.section}>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followingsCount)}</RkText>
+							<RkText rkType='secondary1 hintColor'>Followings</RkText>
+						</View>
+					</TouchableOpacity>
+					:
+					<TouchableOpacity activeOpacity={1} style={styles.section}>
+						<View style={styles.section}>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followingsCount)}</RkText>
+							<RkText rkType='secondary1 hintColor'>Followings</RkText>
+						</View>
+					</TouchableOpacity>
+					}
 				</View>
 				<Gallery items={images}/>
 			</ScrollView>

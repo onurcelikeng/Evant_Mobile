@@ -46,3 +46,39 @@ export function getMe() {
     .then(res => res.data)
     .then(res => { return res; });
 }
+
+export function changePassword(credentials) {
+    var body = {
+        oldPassword: credentials.oldPassword,
+        newPassword: credentials.newPassword,
+        reNewPassword: credentials.newPasswordRepeat
+    };
+
+    var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    return axios.put('account/password', body, {headers: headers})
+    .then(res => res.data)
+    .then(token => { return token; });
+}
+
+export function profileEdit(credentials) {
+    var body = {
+        firstName: credentials.firstName,
+        lastName: credentials.lastName,
+        email: credentials.email
+    };
+
+    console.log(body);
+
+    var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    return axios.post('account/profile', body, {headers: headers})
+    .then(res => res.data)
+    .then(token => { return token; });
+}

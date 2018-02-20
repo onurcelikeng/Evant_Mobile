@@ -52,6 +52,9 @@ export class SplashScreen extends React.Component {
               if(responseJson.isSuccess) {
                 Login.currentUser.userId = responseJson.data.userId;
                 Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
+                Login.currentUser.firstName = responseJson.data.firstName;
+                Login.currentUser.lastName = responseJson.data.lastName;
+                Login.currentUser.email = responseJson.data.email;
                 Login.currentUser.photo = responseJson.data.photoUrl;
                 Login.currentUser.followersCount = responseJson.data.followersCount;
                 Login.currentUser.followingsCount = responseJson.data.followingsCount;

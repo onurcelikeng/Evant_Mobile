@@ -37,19 +37,21 @@ export default class Options extends React.Component {
   }
 
   logout() {
-    deviceProvider.logout()
-    .then((responseJson) => {
-      if(responseJson.isSuccess) {
-        AsyncStorage.removeItem("token");
-        AsyncStorage.removeItem("deviceId");
-        this._setModalVisible(false);
-        Actions.reset("root");
-      }
+    AsyncStorage.getItem("deviceId").then(id => {
+      deviceProvider.logout(id)
+      .then((responseJson) => {
+        if(responseJson.isSuccess) {
+          AsyncStorage.removeItem("token");
+          AsyncStorage.removeItem("deviceId");
+          this._setModalVisible(false);
+          Actions.reset("root");
+        }
+      });
+      
+      AsyncStorage.removeItem("token");
+      this._setModalVisible(false);
+      Actions.reset("root");
     });
-
-    AsyncStorage.removeItem("token");
-    this._setModalVisible(false);
-    Actions.reset("root");
   }
 
   componentDidMount() {
@@ -92,7 +94,7 @@ export default class Options extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.password()} }>
               <RkText rkType='header6'>Change Password</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>

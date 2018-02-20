@@ -23,6 +23,7 @@ import Svg,{
 } from 'react-native-svg';
 
 import * as friendProvider from '../../providers/friendOperations';
+import Login from '../login';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
@@ -122,7 +123,7 @@ export default class FollowerList extends React.Component {
     if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
       var loaders = [];
-      for(let i = 0; i < 10; i++){
+      for(let i = 0; i < Login.currentUser.followersCount; i++){
         loaders.push(
           <ContentLoader height={70}>
             <Circle cx="30" cy="30" r="30"/>

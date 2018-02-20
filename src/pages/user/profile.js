@@ -35,18 +35,36 @@ export default class Profile extends React.Component {
 						<RkText rkType='header3' style={styles.space}>{this.data.postCount}</RkText>
 						<RkText rkType='secondary1 hintColor'>Events</RkText>
 					</View>
-					<TouchableOpacity onPress={() => {if(this.user.followersCount != 0) { Actions.followerList({id: this.user.userId})}}} style={styles.section}>
+					{this.user.followersCount != 0 ?
+					<TouchableOpacity onPress={() => {Actions.followerList({id: this.user.userId})}} style={styles.section}>
 						<View style={styles.section}>
 							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
 							<RkText rkType='secondary1 hintColor'>Followers</RkText>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => {if(this.user.followingsCount != 0) {Actions.followingList({id: this.user.userId})}}} style={styles.section}>
+					:
+					<TouchableOpacity activeOpacity={1} style={styles.section}>
 						<View style={styles.section}>
-							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)}</RkText>
-							<RkText rkType='secondary1 hintColor'>Following</RkText>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
+							<RkText rkType='secondary1 hintColor'>Followers</RkText>
 						</View>
 					</TouchableOpacity>
+					}
+					{this.user.followingsCount != 0 ?
+					<TouchableOpacity onPress={() => {Actions.followingList({id: this.user.userId})}} style={styles.section}>
+						<View style={styles.section}>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)}</RkText>
+							<RkText rkType='secondary1 hintColor'>Followings</RkText>
+						</View>
+					</TouchableOpacity>
+					:
+					<TouchableOpacity activeOpacity={1} style={styles.section}>
+						<View style={styles.section}>
+							<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)}</RkText>
+							<RkText rkType='secondary1 hintColor'>Followings</RkText>
+						</View>
+					</TouchableOpacity>
+					}
 				</View>
 				<Gallery items={images}/>
 			</ScrollView>

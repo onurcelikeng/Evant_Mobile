@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Image, View, Dimensions, StatusBar, AsyncStorage } from 'react-native';
+import { StyleSheet, Image, View, Dimensions, StatusBar, AsyncStorage, Platform  } from 'react-native';
 import { RkText, RkTheme } from 'react-native-ui-kitten'
 import { NavigationActions } from 'react-navigation';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 
 import {ProgressBar} from '../components/progressBar';
+import { DarkKittenTheme } from '../config/darkTheme';
 import { KittenTheme } from '../config/theme';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 import {data} from '../data'
@@ -60,6 +61,16 @@ export class SplashScreen extends React.Component {
                 Login.currentUser.followingsCount = responseJson.data.followingsCount;
                 Login.currentUser.settings.theme = responseJson.data.settings.theme;
                 Login.currentUser.settings.language = responseJson.data.settings.language;
+
+                if(Login.currentUser.settings.theme == "dark") {
+                  RkTheme.setTheme(DarkKittenTheme);
+                  StatusBar.setBarStyle('light-content', true);
+                  Platform.OS == 'android' && StatusBar.setBackgroundColor(DarkKittenTheme.colors.screen.base);
+                } else {
+                  StatusBar.setBarStyle('dark-content', true);
+                  Platform.OS == 'android' && StatusBar.setBackgroundColor(KittenTheme.colors.screen.base);
+                  RkTheme.setTheme(KittenTheme);
+                }
                 Actions.home();
               }
               else {

@@ -12,6 +12,7 @@ import Events from './pages/event/events';
 import EventDetail from './pages/event/eventDetail';
 import Discover from './pages/event/discover';
 import Comments from './pages/event/comments'; 
+import AddEvent from './pages/event/addEvent'; 
 import Notifications from './pages/notifications';
 import Options from './pages/options/options';
 import Themes from './pages/options/themes';
@@ -190,8 +191,17 @@ export default class Routes extends React.Component {
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                 </Stack>
+                                <Scene
+                                    key="addEvent"
+                                    title="Add Event"
+                                    component={withRkTheme(AddEvent)}
+                                    hideTabBar="true"
+                                    clone
+                                    icon={TabIcon}
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
                                 <Stack
-                                    key="tab3"
+                                    key="tab4"
                                     title="Notifications"
                                     tabBarLabel="Notifications"
                                     icon={TabIcon}
@@ -244,7 +254,7 @@ export default class Routes extends React.Component {
                                     />
                                 </Stack>
                                 <Stack
-                                    key="tab4"
+                                    key="tab5"
                                     title="Profile"
                                     tabBarLabel="Profile"
                                     icon={TabIcon}

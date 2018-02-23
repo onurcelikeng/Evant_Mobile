@@ -24,6 +24,7 @@ import Svg,{
 
 import Login from '../login';
 import * as userProvider from '../../providers/users';
+import * as eventOperationProvider from '../../providers/eventOperations';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
@@ -37,7 +38,8 @@ export default class GoingList extends React.Component {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       data: ds.cloneWithRows(this.users),
-      isLoading: true
+      isLoading: true,
+      refreshing: false
     };
 
     this.filter = this._filter.bind(this);
@@ -48,7 +50,8 @@ export default class GoingList extends React.Component {
 
   componentWillMount() {   
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    userProvider.getUsers().then(responseJson => {
+    eventOperationProvider.followers(this.props.id).then(responseJson => {
+      console.log()
       this.setState({
         isLoading: false,
         data: ds.cloneWithRows(responseJson.data),
@@ -151,7 +154,8 @@ let styles = RkStyleSheet.create(theme => ({
   },
   container: {
     flexDirection: 'row',
-    padding: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     alignItems: 'center'
   },
   separator: {

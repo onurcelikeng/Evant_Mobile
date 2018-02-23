@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListView, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { ListView, View, StyleSheet, TouchableOpacity, Image, RefreshControl } from 'react-native';
 import _ from 'lodash';
 import { RkStyleSheet, RkText, RkTextInput } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
@@ -34,7 +34,8 @@ export default class FollowerList extends React.Component {
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      isLoading: true
+      isLoading: true,
+      refreshing: false
     };
 
     this.filter = this._filter.bind(this);
@@ -52,6 +53,7 @@ export default class FollowerList extends React.Component {
     console.log(id)
 		return friendProvider.getFollowers(id)
 		.then((responseJson) => {
+      console.log(responseJson);
 			if(responseJson.isSuccess) {
         this.users = responseJson.data
 				this.setState({
@@ -82,7 +84,7 @@ export default class FollowerList extends React.Component {
     return (
       <TouchableOpacity onPress={() => { Actions.push("otherProfile", {id: row.userId}) }}>
         <View style={styles.container}>
-        <Image source={{uri: row.photoUrl}} style={styles.circle} />
+          <Image source={{uri: row.photoUrl}} style={styles.circle} />
           <RkText>{name}</RkText>
         </View>
       </TouchableOpacity>
@@ -106,6 +108,14 @@ export default class FollowerList extends React.Component {
                      placeholder='Search'/>
       </View>
     )
+  }
+
+  _onRefresh() {
+		console.log("refreshing");
+    this.setState({refreshing: true});
+    this.getFollowers(this.props.id).then(() => {
+      this.setState({refreshing: false});
+    });
   }
 
   _filter(text) {
@@ -140,11 +150,22 @@ export default class FollowerList extends React.Component {
     
     return (
       <ListView
+        autoHideHeader={true}
         style={styles.root}
         dataSource={this.state.data}
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}
         renderHeader={this.renderHeader}
+        automaticallyAdjustContentInsets={false}
+        contentInset={{top:0}}
+        contentOffset={{x: 0, y: 64}}
+        translucent={true}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }
         enableEmptySections={true}/>
     )
   }
@@ -163,7 +184,8 @@ let styles = RkStyleSheet.create(theme => ({
   },
   container: {
     flexDirection: 'row',
-    padding: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     alignItems: 'center'
   },
   avatar: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListView, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { ListView, View, StyleSheet, TouchableOpacity, Image, RefreshControl } from 'react-native';
 import _ from 'lodash';
 import { RkStyleSheet, RkText, RkTextInput } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
@@ -36,7 +36,8 @@ export default class FollowingList extends React.Component {
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      isLoading: true
+      isLoading: true,
+      refreshing: false
     };
 
     this.filter = this._filter.bind(this);
@@ -108,6 +109,13 @@ export default class FollowingList extends React.Component {
     )
   }
 
+  _onRefresh() {
+    this.setState({refreshing: true});
+    this.getFollowings().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
   _filter(text) {
     let pattern = new RegExp(text, 'i');
     let users = _.filter(this.state.users, (user) => {
@@ -146,6 +154,12 @@ export default class FollowingList extends React.Component {
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}
         renderHeader={this.renderHeader}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }
         enableEmptySections={true}/>
     )
   }
@@ -164,7 +178,8 @@ let styles = RkStyleSheet.create(theme => ({
   },
   container: {
     flexDirection: 'row',
-    padding: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     alignItems: 'center'
   },
   separator: {

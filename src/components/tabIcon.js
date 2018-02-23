@@ -16,13 +16,15 @@ const propTypes = {
 
 const TabIcon = (props) => {
   if(props.title == "Events")
-    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/home.png')}/>
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 21, width: 21}} source={require('../assets/icons/home.png')}/>
   else if(props.title == "Discover")
-    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/search.png')}/>
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 21, width: 21}} source={require('../assets/icons/search.png')}/>
   else if(props.title == "Notifications")
-    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/notification.png')}/>
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 21, width: 21}} source={require('../assets/icons/notification.png')}/>
   else if(props.title == "Profile")
-    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 23, width: 23}} source={require('../assets/icons/profile.png')}/>
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 21, width: 21}} source={require('../assets/icons/profile.png')}/>
+  else if(props.title == "Add Event")
+    return <Image style={{tintColor: props.focused ? 'red' : 'black', height: 24, width: 24}} source={require('../assets/icons/add.png')}/>
 };
 
 TabIcon.propTypes = propTypes;

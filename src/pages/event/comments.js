@@ -1,10 +1,30 @@
 import React from 'react';
-import { FlatList, View, Platform, Image, TouchableOpacity, Keyboard, StyleSheet } from 'react-native';
+import { FlatList, View, Platform, Image, TouchableOpacity, Keyboard, StyleSheet, Dimensions } from 'react-native';
 import {InteractionManager} from 'react-native';
 import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import _ from 'lodash';
 import {Actions} from 'react-native-router-flux';
+import ContentLoader from '../../config/contentLoader'
+import Svg,{
+    Circle,
+    Ellipse,
+    G,
+    LinearGradient,
+    RadialGradient,
+    Line,
+    Path,
+    Polygon,
+    Polyline,
+    Rect,
+    Symbol,
+    Text,
+    Use,
+    Defs,
+    Stop
+} from 'react-native-svg';
 
+import Login from '../login';
+import * as commentProvider from '../../providers/comments';
 import {FontAwesome} from '../../assets/icon';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
@@ -20,18 +40,59 @@ export default class Chat extends React.Component {
 
   constructor(props) {
     super(props);
-    let postId = this.props.navigation.params ? this.props.navigation.params.postId : undefined;
-    this.chats = data.getComments(postId);
+    this.eventId = this.props.id;
+
+    this.chats = data.getComments(1);
     this.state = {
-      data: this.chats
+      isLoading: true,
+      isSuccess: false
     };
     
     this.renderItem = this._renderItem.bind(this);
   }
 
   componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.refs.list.scrollToEnd();
+    this.getComments(this.props.id);
+  }
+
+  addComment(credentials) {
+    console.log(credentials);
+    return commentProvider.addComment(credentials) 
+    .then((responseJson) => {
+      console.log(responseJson);
+      if(responseJson.isSuccess) {
+        this.setState({
+          isSuccess: true
+        })
+        this.getComments(this.eventId);
+      }
+    })
+  }
+
+  getComments(id) {
+    return commentProvider.getComments(id)
+    .then((responseJson) => {
+      if(responseJson.isSuccess) {
+        console.log(responseJson);
+        this.setState({
+					isLoading: false,
+          data: responseJson.data,
+          isSuccess:true
+				  }, function() {
+					// do something with new state
+        });
+        InteractionManager.runAfterInteractions(() => {
+          this.refs.list.scrollToEnd();
+        });
+      } else {
+        this.setState({
+					isLoading: false,
+          isSuccess: false,
+          data: []
+				  }, function() {
+					// do something with new state
+				});
+      }
     });
   }
 
@@ -46,68 +107,138 @@ export default class Chat extends React.Component {
   }
 
   _renderItem(info) {
+    console.log(info);
     let name = `${info.item.user.firstName} ${info.item.user.lastName}`;
 
     return (
-        <View style={styles.item}>
-            <TouchableOpacity onPress={() => Actions.otherProfile({id: info.item.user.id})}>
-                <Avatar rkType='circle' style={styles.avatar} img={info.item.user.photo}/>
-            </TouchableOpacity>
-            <View style={styles.content}>
-                <View style={styles.contentHeader}>
-                    <RkText rkType='header5'>{name}</RkText>
-                    <RkText rkType='secondary4 hintColor'>
-                    {moment().add(info.item.time, 'seconds').format('LT')}
-                    </RkText>
-                </View>
-                <RkText rkType='primary3 mediumLine'>{info.item.text}</RkText>
-            </View>
-        </View>
+      <View style={styles.item}>
+          <TouchableOpacity onPress={() => {if(info.item.user.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: info.item.user.userId })} }}>
+              <Image source={{uri: info.item.user.photoUrl}} style={styles.circle} />
+          </TouchableOpacity>
+          <View style={styles.content}>
+              <View style={styles.contentHeader}>
+                  <RkText rkType='header5'>{name}</RkText>
+                  <RkText rkType='secondary4 hintColor'>
+                  {moment(info.item.createdAt).fromNow()}
+                  </RkText>
+              </View>
+              <RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
+          </View>
+      </View>
     )
   }
 
   _scroll() {
-    if (Platform.OS === 'ios') {
-      this.refs.list.scrollToEnd();
-    } else {
-      _.delay(() => this.refs.list.scrollToEnd(), 100);
-    }
+    if(this.state.isSuccess) {
+      if (Platform.OS === 'ios') {
+        this.refs.list.scrollToEnd();
+      } else {
+        _.delay(() => this.refs.list.scrollToEnd(), 100);
+      }
+    }  
   }
 
   _pushMessage() {
-    /*if (!this.state.message)
+    if (!this.state.message)
       return;
 
-    this.state.data.messages.push({id: this.state.data.messages.length, time: 0, type: 'out', text: this.state.message});*/
+    let credentials = {
+      content: this.state.message,
+      eventId: this.eventId
+    }
+
+    this.addComment(credentials);
+    
+    //this.state.data.push({id: this.state.data.length, time: 0, type: 'out', text: this.state.message});
     this.setState({message: ''});
     this._scroll(true);
   }
 
   render() {
-    return (
-      <RkAvoidKeyboard style={styles.container} onResponderRelease={(event) => { Keyboard.dismiss(); }}>
-        <FlatList 
-            ref='list'
+    if (this.state.isLoading) {
+			var width = require('Dimensions').get('window').width - 50;
+			var loaders = [];
+			for(let i = 0; i < 10; i++){
+			  loaders.push(
+				<ContentLoader height={150}>
+					<Circle cx="30" cy="30" r="30"/>
+					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
+					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
+					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
+				</ContentLoader>
+			  )
+			}
+			return (
+			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
+				{loaders}
+			  </View>
+			);
+    }
+    
+    if(this.state.isSuccess == false) {
+      const data = []
+
+      renderFooter = () => {
+        return (
+          <View>
+            <Text>No messages found.</Text>
+          </View>
+        );
+      };
+      return(
+        <RkAvoidKeyboard style={styles.container} onResponderRelease={(event) => { Keyboard.dismiss(); }}>
+          <FlatList 
+            ref="list"
             data={this.state.data}
             extraData={this.state}
             ItemSeparatorComponent={this._renderSeparator}
             keyExtractor={this._keyExtractor}
-            renderItem={this.renderItem}/>
+            renderItem={this._renderItem}
+            ListEmptyComponent={this.showEmptyListView}/>
+          <View style={styles.footer}>
+            <RkTextInput
+              onFocus={() => this._scroll(true)}
+              onBlur={() => this._scroll(true)}
+              onChangeText={(message) => this.setState({message})}
+              value={this.state.message}
+              autoCorrect={false}
+              rkType='row sticker'
+              placeholder="Add a comment..."/>
+
+            <RkButton onPress={() => {this._pushMessage(); Keyboard.dismiss();}} style={styles.send} rkType='circle highlight'>
+              <Image source={require('../../assets/icons/sendIcon.png')}/>
+            </RkButton>
+          </View>
+        </RkAvoidKeyboard>
+      )
+    }
+
+    return (
+      <RkAvoidKeyboard style={styles.container} onResponderRelease={(event) => { Keyboard.dismiss(); }}>
+        <FlatList 
+            ref="list"
+            data={this.state.data}
+            extraData={this.state}
+            ItemSeparatorComponent={this._renderSeparator}
+            keyExtractor={this._keyExtractor}
+            renderItem={this._renderItem}/>
         <View style={styles.footer}>
           <RkTextInput
             onFocus={() => this._scroll(true)}
             onBlur={() => this._scroll(true)}
             onChangeText={(message) => this.setState({message})}
             value={this.state.message}
+            autoCorrect={false}
             rkType='row sticker'
             placeholder="Add a comment..."/>
 
-          <RkButton onPress={() => this._pushMessage()} style={styles.send} rkType='circle highlight'>
+          <RkButton onPress={() => {this._pushMessage(); Keyboard.dismiss();}} style={styles.send} rkType='circle highlight'>
             <Image source={require('../../assets/icons/sendIcon.png')}/>
           </RkButton>
         </View>
       </RkAvoidKeyboard>
-
     )
   }
 }
@@ -118,9 +249,13 @@ let styles = RkStyleSheet.create(theme => ({
     },
     header: {
         alignItems: 'center'
-    },
-    avatar: {
-        marginRight: 16,
+    },  
+    circle: {
+      borderRadius: 20,
+      width: 40,
+      height: 40,
+      alignItems: 'center',
+      flexDirection: 'row'
     },
     container: {
         flex: 1,
@@ -141,19 +276,11 @@ let styles = RkStyleSheet.create(theme => ({
         paddingVertical: 12,
         flexDirection: 'row',
         alignItems: 'flex-start',
-        marginVertical: 14,
         flex: 1,
     },
     itemIn: {},
     itemOut: {
         alignSelf: 'flex-end'
-    },
-    balloon: {
-        maxWidth: scale(250),
-        paddingHorizontal: 15,
-        paddingTop: 10,
-        paddingBottom: 15,
-        borderRadius: 20,
     },
     time: {
         alignSelf: 'flex-end',

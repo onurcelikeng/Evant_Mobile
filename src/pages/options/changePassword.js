@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StatusBar, Platform } from 'react-native';
+import { View, Image, StatusBar, Platform, Keyboard } from 'react-native';
 import { RkText, RkButton, RkTheme, RkStyleSheet, RkAvoidKeyboard, RkTextInput } from 'react-native-ui-kitten';
 
 import * as accountProvider from '../../providers/account';
@@ -20,10 +20,10 @@ export default class Themes extends React.Component {
     accountProvider.changePassword(this.state)
     .then((responseJson) => { 
       if(responseJson.isSuccess) { 
-        console.log(responseJson.message);
+        console.log(responseJson.data);
       }
       else {
-        console.log(responseJson.message)
+        console.log(responseJson.data)
       }
     });
   }

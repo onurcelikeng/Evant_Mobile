@@ -37,12 +37,7 @@ export function register(credentials) {
 }
 
 export function getMe() {
-    var headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
-    
-    return axios.get('account/me', {headers: headers})
+    return axios.get('account/me')
     .then(res => res.data)
     .then(res => { return res; });
 }
@@ -81,4 +76,10 @@ export function profileEdit(credentials) {
     return axios.post('account/profile', body, {headers: headers})
     .then(res => res.data)
     .then(token => { return token; });
+}
+
+export function deactivateAccount() {
+    return axios.get('account/deactive')
+    .then(res => res.data)
+    .then(res => { return res; });
 }

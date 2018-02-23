@@ -3,6 +3,7 @@ import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage, Modal } f
 import { RkText, RkStyleSheet, RkTheme, RkButton } from 'react-native-ui-kitten';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
+import * as accountProvider from '../../providers/account';
 import * as deviceProvider from '../../providers/devices';
 import * as userSettingsProvider from '../../providers/userSettings';
 import { RkSwitch } from '../../components/switch';
@@ -37,25 +38,25 @@ export default class Options extends React.Component {
   }
 
   logout() {
-    AsyncStorage.getItem("deviceId").then(id => {
-      deviceProvider.logout(id)
-      .then((responseJson) => {
-        if(responseJson.isSuccess) {
-          AsyncStorage.removeItem("token");
-          AsyncStorage.removeItem("deviceId");
-          this._setModalVisible(false);
-          Actions.reset("root");
-        }
-      });
-      
-      AsyncStorage.removeItem("token");
-      this._setModalVisible(false);
-      Actions.reset("root");
-    });
+    AsyncStorage.removeItem("token");
+    AsyncStorage.removeItem("deviceId");
+    this._setModalVisible(false);
+    Actions.reset("root");
   }
 
   componentDidMount() {
 		this.getUserSettings();
+  }
+
+  deactivateAccount() {
+    return accountProvider.deactivateAccount()
+    .then((responseJson) => {
+      if(responseJson.isSuccess) {
+        this.logout();
+      } else {
+        console.log(responseJson);
+      }
+    })
   }
   
   getUserSettings() {
@@ -85,7 +86,7 @@ export default class Options extends React.Component {
       <ScrollView style={styles.container}>
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>Account</RkText>
+            <RkText rkType='primary header6'>ACCOUNT</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.editProfile()} }>
@@ -99,11 +100,23 @@ export default class Options extends React.Component {
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.rowButton}>
+              <RkText rkType='header6'>Two-Factor Authentication</RkText>
+              <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.rowButton}>
+              <RkText rkType='header6'>Switch to Business Profile</RkText>
+              <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>Settings</RkText>
+            <RkText rkType='primary header6'>SETTINGS</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.themes()} }>
@@ -127,7 +140,7 @@ export default class Options extends React.Component {
 
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>Support</RkText>
+            <RkText rkType='primary header6'>SUPPORT</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
@@ -141,6 +154,12 @@ export default class Options extends React.Component {
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <View style={[styles.row, styles.heading]}>
+            <RkText rkType='primary header6'>ABOUT</RkText>
+          </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
               <RkText rkType='header6'>Privacy Policy</RkText>
@@ -153,12 +172,23 @@ export default class Options extends React.Component {
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.rowButton}>
+              <RkText rkType='header6'>Open Source Libraries</RkText>
+              <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.section}>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
               <RkText rkType='header6'>Clear Search History</RkText>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this.deactivateAccount()}>
+              <RkText rkType='header6'>Deactivate Account</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
@@ -223,7 +253,7 @@ let styles = RkStyleSheet.create(theme => ({
   },
   rowButton: {
     flex: 1,
-    paddingVertical: 24,
+    paddingVertical: 18,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

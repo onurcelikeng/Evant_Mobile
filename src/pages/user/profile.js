@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView, TouchableOpacity, Platform, FlatList, Image } from 'react-native';
 import { RkText, RkButton, RkStyleSheet } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import PhotoUpload from 'react-native-photo-upload'
 
 import {Avatar} from '../../components/avatar';
 import {Gallery} from '../../components/gallery';
@@ -26,7 +27,9 @@ export default class Profile extends React.Component {
 		return (
 			<ScrollView style={styles.root}>
 				<View style={[styles.header, styles.bordered]}>
-					<Image source={{uri: this.user.photo}} style={styles.big} />
+					<PhotoUpload onResponse={res => console.log(res)}>
+						<Image source={{uri: this.user.photo}} style={styles.big} />
+					</PhotoUpload>
 					<RkText rkType='header2'>{name}</RkText>
 				</View>
 

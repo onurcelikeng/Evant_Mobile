@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>fontawesome_brands.ttf</string>
@@ -54,6 +54,10 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>We need to reach your photos to add new pictures for your profile or event detail.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need to reach your camera to add new pictures for your profile or event detail.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

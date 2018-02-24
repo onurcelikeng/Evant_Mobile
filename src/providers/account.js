@@ -83,3 +83,26 @@ export function deactivateAccount() {
     .then(res => res.data)
     .then(res => { return res; });
 }
+
+export function photo(credentials) {
+    var body = {
+        folder: "",
+        file: {
+            contentType: credentials.contentType,
+            contentDisposition: credentials.contentDisposition,
+            headers: credentials.headers,
+            length: credentials.length,
+            name: credentials.name,
+            fileName: credentials.fileName
+          }
+    };
+
+    var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    return axios.post('account/photo', body, {headers: headers})
+    .then(res => res.data)
+    .then(token => { return token; });
+}

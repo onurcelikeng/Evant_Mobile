@@ -5,6 +5,7 @@ import {Actions} from 'react-native-router-flux';
 import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
+import { Pages } from 'react-native-pages';
 
 import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
 import * as eventOperationProvider from '../../providers/eventOperations';
@@ -97,7 +98,7 @@ export default class EventDetail extends React.Component {
           maxOverlayOpacity={0.6}
           minOverlayOpacity={0.3}
           fadeOutForeground
-          renderHeader={() => <Image rkCardImg style={styles.image} source={{uri: this.data.photoUrl}}/>}
+          renderHeader={() => <Image rkCardImg style={styles.image} source={{uri: this.data.photoUrl}}/> }
           renderFixedForeground={() => (
             <Animatable.View
               style={styles.navTitleView}
@@ -180,6 +181,12 @@ let styles = RkStyleSheet.create(theme => ({
     borderBottomWidth: 1,
     borderBottomColor: '#cccccc',
     backgroundColor: 'white',
+  },
+  imageStyle: {
+    width: null,
+  height: null,
+  resizeMode: 'cover',
+  flex: 1
   },
   sectionTitle: {
     fontSize: 18,

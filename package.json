@@ -27,6 +27,8 @@
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-onesignal": "^3.0.9",
+    "react-native-pages": "^0.6.1",
+    "react-native-photo-upload": "^1.2.0",
     "react-native-progress-bar": "^0.1.2",
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-svg": "^6.2.1",

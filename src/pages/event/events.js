@@ -40,7 +40,27 @@ export default class Events extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getEvents();
+		if(this.props.id != null) {
+			console.log("esd");
+			this.getCategoryEvents(this.props.id);
+		} else {
+			this.getEvents();
+		}
+	}
+
+	getCategoryEvents(id) {
+		return eventProvider.getCategoryEvents(id)
+		.then((responseJson) => {
+			console.log(responseJson);
+			if(responseJson.isSuccess) {
+				this.setState({
+					isLoading: false,
+					data: responseJson.data,
+				  }, function() {
+					// do something with new state
+				});
+			}
+		});
 	}
 
 	getEvents() {

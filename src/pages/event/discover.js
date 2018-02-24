@@ -86,7 +86,7 @@ export default class Events extends React.Component {
 			<TouchableHighlight
 				delayPressIn={70}
 				activeOpacity={0.8}
-				/*onPress={() => this.props.navigation.navigate('eventDetail', {id: info.item.categoryId})}*/>
+				onPress={() => this.props.navigation.navigate('events', {id: info.item.categoryId})}>
 				<RkCard rkType='backImg'>
 					<Image rkCardImg style={{resizeMode:"stretch"}} source={{uri: info.item.photoUrl}}/>
 					<View rkCardImgOverlay rkCardContent style={styles.overlay}>

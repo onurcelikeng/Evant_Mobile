@@ -153,6 +153,13 @@ export default class Routes extends React.Component {
                                         panHandlers={null}
                                     />
                                     <Scene
+                                        key="events"
+                                        component={withRkTheme(Events)}
+                                        title="Events"
+                                        panHandlers={null}
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
+                                    <Scene
                                         hideNavBar={true}
                                         key="eventDetail"
                                         component={withRkTheme(EventDetail)}

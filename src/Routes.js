@@ -115,7 +115,8 @@ export default class Routes extends React.Component {
                                         component={withRkTheme(Profile)}
                                         title="Profile"
                                         onRight={() => Actions.options()}
-                                        rightTitle={() => <RkText style={{fontSize: 25}} rkType='awesome'>{ FontAwesome.setting }</RkText> }
+                                        rightTitle={() => <Image style={{height: 21, width: 21}} source={require('./assets/icons/settings.png')}/> }                                        
+                                        renderLeftButton={() => <TouchableOpacity onPress={() => Actions.options()}><Image style={{marginLeft:8 ,height: 21, width: 21}} source={require('./assets/icons/timeline.png')}/></TouchableOpacity> }
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -271,7 +272,8 @@ export default class Routes extends React.Component {
                                         component={withRkTheme(Profile)}
                                         title="Profile"
                                         onRight={() => Actions.options()}
-                                        rightTitle={() => <RkText style={{fontSize: 25}} rkType='awesome'>{ FontAwesome.setting }</RkText> }
+                                        rightTitle={() => <Image style={{height: 21, width: 21}} source={require('./assets/icons/settings.png')}/> }
+                                        renderLeftButton={() => <TouchableOpacity onPress={() => Actions.options()}><Image style={{marginLeft:8 ,height: 21, width: 21}} source={require('./assets/icons/timeline.png')}/></TouchableOpacity> }
                                         panHandlers={null}
                                         initial={true}
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}

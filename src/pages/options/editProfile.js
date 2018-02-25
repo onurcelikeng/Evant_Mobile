@@ -109,7 +109,13 @@ export default class EditProfile extends React.Component {
                         </View>
                     </View>
                     
-                    <RkButton rkType='medium stretch rounded' style={styles.button} onPress={() => this.profileEdit()}>SAVE</RkButton>
+                    <RkButton rkType='medium stretch rounded' style={styles.button} onPress={() => {
+                        if(this.state.firstName != '' && this.state.lastName != '' && this.state.email != '' 
+                        && this.state.country != '' && this.state.phone != '') {
+                            this.profileEdit()
+                        } else {
+                            DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
+                        }}}>SAVE</RkButton>
                 </RkAvoidKeyboard>
             </ScrollView>
         )

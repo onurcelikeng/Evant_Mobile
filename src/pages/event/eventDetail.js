@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, Image, View, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
-import { RkCard, RkText, RkStyleSheet, RkButton } from 'react-native-ui-kitten';
+import { RkCard, RkText, RkStyleSheet, RkButton, RkModalImg } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
@@ -19,15 +19,16 @@ let moment = require('moment');
 
 const MIN_HEIGHT = Header.HEIGHT;
 const MAX_HEIGHT = 250;
-
+let {height, width} = Dimensions.get('window');
 
 export default class EventDetail extends React.Component {
+
   constructor(props) {
     super(props);
     let {params} = this.props.navigation.state;
     let id = params ? params.id : 1;
     this.data = this.props.obj;
-
+    this.esd = data.getUser();
     this.state = {
       join: false
     }
@@ -91,6 +92,15 @@ export default class EventDetail extends React.Component {
     });
   }
 
+  _renderFooter(options) {
+    return (
+      <View style={styles.footer}>
+        <RkButton rkType='clear contrast' onPress={options.closeImage}>Close</RkButton>
+        <RkText rkType='header4'>{`${options.pageNumber}/${options.totalPages}`}</RkText>
+      </View>
+    );
+  }
+
   render() {
     let button = null;
     if (this.data.user.userId == Login.getCurrentUser().userId) {
@@ -109,7 +119,7 @@ export default class EventDetail extends React.Component {
           maxOverlayOpacity={0.6}
           minOverlayOpacity={0.3}
           fadeOutForeground
-          renderHeader={() => <Image rkCardImg style={styles.image} source={{uri: this.data.photoUrl}}/> }
+          renderHeader={() => <Image rkCardImg style={styles.image} source={{uri: this.data.photoUrl}}/>}
           renderFixedForeground={() => (
             <Animatable.View
               style={styles.navTitleView}
@@ -121,6 +131,12 @@ export default class EventDetail extends React.Component {
                 {this.data.title}
               </RkText>
             </Animatable.View>
+          )}
+          renderTouchableFixedForeground={() => (
+            <RkModalImg
+                style={{width: width, height: MAX_HEIGHT}}
+                renderFooter={this._renderFooter}
+                source={this.esd.images}/>
           )}
           renderForeground={() => (
             <View style={styles.titleContainer}>
@@ -260,5 +276,12 @@ let styles = RkStyleSheet.create(theme => ({
     paddingBottom: scaleVertical(22),
     flex: 1,
     alignItems: 'center',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flex:1,
+    marginHorizontal: 10
   }
 }));

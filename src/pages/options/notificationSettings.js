@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { RkText, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 
+import DropdownHolder from '../../providers/dropdownHolder';
 import * as userSettingsProvider from '../../providers/userSettings';
 import Options from './options'; 
 import { RkSwitch } from '../../components/switch';
@@ -27,10 +28,10 @@ export default class NotificationSettings extends React.Component {
     userSettingsProvider.updateUserSettings(Options.getSettings())
     .then((responseJson) => { 
       if(responseJson.isSuccess) { 
-        console.log(responseJson.message);
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
       }
       else {
-        console.log(responseJson.message)
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
     });
   }

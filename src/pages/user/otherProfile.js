@@ -77,7 +77,7 @@ export default class OtherProfile extends React.Component {
 				this.setState({
 					isFollowing: true
 				});
-				DropdownHolder.getDropDown().alertWithType("success", "", "Kullanıcıyı başarıyla takip ettiniz.");
+				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
 				this.getUserInfo();
 			} else {
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -91,7 +91,7 @@ export default class OtherProfile extends React.Component {
 				this.setState({
 					isFollowing: false
 				});
-				DropdownHolder.getDropDown().alertWithType("success", "", "Kullanıcıyı başarıyla takipten çıkarttınız.");
+				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
 				this.getUserInfo();
 			} else {
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);

@@ -3,6 +3,7 @@ import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage, Modal } f
 import { RkText, RkStyleSheet, RkTheme, RkButton } from 'react-native-ui-kitten';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
+import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account';
 import * as deviceProvider from '../../providers/devices';
 import * as userSettingsProvider from '../../providers/userSettings';
@@ -54,7 +55,7 @@ export default class Options extends React.Component {
       if(responseJson.isSuccess) {
         this.logout();
       } else {
-        console.log(responseJson);
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
     })
   }

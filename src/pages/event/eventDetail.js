@@ -5,8 +5,8 @@ import {Actions} from 'react-native-router-flux';
 import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
-import { Pages } from 'react-native-pages';
 
+import DropdownHolder from '../../providers/dropdownHolder';
 import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
 import * as eventOperationProvider from '../../providers/eventOperations';
 import * as eventProvider from '../../providers/events';
@@ -41,6 +41,11 @@ export default class EventDetail extends React.Component {
     return eventProvider.deleteEvent(this.data.eventId)
     .then((responseJson) => {
       console.log(responseJson);
+      if(responseJson.isSuccess) {
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      } else {
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+      }
     });
   }
 
@@ -48,20 +53,26 @@ export default class EventDetail extends React.Component {
     console.log(this.data);
     return eventOperationProvider.joinEvent(this.data.eventId)
     .then((responseJson) => {
+      console.log(responseJson);
       if(responseJson.isSuccess) {
         this.setState({join: true});
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      } else {
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
-      console.log(responseJson);
     });
   }
 
   leaveEvent() {
     return eventOperationProvider.leaveEvent(this.data.eventId)
     .then((responseJson) => {
+      console.log(responseJson);
       if(responseJson.isSuccess) {
         this.setState({join: false});
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      } else {
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
-      console.log(responseJson);
     });
   }
 

@@ -51,12 +51,19 @@ export default class GoingList extends React.Component {
   componentWillMount() {   
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     eventOperationProvider.followers(this.props.id).then(responseJson => {
-      console.log()
-      this.setState({
-        isLoading: false,
-        data: ds.cloneWithRows(responseJson.data),
-        users: responseJson.data
-      })
+      if(responseJson.isSuccess) {
+        this.setState({
+          isLoading: false,
+          data: ds.cloneWithRows(responseJson.data),
+          users: responseJson.data
+        })
+      } else {
+        this.setState({
+          isLoading: false,
+          data: ds.cloneWithRows([]),
+          users: []
+        })
+      }
     });
 	}
 

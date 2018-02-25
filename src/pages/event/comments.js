@@ -5,24 +5,9 @@ import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme }
 import _ from 'lodash';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
-import Svg,{
-    Circle,
-    Ellipse,
-    G,
-    LinearGradient,
-    RadialGradient,
-    Line,
-    Path,
-    Polygon,
-    Polyline,
-    Rect,
-    Symbol,
-    Text,
-    Use,
-    Defs,
-    Stop
-} from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 
+import DropdownHolder from '../../providers/dropdownHolder';
 import Login from '../login';
 import * as commentProvider from '../../providers/comments';
 import {FontAwesome} from '../../assets/icon';
@@ -65,6 +50,8 @@ export default class Chat extends React.Component {
           isSuccess: true
         })
         this.getComments(this.eventId);
+      } else {
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
     })
   }
@@ -91,7 +78,8 @@ export default class Chat extends React.Component {
           data: []
 				  }, function() {
 					// do something with new state
-				});
+        });
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
     });
   }

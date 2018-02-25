@@ -3,25 +3,9 @@ import { ListView, View, StyleSheet, TouchableOpacity, Image, RefreshControl } f
 import _ from 'lodash';
 import { RkStyleSheet, RkText, RkTextInput } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
-import ContentLoader from '../../config/contentLoader'
-import Svg,{
-  Circle,
-  Ellipse,
-  G,
-  LinearGradient,
-  RadialGradient,
-  Line,
-  Path,
-  Polygon,
-  Polyline,
-  Rect,
-  Symbol,
-  Text,
-  Use,
-  Defs,
-  Stop
-} from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 
+import ContentLoader from '../../config/contentLoader'
 import * as friendProvider from '../../providers/friendOperations';
 import Login from '../login';
 import {data} from '../../data';
@@ -43,6 +27,7 @@ export default class FollowerList extends React.Component {
     this.renderHeader = this._renderHeader.bind(this);
     this.renderRow = this._renderRow.bind(this);
   }
+  
 
   componentDidMount() {
 		this.getFollowers(this.props.id);
@@ -64,6 +49,13 @@ export default class FollowerList extends React.Component {
 					// do something with new state
 				});
 			} else {
+        this.setState({
+					isLoading: false,
+          data: ds.cloneWithRows([]),
+          users: []
+				  }, function() {
+					// do something with new state
+				});
 				console.log(responseJson.message);
 			}
 		})

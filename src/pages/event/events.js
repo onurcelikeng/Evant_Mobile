@@ -3,24 +3,9 @@ import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl } f
 import { RkText, RkCard, RkStyleSheet, withRkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
-import Svg,{
-    Circle,
-    Ellipse,
-    G,
-    LinearGradient,
-    RadialGradient,
-    Line,
-    Path,
-    Polygon,
-    Polyline,
-    Rect,
-    Symbol,
-    Text,
-    Use,
-    Defs,
-    Stop
-} from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 
+import DropdownHolder from '../../providers/dropdownHolder';
 import * as eventProvider from '../../providers/events';
 import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
@@ -59,6 +44,14 @@ export default class Events extends React.Component {
 				  }, function() {
 					// do something with new state
 				});
+			} else {
+				this.setState({
+					isLoading: false,
+					data: [],
+				  }, function() {
+					// do something with new state
+				});
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		});
 	}
@@ -74,6 +67,14 @@ export default class Events extends React.Component {
 				  }, function() {
 					// do something with new state
 				});
+			} else {
+				this.setState({
+					isLoading: false,
+					data: [],
+				  }, function() {
+					// do something with new state
+				});
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		});
 	}

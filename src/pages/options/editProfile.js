@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View, StyleSheet, Image } from 'react-native';
 import { RkText, RkTextInput, RkAvoidKeyboard, RkTheme, RkStyleSheet, RkButton } from 'react-native-ui-kitten';
 
+import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account'
 import Login from '../login';
 import {data} from '../../data';
@@ -41,10 +42,10 @@ export default class EditProfile extends React.Component {
                 Login.getCurrentUser().firstName = this.state.firstName;
                 Login.getCurrentUser().lastName = this.state.lastName;
                 Login.getCurrentUser().email = this.state.email;
-                console.log(responseJson.data);
+                DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
             }
             else {
-                console.log(responseJson)
+                DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
             }
         })
     }

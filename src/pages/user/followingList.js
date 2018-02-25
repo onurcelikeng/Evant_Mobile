@@ -63,6 +63,13 @@ export default class FollowingList extends React.Component {
 					// do something with new state
 				});
 			} else {
+        this.setState({
+					isLoading: false,
+          data: ds.cloneWithRows([]),
+          users: []
+				  }, function() {
+					// do something with new state
+				});
 				console.log(responseJson.message);
 			}
 		})

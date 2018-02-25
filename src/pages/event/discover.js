@@ -4,24 +4,9 @@ import { RkText, RkCard, RkStyleSheet, RkTextInput } from 'react-native-ui-kitte
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
-import Svg,{
-    Circle,
-    Ellipse,
-    G,
-    LinearGradient,
-    RadialGradient,
-    Line,
-    Path,
-    Polygon,
-    Polyline,
-    Rect,
-    Symbol,
-    Text,
-    Use,
-    Defs,
-    Stop
-} from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 
+import DropdownHolder from '../../providers/dropdownHolder';
 import * as categoryProvider from '../../providers/category';
 import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
@@ -68,8 +53,14 @@ export default class Events extends React.Component {
 				  }, function() {
 					// do something with new state
 				});
-			} else {
-				console.log(responseJson.message);
+			} else {  
+				this.setState({
+					isLoading: false,
+					data: [],
+				  }, function() {
+					// do something with new state
+				});      
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		})
 		.catch((error) => {

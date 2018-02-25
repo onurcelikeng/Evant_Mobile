@@ -48,6 +48,7 @@
 		602E35292030CB560035B9A0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		60378B2320389B1800BD981D /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60378B1E20389AEA00BD981D /* libRNDeviceInfo.a */; };
 		6090A5982036FB8100DC081F /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6090A5952036FAFC00DC081F /* libRNSVG.a */; };
+		609A67E62042B0070009D8E3 /* libRCTRefreshControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 609A67C42042AFB80009D8E3 /* libRCTRefreshControl.a */; };
 		60E67F9C2041BAFA00CCA3E5 /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E67F922041BAA600CCA3E5 /* libRCTImageResizer.a */; };
 		60E67F9D2041BB0100CCA3E5 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E67F8A2041BA8A00CCA3E5 /* libRNImagePicker.a */; };
 		60E67F9E2041BB0E00CCA3E5 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E67F992041BABC00CCA3E5 /* libRNFS.a */; };
@@ -363,6 +364,13 @@
 			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
 			remoteInfo = "RNSVG-tvOS";
 		};
+		609A67C32042AFB80009D8E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 609A67AC2042AFB70009D8E3 /* RCTRefreshControl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTRefreshControl;
+		};
 		60E67F892041BA8A00CCA3E5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 60E67F582041BA8900CCA3E5 /* RNImagePicker.xcodeproj */;
@@ -471,6 +479,7 @@
 		2D02E47B1E0B4A5D006451C7 /* Evant-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Evant-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Evant-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Evant-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		34B1B71DC10B4315992AF4EB /* ODRefreshControlDemo.app */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ODRefreshControlDemo.app; sourceTree = "<group>"; };
 		44E8665DD32144439D03EF71 /* AppCenterReactNativeAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AppCenterReactNativeAnalytics.xcodeproj; path = "../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics.xcodeproj"; sourceTree = "<group>"; };
 		53C7BE50B3168221E1759595 /* Pods-EvantTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvantTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EvantTests/Pods-EvantTests.debug.xcconfig"; sourceTree = "<group>"; };
 		543976C11A3F41ACB805E3E6 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -478,6 +487,7 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		60378AEE20389AEA00BD981D /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		6090A5652036FAFC00DC081F /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
+		609A67AC2042AFB70009D8E3 /* RCTRefreshControl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTRefreshControl.xcodeproj; path = "../node_modules/react-refresh-control/RCTRefreshControl.xcodeproj"; sourceTree = "<group>"; };
 		60E67F582041BA8900CCA3E5 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		60E67F8D2041BAA500CCA3E5 /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
 		60E67F932041BABB00CCA3E5 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
@@ -527,6 +537,7 @@
 				6090A5982036FB8100DC081F /* libRNSVG.a in Frameworks */,
 				60378B2320389B1800BD981D /* libRNDeviceInfo.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
+				609A67E62042B0070009D8E3 /* libRCTRefreshControl.a in Frameworks */,
 				60E67F9C2041BAFA00CCA3E5 /* libRCTImageResizer.a in Frameworks */,
 				60E67F9D2041BB0100CCA3E5 /* libRNImagePicker.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -722,6 +733,7 @@
 				A0F3834680E444138D3B8BA4 /* libAppCenterReactNative.a */,
 				95AED98DDA59494F96594E19 /* libAppCenterReactNativeAnalytics.a */,
 				C7E9928899D843BB97976ADF /* libAppCenterReactNativeCrashes.a */,
+				34B1B71DC10B4315992AF4EB /* ODRefreshControlDemo.app */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -749,6 +761,14 @@
 			children = (
 				6090A5952036FAFC00DC081F /* libRNSVG.a */,
 				6090A5972036FAFC00DC081F /* libRNSVG-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		609A67AD2042AFB70009D8E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				609A67C42042AFB80009D8E3 /* libRCTRefreshControl.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -822,6 +842,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				609A67AC2042AFB70009D8E3 /* RCTRefreshControl.xcodeproj */,
 				60E67F932041BABB00CCA3E5 /* RNFS.xcodeproj */,
 				60E67F8D2041BAA500CCA3E5 /* RCTImageResizer.xcodeproj */,
 				60E67F582041BA8900CCA3E5 /* RNImagePicker.xcodeproj */,
@@ -1115,6 +1136,10 @@
 				{
 					ProductGroup = 60F317B9203A252C006E1614 /* Products */;
 					ProjectRef = 60F317B8203A252C006E1614 /* RCTOneSignal.xcodeproj */;
+				},
+				{
+					ProductGroup = 609A67AD2042AFB70009D8E3 /* Products */;
+					ProjectRef = 609A67AC2042AFB70009D8E3 /* RCTRefreshControl.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1442,6 +1467,13 @@
 			fileType = archive.ar;
 			path = "libRNSVG-tvOS.a";
 			remoteRef = 6090A5962036FAFC00DC081F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		609A67C42042AFB80009D8E3 /* libRCTRefreshControl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTRefreshControl.a;
+			remoteRef = 609A67C32042AFB80009D8E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		60E67F8A2041BA8A00CCA3E5 /* libRNImagePicker.a */ = {
@@ -1874,17 +1906,12 @@
 					"$(SRCROOT)/../node_modules/appcenter/ios/AppCenterReactNative",
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
+					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
 				);
 				INFOPLIST_FILE = EvantTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1907,17 +1934,12 @@
 					"$(SRCROOT)/../node_modules/appcenter/ios/AppCenterReactNative",
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
+					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
 				);
 				INFOPLIST_FILE = EvantTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1945,6 +1967,7 @@
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
 				);
 				INFOPLIST_FILE = Evant/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -1979,6 +2002,7 @@
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
 				);
 				INFOPLIST_FILE = Evant/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -2016,16 +2040,11 @@
 					"$(SRCROOT)/../node_modules/appcenter/ios/AppCenterReactNative",
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
+					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
 				);
 				INFOPLIST_FILE = "Evant-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2058,16 +2077,11 @@
 					"$(SRCROOT)/../node_modules/appcenter/ios/AppCenterReactNative",
 					"$(SRCROOT)/../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics",
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
+					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
 				);
 				INFOPLIST_FILE = "Evant-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2094,13 +2108,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Evant-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Evant-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2123,13 +2131,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Evant-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Evant-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;

@@ -6,7 +6,7 @@ import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 import OneSignal from 'react-native-onesignal';
 
-import App from '../../App';
+import DropdownHolder from '../providers/dropdownHolder';
 import * as deviceProvider from '../providers/devices';
 import * as accountProvider from '../providers/account';
 import { FontAwesome } from '../assets/icon';
@@ -120,13 +120,13 @@ export default class Login extends React.Component {
                 });
               }
               else {
-                alert(this.state.appId);
+                DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
               }
             })
             .catch(error => console.log(error));
 				});
 			} else {
-				console.error("cannot login");
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		})
 		.catch((error) => {
@@ -178,6 +178,8 @@ export default class Login extends React.Component {
           <RkButton onPress={() => { 
               if(this.state.email != '' && this.state.password != '') {
                 this.login()
+              } else {
+                DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
               }
             }} rkType='medium stretch rounded' style={styles.save}>LOGIN</RkButton>
           <View style={styles.footer}>

@@ -2,25 +2,10 @@ import React from 'react';
 import { View, ScrollView, TouchableOpacity, Platform, FlatList, Image } from 'react-native';
 import { RkText, RkButton, RkStyleSheet } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
-import ContentLoader from '../../config/contentLoader'
-import Svg,{
-  Circle,
-  Ellipse,
-  G,
-  LinearGradient,
-  RadialGradient,
-  Line,
-  Path,
-  Polygon,
-  Polyline,
-  Rect,
-  Symbol,
-  Text,
-  Use,
-  Defs,
-  Stop
-} from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 
+import DropdownHolder from '../../providers/dropdownHolder';
+import ContentLoader from '../../config/contentLoader'
 import * as friendProvider from '../../providers/friendOperations';
 import * as userProvider from '../../providers/users';
 import {Avatar} from '../../components/avatar';
@@ -49,48 +34,68 @@ export default class OtherProfile extends React.Component {
 	}
 
 	componentWillMount() {
-		friendProvider.isFollowing(this.props.id).then(following => {
-			this.setState({
-				isFollowing: following.isSuccess
-			})
+		friendProvider.isFollowing(this.props.id).then((responseJson) => {
+			console.log(responseJson)
+			if(responseJson.isSuccess) {
+				this.setState({
+					isFollowing: responseJson.isSuccess
+				})
+			} else {
+				console.log(responseJson.message);
+			}
 		});
 
-		userProvider.getUserInfo(this.props.id).then(user => {
-			this.setState({
-				isLoading: false,
-				user: user.data
-			})
+		userProvider.getUserInfo(this.props.id).then((responseJson) => {
+			console.log(responseJson)
+			if(responseJson.isSuccess) {
+				this.setState({
+					isLoading: false,
+					user: responseJson.data
+				})
+			} else {
+				console.log(responseJson.message);
+			}
 		});
 	}
 
 	getUserInfo() {
-		userProvider.getUserInfo(this.props.id).then(user => {
-			this.setState({
-				user: user.data
-			})
+		userProvider.getUserInfo(this.props.id).then((responseJson) => {
+			if(responseJson.isSuccess) {
+				this.setState({
+					user: responseJson.data
+				})
+			} else {
+				console.log(responseJson.message);
+			}
 		});
 	}
 
 	follow() {
 		console.log(this.props.id)
-		friendProvider.follow(this.props.id).then(follow => {
-			console.log(follow);
-			this.setState({
-				isFollowing: true
-			});
-			
-			this.getUserInfo();
+		friendProvider.follow(this.props.id).then((responseJson) => {
+			if(responseJson.isSuccess) {
+				this.setState({
+					isFollowing: true
+				});
+				DropdownHolder.getDropDown().alertWithType("success", "", "Kullanıcıyı başarıyla takip ettiniz.");
+				this.getUserInfo();
+			} else {
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+			}
 		})
 	}
 
 	unfollow() {
-		friendProvider.unfollow(this.props.id).then(unfollow => {
-			console.log(unfollow);
-			this.setState({
-				isFollowing: false
-			});
-			
-			this.getUserInfo();
+		friendProvider.unfollow(this.props.id).then((responseJson) => {
+			if(responseJson.isSuccess) {
+				this.setState({
+					isFollowing: false
+				});
+				DropdownHolder.getDropDown().alertWithType("success", "", "Kullanıcıyı başarıyla takipten çıkarttınız.");
+				this.getUserInfo();
+			} else {
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+			}
 		})
 	}
 

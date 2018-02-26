@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, Platform, FlatList, Image, RefreshControl, ImageBackground, Dimensions, StatusBar } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Platform, FlatList, Image, RefreshControl, ImageBackground, Dimensions, StatusBar, ActivityIndicator } from 'react-native';
 import { RkText, RkButton, RkStyleSheet, RkCard } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import PhotoUpload from 'react-native-photo-upload';
@@ -19,7 +19,7 @@ import Login from '../login'
 let moment = require('moment');
 
 const MIN_HEIGHT = Header.HEIGHT;
-const MAX_HEIGHT = 290;
+const MAX_HEIGHT = 280;
 let {height, width} = Dimensions.get('window');
 
 export default class Profile extends React.Component {
@@ -29,13 +29,14 @@ export default class Profile extends React.Component {
 		this.data = data.getUser();
 		this.user = Login.getCurrentUser();
 		this.state = {
-			isLoading: true,
-			refreshing: false,
-			selected: null
-		}
+      isRefreshing: false,      
+      waiting: false,
+      data: this.data
+    }
 	
 		this.renderItem = this._renderItem.bind(this);
 		console.log(this.user);
+    this.onRefresh = this.onRefresh.bind(this)
 
 		this.onEventPress = this.onEventPress.bind(this)
     this.renderSelected = this.renderSelected.bind(this)
@@ -43,74 +44,59 @@ export default class Profile extends React.Component {
 
     this.data = [
       {
-        time: '09:00', 
-        title: 'Archery Training', 
-        description: 'The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ',
-        lineColor:'#009688', 
-        icon: require('../../assets/icons/archery.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240340/c0f96b3a-0fe3-11e7-8964-fe66e4d9be7a.jpg'
+        time: '30/08/17', 
+        title: 'TolgShow', 
+        description: 'Yeni yorum bıraktın: Çok güzel bir etkinlik. Ailemle birlikte orada olacağız.',
+        icon: require('../../assets/icons/comment.png')
       },
       {
-        time: '10:45', 
-        title: 'Play Badminton', 
-        description: 'Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.', 
-        icon: require('../../assets/icons/badminton.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg'
+        time: '27/08/17', 
+        title: 'Gaming İzmir', 
+        description: 'İzmirde yeni bir etkinlik oluşturdun.', 
+        icon: require('../../assets/icons/create_event.png'),
+        imageUrl: require('../../data/img/event1.jpg')
       },
       {
-        time: '12:00', 
-        title: 'Lunch', 
-        icon: require('../../assets/icons/lunch.png'),
+        time: '14/08/17', 
+        title: 'Zorlu Jaz Festivali', 
+        description: '2 gün süren bir etkinlik oluşturdun.', 
+        icon: require('../../assets/icons/create_event.png'),
+        imageUrl: require('../../data/img/event4.jpg')
       },
       {
-        time: '14:00', 
-        title: 'Watch Soccer', 
-        description: 'Team sport played between two teams of eleven players with a spherical ball. ',
-        lineColor:'#009688', 
-        icon: require('../../assets/icons/soccer.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240419/1f553dee-0fe4-11e7-8638-6025682232b1.jpg'
+        time: '20/07/17', 
+        title: 'Martin Kohlstedt', 
+        description: 'Eğlence kategorisinde bir etkinlik oluşturdun.',
+        lineColor:'#009688',
+        icon: require('../../assets/icons/create_event.png'),
+        imageUrl: require('../../data/img/event2.jpg')
       },
       {
-        time: '16:30', 
-        title: 'Go to Fitness center', 
-        description: 'Look out for the Best Gym & Fitness Centers around me :)', 
-        icon: require('../../assets/icons/dumbbell.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240422/20d84f6c-0fe4-11e7-8f1d-9dbc594d0cfa.jpg'
+        time: '15/06/17', 
+        title: 'Onur Çelik', 
+        description: 'Bugün yine popülersin, yeni bir takipçi kazandın!', 
+        icon: require('../../assets/icons/new_follower.png')
 			},
 			{
-        time: '09:00', 
-        title: 'Archery Training', 
-        description: 'The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ',
+        time: '10/06/17', 
+        title: 'Beyaz Show', 
+        description: 'Yeni yorum bıraktın: DEU CENG olarak biz de orada olacağız.',
         lineColor:'#009688', 
-        icon: require('../../assets/icons/archery.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240340/c0f96b3a-0fe3-11e7-8964-fe66e4d9be7a.jpg'
+        icon: require('../../assets/icons/comment.png')
       },
       {
-        time: '10:45', 
-        title: 'Play Badminton', 
-        description: 'Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.', 
-        icon: require('../../assets/icons/badminton.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg'
+        time: '30/05/17', 
+        title: 'Ulaş Birant', 
+        description: 'Çevren genişlemeye başladı bile, yeni birini takip ettin.', 
+        icon: require('../../assets/icons/new_following.png')
       },
       {
-        time: '12:00', 
-        title: 'Lunch', 
-        icon: require('../../assets/icons/lunch.png'),
-      },
-      {
-        time: '14:00', 
-        title: 'Watch Soccer', 
-        description: 'Team sport played between two teams of eleven players with a spherical ball. ',
-        lineColor:'#009688', 
-        icon: require('../../assets/icons/soccer.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240419/1f553dee-0fe4-11e7-8638-6025682232b1.jpg'
-      },
-      {
-        time: '16:30', 
-        title: 'Go to Fitness center', 
-        description: 'Look out for the Best Gym & Fitness Centers around me :)', 
-        icon: require('../../assets/icons/dumbbell.png'),
-        imageUrl: 'https://cloud.githubusercontent.com/assets/21040043/24240422/20d84f6c-0fe4-11e7-8f1d-9dbc594d0cfa.jpg'
+        time: '23/05/17', 
+        title: 'Ai Weiwei Porselene Dair', 
+        description: '1 gün 36 dakika sürecek bir etkinliğe katıldın.',
+        lineColor:'#009688',
+        icon: require('../../assets/icons/join_event.png'),
+        imageUrl: require('../../data/img/event3.jpg')
       }
     ]
 	}
@@ -130,11 +116,17 @@ export default class Profile extends React.Component {
     if(rowData.description && rowData.imageUrl)
       desc = (
         <View style={styles.descriptionContainer}>   
-          <Image source={{uri: rowData.imageUrl}} style={styles.image}/>
+          <Image source={rowData.imageUrl} style={styles.image}/>
           <RkText style={[styles.textDescription]}>{rowData.description}</RkText>
         </View>
-      )
-    
+			)
+		else if(rowData.description)
+			desc = (
+				<View style={styles.descriptionContainer}>   
+					<RkText style={[styles.textDescription]}>{rowData.description}</RkText>
+				</View>
+			)
+
     return (
       <View style={{flex:1}}>
         {title}
@@ -171,14 +163,17 @@ export default class Profile extends React.Component {
 		});
 	}
 
-	_onRefresh() {
-		console.log("refreshing");
-    this.setState({refreshing: true});
-    this.getUserEvents(this.user.userId).then(() => {
-      this.setState({refreshing: false});
-    });
-  }
-
+	onRefresh(){
+		console.log("esd");
+    this.setState({isRefreshing: true});
+    setTimeout(() => {
+      this.setState({
+        data: this.data,
+        isRefreshing: false
+      });
+    }, 2000);
+	}
+	
 	_keyExtractor(post, index) {
 		return post.id;
 	}
@@ -211,6 +206,10 @@ export default class Profile extends React.Component {
           maxHeight={MAX_HEIGHT}
           minHeight={MIN_HEIGHT}
 					renderHeader={() => <View style={{backgroundColor: '#da6954', height: MAX_HEIGHT, width: Dimensions.get('window').width}} />}
+					refreshControl={<RefreshControl
+						refreshing={this.state.isRefreshing}
+						onRefresh={this.onRefresh}
+					/>}
 					renderFixedForeground={() => (
             <Animatable.View
               style={styles.navTitleView}
@@ -236,29 +235,24 @@ export default class Profile extends React.Component {
 									</TouchableOpacity>
 								</View>
 							</View>
-
-							<RkText rkType='header4' style={{color: '#ffffff', marginBottom: 5}}>{name}</RkText>
-							<RkText style={{color: '#ffffff',  fontSize: 14}} rkType='secondary1 hintColor'>İzmir, Türkiye</RkText>
+							<RkText rkType='header3' style={{color: '#ffffff', marginBottom: 5}}>{name}</RkText>
+							<View style={{flexDirection:"row", justifyContent: 'center', alignItems: 'center'}}>
+								<Image style={{height:20, width:20}} source={require('../../assets/icons/location.png')}></Image>
+								<RkText style={{color: '#ffffff',  fontSize: 14, textAlign:"center", marginLeft:2}} rkType='secondary1 hintColor'>İzmir, Türkiye</RkText>
+							</View>
 						</View>
 
 						<View style={styles.userInfo}>
-							<View style={styles.section}>
-									<RkText rkType='header3' style={styles.space}>{this.state.eventCount}</RkText>
-									<RkText style={styles.title} rkType='secondary1 hintColor'>Events</RkText>
-							</View>
-							<View style={styles.separator}/>
 							{this.user.followersCount != 0 ?
 							<TouchableOpacity onPress={() => {Actions.followerList({id: this.user.userId})}} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
-											<RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							:
 							<TouchableOpacity activeOpacity={1} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)}</RkText>
-											<RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							}
@@ -266,15 +260,13 @@ export default class Profile extends React.Component {
 							{this.user.followingsCount != 0 ?
 							<TouchableOpacity onPress={() => {Actions.followingList({id: this.user.userId})}} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)}</RkText>
-											<RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							:
 							<TouchableOpacity activeOpacity={1} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)}</RkText>
-											<RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							}
@@ -300,7 +292,13 @@ export default class Profile extends React.Component {
 							timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'white', padding:5, borderRadius:13}}
 							descriptionStyle={{color:'gray'}}
 							options={{
-								style:{paddingTop:5}
+								style:{paddingTop:5},
+								refreshControl: (
+									<RefreshControl
+										refreshing={this.state.isRefreshing}
+										onRefresh={this.onRefresh}
+									/>
+								)
 							}}
 							innerCircle={'icon'}
 							onEventPress={this.onEventPress}
@@ -324,12 +322,12 @@ let styles = RkStyleSheet.create(theme => ({
 	},
 	title: {
 		color: '#ffffff',
-		fontSize: 12,
+		fontSize: 14,
 		marginBottom: 5
 	},
 	userInfo: {
 	  flexDirection: 'row',
-	  paddingVertical: 4
+	  paddingBottom: 4
 	},
 	section: {
 	  flex: 1,

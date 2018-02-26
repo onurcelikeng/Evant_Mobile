@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StatusBar, Platform, Keyboard } from 'react-native';
+import { View, Image, StatusBar, Platform, Keyboard, ScrollView, StyleSheet } from 'react-native';
 import { RkText, RkButton, RkTheme, RkStyleSheet, RkAvoidKeyboard, RkTextInput } from 'react-native-ui-kitten';
 
 import DropdownHolder from '../../providers/dropdownHolder';
@@ -31,43 +31,83 @@ export default class Themes extends React.Component {
 
   render() {
     return (
-        <RkAvoidKeyboard
-            onStartShouldSetResponder={ (e) => true}
-            onResponderRelease={ (e) => Keyboard.dismiss()}
-            style={styles.screen}>
-        <View style={styles.container}>
-          <RkTextInput autoCapitalize='none' value={this.state.oldPassword} onChangeText={(text) => this.setState({ oldPassword: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Old Password' secureTextEntry={true}/>
-          <RkTextInput autoCapitalize='none' value={this.state.newPassword} onChangeText={(text) => this.setState({ newPassword: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='New Password' secureTextEntry={true}/>
-          <RkTextInput autoCapitalize='none' value={this.state.newPasswordRepeat} onChangeText={(text) => this.setState({ newPasswordRepeat: text })} autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='New Password (Again)' secureTextEntry={true}/>
-          <RkButton onPress={() => { 
-              if(this.state.oldPassword != '' && this.state.newPassword != '' && this.state.newPasswordRepeat != '') {
-                this.changePassword()
-              } else {
-                DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
-              }
-            }} rkType='medium stretch rounded' style={styles.save}>LOGIN</RkButton>
-        </View>
-      </RkAvoidKeyboard>
+      <ScrollView style={styles.root} key={this.state}>
+        <RkAvoidKeyboard>
+            <View style={styles.section}>
+                <View style={styles.row}>
+                    <RkTextInput label='Old Password'
+                                value={this.state.oldPassword}
+                                rkType='right clear'
+                                autoCapitalize='none'
+                                secureTextEntry={true}
+                                autoCorrect={false}
+                                onChangeText={(text) => this.setState({oldPassword: text})}/>
+                </View>
+                <View style={styles.row}>
+                    <RkTextInput label='New Password'
+                                value={this.state.newPassword}
+                                autoCapitalize='none'
+                                secureTextEntry={true}
+                                autoCorrect={false}
+                                onChangeText={(text) => this.setState({newPassword: text})}
+                                rkType='right clear'/>
+                </View>
+                <View style={styles.row}>
+                    <RkTextInput label='New Password (Again)'
+                                value={this.state.newPasswordRepeat}
+                                autoCapitalize='none'
+                                secureTextEntry={true}
+                                autoCorrect={false}
+                                onChangeText={(text) => this.setState({newPasswordRepeat: text})}
+                                rkType='right clear'/>
+                </View>
+            </View>
+
+            <RkButton rkType='medium stretch rounded' style={styles.button} onPress={() => {
+                if(this.state.oldPassword != '' && this.state.newPassword != '' && this.state.newPasswordRepeat != '') {
+                    this.changePassword()
+                } else {
+                    DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
+                }}}>SAVE</RkButton>
+        </RkAvoidKeyboard>
+      </ScrollView>
     )
   }
 }
 
 let styles = RkStyleSheet.create(theme => ({
-    screen: {
-        paddingVertical: 25,
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: theme.colors.screen.base
-    },
-    container: {
-        paddingHorizontal: 17,
-        paddingBottom: scaleVertical(22),
-        alignItems: 'center',
-        flex: -1
-    },
-    save: {
-        marginVertical: 9,
-        backgroundColor: '#FF5E20',
-        marginHorizontal: 10
-    }
+  root: {
+    backgroundColor: theme.colors.screen.base
+  },
+  header: {
+      alignItems: 'center',
+      backgroundColor: theme.colors.screen.neutral,
+      paddingVertical: 25
+  },
+  section: {
+      marginVertical: 25
+  },
+  heading: {
+      paddingBottom: 12.5
+  },
+  row: {
+      flexDirection: 'row',
+      paddingHorizontal: 17.5,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderColor: theme.colors.border.base,
+      alignItems: 'center'
+  },
+  button: {
+      marginHorizontal: 25,
+      marginBottom: 32,
+      backgroundColor: '#FF5E20'
+  },
+  big: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+          marginBottom: 19,      
+          paddingVertical: 25,
+          flexDirection: 'column'
+  }
 }));

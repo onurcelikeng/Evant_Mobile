@@ -38,6 +38,12 @@ export function getCategoryEvents(categoryId) {
         .then(res => { return res; });
 }
 
+export function getUserEvents(userId) {
+    return axios.get('events/' + userId)
+        .then(res => res.data)
+        .then(res => { return res; });
+}
+
 export function deleteEvent(id) {
     return axios.delete('events/' + id)
         .then(res => res.data)

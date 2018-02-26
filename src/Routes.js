@@ -24,6 +24,7 @@ import FollowerList from './pages/user/followerList';
 import FollowingList from './pages/user/followingList';
 import GoingList from './pages/user/goingList';
 import OtherProfile from './pages/user/otherProfile';
+import Timeline from './pages/user/timeline';
 
 import TabIcon from './components/tabIcon';
 import { NavBar } from './components/navBar';
@@ -93,6 +94,7 @@ export default class Routes extends React.Component {
                                     />
                                     <Scene
                                         hideNavBar={true}
+                                        hideTabBar
                                         key="eventDetail"
                                         component={withRkTheme(EventDetail)}
                                         title="Event"
@@ -114,10 +116,15 @@ export default class Routes extends React.Component {
                                         key="profile"
                                         component={withRkTheme(Profile)}
                                         title="Profile"
-                                        onRight={() => Actions.options()}
-                                        rightTitle={() => <Image style={{height: 21, width: 21}} source={require('./assets/icons/settings.png')}/> }                                        
-                                        renderLeftButton={() => <TouchableOpacity onPress={() => Actions.options()}><Image style={{marginLeft:8 ,height: 21, width: 21}} source={require('./assets/icons/timeline.png')}/></TouchableOpacity> }
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                        hideNavBar={true}
+                                    />
+                                    <Scene
+                                        key="timeline"
+                                        component={withRkTheme(Timeline)}
+                                        title="Timeline"
+                                        hideNavBar={true}
+                                        hideTabBar={true}
                                     />
                                     <Scene
                                         key="followerList"
@@ -162,6 +169,7 @@ export default class Routes extends React.Component {
                                     />
                                     <Scene
                                         hideNavBar={true}
+                                        hideTabBar
                                         key="eventDetail"
                                         component={withRkTheme(EventDetail)}
                                         title="Event"
@@ -242,6 +250,7 @@ export default class Routes extends React.Component {
                                     />
                                     <Scene
                                         hideNavBar={true}
+                                        hideTabBar
                                         key="eventDetail"
                                         component={withRkTheme(EventDetail)}
                                         title="Event"
@@ -271,11 +280,9 @@ export default class Routes extends React.Component {
                                         key="profile"
                                         component={withRkTheme(Profile)}
                                         title="Profile"
-                                        onRight={() => Actions.options()}
-                                        rightTitle={() => <Image style={{height: 21, width: 21}} source={require('./assets/icons/settings.png')}/> }
-                                        renderLeftButton={() => <TouchableOpacity onPress={() => Actions.options()}><Image style={{marginLeft:8 ,height: 21, width: 21}} source={require('./assets/icons/timeline.png')}/></TouchableOpacity> }
                                         panHandlers={null}
                                         initial={true}
+                                        hideNavBar={true}
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -294,6 +301,22 @@ export default class Routes extends React.Component {
                                         key="otherProfile"
                                         component={withRkTheme(OtherProfile)}
                                         title="Profile"
+                                        navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                    />
+                                    <Scene
+                                        key="timeline"
+                                        component={withRkTheme(Timeline)}
+                                        title="Timeline"
+                                        headerMode="null"
+                                        hideNavBar={true}
+                                        hideTabBar={true}
+                                    />
+                                    <Scene
+                                        hideNavBar={true}
+                                        hideTabBar
+                                        key="eventDetail"
+                                        component={withRkTheme(EventDetail)}
+                                        title="Event"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene

@@ -76,7 +76,7 @@ export class NavBar extends React.Component {
 
     return (
       <View style={styles.title} onLayout={onLayout}>
-        <RkText style={{fontSize:20}}>{title}</RkText>
+        <RkText style={{fontSize:20, color:'#fff'}}>{title}</RkText>
       </View>
     )
   }
@@ -97,7 +97,7 @@ export class NavBar extends React.Component {
 
 let styles = RkStyleSheet.create(theme => ({
   layout: {
-    backgroundColor: theme.colors.screen.base,
+    backgroundColor: theme.colors.screen.nav,
     paddingTop: UIConstants.StatusbarHeight,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: theme.colors.border.base
@@ -124,6 +124,7 @@ let styles = RkStyleSheet.create(theme => ({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
+    color: theme.colors.text.nav
   },
   menu: {
     width: 40

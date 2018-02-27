@@ -16,6 +16,7 @@ const Colors = {
 
   boldBackground: '#090f3f',
   background: '#0a1142',
+  nav: '#0a1142',
   alterBackground: '#12194d',
   overlayBackground: '#00000057',
   neutralBackground: '#2f396b',
@@ -94,6 +95,7 @@ export const DarkKittenTheme = {
     },
     screen: {
       base: Colors.background,
+      nav: Colors.nav,
       alter: Colors.alterBackground,
       scroll: Colors.background,
       bold: Colors.boldBackground,

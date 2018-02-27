@@ -133,7 +133,7 @@ let styles = RkStyleSheet.create(theme => ({
 		width: 240
 	},
     searchContainer: {
-		backgroundColor: theme.colors.screen.base,
+		backgroundColor: theme.colors.screen.nav,
 		paddingHorizontal: 16,
 		paddingTop: 26,
 		paddingBottom: 8,

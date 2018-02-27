@@ -63,7 +63,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		mRbuzP3gMQOBlryUWLfwIxh2SZo=
+		tUEXE2HuDOgw5+Lf9fSU6NTNZVo=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -71,7 +71,7 @@
 		</data>
 		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Info.plist</key>
 		<data>
-		gX6xu18QmW1Xo5UviaDEnVAAJ/8=
+		pafh+DSL9Eo1/kyrN03CANq2EII=
 		</data>
 		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Resources/DWARF/EvantTests</key>
 		<data>
@@ -79,15 +79,31 @@
 		</data>
 		<key>PlugIns/EvantTests.xctest/EvantTests</key>
 		<data>
-		oXo7N57QPfzdnQP+yb22rqTkxYQ=
+		OBvo+h7qWPsZmVU0gdeyZ17dxmQ=
 		</data>
 		<key>PlugIns/EvantTests.xctest/Info.plist</key>
 		<data>
-		4LdSKo9zWmlzCqnMSLSoM0oIWg8=
+		HENO5NcsZGXY3q3a7PJmnjnZORI=
+		</data>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeDirectory</key>
+		<data>
+		z7GFPxxnDAJRKQCBEgdVLp648KI=
+		</data>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeRequirements</key>
+		<data>
+		OnX22wWFKRSOFN1+obRynMCeyXM=
+		</data>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeRequirements-1</key>
+		<data>
+		OFqLvnFZU3Rglj4VIfcsjjjqKXI=
 		</data>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
-		kOvOj5g3jPCqJCkHOXjQSb2mOUY=
+		uOrUl35aihOmVAZRSvu2HoyEmc0=
+		</data>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeSignature</key>
+		<data>
+		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
 		</data>
 		<key>Righteous-Regular.ttf</key>
 		<data>
@@ -281,11 +297,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			gX6xu18QmW1Xo5UviaDEnVAAJ/8=
+			pafh+DSL9Eo1/kyrN03CANq2EII=
 			</data>
 			<key>hash2</key>
 			<data>
-			Sbx6cEH2Q5PMSla+0io52J9+3W5w6wdNB84ihgCdWvs=
+			GX5sJHX3Sfmd6A0LxqYv/HeiPHfjhL3u1FZZX9An9nw=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Resources/DWARF/EvantTests</key>
@@ -303,33 +319,77 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			oXo7N57QPfzdnQP+yb22rqTkxYQ=
+			OBvo+h7qWPsZmVU0gdeyZ17dxmQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			V9yowIuWOM2WubBXtQdcJNlX80qKWiL3aY/Y7grrG2M=
+			Yr/9eFi2Gu3zsyfuAisudzsL4b85JLIXyvi3DjyTGiQ=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4LdSKo9zWmlzCqnMSLSoM0oIWg8=
+			HENO5NcsZGXY3q3a7PJmnjnZORI=
 			</data>
 			<key>hash2</key>
 			<data>
-			tPhXslSPO9ikSbEdQcv21N4UVxTSMBtdEzZPvbVV7zI=
+			qCW/KnVe1UY1e6IV2mF6+pTPZfSJybZzQjvHyQWuw3c=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeDirectory</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			z7GFPxxnDAJRKQCBEgdVLp648KI=
+			</data>
+			<key>hash2</key>
+			<data>
+			lMZVIOCf/cjwnJcJY7FSH5p49YandDt0tNG7pyjXrTg=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeRequirements</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OnX22wWFKRSOFN1+obRynMCeyXM=
+			</data>
+			<key>hash2</key>
+			<data>
+			mHkgkE6rZQ51eIwFSqCwUk5qgL/HGqMt+NI3phdD+YY=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeRequirements-1</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OFqLvnFZU3Rglj4VIfcsjjjqKXI=
+			</data>
+			<key>hash2</key>
+			<data>
+			6TFXgZ+WZA6nT7s2PRoctzUIqK7ammuR4A3BRoxI17g=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kOvOj5g3jPCqJCkHOXjQSb2mOUY=
+			uOrUl35aihOmVAZRSvu2HoyEmc0=
 			</data>
 			<key>hash2</key>
 			<data>
-			uMMspmfrjGYdGtqHY6U2D2jwe5SZ2J1oVHKH1owqkw0=
+			fuMzb4mLOzm/MjbzQpgC++1VXT2/51aKQwvVvx7EZCk=
+			</data>
+		</dict>
+		<key>PlugIns/EvantTests.xctest/_CodeSignature/CodeSignature</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
+			</data>
+			<key>hash2</key>
+			<data>
+			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
 			</data>
 		</dict>
 		<key>Righteous-Regular.ttf</key>

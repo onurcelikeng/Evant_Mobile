@@ -14,3 +14,10 @@ export function getUsers() {
         return users;
     });
 }
+
+export function getTimeline(userId) {
+    return axios.get('users/timeline/' + userId)
+    .then(res => res.data).then(timeline => {
+        return timeline;
+    });
+}

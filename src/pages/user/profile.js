@@ -7,8 +7,27 @@ import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
 import Timeline from 'react-native-timeline-listview'
+import ContentLoader from '../../config/contentLoader'
+import Svg,{
+  Circle,
+  Ellipse,
+  G,
+  LinearGradient,
+  RadialGradient,
+  Line,
+  Path,
+  Polygon,
+  Polyline,
+  Rect,
+  Symbol,
+  Text,
+  Use,
+  Defs,
+  Stop
+} from 'react-native-svg';
 
-import * as eventProvider from '../../providers/events';
+import DropdownHolder from '../../providers/dropdownHolder';
+import * as userProvider from '../../providers/users';
 import {Avatar} from '../../components/avatar';
 import {Gallery} from '../../components/gallery';
 import {FontIcons} from '../../assets/icon';
@@ -26,79 +45,21 @@ export default class Profile extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.data = data.getUser();
 		this.user = Login.getCurrentUser();
 		this.state = {
       isRefreshing: false,      
-      waiting: false,
-      data: this.data
-    }
-	
-		this.renderItem = this._renderItem.bind(this);
+			waiting: false,
+			isLoading: true,
+			array: [],
+			data: []
+      //data: this.data
+		}
+		
 		console.log(this.user);
     this.onRefresh = this.onRefresh.bind(this)
-
 		this.onEventPress = this.onEventPress.bind(this)
     this.renderSelected = this.renderSelected.bind(this)
     this.renderDetail = this.renderDetail.bind(this)
-
-    this.data = [
-      {
-        time: '30/08/17', 
-        title: 'TolgShow', 
-        description: 'Yeni yorum bıraktın: Çok güzel bir etkinlik. Ailemle birlikte orada olacağız.',
-        icon: require('../../assets/icons/comment.png')
-      },
-      {
-        time: '27/08/17', 
-        title: 'Gaming İzmir', 
-        description: 'İzmirde yeni bir etkinlik oluşturdun.', 
-        icon: require('../../assets/icons/create_event.png'),
-        imageUrl: require('../../data/img/event1.jpg')
-      },
-      {
-        time: '14/08/17', 
-        title: 'Zorlu Jaz Festivali', 
-        description: '2 gün süren bir etkinlik oluşturdun.', 
-        icon: require('../../assets/icons/create_event.png'),
-        imageUrl: require('../../data/img/event4.jpg')
-      },
-      {
-        time: '20/07/17', 
-        title: 'Martin Kohlstedt', 
-        description: 'Eğlence kategorisinde bir etkinlik oluşturdun.',
-        lineColor:'#009688',
-        icon: require('../../assets/icons/create_event.png'),
-        imageUrl: require('../../data/img/event2.jpg')
-      },
-      {
-        time: '15/06/17', 
-        title: 'Onur Çelik', 
-        description: 'Bugün yine popülersin, yeni bir takipçi kazandın!', 
-        icon: require('../../assets/icons/new_follower.png')
-			},
-			{
-        time: '10/06/17', 
-        title: 'Beyaz Show', 
-        description: 'Yeni yorum bıraktın: DEU CENG olarak biz de orada olacağız.',
-        lineColor:'#009688', 
-        icon: require('../../assets/icons/comment.png')
-      },
-      {
-        time: '30/05/17', 
-        title: 'Ulaş Birant', 
-        description: 'Çevren genişlemeye başladı bile, yeni birini takip ettin.', 
-        icon: require('../../assets/icons/new_following.png')
-      },
-      {
-        time: '23/05/17', 
-        title: 'Ai Weiwei Porselene Dair', 
-        description: '1 gün 36 dakika sürecek bir etkinliğe katıldın.',
-        lineColor:'#009688',
-        icon: require('../../assets/icons/join_event.png'),
-        imageUrl: require('../../data/img/event3.jpg')
-      }
-    ]
 	}
 
 	onEventPress(data){
@@ -111,101 +72,103 @@ export default class Profile extends React.Component {
   }
 
   renderDetail(rowData, sectionID, rowID) {
-    let title = <RkText style={[styles.titleTimeline]}>{rowData.title}</RkText>
+    let title = <RkText style={[styles.titleTimeline]}>{rowData.header}</RkText>
     var desc = null
-    if(rowData.description && rowData.imageUrl)
-      desc = (
-        <View style={styles.descriptionContainer}>   
-          <Image source={rowData.imageUrl} style={styles.image}/>
-          <RkText style={[styles.textDescription]}>{rowData.description}</RkText>
-        </View>
-			)
-		else if(rowData.description)
-			desc = (
-				<View style={styles.descriptionContainer}>   
-					<RkText style={[styles.textDescription]}>{rowData.description}</RkText>
+    if(rowData.body && rowData.image)
+      desc = ( 
+				<View style={styles.descriptionContainer}>
+					<View style={{flex:1}}>  
+						{title}
+						<RkText style={[styles.textDescription]}>{rowData.body}</RkText>
+					</View>
+          <Image source={{uri: rowData.image}} style={styles.image}/>
 				</View>
+			)
+		else if(rowData.body)
+			desc = (
+        <View style={{flex:1}}>  
+					{title}
+					<RkText style={[styles.textDescription]}>{rowData.body}</RkText>
+        </View>
 			)
 
     return (
-      <View style={{flex:1}}>
-        {title}
+			<View> 
         {desc}
-      </View>
+			</View>
     )
   }
 
 	componentDidMount() {
-		this.getEvents(this.user.userId);
+		this.getTimeline(this.user.userId);
 	}
-	
-	getEvents(id) {
-		return eventProvider.getUserEvents(id)
-		.then((responseJson) => {
+
+	getTimeline(id) {
+		userProvider.getTimeline(id).then((responseJson) => {
+			let icon = require("../../assets/icons/comment.png");
 			if(responseJson.isSuccess) {
-				console.log(responseJson.data)
+				this.setState({data: []});
+				responseJson.data.forEach(element => {
+					if(element.type == "comment-event") {
+						icon = require("../../assets/icons/comment.png");
+					} else if(element.type == "create-event") {
+						icon = require("../../assets/icons/create_event.png");
+					} else if(element.type == "follower") {
+						icon = require("../../assets/icons/new_follower.png");
+					} else if(element.type == "following") {
+						icon = require("../../assets/icons/new_following.png");
+					} else if(element.type == "join-event") {
+						icon = require("../../assets/icons/join_event.png");
+					}
+					var model = {
+						body: element.body,
+						customId: element.customId,
+						header: element.header,
+						image: element.image,
+						icon: icon,
+						lineColor: element.lineColor,
+						type: element.type,
+						createAt: element.createAt
+					};
+					console.log(model);
+					console.log(responseJson.data);
+					this.state.data.push(model);
+					this.setState(
+						this.state
+					)
+				});
+				console.log(this.state.data);
 				this.setState({
 					isLoading: false,
-					data: responseJson.data,
-					eventCount: responseJson.data.length
-				  }, function() {
-					// do something with new state
-				});
+					isRefreshing: false
+				})
 			} else {
-				this.setState({
-					isLoading: false,
-					data: [],
-				  }, function() {
-					// do something with new state
-				});
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				DropdownHolder.getDropDown().alertWithType("alert", "", responseJson.message);
 			}
-		});
+		})
 	}
 
 	onRefresh(){
 		console.log("esd");
-    this.setState({isRefreshing: true});
-    setTimeout(() => {
-      this.setState({
-        data: this.data,
-        isRefreshing: false
-      });
-    }, 2000);
+    this.setState({
+			isRefreshing: true});
+		this.getTimeline(this.user.userId);
 	}
 	
 	_keyExtractor(post, index) {
 		return post.id;
 	}
-	
-	_renderItem(info) {
-		console.log(info)
-		return (
-		  <TouchableOpacity
-				delayPressIn={70}
-				activeOpacity={1}
-				onPress={() => { Actions.eventDetail({id: info.item.eventId, obj: info.item}) }}>
-				<RkCard rkType='imgBlock' style={styles.card}>
-					<Image rkCardImg source={{uri: info.item.photoUrl}}/>
-					<View rkCardImgOverlay rkCardContent style={styles.overlay}>
-						<RkText rkType='header4 inverseColor'>{info.item.title}</RkText>
-						<RkText style={styles.time}
-							rkType='secondary2 inverseColor'>{moment(info.item.start).fromNow()}</RkText>
-					</View>
-				</RkCard>
-		  </TouchableOpacity>
-		)
-	}
 
 	render() {
 		let name = this.user.name;
-		
+		var width = require('Dimensions').get('window').width - 50;
+
 		return (
 			<View style={styles.container}>
         <HeaderImageScrollView
           maxHeight={MAX_HEIGHT}
           minHeight={MIN_HEIGHT}
-					renderHeader={() => <View style={{backgroundColor: '#da6954', height: MAX_HEIGHT, width: Dimensions.get('window').width}} />}
+					renderHeader={() => <View style={styles.headerBackground} />}
 					refreshControl={<RefreshControl
 						refreshing={this.state.isRefreshing}
 						onRefresh={this.onRefresh}
@@ -279,32 +242,41 @@ export default class Profile extends React.Component {
 						onDisplay={() => this.navTitleView.fadeOut(100)}
 						style={{height: 0}}
           >
-            <RkText>{name}</RkText>
+            <RkText style={{color: '#ffffff'}}>{name}</RkText>
           </TriggeringView>
-          <View style={styles.timeline}>
-						<Timeline 
-							style={styles.list}
-							data={this.data}
-							circleSize={20}
-							circleColor='rgba(0,0,0,0)'
-							lineColor='rgb(45,156,219)'
-							timeContainerStyle={{minWidth:52, marginTop: -5}}
-							timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'white', padding:5, borderRadius:13}}
-							descriptionStyle={{color:'gray'}}
-							options={{
-								style:{paddingTop:5},
-								refreshControl: (
-									<RefreshControl
-										refreshing={this.state.isRefreshing}
-										onRefresh={this.onRefresh}
-									/>
-								)
-							}}
-							innerCircle={'icon'}
-							onEventPress={this.onEventPress}
-							renderDetail={this.renderDetail}
-						/>
-					</View>
+					{this.state.isLoading ?
+						<ContentLoader height={70}>
+							<Circle cx="30" cy="30" r="30"/>
+							<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+						</ContentLoader>
+						:
+						<View style={styles.timeline}>
+							<Timeline 
+								style={styles.list}
+								data={this.state.data}
+								circleSize={20}
+								circleColor='rgba(0,0,0,0)'
+								lineColor='rgb(45,156,219)'
+								timeContainerStyle={{minWidth:55, marginTop: -5}}
+								timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'white', padding:5, borderRadius:13}}
+								descriptionStyle={{color:'gray'}}
+								options={{
+									style:{paddingTop:5},
+									removeClippedSubviews: false,
+									refreshControl: (
+										<RefreshControl
+											refreshing={this.state.isRefreshing}
+											onRefresh={this.onRefresh}
+										/>
+									)
+								}}
+								innerCircle={'icon'}
+								onEventPress={this.onEventPress}
+								renderDetail={this.renderDetail}
+							/>
+						</View>
+					}
+          
         </HeaderImageScrollView>
       </View>
 		)
@@ -318,11 +290,12 @@ let styles = RkStyleSheet.create(theme => ({
 		marginTop: 10,
 	  paddingTop: 25,
 		paddingBottom: 17,
+
 		alignItems: "center"
 	},
 	title: {
 		color: '#ffffff',
-		fontSize: 14,
+		fontSize: 16,
 		marginBottom: 5
 	},
 	userInfo: {
@@ -401,8 +374,10 @@ let styles = RkStyleSheet.create(theme => ({
 	},
 	timeline: {
     flex: 1,
-    padding: 20,
-    backgroundColor:'white'
+		paddingBottom: 20,
+		paddingLeft: 20,
+		paddingRight: 20,
+    backgroundColor:theme.colors.screen.base
   },
   list: {
     flex: 1,
@@ -410,11 +385,11 @@ let styles = RkStyleSheet.create(theme => ({
   },
   titleTimeline:{
     fontSize:16,
-    fontWeight: 'bold'
+		fontWeight: 'bold',
+		marginBottom: 5
   },
   descriptionContainer:{
-    flexDirection: 'row',
-    paddingRight: 50
+    flexDirection: 'row'
   },
   image:{
     width: 50,
@@ -422,7 +397,9 @@ let styles = RkStyleSheet.create(theme => ({
     borderRadius: 25
   },
   textDescription: {
-    marginLeft: 10,
     color: 'gray'
-  }
+	},
+	headerBackground: {
+		backgroundColor: theme.colors.screen.nav, height: MAX_HEIGHT, width: Dimensions.get('window').width
+	}
 }));

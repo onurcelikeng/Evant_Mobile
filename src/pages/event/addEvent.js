@@ -7,5 +7,9 @@ import { Pages } from 'react-native-pages';
 const { height: deviceHeight } = Dimensions.get("window");
 
 export default class AddEvent extends React.Component {
-    
+    render() {
+        return(
+            <Text>Seray</Text>
+        )
+    }
 }

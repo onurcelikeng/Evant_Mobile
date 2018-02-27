@@ -2,7 +2,6 @@ import React from 'react';
 import { View, ScrollView, TouchableOpacity, Platform, FlatList, Image, RefreshControl, ImageBackground, Dimensions, StatusBar, ActivityIndicator } from 'react-native';
 import { RkText, RkButton, RkStyleSheet, RkCard } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
-import PhotoUpload from 'react-native-photo-upload';
 import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
@@ -171,9 +170,7 @@ export default class Profile extends React.Component {
 							<View style={styles.row}>
 								<View style={styles.buttons}>
 								</View>
-								<PhotoUpload onResponse={res => console.log(res)}>
-									<Image source={{uri: this.user.photo}} style={styles.big} />
-								</PhotoUpload>
+								<Image source={{uri: this.user.photo}} style={styles.big} />
 								<View style={styles.buttons}>
 									<TouchableOpacity style={[styles.navButtons, {alignSelf: "flex-end"}]} onPress={() => Actions.options()}>
 										<Image style={{height: 21, width: 21, tintColor: "#ffffff"}} source={require('../../assets/icons/settings.png')} />

@@ -1,0 +1,10 @@
+version: "Apple Swift version 4.0.3 (swiftlang-900.0.74.1 clang-900.0.39.2)"
+options: "61667ae644a934617114c40f8069fccf"
+build_time: [1519759538, 383071000]
+inputs:
+  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shine-button/ios/WCLShineButton/WCLShineButton/WCLShineBundle.swift": [1518337048, 0]
+  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shine-button/ios/WCLShineButton/WCLShineButton/WCLShineParams.swift": [1518337048, 0]
+  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shine-button/ios/WCLShineButton/WCLShineButton/WCLShineLayer.swift": [1518337048, 0]
+  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shine-button/ios/WCLShineButton/WCLShineButton/WCLShineButton.swift": [1518337048, 0]
+  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shine-button/ios/WCLShineButton/WCLShineButton/WCLShineAngleLayer.swift": [1518337048, 0]
+  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shine-button/ios/WCLShineButton/WCLShineButton/WCLShineClickLayer.swift": [1518337048, 0]

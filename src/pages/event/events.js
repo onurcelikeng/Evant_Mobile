@@ -177,7 +177,7 @@ let styles = RkStyleSheet.create(theme => ({
 		backgroundColor: theme.colors.screen.base,
 	},
 	card: {
-		marginBottom: 40,
+		marginBottom: 15,
 	},
 	time: {
 		marginTop: 5

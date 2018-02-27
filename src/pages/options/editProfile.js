@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet, Image } from 'react-native';
 import { RkText, RkTextInput, RkAvoidKeyboard, RkTheme, RkStyleSheet, RkButton } from 'react-native-ui-kitten';
+import PhotoUpload from 'react-native-photo-upload';
 
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account'
@@ -55,7 +56,9 @@ export default class EditProfile extends React.Component {
             <ScrollView style={styles.root} key={this.state}>
                 <RkAvoidKeyboard>
                     <View style={styles.header}>
-                        <Image source={{uri: this.user.photo}} style={styles.big} />
+                        <PhotoUpload onResponse={res => console.log(res)}>
+                            <Image source={{uri: this.user.photo}} style={styles.big} />
+                        </PhotoUpload>
                     </View>
                     <View style={styles.section}>
                         <View style={[styles.row, styles.heading]}>

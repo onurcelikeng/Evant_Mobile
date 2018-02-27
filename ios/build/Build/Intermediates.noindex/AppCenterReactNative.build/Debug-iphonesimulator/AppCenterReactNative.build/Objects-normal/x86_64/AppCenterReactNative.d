@@ -40,5 +40,5 @@ dependencies: \
   ../../../ios/Pods/AppCenter/AppCenter-SDK-Apple/iOS/AppCenter.framework/Headers/MSAppCenter.h \
   ../../../ios/Pods/AppCenter/AppCenter-SDK-Apple/iOS/AppCenter.framework/Headers/AppCenter.h \
   ../../../ios/Pods/AppCenterReactNativeShared/AppCenterReactNativeShared/AppCenterReactNativeShared.framework/Modules/module.modulemap \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/appcenter-analytics/ios/../../../ios/Pods/AppCenter/AppCenter-SDK-Apple/iOS/AppCenter.framework/Modules/module.modulemap \
+  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/appcenter-crashes/ios/../../../ios/Pods/AppCenter/AppCenter-SDK-Apple/iOS/AppCenter.framework/Modules/module.modulemap \
   ../../../ios/Pods/AppCenterReactNativeShared/AppCenterReactNativeShared/AppCenterReactNativeShared.framework/Headers/AppCenterReactNativeShared.h

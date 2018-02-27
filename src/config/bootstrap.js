@@ -376,10 +376,10 @@ export let bootstrap = () => {
       borderRadius: 0
     },
     img: {
-      height: 200
+      height: 220
     },
     imgOverlay: {
-      height: 200,
+      height: 220,
       backgroundColor: 'transparent'
     },
     content: {

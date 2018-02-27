@@ -3,8 +3,10 @@ import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl } f
 import { RkText, RkCard, RkStyleSheet, withRkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
-import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 
+import Login from '../login';
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as eventProvider from '../../providers/events';
 import {SocialBar} from '../../components/socialBar';
@@ -87,10 +89,15 @@ export default class Events extends React.Component {
 		console.log(info)
 		return (
 			<View >
+			<TouchableOpacity
+				delayPressIn={70}
+				activeOpacity={1}
+				onPress={() => { if(info.item.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: info.item.user.userId}) }}>
 				<View flexDirection="row" style={{flex:1, marginBottom: 5}}>
 					<Image style={{height:30, width: 30, borderRadius: 15, marginLeft: 5, marginRight: 5}} source={{uri: info.item.user.photoUrl}}/>
 					<RkText style={{fontSize: 14, alignSelf: 'center', fontWeight: 'bold'}}>{info.item.user.firstName + " " + info.item.user.lastName}</RkText>
 				</View>
+				</TouchableOpacity>
 				<TouchableOpacity
 					delayPressIn={70}
 					activeOpacity={1}
@@ -98,6 +105,7 @@ export default class Events extends React.Component {
 					<RkCard rkType='backImg2' style={styles.card}>
 						<Image rkCardImg style={{resizeMode:"stretch"}} source={{uri: info.item.photoUrl}}/>
 						<View rkCardImgOverlay rkCardContent alignItems="baseline" style={styles.overlay}>
+							<LinearGradient colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 1)']} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}/>
 							<RkText rkType='header4 inverseColor'>{info.item.title}</RkText>
 							<View flexDirection="row">
 								<Image style={{height: 16, width: 16, marginRight:5}} alignSelf="center" source={require('../../assets/icons/calendar.png')}/>
@@ -175,7 +183,20 @@ let styles = RkStyleSheet.create(theme => ({
 		marginTop: 5
 	},
 	overlay: {
-		justifyContent: 'flex-end',
-		backgroundColor: 'rgba(0, 0, 0, 0.3)'
+		justifyContent: 'flex-end'
 	},
+	linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5
+  },
+  buttonText: {
+    fontSize: 18,
+    fontFamily: 'Gill Sans',
+    textAlign: 'center',
+    margin: 10,
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+  },
 }));

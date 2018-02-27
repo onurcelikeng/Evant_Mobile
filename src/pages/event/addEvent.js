@@ -8,18 +8,4 @@ const { height: deviceHeight } = Dimensions.get("window");
 
 export default class AddEvent extends React.Component {
 
-    constructor(props) {
-        super(props);
-    
-    }
-
-    render() {
-        return (
-            <Pages>
-                <View style={{ flex: 1, backgroundColor: 'red' }} />
-                <View style={{ flex: 1, backgroundColor: 'green' }} />
-                <View style={{ flex: 1, backgroundColor: 'blue' }} />
-            </Pages>
-        );
-    }
 }

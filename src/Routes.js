@@ -109,6 +109,7 @@ export default class Routes extends React.Component {
                                         key="otherProfile"
                                         component={withRkTheme(OtherProfile)}
                                         title="Profile"
+                                        hideNavBar={true}
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -177,6 +178,7 @@ export default class Routes extends React.Component {
                                         key="otherProfile"
                                         component={withRkTheme(OtherProfile)}
                                         title="Profile"
+                                        hideNavBar={true}
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -226,6 +228,7 @@ export default class Routes extends React.Component {
                                         key="otherProfile"
                                         component={withRkTheme(OtherProfile)}
                                         title="Profile"
+                                        hideNavBar={true}
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene
@@ -293,6 +296,7 @@ export default class Routes extends React.Component {
                                         key="otherProfile"
                                         component={withRkTheme(OtherProfile)}
                                         title="Profile"
+                                        hideNavBar={true}
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     />
                                     <Scene

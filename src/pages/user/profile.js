@@ -7,25 +7,9 @@ import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
 import Timeline from 'react-native-timeline-listview';
-import ContentLoader from '../../config/contentLoader';
-import Svg,{
-  Circle,
-  Ellipse,
-  G,
-  LinearGradient,
-  RadialGradient,
-  Line,
-  Path,
-  Polygon,
-  Polyline,
-  Rect,
-  Symbol,
-  Text,
-  Use,
-  Defs,
-  Stop
-} from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 
+import ContentLoader from '../../config/contentLoader';
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as userProvider from '../../providers/users';
 import {Avatar} from '../../components/avatar';
@@ -50,9 +34,7 @@ export default class Profile extends React.Component {
       isRefreshing: false,      
 			waiting: false,
 			isLoading: true,
-			array: [],
 			data: []
-      //data: this.data
 		}
 		
 		console.log(this.user);

@@ -6,8 +6,8 @@ import PhotoUpload from 'react-native-photo-upload';
 import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
-import Timeline from 'react-native-timeline-listview'
-import ContentLoader from '../../config/contentLoader'
+import Timeline from 'react-native-timeline-listview';
+import ContentLoader from '../../config/contentLoader';
 import Svg,{
   Circle,
   Ellipse,
@@ -292,7 +292,6 @@ let styles = RkStyleSheet.create(theme => ({
 		marginTop: 10,
 	  paddingTop: 25,
 		paddingBottom: 17,
-
 		alignItems: "center"
 	},
 	title: {

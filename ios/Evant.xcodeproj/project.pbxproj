@@ -1938,6 +1938,7 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
+					"$(SRCROOT)/../node_modules/react-native-shape-image-view/ios/**",
 				);
 				INFOPLIST_FILE = Evant/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -1973,6 +1974,7 @@
 					"$(SRCROOT)/../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-drop-refresh/**",
+					"$(SRCROOT)/../node_modules/react-native-shape-image-view/ios/**",
 				);
 				INFOPLIST_FILE = Evant/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;

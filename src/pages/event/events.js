@@ -86,22 +86,31 @@ export default class Events extends React.Component {
 	_renderItem(info) {
 		console.log(info)
 		return (
-		  <TouchableOpacity
-				delayPressIn={70}
-				activeOpacity={1}
-				onPress={() => { Actions.eventDetail({id: info.item.eventId, obj: info.item}) }}>
-				<RkCard rkType='imgBlock' style={styles.card}>
-					<Image rkCardImg source={{uri: info.item.photoUrl}}/>
-					<View rkCardImgOverlay rkCardContent style={styles.overlay}>
-						<RkText rkType='header4 inverseColor'>{info.item.title}</RkText>
-						<RkText style={styles.time}
-							rkType='secondary2 inverseColor'>{moment(info.item.start).fromNow()}</RkText>
-					</View>
-					<View rkCardFooter>
-					<SocialBar rkType='space' showLabel={true} comments={info.item.totalComments} goings={info.item.totalGoings} id={info.item.eventId}/>
-					</View >
-				</RkCard>
-		  </TouchableOpacity>
+			<View >
+				<View flexDirection="row" style={{flex:1, marginBottom: 5}}>
+					<Image style={{height:30, width: 30, borderRadius: 15, marginLeft: 5, marginRight: 5}} source={{uri: info.item.user.photoUrl}}/>
+					<RkText style={{fontSize: 14, alignSelf: 'center', fontWeight: 'bold'}}>{info.item.user.firstName + " " + info.item.user.lastName}</RkText>
+				</View>
+				<TouchableOpacity
+					delayPressIn={70}
+					activeOpacity={1}
+					onPress={() => { Actions.eventDetail({id: info.item.eventId, obj: info.item}) }}>
+					<RkCard rkType='backImg2' style={styles.card}>
+						<Image rkCardImg style={{resizeMode:"stretch"}} source={{uri: info.item.photoUrl}}/>
+						<View rkCardImgOverlay rkCardContent alignItems="baseline" style={styles.overlay}>
+							<RkText rkType='header4 inverseColor'>{info.item.title}</RkText>
+							<View flexDirection="row">
+								<Image style={{height: 16, width: 16, marginRight:5}} alignSelf="center" source={require('../../assets/icons/calendar.png')}/>
+								<RkText style={styles.time}  alignSelf="center" rkType='secondary2 inverseColor'>{moment(info.item.start).format('lll')}</RkText>
+							</View>
+							<View flexDirection="row">
+								<Image style={{height: 16, width: 16, marginRight:5}} alignSelf="center" source={require('../../assets/icons/place.png')}/>
+								<RkText style={styles.time}  alignSelf="center" rkType='secondary2 inverseColor'>Buca, İzmir</RkText>
+							</View>
+						</View>
+					</RkCard>
+				</TouchableOpacity>
+			</View>
 		)
 	}
 
@@ -157,16 +166,16 @@ export default class Events extends React.Component {
 let styles = RkStyleSheet.create(theme => ({
 	container: {
 		paddingVertical: 8,
-		paddingHorizontal: 14,
-		backgroundColor: theme.colors.screen.scroll,
+		backgroundColor: theme.colors.screen.base,
 	},
 	card: {
-		marginVertical: 8,
+		marginBottom: 40,
 	},
 	time: {
 		marginTop: 5
 	},
 	overlay: {
-		justifyContent: 'flex-end'
+		justifyContent: 'flex-end',
+		backgroundColor: 'rgba(0, 0, 0, 0.3)'
 	},
 }));

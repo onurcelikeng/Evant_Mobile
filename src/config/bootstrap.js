@@ -370,10 +370,33 @@ export let bootstrap = () => {
     }
   });
 
+  RkTheme.setType('RkCard', 'backImg2', {
+    container: {
+      borderWidth: 0,
+      borderRadius: 0
+    },
+    img: {
+      height: 200
+    },
+    imgOverlay: {
+      height: 200,
+      backgroundColor: 'transparent'
+    },
+    content: {
+      paddingHorizontal: 14
+    },
+    footer: {
+      paddingTop: 15,
+      paddingBottom: 0,
+      paddingVertical: 7.5,
+      paddingHorizontal: 0
+    }
+  });
+
 
   RkTheme.setType('RkCard', 'imgBlock', {
     img: {
-      height: 235
+      height: 200
     },
     header: {
       padding: 0,

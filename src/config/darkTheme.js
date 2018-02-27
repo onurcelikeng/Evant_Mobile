@@ -8,6 +8,7 @@ const Colors = {
   danger: '#f53d56',
 
   foreground: '#ffffff',
+  navForeground: '#ffffff',
   alterForeground: '#acacd2',
   inverseForeground: '#ffffff',
   secondaryForeground: '#bcbcbc',
@@ -16,7 +17,7 @@ const Colors = {
 
   boldBackground: '#090f3f',
   background: '#0a1142',
-  nav: '#0a1142',
+  navBackground: '#0a1142',
   alterBackground: '#12194d',
   overlayBackground: '#00000057',
   neutralBackground: '#2f396b',
@@ -88,6 +89,7 @@ export const DarkKittenTheme = {
     infoActive: Colors.info,
     text: {
       base: Colors.foreground,
+      nav: Colors.navForeground,
       secondary: Colors.foreground,
       accent: Colors.accent,
       inverse: Colors.inverseForeground,
@@ -95,7 +97,7 @@ export const DarkKittenTheme = {
     },
     screen: {
       base: Colors.background,
-      nav: Colors.nav,
+      nav: Colors.navBackground,
       alter: Colors.alterBackground,
       scroll: Colors.background,
       bold: Colors.boldBackground,

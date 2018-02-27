@@ -7,7 +7,7 @@ const Colors = {
   disabled: '#cacaca',
 
   foreground: '#212121',
-  nav: '#000000',
+  navForeground: '#ffffff',
   alterForeground: '#707070',
   inverseForeground: '#ffffff',
   secondaryForeground: '#bcbcbc',
@@ -15,7 +15,7 @@ const Colors = {
   highlight: '#bcbcbc',
 
   background: '#ffffff',
-  nav: '#da6954',
+  navBackground: '#da6954',
   alterBackground: '#f2f2f2',
   overlayBackground: '#00000057',
   neutralBackground: '#f2f2f2',
@@ -88,7 +88,7 @@ export const KittenTheme = {
     brand: Colors.accent,
     text: {
       base: Colors.foreground,
-      nav: Colors.nav,
+      nav: Colors.navForeground,
       secondary: Colors.secondaryForeground,
       accent: Colors.accent,
       inverse: Colors.inverseForeground,
@@ -102,7 +102,7 @@ export const KittenTheme = {
     },
     screen: {
       base: Colors.background,
-      nav: Colors.nav,
+      nav: Colors.navBackground,
       alter: Colors.alterBackground,
       scroll: Colors.alterBackground,
       bold: Colors.alterBackground,

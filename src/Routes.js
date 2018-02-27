@@ -24,7 +24,6 @@ import FollowerList from './pages/user/followerList';
 import FollowingList from './pages/user/followingList';
 import GoingList from './pages/user/goingList';
 import OtherProfile from './pages/user/otherProfile';
-import Timeline from './pages/user/timeline';
 
 import TabIcon from './components/tabIcon';
 import { NavBar } from './components/navBar';
@@ -118,13 +117,6 @@ export default class Routes extends React.Component {
                                         title="Profile"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                         hideNavBar={true}
-                                    />
-                                    <Scene
-                                        key="timeline"
-                                        component={withRkTheme(Timeline)}
-                                        title="Timeline"
-                                        hideNavBar={true}
-                                        hideTabBar={true}
                                     />
                                     <Scene
                                         key="followerList"
@@ -302,14 +294,6 @@ export default class Routes extends React.Component {
                                         component={withRkTheme(OtherProfile)}
                                         title="Profile"
                                         navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                    />
-                                    <Scene
-                                        key="timeline"
-                                        component={withRkTheme(Timeline)}
-                                        title="Timeline"
-                                        headerMode="null"
-                                        hideNavBar={true}
-                                        hideTabBar={true}
                                     />
                                     <Scene
                                         hideNavBar={true}

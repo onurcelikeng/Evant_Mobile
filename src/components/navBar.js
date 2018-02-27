@@ -50,7 +50,7 @@ export class NavBar extends React.Component {
           onPress={() => {
             Actions.pop()
           }}>
-          <RkText rkType='awesome hero'>{FontAwesome.chevronLeft}</RkText>
+          <RkText rkType='awesome hero' style={styles.backButton}>{FontAwesome.chevronLeft}</RkText>
         </RkButton>
       }
     };
@@ -128,5 +128,8 @@ let styles = RkStyleSheet.create(theme => ({
   },
   menu: {
     width: 40
+  },
+  backButton: {
+    color: theme.colors.text.nav
   }
 }));

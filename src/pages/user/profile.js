@@ -245,10 +245,12 @@ export default class Profile extends React.Component {
             <RkText style={{color: '#ffffff'}}>{name}</RkText>
           </TriggeringView>
 					{this.state.isLoading ?
-						<ContentLoader height={70}>
-							<Circle cx="30" cy="30" r="30"/>
-							<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-						</ContentLoader>
+						<View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
+							<ContentLoader height={70}>
+								<Circle cx="30" cy="30" r="30"/>
+								<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+							</ContentLoader>
+						</View>
 						:
 						<View style={styles.timeline}>
 							<Timeline 
@@ -377,7 +379,7 @@ let styles = RkStyleSheet.create(theme => ({
 		paddingBottom: 20,
 		paddingLeft: 20,
 		paddingRight: 20,
-    backgroundColor:theme.colors.screen.base
+    backgroundColor: theme.colors.screen.base
   },
   list: {
     flex: 1,
@@ -394,7 +396,8 @@ let styles = RkStyleSheet.create(theme => ({
   image:{
     width: 50,
     height: 50,
-    borderRadius: 25
+		borderRadius: 25,
+		marginLeft: 3
   },
   textDescription: {
     color: 'gray'

@@ -49,3 +49,10 @@ export function deleteEvent(id) {
         .then(res => res.data)
         .then(res => { return res; });
 }
+
+export function search(query) {
+    return axios.get('events/search/' + query) 
+    .then(res => res.data).then(res => {
+        return res;
+    })
+}

@@ -21,3 +21,10 @@ export function getTimeline(userId) {
         return timeline;
     });
 }
+
+export function search(query) {
+    return axios.get('users/search/' + query) 
+    .then(res => res.data).then(res => {
+        return res;
+    })
+}

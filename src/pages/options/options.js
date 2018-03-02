@@ -120,6 +120,12 @@ export default class Options extends React.Component {
             <RkText rkType='primary header6'>SETTINGS</RkText>
           </View>
           <View style={styles.row}>
+            <TouchableOpacity style={styles.rowButton}>
+              <RkText rkType='header6'>Timeline</RkText>
+              <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.themes()} }>
               <RkText rkType='header6'>Theme</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>

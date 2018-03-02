@@ -72,7 +72,7 @@ export default class FollowerList extends React.Component {
   _renderRow(row) {
     let name = `${row.firstName} ${row.lastName}`;
     return (
-      <TouchableOpacity onPress={() => { Actions.push("otherProfile", {id: row.userId}) }}>
+      <TouchableOpacity onPress={() => { if(row.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.push("otherProfile", {id: row.userId}) }}}>
         <View style={styles.container}>
           <Image source={{uri: row.photoUrl}} style={styles.circle} />
           <RkText>{name}</RkText>

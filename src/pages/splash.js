@@ -32,7 +32,7 @@ export class SplashScreen extends React.Component {
       AsyncStorage.getItem('token').then((token) => {
         if (token !== null){
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          route = 'home'
+          route = 'tabbar'
         }
         else {
           route = 'login'
@@ -47,9 +47,8 @@ export class SplashScreen extends React.Component {
         clearInterval(this.timer);
         setTimeout(() => {
           StatusBar.setHidden(false, 'slide');
-          if(route == 'home') {
+          if(route == 'tabbar') {
             accountProvider.getMe().then((responseJson) => {
-              console.log(responseJson.data)
               if(responseJson.isSuccess) {
                 Login.currentUser.userId = responseJson.data.userId;
                 Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
@@ -71,7 +70,7 @@ export class SplashScreen extends React.Component {
                   Platform.OS == 'android' && StatusBar.setBackgroundColor(KittenTheme.colors.screen.base);
                   RkTheme.setTheme(KittenTheme);
                 }
-                Actions.home();
+                Actions.tabbar();
               }
               else {
                 let toHome = NavigationActions.reset({

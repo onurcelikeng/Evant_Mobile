@@ -141,7 +141,7 @@ export default class FollowingList extends React.Component {
       var loaders = [];
       for(let i = 0; i < Login.currentUser.followingsCount; i++){
         loaders.push(
-          <ContentLoader height={70}>
+          <ContentLoader key={i} height={70}>
             <Circle cx="30" cy="30" r="30"/>
             <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
           </ContentLoader>

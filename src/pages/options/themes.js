@@ -10,6 +10,13 @@ import { KittenTheme } from '../../config/theme';
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 
 export default class Themes extends React.Component {
+
+  static tabBarOptions = {
+    style: {
+      backgroundColor: 'ff0000'
+    }
+  }
+
   constructor(props) {
     super(props);
 
@@ -20,10 +27,10 @@ export default class Themes extends React.Component {
     userSettingsProvider.updateUserSettings(Options.getSettings())
     .then((responseJson) => { 
       if(responseJson.isSuccess) { 
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.data);
       }
       else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.data);
       }
     });
   }

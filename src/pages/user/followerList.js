@@ -35,10 +35,8 @@ export default class FollowerList extends React.Component {
 	
 	getFollowers(id) {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    console.log(id)
 		return friendProvider.getFollowers(id)
 		.then((responseJson) => {
-      console.log(responseJson);
 			if(responseJson.isSuccess) {
         this.users = responseJson.data
 				this.setState({
@@ -103,7 +101,6 @@ export default class FollowerList extends React.Component {
   }
 
   _onRefresh() {
-		console.log("refreshing");
     this.setState({refreshing: true});
     this.getFollowers(this.props.id).then(() => {
       this.setState({refreshing: false});
@@ -127,7 +124,7 @@ export default class FollowerList extends React.Component {
       var loaders = [];
       for(let i = 0; i < Login.currentUser.followersCount; i++){
         loaders.push(
-          <ContentLoader height={70}>
+          <ContentLoader key={i} height={70}>
             <Circle cx="30" cy="30" r="30"/>
             <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
           </ContentLoader>

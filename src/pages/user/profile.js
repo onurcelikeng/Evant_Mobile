@@ -36,7 +36,6 @@ export default class Profile extends React.Component {
 			data: []
 		}
 		
-		console.log(this.user);
     this.onRefresh = this.onRefresh.bind(this)
 		this.onEventPress = this.onEventPress.bind(this)
     this.renderSelected = this.renderSelected.bind(this)
@@ -111,14 +110,13 @@ export default class Profile extends React.Component {
 						type: element.type,
 						createAt: element.createAt
 					};
-					console.log(model);
-					console.log(responseJson.data);
+					
 					this.state.data.push(model);
 					this.setState(
 						this.state
 					)
 				});
-				console.log(this.state.data);
+				
 				this.setState({
 					isLoading: false,
 					isRefreshing: false

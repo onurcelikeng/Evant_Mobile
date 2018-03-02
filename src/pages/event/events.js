@@ -28,7 +28,6 @@ export default class Events extends React.Component {
 
 	componentDidMount() {
 		if(this.props.id != null) {
-			console.log("esd");
 			this.getCategoryEvents(this.props.id);
 		} else {
 			this.getEvents();
@@ -38,7 +37,6 @@ export default class Events extends React.Component {
 	getCategoryEvents(id) {
 		return eventProvider.getCategoryEvents(id)
 		.then((responseJson) => {
-			console.log(responseJson);
 			if(responseJson.isSuccess) {
 				this.setState({
 					isLoading: false,
@@ -62,7 +60,6 @@ export default class Events extends React.Component {
 		return eventProvider.getEvents()
 		.then((responseJson) => {
 			if(responseJson.isSuccess) {
-				console.log(responseJson.data)
 				this.setState({
 					isLoading: false,
 					data: responseJson.data,
@@ -82,13 +79,12 @@ export default class Events extends React.Component {
 	}
 
 	_keyExtractor(post, index) {
-		return post.id;
+		return post.eventId;
 	}
 	
 	_renderItem(info) {
-		console.log(info)
 		return (
-			<View >
+			<View>
 			<TouchableOpacity
 				delayPressIn={70}
 				activeOpacity={1}
@@ -136,7 +132,7 @@ export default class Events extends React.Component {
 			var loaders = [];
 			for(let i = 0; i < 10; i++){
 			  loaders.push(
-				<ContentLoader height={150}>
+				<ContentLoader key={i} height={150}>
 					<Circle cx="30" cy="30" r="30"/>
 					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
 					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>

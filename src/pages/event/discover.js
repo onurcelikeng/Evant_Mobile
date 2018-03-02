@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, Dimensions } from 'react-native';
-import { RkText, RkCard, RkStyleSheet, RkTextInput } from 'react-native-ui-kitten';
+import { FlatList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, Dimensions, InteractionManager, TouchableWithoutFeedback } from 'react-native';
+import { RkText, RkCard, RkStyleSheet, RkTextInput, RkButton } from 'react-native-ui-kitten';
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
@@ -13,28 +13,16 @@ import {data} from '../../data';
 import {FontAwesome} from '../../assets/icon';
 
 let moment = require('moment');
-
+var self;
 export default class Events extends React.Component {
-	
-	static navigationOptions = {
-		header: (headerProps) => { 
-			return <View style={styles.searchContainer}>
-					<RkTextInput
-						style={styles.search} 
-						labelStyle={{fontSize: 18}}
-						inputStyle={{fontSize: 16}}
-						autoCapitalize='none'
-						autoCorrect={false}
-						label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
-						rkType='row'
-						placeholder='Search'/>
-			</View> }
-	};
 
 	constructor(props) {
 		super(props);
+		self = this;
+
 		this.state = {
-			isLoading: true
+			isLoading: true,
+			isSearchPressed: false
 		}
 		this.renderItem = this._renderItem.bind(this);
 	}
@@ -42,7 +30,7 @@ export default class Events extends React.Component {
 	componentDidMount() {
 		this.getCategories();
 	}
-	
+
 	getCategories() {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
@@ -68,8 +56,20 @@ export default class Events extends React.Component {
 		});
 	}  
 
+	searchPage() {
+		this.setState({
+			isSearchPressed: true
+		})
+	}
+
+	discoverPage() {
+		this.setState({
+			isSearchPressed: false
+		})
+	}
+
 	_keyExtractor(post, index) {
-		return post.id;
+		return post.categoryId;
 	}
 	
 	_renderItem(info) {
@@ -94,7 +94,7 @@ export default class Events extends React.Component {
 			var loaders = [];
 			for(let i = 0; i < 10; i++){
 			  loaders.push(
-				<ContentLoader height={150}>
+				<ContentLoader key={i} height={150}>
 					<Circle cx="30" cy="30" r="30"/>
 					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
 					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
@@ -111,12 +111,48 @@ export default class Events extends React.Component {
 			);
 		}
 
+		else if(this.state.isSearchPressed) {
+			return (
+				<View>
+					<View style={styles.searchContainer}>
+						<RkTextInput
+							ref={c => this._searchInput = c}
+							style={styles.search} 
+							labelStyle={{fontSize: 18}}
+							inputStyle={{fontSize: 16}}
+							autoCapitalize='none'
+							autoCorrect={false}
+							onFocus={() => {this.searchPage()}}
+							label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
+							rkType='row'
+							placeholder='Search'/>
+						<TouchableWithoutFeedback onPress={() => {this._searchInput.refs.input.blur(); this.discoverPage()}} style={{marginLeft: 10}}><RkText style={{color: '#fff'}}>Cancel</RkText></TouchableWithoutFeedback>
+					</View> 
+					<RkText>Seray</RkText>
+				</View>
+			)
+		}
+
 		return (
-			<FlatList numColumns={2} data={this.state.data}
-				renderItem={this.renderItem}
-				keyExtractor={this._keyExtractor}
-				style={styles.root}/>
-		
+			<View>
+				<View style={styles.searchContainer}>
+					<RkTextInput
+						style={styles.search} 
+						labelStyle={{fontSize: 18}}
+						inputStyle={{fontSize: 16}}
+						autoCapitalize='none'
+						autoCorrect={false}
+						onFocus={() => {this.searchPage()}}
+						label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
+						rkType='row'
+						placeholder='Search'/>
+				</View> 
+			
+				<FlatList numColumns={2} data={this.state.data}
+					renderItem={this.renderItem}
+					keyExtractor={this._keyExtractor}
+					style={styles.root}/>
+			</View>
 		)
 	}
 }
@@ -133,6 +169,7 @@ let styles = RkStyleSheet.create(theme => ({
 		width: 240
 	},
     searchContainer: {
+		flexDirection: 'row',
 		backgroundColor: theme.colors.screen.nav,
 		paddingHorizontal: 16,
 		paddingTop: 26,

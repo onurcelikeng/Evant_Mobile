@@ -55,7 +55,6 @@ export default class OtherProfile extends React.Component {
 		});
 
 		userProvider.getUserInfo(this.props.id).then((responseJson) => {
-			console.log(responseJson)
 			if(responseJson.isSuccess) {
 				this.setState({
 					user: responseJson.data
@@ -81,7 +80,6 @@ export default class OtherProfile extends React.Component {
 	}
 
 	follow() {
-		console.log(this.props.id)
 		friendProvider.follow(this.props.id).then((responseJson) => {
 			if(responseJson.isSuccess) {
 				this.setState({
@@ -173,14 +171,13 @@ export default class OtherProfile extends React.Component {
 						type: element.type,
 						createAt: element.createAt
 					};
-					console.log(model);
-					console.log(responseJson.data);
+					
 					this.state.data.push(model);
 					this.setState(
 						this.state
 					)
 				});
-				console.log(this.state.data);
+				
 				this.setState({
 					isLoading: false,
 					isRefreshing: false
@@ -228,7 +225,6 @@ export default class OtherProfile extends React.Component {
 			);
 		}
 
-		console.log(this.state.user);
 		let name = `${this.state.user.firstName} ${this.state.user.lastName}`;
 
 		return (

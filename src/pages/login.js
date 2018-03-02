@@ -115,7 +115,7 @@ export default class Login extends React.Component {
                     Login.currentUser.followingsCount = responseJson.data.followingsCount;
                     Login.currentUser.settings.theme = responseJson.data.settings.theme;
                     Login.currentUser.settings.language = responseJson.data.settings.language;
-                    Actions.home();
+                    Actions.tabbar();
                   }
                 });
               }

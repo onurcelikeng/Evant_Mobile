@@ -49,7 +49,7 @@ export default class Signup extends React.Component {
                     if(responseJson.isSuccess) {
                       Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
                       Login.currentUser.photo = responseJson.data.photoUrl;
-                      Actions.home();
+                      Actions.tabbar();
                     }
                   })
               });

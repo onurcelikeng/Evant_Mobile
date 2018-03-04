@@ -2,14 +2,14 @@ import React from 'react';
 import axios from 'axios';
 
 export function getFollowings(id) {
-    return axios.get('friendoperations/followings/' + id)
+    return axios.get('friendoperations/' + id + '/followings')
     .then(res => res.data).then(friends => {
         return friends;
     });
 }
 
 export function getFollowers(id) {
-    return axios.get('friendoperations/followers/' + id)
+    return axios.get('friendoperations/' + id + '/followers')
     .then(res => res.data).then(friends => {
         return friends;
     });

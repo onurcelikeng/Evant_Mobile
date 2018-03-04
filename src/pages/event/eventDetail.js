@@ -2,11 +2,13 @@ import React from 'react';
 import { ScrollView, Image, View, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
 import { RkCard, RkText, RkStyleSheet, RkButton, RkModalImg } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
 
 import DropdownHolder from '../../providers/dropdownHolder';
+import ContentLoader from '../../config/contentLoader'
 import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
 import * as eventOperationProvider from '../../providers/eventOperations';
 import * as eventProvider from '../../providers/events';
@@ -25,21 +27,43 @@ export default class EventDetail extends React.Component {
 
   constructor(props) {
     super(props);
-    let {params} = this.props.navigation.state;
-    let id = params ? params.id : 1;
-    this.data = this.props.obj;
-    this.esd = data.getUser();
+
     this.state = {
-      join: false
+      join: false,
+      isLoading: true
     }
+
+    let {params} = this.props.navigation.state;
+    this.id = params ? params.id : 1;
+    console.log(this.id);
+    if(this.id == 1) this.setState({data: this.props.obj});
+    else this.getEvent(this.id);
+
+    this.user = data.getUser();
   }
 
   componentDidMount() {
-    this.joinStatus();
+    if(this.id == 1)
+      this.joinStatus();
+  }
+
+  getEvent(id) {
+    console.log(id);
+    return eventProvider.getEvent(id)
+    .then((responseJson) => {
+      console.log(responseJson);
+      if(responseJson.isSuccess) {
+        this.setState({
+          data: responseJson.data,
+          isLoading: false});
+      } else {
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+      }
+    });
   }
 
   deleteEvent() {
-    return eventProvider.deleteEvent(this.data.eventId)
+    return eventProvider.deleteEvent(this.state.data.eventId)
     .then((responseJson) => {
       console.log(responseJson);
       if(responseJson.isSuccess) {
@@ -51,8 +75,8 @@ export default class EventDetail extends React.Component {
   }
 
   joinEvent() {
-    console.log(this.data);
-    return eventOperationProvider.joinEvent(this.data.eventId)
+    console.log(this.state.data);
+    return eventOperationProvider.joinEvent(this.state.data.eventId)
     .then((responseJson) => {
       console.log(responseJson);
       if(responseJson.isSuccess) {
@@ -65,7 +89,7 @@ export default class EventDetail extends React.Component {
   }
 
   leaveEvent() {
-    return eventOperationProvider.leaveEvent(this.data.eventId)
+    return eventOperationProvider.leaveEvent(this.state.data.eventId)
     .then((responseJson) => {
       console.log(responseJson);
       if(responseJson.isSuccess) {
@@ -78,14 +102,14 @@ export default class EventDetail extends React.Component {
   }
 
   joinStatus() {
-    return eventOperationProvider.joinStatus(this.data.eventId)
+    return eventOperationProvider.joinStatus(this.state.data.eventId)
     .then((responseJson) => {
       this.setState({join: responseJson.isSuccess})
     })
   }
 
   followers() {
-    return eventOperationProvider.followers(this.data.eventId)
+    return eventOperationProvider.followers(this.state.data.eventId)
     .then((responseJson) => {
       console.log(responseJson);
       this.setState({status: responseJson.data});
@@ -102,80 +126,110 @@ export default class EventDetail extends React.Component {
   }
 
   render() {
-    let button = null;
-    if (this.data.user.userId == Login.getCurrentUser().userId) {
-      button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.deleteEvent()}>DELETE</RkButton>;
-    } else if(this.state.join == true){
-      button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.leaveEvent()}>LEAVE</RkButton>;
-    } else {
-      button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.joinEvent()}>JOIN</RkButton>;
-    }
+    if (this.state.isLoading) {
+			var width = require('Dimensions').get('window').width - 50;
 
-    return (
-      <View style={{ flex: 1 }}>
-        <HeaderImageScrollView
-          maxHeight={MAX_HEIGHT}
-          minHeight={MIN_HEIGHT}
-          maxOverlayOpacity={0.6}
-          minOverlayOpacity={0.3}
-          fadeOutForeground
-          renderHeader={() => <Image rkCardImg style={styles.image} source={{uri: this.data.photoUrl}}/>}
-          renderFixedForeground={() => (
-            <Animatable.View
-              style={styles.navTitleView}
-              ref={navTitleView => {
-                this.navTitleView = navTitleView;
-              }}
-            >
-              <RkText style={styles.navTitle}>
-                {this.data.title}
-              </RkText>
-            </Animatable.View>
-          )}
-          renderTouchableFixedForeground={() => (
-            <RkModalImg
-                style={{width: width, height: MAX_HEIGHT}}
-                renderFooter={this._renderFooter}
-                source={this.esd.images}/>
-          )}
-          renderForeground={() => (
-            <View style={styles.titleContainer}>
-              <RkText style={styles.imageTitle}>{this.data.title}</RkText>
-            </View>
-          )}
-        >
-          <TriggeringView
-            onHide={() => this.navTitleView.fadeInUp(200)}
-            onDisplay={() => this.navTitleView.fadeOut(100)}
+			return (
+			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+          <ContentLoader height={70}>
+            <Circle cx="30" cy="30" r="30"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          </ContentLoader>
+			  </View>
+			);
+		} else {
+      console.log(this.state.data)
+      let button = null;
+      if (this.state.data.user.userId == Login.getCurrentUser().userId) {
+        button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.deleteEvent()}>DELETE</RkButton>;
+      } else if(this.state.join == true){
+        button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.leaveEvent()}>LEAVE</RkButton>;
+      } else {
+        button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.joinEvent()}>JOIN</RkButton>;
+      }
+
+      return (
+        <View style={{ flex: 1 }}>
+          <HeaderImageScrollView
+            maxHeight={MAX_HEIGHT}
+            minHeight={MIN_HEIGHT}
+            maxOverlayOpacity={0.6}
+            minOverlayOpacity={0.3}
+            fadeOutForeground
+            renderHeader={() => <Image rkCardImg style={styles.image} source={{uri: this.state.data.photoUrl}}/>}
+            renderFixedForeground={() => (
+              <Animatable.View
+                style={styles.navTitleView}
+                ref={navTitleView => {
+                  this.navTitleView = navTitleView;
+                }}
+              >
+                <RkText style={styles.navTitle}>
+                  {this.state.data.title}
+                </RkText>
+              </Animatable.View>
+            )}
+            renderTouchableFixedForeground={() => (
+              <RkModalImg
+                  style={{width: width, height: MAX_HEIGHT}}
+                  renderFooter={this._renderFooter}
+                  source={this.user.images}/>
+            )}
+            renderForeground={() => (
+              <View style={styles.titleContainer}>
+                <RkText style={styles.imageTitle}>{this.state.data.title}</RkText>
+              </View>
+            )}
           >
-            <RkCard rkType='article'>
-              <View rkCardHeader>
-                <View>
-                  <RkText style={styles.title} rkType='header4'>{this.data.title}</RkText>
-                  <RkText rkType='secondary2 hintColor'>{moment(this.data.start).fromNow()}</RkText>
+            <TriggeringView
+              onHide={() => this.navTitleView.fadeInUp(200)}
+              onDisplay={() => this.navTitleView.fadeOut(100)}
+            >
+              <RkCard rkType='article'>
+                <View rkCardHeader>
+                  <View>
+                    <RkText style={styles.title} rkType='header4'>{this.state.data.title}</RkText>
+                    <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).fromNow()}</RkText>
+                  </View>
+                  <TouchableOpacity onPress={() => { if(this.state.data.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: this.state.data.user.userId}) }}>
+                    <Image source={{uri: this.state.data.user.photoUrl}} style={styles.circle} />
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => { if(this.data.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: this.data.user.userId}) }}>
-                  <Image source={{uri: this.data.user.photoUrl}} style={styles.circle} />
-                </TouchableOpacity>
+              </RkCard>
+            </TriggeringView>
+            <RkCard rkType='article'>
+              <View rkCardContent>
+                <SocialBar id={this.state.data.eventId} comments={this.state.data.totalComments} goings={this.state.data.totalGoings}/>
+              </View>
+              <View rkCardContent>
+                <View>
+                  <RkText rkType='primary3 bigLine'>{this.state.data.description}</RkText>
+                </View>
+              </View>
+              <View style={styles.buttons}>
+                {button} 
               </View>
             </RkCard>
-          </TriggeringView>
-          <RkCard rkType='article'>
-            <View rkCardContent>
-              <SocialBar id={this.data.eventId} comments={this.data.totalComments} goings={this.data.totalGoings}/>
-            </View>
-            <View rkCardContent>
-              <View>
-                <RkText rkType='primary3 bigLine'>{this.data.description}</RkText>
-              </View>
-            </View>
-            <View style={styles.buttons}>
-              {button} 
-            </View>
-          </RkCard>
-        </HeaderImageScrollView>
-      </View>
-    )
+          </HeaderImageScrollView>
+        </View>
+      )
+    }
+
+    
+
+    
   }
 }
 

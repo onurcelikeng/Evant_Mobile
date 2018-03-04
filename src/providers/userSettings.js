@@ -14,6 +14,10 @@ export function updateUserSettings(credentials) {
         isEventNewComerNotif: credentials.isEventNewComerNotif,
         isEventUpdateNotif: credentials.isEventUpdateNotif,
         isFriendshipNotif: credentials.isFriendshipNotif,
+        isCommentVisibleTimeline: credentials.isCommentVisibleTimeline,
+        isFollowerVisibleTimeline: credentials.isFollowerVisibleTimeline,
+        isFollowingVisibleTimeline: credentials.isFollowingVisibleTimeline,
+        isJoinEventVisibleTimeline: credentials.isJoinEventVisibleTimeline,
         language: credentials.language,
         theme: credentials.theme,
         userSettingId: credentials.userSettingId

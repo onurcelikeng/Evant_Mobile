@@ -9,7 +9,7 @@ export const SwitchTypes = (theme) => {
         borderRadius: 16,
         borderWidth: 1,
         borderColor: theme.colors.border.secondary,
-        onColor: theme.colors.primary,
+        onColor: theme.colors.success,
         offColor: {
           android: theme.colors.screen.base,
           ios: theme.colors.border.base

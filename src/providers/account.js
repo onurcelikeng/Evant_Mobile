@@ -78,6 +78,13 @@ export function profileEdit(credentials) {
     .then(token => { return token; });
 }
 
+export function getTimeline() {
+    return axios.get('account/timeline')
+    .then(res => res.data).then(timeline => {
+        return timeline;
+    });
+}
+
 export function deactivateAccount() {
     return axios.get('account/deactive')
     .then(res => res.data)

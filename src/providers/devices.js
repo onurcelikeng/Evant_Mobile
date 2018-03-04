@@ -22,7 +22,7 @@ export function addUserDevice(credentials) {
 }
 
 export function logout(deviceId) {
-    return axios.get('devices/' + deviceId)
+    return axios.get('devices/' + deviceId + '/logout')
         .then(res => res.data)
         .then(res => { console.log(res); return res; });
 }

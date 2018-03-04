@@ -2,9 +2,13 @@ import React from 'react';
 import { View, Image, Keyboard, AsyncStorage } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme, RkAvoidKeyboard } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
+import OneSignal from 'react-native-onesignal';
 
+import DropdownHolder from '../providers/dropdownHolder';
 import * as accountProvider from '../providers/account';
+import * as deviceProvider from '../providers/devices';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 import Login from './login'
 
@@ -19,6 +23,39 @@ export default class Signup extends React.Component {
         password: '',
         passwordRepeat: ''
     };
+  }
+
+  componentWillMount() {
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('registered', this.onRegistered);
+    OneSignal.addEventListener('ids', this.onIds);
+  }
+
+  componentWillUnmount() {
+    OneSignal.removeEventListener('received', this.onReceived);
+    OneSignal.removeEventListener('opened', this.onOpened);
+    OneSignal.removeEventListener('registered', this.onRegistered);
+    OneSignal.removeEventListener('ids', this.onIds);
+  }
+
+  onReceived(notification) {
+      console.log("Notification received: ", notification);
+  }
+
+  onOpened(openResult) {
+    console.log('Message: ', openResult.notification.payload.body);
+    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('isActive: ', openResult.notification.isAppInFocus);
+    console.log('openResult: ', openResult);
+  }
+
+  onRegistered(notifData) {
+      console.log("Device had been registered for push notifications!", notifData);
+  }
+
+  onIds(device) {
+    playerId = device.userId;
   }
 
   signup() {
@@ -40,34 +77,66 @@ export default class Signup extends React.Component {
           accountProvider.login(loginCredentials).then((responseJson) => {
             if(responseJson.isSuccess) {
               this.setState({
-                token: responseJson.data,
+                token: responseJson.data.token,
                 }, function() {
                   AsyncStorage.setItem('token', this.state.token);
                   axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
-            
-                  accountProvider.getMe().then((responseJson) => {
+                  
+                  const brand = DeviceInfo.getBrand();
+                  const model = DeviceInfo.getModel();
+                  const systemName = DeviceInfo.getSystemName();
+                  const systemVersion = DeviceInfo.getSystemVersion();
+
+                  let deviceProperties = {
+                    deviceId: playerId,
+                    brand: brand,
+                    model: model,
+                    os: systemName + " " + systemVersion
+                  }
+                  
+                  deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
+                    console.log(responseJson);
                     if(responseJson.isSuccess) {
-                      Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
-                      Login.currentUser.photo = responseJson.data.photoUrl;
-                      Actions.tabbar();
+                      accountProvider.getMe().then((responseJson) => {
+                        if(responseJson.isSuccess) {
+                          console.log(responseJson.data)
+                          Login.currentUser.userId = responseJson.data.userId;
+                          Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
+                          Login.currentUser.firstName = responseJson.data.firstName;
+                          Login.currentUser.lastName = responseJson.data.lastName;
+                          Login.currentUser.email = responseJson.data.email;
+                          Login.currentUser.photo = responseJson.data.photoUrl;
+                          Login.currentUser.followersCount = responseJson.data.followersCount;
+                          Login.currentUser.followingsCount = responseJson.data.followingsCount;
+                          Login.currentUser.settings.theme = responseJson.data.settings.theme;
+                          Login.currentUser.settings.language = responseJson.data.settings.language;
+                          Actions.tabbar();
+                        } else {
+                          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                        }
+                      });
+                    }
+                    else {
+                      DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
                     }
                   })
+                  .catch(error => console.log(error));
               });
             }
             else {
-              console.error("cannot login");
+              DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
             }
           }) 
         } else {
-          console.error("cannot register");
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
     }
     else {
-      console.log("passwords are not same");
+      DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
     }
   }
 

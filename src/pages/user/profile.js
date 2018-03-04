@@ -10,7 +10,7 @@ import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Po
 
 import ContentLoader from '../../config/contentLoader';
 import DropdownHolder from '../../providers/dropdownHolder';
-import * as userProvider from '../../providers/users';
+import * as accountProvider from '../../providers/account';
 import {Avatar} from '../../components/avatar';
 import {Gallery} from '../../components/gallery';
 import {FontIcons} from '../../assets/icon';
@@ -43,12 +43,26 @@ export default class Profile extends React.Component {
 	}
 
 	onEventPress(data){
-    this.setState({selected: data})
+		this.setState({selected: data});
+		
+		console.log(data);
+		if(data.type == "following") {
+			Actions.otherProfile({id: data.customId});
+		} else if(data.type == "follower") {
+			Actions.otherProfile({id: data.customId});
+		} else if(data.type == "comment-event") {
+			Actions.comments({id: data.customId});
+		} else if(data.type == "create-event") {
+			Actions.eventDetail({id: data.customId});
+		} else if(data.type == "join-event") {
+			Actions.eventDetail({id: data.customId});
+		}
   }
 
   renderSelected(){
-      if(this.state.selected)
-        return <RkText style={{marginTop:10}}>Selected event: {this.state.selected.title} at {this.state.selected.time}</RkText>
+      if(this.state.selected) {
+
+			}
   }
 
   renderDetail(rowData, sectionID, rowID) {
@@ -83,8 +97,8 @@ export default class Profile extends React.Component {
 		this.getTimeline(this.user.userId);
 	}
 
-	getTimeline(id) {
-		userProvider.getTimeline(id).then((responseJson) => {
+	getTimeline() {
+		accountProvider.getTimeline().then((responseJson) => {
 			let icon = require("../../assets/icons/comment.png");
 			if(responseJson.isSuccess) {
 				this.setState({data: []});
@@ -122,7 +136,7 @@ export default class Profile extends React.Component {
 					isRefreshing: false
 				})
 			} else {
-				DropdownHolder.getDropDown().alertWithType("alert", "", responseJson.message);
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		})
 	}
@@ -236,7 +250,7 @@ export default class Profile extends React.Component {
 								circleSize={20}
 								circleColor='rgba(0,0,0,0)'
 								lineColor='rgb(45,156,219)'
-								timeContainerStyle={{minWidth:55, marginTop: -5}}
+								timeContainerStyle={{minWidth:70, marginTop: -5}}
 								timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'white', padding:5, borderRadius:13}}
 								descriptionStyle={{color:'gray'}}
 								options={{

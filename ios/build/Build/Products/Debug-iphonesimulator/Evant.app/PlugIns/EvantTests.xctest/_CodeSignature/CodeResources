@@ -4,25 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>EvantTests</key>
+		<key>Info.plist</key>
 		<data>
-		Jg6H57mS+wFHACDIHcrECqz/hYY=
+		4LdSKo9zWmlzCqnMSLSoM0oIWg8=
 		</data>
 	</dict>
 	<key>files2</key>
-	<dict>
-		<key>EvantTests</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Jg6H57mS+wFHACDIHcrECqz/hYY=
-			</data>
-			<key>hash2</key>
-			<data>
-			jJ1sGrRdHIhn0hpiHza5AZH93+oT0uQYdy9+fZ/muDk=
-			</data>
-		</dict>
-	</dict>
+	<dict/>
 	<key>rules</key>
 	<dict>
 		<key>^</key>

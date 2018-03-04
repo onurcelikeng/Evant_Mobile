@@ -19,6 +19,7 @@ import Themes from './pages/options/themes';
 import EditProfile from './pages/options/editProfile';
 import ChangePassword from './pages/options/changePassword';
 import NotificationSettings from './pages/options/notificationSettings';
+import TimelineSettings from './pages/options/timelineSettings';
 import Profile from './pages/user/profile';
 import FollowerList from './pages/user/followerList';
 import FollowingList from './pages/user/followingList';
@@ -93,16 +94,15 @@ export default class Routes extends React.Component {
                                     key="events"
                                     component={withRkTheme(Events)}
                                     title="Events"
-                                    panHandlers={null}
                                     initial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
-                                    hideNavBar={true}
-                                    hideTabBar
                                     key="eventDetail"
                                     component={withRkTheme(EventDetail)}
                                     title="Event"
+                                    hideNavBar={true}
+                                    hideTabBar
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -157,7 +157,6 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(Discover)}
                                     title="Discover"
                                     initial={true}
-                                    panHandlers={null}
                                 />
                                 <Scene
                                     key="events"
@@ -183,6 +182,13 @@ export default class Routes extends React.Component {
                                 <Scene
                                     key="otherProfile"
                                     component={withRkTheme(OtherProfile)}
+                                    title="Profile"
+                                    hideNavBar={true}
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                                <Scene
+                                    key="profile"
+                                    component={withRkTheme(Profile)}
                                     title="Profile"
                                     hideNavBar={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
@@ -227,7 +233,6 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(Notifications)}
                                     title="Notifications"
                                     initial={true}
-                                    panHandlers={null}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -281,7 +286,6 @@ export default class Routes extends React.Component {
                                     key="profile"
                                     component={withRkTheme(Profile)}
                                     title="Profile"
-                                    panHandlers={null}
                                     initial={true}
                                     hideNavBar={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
@@ -341,6 +345,12 @@ export default class Routes extends React.Component {
                                     key="notificationSettings"
                                     component={withRkTheme(NotificationSettings)}
                                     title="Notification Settings"
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                                <Scene
+                                    key="timelineSettings"
+                                    component={withRkTheme(TimelineSettings)}
+                                    title="Timeline Settings"
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene

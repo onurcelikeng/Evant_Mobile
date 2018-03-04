@@ -32,6 +32,12 @@ export function addEvents(credentials) {
         .then(res => { console.log(res); return res; });
 }
 
+export function getEvent(id) {
+    return axios.get('events/' + id + '/details')
+        .then(res => res.data)
+        .then(res => { return res; });
+}
+
 export function getCategoryEvents(categoryId) {
     return axios.get('events/categoryevents/' + categoryId)
         .then(res => res.data)

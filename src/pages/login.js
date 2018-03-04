@@ -34,7 +34,8 @@ export default class Login extends React.Component {
     userId: '',
     settings: {
       language: '',
-      theme: ''
+      theme: '',
+      
     }
   };
 
@@ -81,8 +82,8 @@ export default class Login extends React.Component {
 		.then((responseJson) => {
 			if(responseJson.isSuccess) {
 				this.setState({
-					token: responseJson.data,
-				  }, function() {
+					token: responseJson.data.token,
+				}, function() {
             console.log(this.state.token)
             AsyncStorage.setItem("token", this.state.token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
@@ -116,6 +117,8 @@ export default class Login extends React.Component {
                     Login.currentUser.settings.theme = responseJson.data.settings.theme;
                     Login.currentUser.settings.language = responseJson.data.settings.language;
                     Actions.tabbar();
+                  } else {
+                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
                   }
                 });
               }

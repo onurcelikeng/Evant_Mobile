@@ -7,6 +7,7 @@ import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account';
 import * as deviceProvider from '../../providers/devices';
 import * as userSettingsProvider from '../../providers/userSettings';
+import Login from '../login';
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
 import { FontAwesome } from '../../assets/icon';
@@ -20,6 +21,10 @@ export default class Options extends React.Component {
     isEventNewComerNotif: true,
     isEventUpdateNotif: true,
     isFriendshipNotif: true,
+    isCommentVisibleTimeline: true,
+    isFollowerVisibleTimeline: true,
+    isFollowingVisibleTimeline: true,
+    isJoinEventVisibleTimeline: true,
     language: '',
     theme: '',
     userSettingId: ''
@@ -41,6 +46,7 @@ export default class Options extends React.Component {
   logout() {
     AsyncStorage.removeItem("token");
     AsyncStorage.removeItem("deviceId");
+    Login.currentUser = {};
     this._setModalVisible(false);
     Actions.reset("root");
   }
@@ -64,6 +70,7 @@ export default class Options extends React.Component {
 		return userSettingsProvider.getUserSettings()
 		.then((responseJson) => {
 			if(responseJson.isSuccess) {
+        console.log(responseJson.data)
         Options.userSettings = responseJson.data;
 			} else {
 				console.log(responseJson.message);
@@ -120,7 +127,7 @@ export default class Options extends React.Component {
             <RkText rkType='primary header6'>SETTINGS</RkText>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.timelineSettings()} }>
               <RkText rkType='header6'>Timeline</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>

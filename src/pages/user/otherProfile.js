@@ -17,6 +17,7 @@ import {Gallery} from '../../components/gallery';
 import {FontIcons} from '../../assets/icon';
 import formatNumber from '../../utils/textUtils';
 import {data} from '../../data';
+import Login from '../login'
 
 let moment = require('moment');
 
@@ -108,7 +109,21 @@ export default class OtherProfile extends React.Component {
 	}
 
 	onEventPress(data){
-    this.setState({selected: data})
+    this.setState({selected: data});
+		
+		console.log(data);
+		if(data.type == "following") {
+			Actions.otherProfile({id: data.customId});
+		} else if(data.type == "follower") {
+			if(Login.getCurrentUser().userId == data.customId) Actions.profile();
+			else Actions.otherProfile({id: data.customId});
+		} else if(data.type == "comment-event") {
+			Actions.comments({id: data.customId});
+		} else if(data.type == "create-event") {
+			Actions.eventDetail({id: data.customId});
+		} else if(data.type == "join-event") {
+			Actions.eventDetail({id: data.customId});
+		}
   }
 
   renderSelected(){
@@ -327,7 +342,7 @@ export default class OtherProfile extends React.Component {
 								circleSize={20}
 								circleColor='rgba(0,0,0,0)'
 								lineColor='rgb(45,156,219)'
-								timeContainerStyle={{minWidth:55, marginTop: -5}}
+								timeContainerStyle={{minWidth:70, marginTop: -5}}
 								timeStyle={{textAlign: 'center', backgroundColor:'#ff9797', color:'white', padding:5, borderRadius:13}}
 								descriptionStyle={{color:'gray'}}
 								options={{

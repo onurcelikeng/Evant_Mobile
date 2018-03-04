@@ -24,7 +24,7 @@ export function leaveEvent(id) {
 }
 
 export function joinStatus(id) {
-    return axios.get('eventoperations/status/' + id)
+    return axios.get('eventoperations/' + id + '/status')
     .then(res => res.data).then(res => {
         return res;
     });

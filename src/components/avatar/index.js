@@ -21,7 +21,7 @@ export class Avatar extends RkComponent {
     let {image, badge, badgeText} = styles;
     return (
       <View>
-        <Image style={image} source={this.props.img}/>
+        <Image style={image} source={{uri: this.props.img}}/>
         { this.props.badge && this.renderBadge(badge, badgeText)}
       </View>
     )
@@ -33,17 +33,17 @@ export class Avatar extends RkComponent {
     let color;
 
     switch (this.props.badge) {
-      case 'like':
+      case 2:
         symbol = FontAwesome.heart;
         backgroundColor = RkTheme.current.colors.badge.likeBackground;
         color = RkTheme.current.colors.badge.likeForeground;
         break;
-      case 'follow':
+      case 3:
         symbol = FontAwesome.plus;
         backgroundColor = RkTheme.current.colors.badge.plusBackground;
         color = RkTheme.current.colors.badge.plusForeground;
         break;
-      case 'comment':
+      case 1:
         symbol = FontAwesome.comment;
         backgroundColor = RkTheme.current.colors.badge.commentBackground;
         color = RkTheme.current.colors.badge.commentForeground;
@@ -67,7 +67,7 @@ export class Avatar extends RkComponent {
   render() {
     let {container, ...other} = this.defineStyles();
     return (
-      <View style={[container, this.props.style]}>
+      <View style={[container]}>
         {this.renderImg(other)}
       </View>
     )

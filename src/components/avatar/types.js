@@ -29,7 +29,22 @@ export const AvatarTypes = (theme) => {
         width: 110,
         height: 110,
         borderRadius: 55,
-        marginBottom: 19
+        marginBottom: 19,
+        marginTop:25,
+        borderColor:"#ffffff", 
+        borderWidth:1.5,
+      },
+      container: {
+        flexDirection: 'column'
+      }
+    },
+    bigEdit: {
+      image: {
+        width: 110,
+        height: 110,
+        borderRadius: 55,
+        marginBottom: 19,      
+        paddingVertical: 25
       },
       container: {
         flexDirection: 'column'
@@ -37,9 +52,10 @@ export const AvatarTypes = (theme) => {
     },
     small: {
       image: {
-        width: 32,
-        height: 32,
-        borderRadius:16
+        width: 30,
+        height: 30,
+        borderRadius:15,
+        marginHorizontal: 5
       }
     },
     circle: {

@@ -90,8 +90,8 @@ export default class FollowingList extends React.Component {
     return (
       <TouchableOpacity onPress={() => { if(row.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.push("otherProfile",{id: row.userId}) }}}>
         <View style={styles.container}>
-        <Image source={{uri: row.photoUrl}} style={styles.circle} />
-        <RkText>{name}</RkText>
+          <Avatar img={row.photoUrl} rkType='circle'/>
+          <RkText style={{marginLeft: 16, alignItems: 'center', flexDirection: 'row'}}>{name}</RkText>
         </View>
       </TouchableOpacity>
     )

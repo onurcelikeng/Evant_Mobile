@@ -182,7 +182,7 @@ export default class Profile extends React.Component {
 							<View style={styles.row}>
 								<View style={styles.buttons}>
 								</View>
-								<Image source={{uri: this.user.photo}} style={styles.big} />
+								<Avatar img={this.user.photo} rkType='big'/>
 								<View style={styles.buttons}>
 									<TouchableOpacity style={[styles.navButtons, {alignSelf: "flex-end"}]} onPress={() => Actions.options()}>
 										<Image style={{height: 21, width: 21, tintColor: "#ffffff"}} source={require('../../assets/icons/settings.png')} />
@@ -288,11 +288,11 @@ let styles = RkStyleSheet.create(theme => ({
 	title: {
 		color: '#ffffff',
 		fontSize: 16,
-		marginBottom: 5
+		marginBottom: 10
 	},
 	userInfo: {
 	  flexDirection: 'row',
-	  paddingBottom: 4
+	  paddingBottom: 6
 	},
 	section: {
 	  flex: 1,
@@ -326,17 +326,7 @@ let styles = RkStyleSheet.create(theme => ({
   navButtons: {
 		width: 50,
 		height: 50,
-	},
-	big: {
-		width: 100,
-		height: 100,
-		borderRadius: 50,
-		marginBottom: 19,
-		flexDirection: 'column',
-		borderColor:"#ffffff", 
-		borderWidth:1.5,
-		marginTop:30
-	},  
+	}, 
 	backgroundImage: {
     flex: 1,
     resizeMode: 'cover', // or 'stretch'

@@ -15,6 +15,7 @@ import * as eventProvider from '../../providers/events';
 import * as userProvider from '../../providers/users';
 import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
+import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
 
 let moment = require('moment');
@@ -111,8 +112,7 @@ export default class Events extends React.Component {
 
 	_handleChangeTab({i, ref, from, }) {
 		this.setState({selectedIndex:i});
-		this._searchInput.refs.input.clear();
-		this.search("");
+		this.search(this._searchInput.refs.input._lastNativeText);
 	}
 
 	_setData(data, type) {
@@ -194,8 +194,8 @@ export default class Events extends React.Component {
 		return (
 			<TouchableOpacity onPress={() => { if(row.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.push("otherProfile", {id: row.userId}) }}}>
 				<View style={styles.containerUser}>
-					<Image source={{uri: row.photoUrl}} style={styles.circle} />
-					<RkText>{name}</RkText>
+					<Avatar img={row.photoUrl} rkType='circle'/>
+					<RkText style={{alignItems: 'center', flexDirection: 'row', marginLeft: 16}}>{name}</RkText>
 				</View>
 			</TouchableOpacity>
 		)
@@ -363,14 +363,6 @@ let styles = RkStyleSheet.create(theme => ({
 		paddingVertical: 8,
 		paddingHorizontal: 16,
 		alignItems: 'center'
-	},
-	circle: {
-	  borderRadius: 20,
-	  width: 40,
-	  height: 40,
-	  alignItems: 'center',
-	  flexDirection: 'row',
-	  marginRight: 16
 	},
 	tabView: {
 		flex: 1,

@@ -95,6 +95,7 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(Events)}
                                     title="Events"
                                     initial={true}
+                                    panHandlers={false}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -156,6 +157,7 @@ export default class Routes extends React.Component {
                                     key="discover"
                                     component={withRkTheme(Discover)}
                                     title="Discover"
+                                    panHandlers={false}
                                     initial={true}
                                 />
                                 <Scene
@@ -220,6 +222,7 @@ export default class Routes extends React.Component {
                                 hideTabBar="true"
                                 clone
                                 icon={TabIcon}
+                                panHandlers={false}
                                 navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                             />
                             <Stack
@@ -233,6 +236,7 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(Notifications)}
                                     title="Notifications"
                                     initial={true}
+                                    panHandlers={false}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -288,6 +292,7 @@ export default class Routes extends React.Component {
                                     title="Profile"
                                     initial={true}
                                     hideNavBar={true}
+                                    panHandlers={false}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene

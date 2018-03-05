@@ -268,7 +268,7 @@ export default class OtherProfile extends React.Component {
 							<View style={styles.row}>
 								<View style={styles.buttons}>
 								</View>
-								<Image source={{uri: this.state.user.photoUrl}} style={styles.big} />
+								<Avatar img={this.state.user.photo} rkType='big'/>
 								<View style={styles.buttons}>
 								{this.state.isFollowing === false ? 
 									<TouchableOpacity style={[styles.navButtons, {alignSelf: "flex-end"}]} onPress={() => {this.follow()}}>

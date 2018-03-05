@@ -57,7 +57,7 @@ export default class EditProfile extends React.Component {
                 <RkAvoidKeyboard>
                     <View style={styles.header}>
                         <PhotoUpload onResponse={res => console.log(res)}>
-                            <Image source={{uri: this.user.photo}} style={styles.big} />
+                            <Avatar img={this.user.photo} rkType='bigEdit'/>
                         </PhotoUpload>
                     </View>
                     <View style={styles.section}>
@@ -151,13 +151,5 @@ let styles = RkStyleSheet.create(theme => ({
         marginHorizontal: 25,
         marginBottom: 32,
         backgroundColor: '#FF5E20'
-    },
-	big: {
-			width: 110,
-			height: 110,
-			borderRadius: 55,
-            marginBottom: 19,      
-            paddingVertical: 25,
-            flexDirection: 'column'
-	}, 
+    }
 }));

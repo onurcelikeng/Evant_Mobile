@@ -100,8 +100,8 @@ export default class Chat extends React.Component {
 
     return (
       <View style={styles.item}>
-          <TouchableOpacity onPress={() => {if(info.item.user.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: info.item.user.userId })} }}>
-              <Image source={{uri: info.item.user.photoUrl}} style={styles.circle} />
+          <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}} onPress={() => {if(info.item.user.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: info.item.user.userId })} }}>
+              <Avatar img={info.item.user.photoUrl} rkType='circle'/>
           </TouchableOpacity>
           <View style={styles.content}>
               <View style={styles.contentHeader}>
@@ -237,13 +237,6 @@ let styles = RkStyleSheet.create(theme => ({
     },
     header: {
         alignItems: 'center'
-    },  
-    circle: {
-      borderRadius: 20,
-      width: 40,
-      height: 40,
-      alignItems: 'center',
-      flexDirection: 'row'
     },
     container: {
         flex: 1,

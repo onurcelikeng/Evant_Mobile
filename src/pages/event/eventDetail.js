@@ -53,9 +53,10 @@ export default class EventDetail extends React.Component {
     .then((responseJson) => {
       console.log(responseJson);
       if(responseJson.isSuccess) {
-        this.setState({
-          data: responseJson.data,
-          isLoading: false});
+        this.setState({data: responseJson.data})
+        this.joinStatus().then(() =>
+          this.setState({isLoading: false})
+        );    
       } else {
         DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
@@ -102,6 +103,7 @@ export default class EventDetail extends React.Component {
   }
 
   joinStatus() {
+    console.log(this.state.data)
     return eventOperationProvider.joinStatus(this.state.data.eventId)
     .then((responseJson) => {
       this.setState({join: responseJson.isSuccess})
@@ -203,8 +205,8 @@ export default class EventDetail extends React.Component {
                     <RkText style={styles.title} rkType='header4'>{this.state.data.title}</RkText>
                     <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).fromNow()}</RkText>
                   </View>
-                  <TouchableOpacity onPress={() => { if(this.state.data.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: this.state.data.user.userId}) }}>
-                    <Image source={{uri: this.state.data.user.photoUrl}} style={styles.circle} />
+                  <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row', marginRight: 16}} onPress={() => { if(this.state.data.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: this.state.data.user.userId}) }}>
+                    <Avatar img={this.state.data.user.photoUrl} rkType='circle'/>
                   </TouchableOpacity>
                 </View>
               </RkCard>
@@ -225,11 +227,7 @@ export default class EventDetail extends React.Component {
           </HeaderImageScrollView>
         </View>
       )
-    }
-
-    
-
-    
+    }  
   }
 }
 
@@ -248,14 +246,6 @@ let styles = RkStyleSheet.create(theme => ({
   },
   name: {
     fontWeight: 'bold',
-  },
-  circle: {
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginRight: 16
   },
   section: {
     padding: 20,

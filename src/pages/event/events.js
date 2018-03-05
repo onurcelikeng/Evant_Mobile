@@ -6,6 +6,7 @@ import ContentLoader from '../../config/contentLoader'
 import Svg, { Circle, Ellipse, G, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
+import {Avatar} from '../../components/avatar';
 import Login from '../login';
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as eventProvider from '../../providers/events';
@@ -20,7 +21,7 @@ export default class Events extends React.Component {
 		super(props);
 		this.state = {
 			isLoading: true,
-      refreshing: false
+      isRefreshing: false
 		}
 	
 		this.renderItem = this._renderItem.bind(this);
@@ -41,16 +42,12 @@ export default class Events extends React.Component {
 				this.setState({
 					isLoading: false,
 					data: responseJson.data,
-				  }, function() {
-					// do something with new state
-				});
+				  });
 			} else {
 				this.setState({
 					isLoading: false,
 					data: [],
-				  }, function() {
-					// do something with new state
-				});
+				  });
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		});
@@ -63,16 +60,12 @@ export default class Events extends React.Component {
 				this.setState({
 					isLoading: false,
 					data: responseJson.data,
-				  }, function() {
-					// do something with new state
-				});
+				  });
 			} else {
 				this.setState({
 					isLoading: false,
 					data: [],
-				  }, function() {
-					// do something with new state
-				});
+				  });
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		});
@@ -90,7 +83,7 @@ export default class Events extends React.Component {
 				activeOpacity={1}
 				onPress={() => { if(info.item.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: info.item.user.userId}) }}>
 				<View flexDirection="row" style={{flex:1, marginBottom: 5}}>
-					<Image style={{height:30, width: 30, borderRadius: 15, marginLeft: 5, marginRight: 5}} source={{uri: info.item.user.photoUrl}}/>
+					<Avatar img={info.item.user.photoUrl} rkType='small'/>
 					<RkText style={{fontSize: 14, alignSelf: 'center', fontWeight: 'bold'}}>{info.item.user.firstName + " " + info.item.user.lastName}</RkText>
 				</View>
 				</TouchableOpacity>
@@ -120,9 +113,9 @@ export default class Events extends React.Component {
 
 	_onRefresh() {
 		console.log("refreshing");
-    this.setState({refreshing: true});
+    this.setState({isRefreshing: true});
     this.getEvents().then(() => {
-      this.setState({refreshing: false});
+      this.setState({isRefreshing: false});
     });
   }
 	
@@ -158,7 +151,7 @@ export default class Events extends React.Component {
 				enableEmptySections={true}
 				refreshControl={
           <RefreshControl
-            refreshing={this.state.refreshing}
+            refreshing={this.state.isRefreshing}
             onRefresh={this._onRefresh.bind(this)}
           />
         }

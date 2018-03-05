@@ -65,9 +65,7 @@ export default class Chat extends React.Component {
 					isLoading: false,
           data: responseJson.data,
           isSuccess:true
-				  }, function() {
-					// do something with new state
-        });
+				});
         InteractionManager.runAfterInteractions(() => {
           this.refs.list.scrollToEnd();
         });
@@ -76,9 +74,7 @@ export default class Chat extends React.Component {
 					isLoading: false,
           isSuccess: false,
           data: []
-				  }, function() {
-					// do something with new state
-        });
+				  });
         DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
     });

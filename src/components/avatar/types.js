@@ -30,7 +30,7 @@ export const AvatarTypes = (theme) => {
         height: 110,
         borderRadius: 55,
         marginBottom: 19,
-        marginTop:25,
+        marginTop:20,
         borderColor:"#ffffff", 
         borderWidth:1.5,
       },

@@ -416,8 +416,7 @@ let styles = RkStyleSheet.create(theme => ({
 	  backgroundColor: '#FF5E20',
 	},
   navButtons: {
-		width: 50,
-		height: 50,
+		marginRight: 10
 	},
 	big: {
 		width: 100,

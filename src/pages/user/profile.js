@@ -292,7 +292,7 @@ let styles = RkStyleSheet.create(theme => ({
 	},
 	userInfo: {
 	  flexDirection: 'row',
-	  paddingBottom: 6
+	  paddingBottom: 4
 	},
 	section: {
 	  flex: 1,
@@ -324,8 +324,7 @@ let styles = RkStyleSheet.create(theme => ({
 	  backgroundColor: '#FF5E20',
 	},
   navButtons: {
-		width: 50,
-		height: 50,
+		marginRight: 10
 	}, 
 	backgroundImage: {
     flex: 1,

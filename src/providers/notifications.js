@@ -9,7 +9,14 @@ export function getNotifications() {
 }
 
 export function readNotifications() {
-    return axios.post('eventoperations')
+    return axios.get('notifications/read')
+    .then(res => res.data).then(res => {
+        return res;
+    });
+}
+
+export function deleteNotification(id) {
+    return axios.delete('notifications/' + id)
     .then(res => res.data).then(res => {
         return res;
     });

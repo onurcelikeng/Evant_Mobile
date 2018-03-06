@@ -3,6 +3,7 @@ import { ListView, View, Image, TouchableOpacity, TouchableHighlight, RefreshCon
 import { RkStyleSheet, RkText } from 'react-native-ui-kitten';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import { Actions } from 'react-native-router-flux';
+import Swipeable from 'react-native-swipeable';
 
 import DropdownHolder from '../providers/dropdownHolder';
 import ContentLoader from '../config/contentLoader'
@@ -19,8 +20,11 @@ export default class Notifications extends React.Component {
 	
 		this.state = {
 			isLoading: true,
-			isRefreshing: false
+			isRefreshing: false,
+			isSwiping: false
 		};
+
+		this.renderRow = this.renderRow.bind(this);
 	}
 
 	componentWillMount() {
@@ -31,7 +35,6 @@ export default class Notifications extends React.Component {
 		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		return notificationProvider.getNotifications()
 		.then((responseJson) => {
-			console.log(responseJson)
 			if(responseJson.isSuccess) {
 				this.setState({
 					data: ds.cloneWithRows(responseJson.data),
@@ -41,15 +44,27 @@ export default class Notifications extends React.Component {
 				.then((responseJson) => {
 					console.log(responseJson)
 					if(responseJson.isSuccess) {
-						console.log(responseJson.message)
+						console.log(responseJson.data)
 					} else {
-						DropdownHolder.getDropDown().alertWithType("error", "", responseJson.data);
+						DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 					}
 				})
 			} else {
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		})
+	}
+
+	deleteNotification(id) {
+		return notificationProvider.deleteNotification(id)
+		.then((responseJson) => {
+			if(responseJson.isSuccess) {
+				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+				this.getNotifications();
+			} else {
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+			}
+		});
 	}
 
 	_onRefresh() {
@@ -61,10 +76,11 @@ export default class Notifications extends React.Component {
 	}
 
 	renderRow(row) {
-	
+		const {currentlyOpenSwipeable} = this.state;
+		
 		let username = `${row.user.firstName} ${row.user.lastName}`;
 		let hasAttachment = row.event !== null;
-		console.log(hasAttachment)
+		console.log(row)
 		let attachment = <View/>;
 	
 		let mainContentStyle;
@@ -74,43 +90,58 @@ export default class Notifications extends React.Component {
 		}
 	
 		return (
-			<TouchableOpacity activeOpacity={1} onPress={() => {
-				if(row.notificationType == 1) {
-					Actions.comments()
-				}
-				else if(row.notificationType == 2) {
-					Actions.eventDetail({id: row.user.id})
-				}
-				else if(row.notificationType == 3) {
-					Actions.otherProfile({id: row.user.id})
-				}
-			}}>
-				<View style={styles.container}>
-					<TouchableHighlight style={{borderRadius: 20}} activeOpacity={0.6} onPress={() => { Actions.otherProfile({id: row.user.userId}) }}>
-						<Avatar img={row.user.photoUrl} rkType='circle' badge={row.notificationType}/>
-					</TouchableHighlight>
-					<View style={styles.content}>
-						<View style={mainContentStyle}>
-							<View style={styles.text}>
-								<RkText>
-									<RkText rkType='header6'>{username}</RkText>
-									<RkText rkType='primary2'> {row.content}</RkText>
-								</RkText>
-							</View>
-							<RkText rkType='secondary5 hintColor'>{moment().add(row.createdAt, 'seconds').fromNow()}</RkText>
-						</View>		
-						
-						{(row.notificationType == 1 || row.notificationType == 2) ? <TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {
-							if(row.notificationType == 1) {
-								Actions.comments()
-							}
-							else if(row.notificationType == 2) {
-								Actions.eventDetail({id: row.event.eventId})
-							}
-						} }>{attachment}</TouchableHighlight> : null }
+			<Swipeable
+				rightButtons={[
+					<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.deleteNotification(row.notificationId)}}><RkText style={{color: '#ffffff'}}>Delete</RkText></TouchableHighlight>
+				]}
+				onSwipeStart={() => this.setState({isSwiping: true})}
+				onSwipeRelease={() => this.setState({isSwiping: false})}
+				onRightButtonsOpenRelease={(event, gestureState, swipeable) => {
+					if (currentlyOpenSwipeable && currentlyOpenSwipeable !== swipeable) {
+					  currentlyOpenSwipeable.recenter();
+					}
+			
+					this.setState({currentlyOpenSwipeable: swipeable});
+				  }}
+      			onRightButtonsCloseRelease={() => this.setState({currentlyOpenSwipeable: null})}>
+				<TouchableOpacity activeOpacity={1} onPress={() => {
+					if(row.notificationType == 1) {
+						Actions.comments({id: row.event.eventId})
+					}
+					else if(row.notificationType == 2) {
+						Actions.eventDetail({id: row.event.eventId})
+					}
+					else if(row.notificationType == 3) {
+						Actions.otherProfile({id: row.user.id})
+					}
+				}}>
+					<View style={styles.container}>
+						<TouchableHighlight style={{borderRadius: 20}} activeOpacity={0.6} onPress={() => { Actions.otherProfile({id: row.user.userId}) }}>
+							<Avatar img={row.user.photoUrl} rkType='circle' badge={row.notificationType}/>
+						</TouchableHighlight>
+						<View style={styles.content}>
+							<View style={mainContentStyle}>
+								<View style={styles.text}>
+									<RkText>
+										<RkText rkType='header6'>{username}</RkText>
+										<RkText rkType='primary2'> {row.content}</RkText>
+									</RkText>
+								</View>
+								<RkText rkType='secondary5 hintColor'>{moment().add(row.createdAt, 'seconds').fromNow()}</RkText>
+							</View>		
+							
+							{(row.notificationType == 1 || row.notificationType == 2) ? <TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {
+								if(row.notificationType == 1) {
+									Actions.comments()
+								}
+								else if(row.notificationType == 2) {
+									Actions.eventDetail({id: row.event.eventId})
+								}
+							} }>{attachment}</TouchableHighlight> : null }
+						</View>
 					</View>
-				</View>
-			</TouchableOpacity>
+				</TouchableOpacity>
+				</Swipeable>
 		)
 	}
 	
@@ -141,6 +172,7 @@ export default class Notifications extends React.Component {
 		} else {
 			return (
 				<ListView
+					scrollEnabled={!this.state.isSwiping}
 					style={styles.root}
 					dataSource={this.state.data}
 					renderRow={this.renderRow}
@@ -189,5 +221,11 @@ let styles = RkStyleSheet.create(theme => ({
 		right: 0,
 		height: 50,
 		width: 50
+	},
+	rightSwipeItem: {
+		flex: 1,
+		justifyContent: 'center',
+		paddingLeft: 20,
+		backgroundColor: '#4fba8a'
 	}
 }));

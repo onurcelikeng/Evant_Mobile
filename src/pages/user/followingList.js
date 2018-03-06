@@ -59,17 +59,13 @@ export default class FollowingList extends React.Component {
 					isLoading: false,
           data: ds.cloneWithRows(responseJson.data),
           users: responseJson.data
-				  }, function() {
-					// do something with new state
-				});
+				  });
 			} else {
         this.setState({
 					isLoading: false,
           data: ds.cloneWithRows([]),
           users: []
-				  }, function() {
-					// do something with new state
-				});
+				  });
 				console.log(responseJson.message);
 			}
 		})
@@ -118,7 +114,7 @@ export default class FollowingList extends React.Component {
 
   _onRefresh() {
     this.setState({refreshing: true});
-    this.getFollowings().then(() => {
+    this.getFollowings(this.props.id).then(() => {
       this.setState({refreshing: false});
     });
   }

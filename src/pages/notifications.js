@@ -112,7 +112,7 @@ export default class Notifications extends React.Component {
 						Actions.eventDetail({id: row.event.eventId})
 					}
 					else if(row.notificationType == 3) {
-						Actions.otherProfile({id: row.user.id})
+						Actions.otherProfile({id: row.user.userId})
 					}
 				}}>
 					<View style={styles.container}>
@@ -132,9 +132,8 @@ export default class Notifications extends React.Component {
 							
 							{(row.notificationType == 1 || row.notificationType == 2) ? <TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {
 								if(row.notificationType == 1) {
-									Actions.comments()
-								}
-								else if(row.notificationType == 2) {
+									Actions.comments({id: row.event.eventId})
+								} else if(row.notificationType == 2) {
 									Actions.eventDetail({id: row.event.eventId})
 								}
 							} }>{attachment}</TouchableHighlight> : null }

@@ -4,7 +4,7 @@ import { RkText, RkButton, RkStyleSheet } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import * as Animatable from 'react-native-animatable';
-import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
+import HeaderImageScrollView, { TriggeringView } from 'image-header-scroll';
 import { Header } from 'react-navigation';
 import Timeline from 'react-native-timeline-listview';
 

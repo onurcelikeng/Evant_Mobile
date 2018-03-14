@@ -17,6 +17,7 @@
     "appcenter-crashes": "^1.2.0",
     "axios": "^0.17.1",
     "d3-interpolate": "^1.1.6",
+    "image-header-scroll": "github:EvantApp/image-header-scroll",
     "moment": "^2.20.1",
     "react": "16.2.0",
     "react-native": "0.52.2",
@@ -24,7 +25,7 @@
     "react-native-button": "^2.2.0",
     "react-native-device-info": "^0.15.3",
     "react-native-dropdownalert": "^3.3.0",
-    "react-native-image-header-scroll-view": "^0.8.0",
+    "react-native-image-header-scroll-view": "^0.8.1",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-onesignal": "^3.0.9",
@@ -38,8 +39,8 @@
     "react-native-svg": "^6.2.1",
     "react-native-swipeable": "^0.6.0",
     "react-native-switch-pro": "^0.4.8",
-    "react-native-timeline-listview": "^0.2.2",
-    "react-native-ui-kitten": "^3.0.0",
+    "react-native-timeline-listview": "github:EvantApp/react-native-timeline-listview",
+    "react-native-ui-kitten": "github:EvantApp/react-native-ui-kitten",
     "react-navigation": "^1.0.0-beta.29"
   },
   "devDependencies": {

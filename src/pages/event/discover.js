@@ -214,7 +214,7 @@ export default class Events extends React.Component {
 			var loaders = [];
 			for(let i = 0; i < 10; i++){
 				loaders.push(
-					<ContentLoader key={i} height={150}>
+					<ContentLoader key={i} height={150} marginLeft={5}>
 						<Circle cx="30" cy="30" r="30"/>
 						<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
 						<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
@@ -225,8 +225,25 @@ export default class Events extends React.Component {
 				)
 			}
 			return (
-			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-				{loaders}
+			  <View style={styles.root}>
+				<View style={styles.searchContainer}>
+					<RkTextInput
+						ref={c => this._searchInput = c}
+						style={[styles.search, {marginRight: 5}]} 
+						labelStyle={{fontSize: 18}}
+						inputStyle={{fontSize: 16}}
+						autoCapitalize='none'
+						autoCorrect={false}
+						onChange={(event) => {this.search(event.nativeEvent.text)}}
+						onFocus={() => {this.searchPage()}}
+						label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
+						rkType='row'
+						placeholder='Search'/>
+					<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>Cancel</RkText></TouchableWithoutFeedback>
+				</View> 
+				<View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
+					{loaders}
+				</View>
 			  </View>
 			);
 		}

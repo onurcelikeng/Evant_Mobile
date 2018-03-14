@@ -8,8 +8,9 @@ export function getEvents() {
         .then(res => { return res; });
 }
 
-export function addEvents(credentials) {
+export function addEvent(credentials) {
     var body = {
+        eventId: "0",
         categoryId: credentials.categoryId,
         title: credentials.title,
         description: credentials.description,

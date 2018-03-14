@@ -155,6 +155,15 @@ export default class Profile extends React.Component {
 	render() {
 		let name = this.user.name;
 		var width = require('Dimensions').get('window').width - 50;
+		var loaders = [];
+		for(let i = 0; i < 10; i++){
+			loaders.push(
+				<ContentLoader key={i} height={70}>
+					<Circle cx="30" cy="30" r="30"/>
+					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+				</ContentLoader>
+			)
+		}
 
 		return (
 			<View style={styles.container}>
@@ -237,10 +246,7 @@ export default class Profile extends React.Component {
           </TriggeringView>
 					{this.state.isLoading ?
 						<View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-							<ContentLoader height={70}>
-								<Circle cx="30" cy="30" r="30"/>
-								<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-							</ContentLoader>
+							{loaders}
 						</View>
 						:
 						<View style={styles.timeline}>

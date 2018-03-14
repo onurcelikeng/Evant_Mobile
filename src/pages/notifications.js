@@ -140,7 +140,7 @@ export default class Notifications extends React.Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-				</Swipeable>
+			</Swipeable>
 		)
 	}
 	

@@ -92,10 +92,11 @@ export class DoughnutChart extends RkComponent {
               }]}>
             </VictoryPie>
             <SvgText
-              textAnchor="middle" verticalAnchor="middle"
+              textAnchor="middle" 
+              verticalAnchor="middle"
               x={scale(this.size / 2)}
               y={scale(this.size / 2 - this.fontSize / 2)}
-              dy={scale(this.fontSize * -0.25)}
+              dy={scale(this.fontSize)}
               height={scale(this.fontSize)}
               fontSize={scale(this.fontSize)}
               fontFamily={RkTheme.current.fonts.family.regular}

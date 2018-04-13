@@ -13,7 +13,7 @@ export const FontIcons = {
 };
 
 export const FontAwesome = {
-  heart: String.fromCharCode(61444),
+  heart: String.fromCharCode(61578),
   comment: String.fromCharCode(61557),
   user: String.fromCharCode(62144),
   twitter: String.fromCharCode(61593),

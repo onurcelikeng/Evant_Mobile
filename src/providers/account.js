@@ -92,24 +92,23 @@ export function deactivateAccount() {
 }
 
 export function photo(credentials) {
-    var body = {
-        folder: "",
-        file: {
-            contentType: credentials.contentType,
-            contentDisposition: credentials.contentDisposition,
-            headers: credentials.headers,
-            length: credentials.length,
-            name: credentials.name,
-            fileName: credentials.fileName
-          }
+    console.log(credentials.uri);
+
+    var photo = {
+        uri: credentials.uri,
+        type: 'image/jpeg',
+        name: 'photo.jpg'
     };
 
+    var form = new FormData();
+    form.append("File", photo);
+
     var headers = {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Accept': 'application/json'
     }
 
-    return axios.post('account/photo', body, {headers: headers})
+    return axios.post('account/photo', form, {headers: headers})
     .then(res => res.data)
     .then(token => { return token; });
 }

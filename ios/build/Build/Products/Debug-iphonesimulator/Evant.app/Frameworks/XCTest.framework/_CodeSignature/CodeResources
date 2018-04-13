@@ -66,7 +66,7 @@
 		</data>
 		<key>Headers/XCTestCase.h</key>
 		<data>
-		7cm+qMjwhWmKgQWOex4Hjcc2jvs=
+		9k/frnoS30eoHzc0bCt1L5mno9U=
 		</data>
 		<key>Headers/XCTestCaseRun.h</key>
 		<data>
@@ -90,7 +90,7 @@
 		</data>
 		<key>Headers/XCTestObservation.h</key>
 		<data>
-		24hjfD82jAN7/PhxU8RiEWTo5gs=
+		eYPPds+/sIm1g8tzzWEi74ngT8s=
 		</data>
 		<key>Headers/XCTestObservationCenter.h</key>
 		<data>
@@ -174,7 +174,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		CYfyvPIGUR84QvCD7SuNDvG6Bxc=
+		THfQZgzkqYfCF+1a6Qiiyg4PBvk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -191,7 +191,7 @@
 		</dict>
 		<key>version.plist</key>
 		<data>
-		Etc/8BPenX54rv1uBx24u4bnqTg=
+		4NEkyhJ9SrLJFKYhtHIBA6JBUFk=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -365,11 +365,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7cm+qMjwhWmKgQWOex4Hjcc2jvs=
+			9k/frnoS30eoHzc0bCt1L5mno9U=
 			</data>
 			<key>hash2</key>
 			<data>
-			zx/f5HefeE/H6XdzU8PNfu+tq/NcLHXaLOQxIRbQA9E=
+			sUlicIfA6n2ptVq+hNCObVRX+Ko6TpYZ5MtZYgnkTAI=
 			</data>
 		</dict>
 		<key>Headers/XCTestCaseRun.h</key>
@@ -431,11 +431,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			24hjfD82jAN7/PhxU8RiEWTo5gs=
+			eYPPds+/sIm1g8tzzWEi74ngT8s=
 			</data>
 			<key>hash2</key>
 			<data>
-			bZQGOpPj/qLs1snCfbJDBnIeMfcP2Bs5EhkID+1qmjM=
+			DlaZPljnXduHBIxVFsQHWivHsQV6+QqtkPm3wqcNC9c=
 			</data>
 		</dict>
 		<key>Headers/XCTestObservationCenter.h</key>
@@ -686,11 +686,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Etc/8BPenX54rv1uBx24u4bnqTg=
+			4NEkyhJ9SrLJFKYhtHIBA6JBUFk=
 			</data>
 			<key>hash2</key>
 			<data>
-			Jh5i9giCFfo5GhN25CjMKdDJ6Kdlz/p4L95RITR+WeA=
+			npuwVsQMT6N9VGE0YqH9a729MzPY+LnokIqdklNFhIs=
 			</data>
 		</dict>
 	</dict>

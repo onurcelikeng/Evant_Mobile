@@ -26,7 +26,9 @@ export default class EditProfile extends React.Component {
             phone: this.data.phone,
             twitter: true,
             google: false,
-            facebook: false
+            facebook: false,
+            photo: this.user.photo,
+            isPhotoChanged: false
         }
     }
 
@@ -43,7 +45,18 @@ export default class EditProfile extends React.Component {
                 Login.getCurrentUser().firstName = this.state.firstName;
                 Login.getCurrentUser().lastName = this.state.lastName;
                 Login.getCurrentUser().email = this.state.email;
-                DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+
+                accountProvider.photo(this.state.photo)
+                .then((res) => {
+                    console.log(res);
+                    if(res.isSuccess) {
+                        this.user.photo = this.state.photo;
+                        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
             }
             else {
                 DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -56,8 +69,18 @@ export default class EditProfile extends React.Component {
             <ScrollView style={styles.root} key={this.state}>
                 <RkAvoidKeyboard>
                     <View style={styles.header}>
-                        <PhotoUpload onResponse={res => console.log(res)}>
-                            <Avatar img={this.user.photo} rkType='bigEdit'/>
+                        <PhotoUpload 
+                            width={300}
+                            height={300}
+                            quality={50}
+                            onResizedImageUri={(res) => {console.log(res); this.setState({photo: res, isPhotoChanged: true})}}
+                        >
+                        { 
+                            this.state.isPhotoChanged ?
+                            <Avatar img={this.state.photo.uri} rkType='bigEdit'/>
+                            :
+                            <Avatar img={this.state.photo} rkType='bigEdit'/>
+                        }
                         </PhotoUpload>
                     </View>
                     <View style={styles.section}>
@@ -66,35 +89,34 @@ export default class EditProfile extends React.Component {
                         </View>
                         <View style={styles.row}>
                             <RkTextInput label='First Name'
-                                        value={this.state.firstName}
-                                        rkType='right clear'
-                                        onChangeText={(text) => this.setState({firstName: text})}/>
+                                value={this.state.firstName}
+                                rkType='right clear'
+                                onChangeText={(text) => this.setState({firstName: text})}/>
                         </View>
                         <View style={styles.row}>
                             <RkTextInput label='Last Name'
-                                        value={this.state.lastName}
-                                        onChangeText={(text) => this.setState({lastName: text})}
-                                        rkType='right clear'/>
+                                value={this.state.lastName}
+                                onChangeText={(text) => this.setState({lastName: text})}
+                                rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
                             <RkTextInput label='Email'
-                                        value={this.state.email}
-                                        onChangeText={(text) => this.setState({email: text})}
-                                        rkType='right clear'/>
+                                value={this.state.email}
+                                onChangeText={(text) => this.setState({email: text})}
+                                rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
                             <RkTextInput label='Country'
-                                        value={this.state.country}
-                                        onChangeText={(text) => this.setState({country: text})}
-                                        rkType='right clear'/>
+                                value={this.state.country}
+                                onChangeText={(text) => this.setState({country: text})}
+                                rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
                             <RkTextInput label='Phone'
-                                        value={this.state.phone}
-                                        onChangeText={(text) => this.setState({phone: text})}
-                                        rkType='right clear'/>
+                                value={this.state.phone}
+                                onChangeText={(text) => this.setState({phone: text})}
+                                rkType='right clear'/>
                         </View>
-
                     </View>
 
                     <View style={styles.section}>

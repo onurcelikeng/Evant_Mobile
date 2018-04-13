@@ -17,8 +17,11 @@
     "appcenter-crashes": "^1.2.0",
     "axios": "^0.17.1",
     "d3-interpolate": "^1.1.6",
+    "hoist-non-react-statics": "^2.5.0",
     "image-header-scroll": "github:EvantApp/image-header-scroll",
+    "lodash": "^4.17.5",
     "moment": "^2.20.1",
+    "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-native": "0.52.2",
     "react-native-animatable": "^1.2.4",
@@ -41,7 +44,8 @@
     "react-native-switch-pro": "^0.4.8",
     "react-native-timeline-listview": "github:EvantApp/react-native-timeline-listview",
     "react-native-ui-kitten": "github:EvantApp/react-native-ui-kitten",
-    "react-navigation": "^1.0.0-beta.29"
+    "react-navigation": "^1.0.0-beta.29",
+    "victory-native": "^0.17.2"
   },
   "devDependencies": {
     "babel-jest": "22.1.0",

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Scene, Router, Actions, Reducer, Overlay, Tabs, Stack } from 'react-native-router-flux';
 import { Platform, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { RkText, RkButton, RkStyleSheet, RkTextInput, RkTabView } from 'react-native-ui-kitten';
+import { RkText, RkButton, RkStyleSheet, RkTextInput, RkTabView, withRkTheme } from 'react-native-ui-kitten';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
-import { withRkTheme } from 'react-native-ui-kitten'
 
 import Login from './pages/login';
 import Signup from './pages/signup';
 import { SplashScreen } from './pages/splash';
+import Dashboard from './pages/dashboard';
 import Events from './pages/event/events';
+import CategoryEvents from './pages/event/categoryEvents';
 import EventDetail from './pages/event/eventDetail';
 import Discover from './pages/event/discover';
 import Comments from './pages/event/comments'; 
@@ -107,6 +108,12 @@ export default class Routes extends React.Component {
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
+                                    key="dashboard"
+                                    component={withRkTheme(Dashboard)}
+                                    title="Dashboard"
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                                <Scene
                                     key="goingList"
                                     component={withRkTheme(GoingList)}
                                     title="Goings"
@@ -164,6 +171,13 @@ export default class Routes extends React.Component {
                                     key="events"
                                     component={withRkTheme(Events)}
                                     title="Events"
+                                    panHandlers={null}
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                                <Scene
+                                    key="categoryEvents"
+                                    component={withRkTheme(CategoryEvents)}
+                                    title="Category Events"
                                     panHandlers={null}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />

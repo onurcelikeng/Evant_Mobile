@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, Dimensions, InteractionManager, TouchableWithoutFeedback, ListView } from 'react-native';
+import { FlatList, SectionList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, ScrollView, StyleSheet, Dimensions, InteractionManager, TouchableWithoutFeedback, ListView } from 'react-native';
 import { RkText, RkCard, RkStyleSheet, RkTextInput, RkButton } from 'react-native-ui-kitten';
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
@@ -7,9 +7,11 @@ import ContentLoader from '../../config/contentLoader'
 import Svg, { Circle, Ellipse, G, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import LinearGradient from 'react-native-linear-gradient';
+import Swipeable from 'react-native-swipeable';
 
 import Login from '../login';
 import DropdownHolder from '../../providers/dropdownHolder';
+import * as searchHistoryProvider from '../../providers/searchHistories';
 import * as categoryProvider from '../../providers/category';
 import * as eventProvider from '../../providers/events';
 import * as userProvider from '../../providers/users';
@@ -19,47 +21,48 @@ import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
 
 let moment = require('moment');
-var self;
 
-export default class Events extends React.Component {
+export default class Discover extends React.Component {
 
 	constructor(props) {
 		super(props);
-		self = this;
 
 		this.setData = this._setData.bind(this);
-		this.renderItem = this._renderItem.bind(this);		
+		this.renderCategoryItem = this._renderCategoryItem.bind(this);		
+		this.renderHistoryItem = this._renderHistoryItem.bind(this);		
 		this.renderEventItem = this._renderEventItem.bind(this);
 		this.renderUserRow = this._renderUserRow.bind(this);
 		this.handleChangeTab = this._handleChangeTab.bind(this);
 
+		this.currentlyOpenSwipeable = null;
+
 		this.state = {
 			isLoading: true,
 			isSearchPressed: false,
-			selectedIndex: 0
+			selectedIndex: 0,
+			isSwiping: false,
+			rightActionActivated: false,
+			toggle: false
 		}    
 	}
 
 	componentDidMount() {
-		this.getCategories();
+		this.getCategories().then(() => {
+			this.getSearchHistories();
+		});
 	}
 
 	getCategories() {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
 			if(responseJson.isSuccess) {
+				console.log(responseJson.data);
 				this.setState({
-					isLoading: false,
 					data: responseJson.data,
-				  }, function() {
-					// do something with new state
 				});
 			} else {  
 				this.setState({
-					isLoading: false,
 					data: [],
-				  }, function() {
-					// do something with new state
 				});      
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
@@ -68,6 +71,34 @@ export default class Events extends React.Component {
 		  console.log(error);
 		});
 	}  
+
+	getSearchHistories() {
+		return searchHistoryProvider.getSearchHistories()
+		.then((responseJson) => {
+			if(responseJson.isSuccess) {
+				this.setState({
+					isLoading: false,
+					searchData: responseJson.data.slice(0, 5)
+				})
+			} else {
+				this.setState({
+					isLoading: false,
+					searchData: []
+				})
+			}
+		})
+	}
+
+	deleteSearchHistory(id) {
+		return searchHistoryProvider.deleteSearchHistory(id)
+		.then((responseJson) => {
+			if(responseJson.isSuccess) {
+				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+			} else {
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+			}
+		})
+	}
 
 	searchPage() {
 		this.setState({
@@ -112,7 +143,8 @@ export default class Events extends React.Component {
 
 	_handleChangeTab({i, ref, from, }) {
 		this.setState({selectedIndex:i});
-		this.search(this._searchInput.refs.input._lastNativeText);
+		if(this._searchInput.refs.input._lastNativeText !== undefined)
+			this.search(this._searchInput.refs.input._lastNativeText);
 	}
 
 	_setData(data, type) {
@@ -136,19 +168,48 @@ export default class Events extends React.Component {
 		return post.categoryId;
 	}
 	
-	_renderItem(info) {
+	_renderCategoryItem(info) {
 		return (
-			<TouchableHighlight
-				delayPressIn={70}
-				activeOpacity={0.8}
-				onPress={() => this.props.navigation.navigate('events', {id: info.item.categoryId})}>
-				<RkCard rkType='backImg'>
-					<Image rkCardImg style={{resizeMode:"stretch"}} source={{uri: info.item.photoUrl}}/>
-					<View rkCardImgOverlay rkCardContent style={styles.overlay}>
-						<RkText rkType='header2 inverseColor' style={{fontSize: 20}}>{info.item.name}</RkText>
+			<View style={styles.row}>
+				<TouchableOpacity 
+					style={styles.rowButton}	
+					delayPressIn={70}
+					activeOpacity={0.8}
+					onPress={() => this.props.navigation.navigate('categoryEvents', {id: info.item.categoryId, title: info.item.name})}>
+					<View style={styles.categoryNameIcon}>
+						<Image rkCardImg style={styles.categoryIcon} source={{uri: info.item.photoUrl}}/>
+						<RkText style={styles.categoryName}>{info.item.name}</RkText>
 					</View>
-				</RkCard>
-			</TouchableHighlight>
+					<RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
+				</TouchableOpacity>
+			</View>
+		)
+	}
+
+	_renderHistoryItem(info) {
+		const {rightActionActivated, toggle} = this.state;
+		return (
+			<Swipeable
+				onRef = {ref => this.swipe = ref}
+				rightActionActivationDistance={200}
+				rightButtons={[
+					<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteSearchHistory(info.item.historyId); this.getSearchHistories();}}><Image style={{height: 20, width: 20}} source={require('../../assets/icons/delete.png')}/></TouchableHighlight>
+				]}
+				onRightActionActivate={() => {this.deleteSearchHistory(info.item.historyId);this.setState({rightActionActivated: true})}}
+				onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
+				onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getSearchHistories(); this.setState({toggle: !toggle})}}
+				onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
+					if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
+					this.currentlyOpenSwipeable.recenter(); }
+					this.currentlyOpenSwipeable = swipe;
+					} }
+				onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
+				<View style={styles.row}>
+					<TouchableOpacity style={styles.rowButton}>
+						<RkText style={styles.recentSearch}>{info.item.keyword}</RkText>
+					</TouchableOpacity>
+				</View>
+			</Swipeable>
 		)
 	}
 
@@ -208,7 +269,6 @@ export default class Events extends React.Component {
 	}
 	
 	render() {
-
 		if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
 			var loaders = [];
@@ -329,11 +389,22 @@ export default class Events extends React.Component {
 						rkType='row'
 						placeholder='Search'/>
 				</View> 
-			
-				<FlatList numColumns={2} data={this.state.data}
-					renderItem={this.renderItem}
-					keyExtractor={this._keyExtractor}
-					style={styles.root}/>
+
+				<ScrollView style={styles.scroll}>
+					<SectionList
+						renderSectionHeader = {({section}) => {
+							return <View style={styles.section}>
+										<View style={[styles.row, styles.heading]}>
+											<RkText rkType='primary header6'>{section.title}</RkText>
+										</View>
+									</View>
+						}}
+						sections={[
+							{data: this.state.searchData, key: "0", renderItem: this.renderHistoryItem, title: "RECENT SEARCHES"},
+							{data: this.state.data, key: "1", renderItem: this.renderCategoryItem, title: "CATEGORIES"}
+						]}
+					/>
+				</ScrollView>
 			</View>
 		)
 	}
@@ -364,7 +435,7 @@ let styles = RkStyleSheet.create(theme => ({
 	},
 	search: {
 		backgroundColor: theme.colors.screen.bold,
-		height: 25
+		height: 30
 	},
 	cancelButton: {
 		color: theme.colors.text.nav,
@@ -399,4 +470,51 @@ let styles = RkStyleSheet.create(theme => ({
 	overlay: {
 		justifyContent: 'flex-end'
 	},
+	scroll: {
+		backgroundColor: theme.colors.screen.base
+	},
+	section: {
+		marginTop: 25
+	},
+	heading: {
+		paddingBottom: 12.5
+	},
+	row: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingHorizontal: 17.5,
+		borderBottomWidth: StyleSheet.hairlineWidth,
+		borderColor: theme.colors.border.base,
+		alignItems: 'center'
+	},
+	rowButton: {
+		flex: 1,
+		paddingVertical: 18,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	},
+	categoryIcon: {
+		width: 20, 
+		height: 20, 
+		marginRight: 8,
+		alignItems: "center"
+	},
+	categoryName: {
+		fontSize: 15, 
+		fontWeight:"normal", 
+		alignSelf:"center"
+	},
+	categoryNameIcon: {
+		flexDirection: 'row'
+	},
+	recentSearch: {
+		fontSize: 15, 
+		fontWeight:"normal"
+	},
+	rightSwipeItem: {
+		flex: 1,
+		justifyContent: 'center',
+		paddingLeft: 20,
+		backgroundColor: '#FF3B30'
+	}
 }));

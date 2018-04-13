@@ -200,8 +200,7 @@ export default class Profile extends React.Component {
 							</View>
 							<RkText rkType='header3' style={{color: '#ffffff', marginBottom: 5}}>{name}</RkText>
 							<View style={{flexDirection:"row", justifyContent: 'center', alignItems: 'center'}}>
-								<Image style={{height:20, width:20}} source={require('../../assets/icons/location.png')}></Image>
-								<RkText style={{color: '#ffffff',  fontSize: 14, textAlign:"center", marginLeft:2}} rkType='secondary1 hintColor'>İzmir, Türkiye</RkText>
+								<RkText style={{color: '#ffffff',  fontSize: 14, textAlign:"center"}} rkType='secondary1 hintColor'>İzmir, Türkiye</RkText>
 							</View>
 						</View>
 
@@ -254,6 +253,7 @@ export default class Profile extends React.Component {
 								style={styles.list}
 								data={this.state.data}
 								circleSize={20}
+								separator = {true}
 								circleColor='rgba(0,0,0,0)'
 								lineColor='rgb(45,156,219)'
 								timeContainerStyle={{minWidth:70, marginTop: -5}}

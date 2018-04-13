@@ -99,7 +99,6 @@ let styles = RkStyleSheet.create(theme => ({
   layout: {
     backgroundColor: theme.colors.screen.nav,
     paddingTop: UIConstants.StatusbarHeight,
-    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: theme.colors.border.base
   },
   container: {

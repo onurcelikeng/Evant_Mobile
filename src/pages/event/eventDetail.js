@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image, View, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
+import { ScrollView, Image, View, TouchableOpacity, Dimensions, StatusBar, StyleSheet } from 'react-native';
 import { RkCard, RkText, RkStyleSheet, RkButton, RkModalImg } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
@@ -155,11 +155,17 @@ export default class EventDetail extends React.Component {
       console.log(this.state.data)
       let button = null;
       if (this.state.data.user.userId == Login.getCurrentUser().userId) {
-        button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.deleteEvent()}>DELETE</RkButton>;
+        button = <TouchableOpacity onPress={() => { this.deleteEvent()}} activeOpacity={0.6}>
+                  <Image style={{height: 25, width: 25, tintColor: "#707070"}} source={require("../../assets/icons/delete_outline.png")}/>
+                </TouchableOpacity>;
       } else if(this.state.join == true){
-        button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.leaveEvent()}>LEAVE</RkButton>;
+        button = <TouchableOpacity onPress={() => { this.leaveEvent()}} activeOpacity={0.6}>
+                  <Image style={{height: 25, width: 25}} source={require("../../assets/icons/heart.png")}/>
+                </TouchableOpacity>;
       } else {
-        button = <RkButton rkType='medium stretch rounded' style={styles.save} onPress={() => this.joinEvent()}>JOIN</RkButton>;
+        button = <TouchableOpacity onPress={() => { this.joinEvent()}} activeOpacity={0.6}>
+                  <Image style={{height: 25, width: 25}} source={require("../../assets/icons/heart_outline.png")}/>
+                </TouchableOpacity>;
       }
 
       return (
@@ -215,16 +221,32 @@ export default class EventDetail extends React.Component {
               <View rkCardContent>
                 <SocialBar id={this.state.data.eventId} comments={this.state.data.totalComments} goings={this.state.data.totalGoings}/>
               </View>
-              <View rkCardContent>
-                <View>
-                  <RkText rkType='primary3 bigLine'>{this.state.data.description}</RkText>
-                </View>
-              </View>
-              <View style={styles.buttons}>
-                {button} 
+              <View style={{paddingHorizontal: 10, paddingVertical: 5}}>
+                <RkText rkType='primary3 bigLine'>{this.state.data.description}</RkText>
               </View>
             </RkCard>
           </HeaderImageScrollView>
+
+          <View style={{backgroundColor: "#ffffff", height: 45, borderTopWidth: 1, borderTopColor: "#f2f2f2"}}>
+            <View style={styles.buttons}>
+              {
+                this.state.data.user.userId == Login.getCurrentUser().userId ?
+                  <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard()}}>
+                    <Image style={{height: 28, width: 28}} source={require("../../assets/icons/dashboard.png")}/>
+                  </TouchableOpacity>
+                :
+                <View></View>
+              }
+              
+              <TouchableOpacity activeOpacity={0.6}>
+                <Image style={{height: 28, width: 28, marginHorizontal: 5}} source={require("../../assets/icons/share.png")}/>
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.comments({id: this.state.data.eventId})}}>
+                <Image style={{height: 25, width: 25, marginRight: 5}} source={require("../../assets/icons/comments.png")}/>
+              </TouchableOpacity>
+              {button} 
+            </View>
+          </View>
         </View>
       )
     }  
@@ -255,9 +277,9 @@ let styles = RkStyleSheet.create(theme => ({
   },
   imageStyle: {
     width: null,
-  height: null,
-  resizeMode: 'cover',
-  flex: 1
+    height: null,
+    resizeMode: 'cover',
+    flex: 1
   },
   sectionTitle: {
     fontSize: 18,
@@ -317,9 +339,10 @@ let styles = RkStyleSheet.create(theme => ({
   },
   buttons: {
     paddingHorizontal: 17,
-    paddingBottom: scaleVertical(22),
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-end"
   },
   footer: {
     flexDirection: 'row',

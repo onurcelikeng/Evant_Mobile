@@ -102,9 +102,9 @@ export default class AddEvent extends React.Component {
                 <RkAvoidKeyboard>
                     <View style={styles.section}>
                         <View style={styles.row}>
-                            <PhotoUpload onResponse={res => { console.log(photo); this.setState({photo})}}>
+                            <PhotoUpload onResponse={photo => { console.log(photo); this.setState({photo})}}>
                                 { this.state.photo == "" ?
-                                    <Avatar uri={this.state.photo} img={this.state.photo} rkType='bigEdit'/>
+                                    <Avatar img={this.state.photo} rkType='bigEdit'/>
                                     :
                                     <Avatar img={this.state.photo.uri} rkType='bigEdit'/>
                                 }     

@@ -1,17 +1,17 @@
 import React from 'react';
-import { FlatList, View, Platform, Image, TouchableOpacity, Keyboard, StyleSheet, Dimensions } from 'react-native';
+import { FlatList, View, Platform, Image, TouchableOpacity, Keyboard, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
 import {InteractionManager} from 'react-native';
 import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import _ from 'lodash';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
+import Swipeable from 'react-native-swipeable';
 
 import DropdownHolder from '../../providers/dropdownHolder';
 import Login from '../login';
 import * as commentProvider from '../../providers/comments';
 import {FontAwesome} from '../../assets/icon';
-import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {scale} from '../../utils/scale';
 
@@ -21,19 +21,23 @@ let getUserId = (navigation) => {
   return navigation.state.params ? navigation.state.params.userId : undefined;
 };
 
-export default class Chat extends React.Component {
+export default class Comments extends React.Component {
 
   constructor(props) {
     super(props);
     this.eventId = this.props.id;
 
-    this.chats = data.getComments(1);
+    this.renderItem = this._renderItem.bind(this);
+
+    this.currentlyOpenSwipeable = null;
+
     this.state = {
       isLoading: true,
-      isSuccess: false
-    };
-    
-    this.renderItem = this._renderItem.bind(this);
+      isSuccess: false,
+			isSwiping: false,
+			rightActionActivated: false,
+			toggle: false
+    }; 
   }
 
   componentDidMount() {
@@ -80,6 +84,18 @@ export default class Chat extends React.Component {
     });
   }
 
+  deleteComment(id) {
+    return commentProvider.deleteComment(id)
+    .then((responseJson) => {
+      console.log(responseJson);
+      if(responseJson.isSuccess) {
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      } else {
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+      }
+    })
+  }
+
   _keyExtractor(post, index) {
     return post.id;
   }
@@ -91,11 +107,26 @@ export default class Chat extends React.Component {
   }
 
   _renderItem(info) {
-    console.log(info);
+    const {rightActionActivated, toggle} = this.state;
     let name = `${info.item.user.firstName} ${info.item.user.lastName}`;
 
     return (
-      <View style={styles.item}>
+      <Swipeable
+				onRef = {ref => this.swipe = ref}
+				rightActionActivationDistance={200}
+				rightButtons={[
+					<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteComment(info.item.commentId); this.getComments(this.eventId);}}><Image style={{height: 20, width: 20}} source={require('../../assets/icons/delete.png')}/></TouchableHighlight>
+				]}
+				onRightActionActivate={() => {this.deleteComment(info.item.commentId);this.setState({rightActionActivated: true})}}
+				onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
+				onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getComments(this.eventId); this.setState({toggle: !toggle})}}
+				onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
+					if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
+					this.currentlyOpenSwipeable.recenter(); }
+					this.currentlyOpenSwipeable = swipe;
+					} }
+				onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
+        <View style={styles.item}>
           <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}} onPress={() => {if(info.item.user.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: info.item.user.userId })} }}>
               <Avatar img={info.item.user.photoUrl} rkType='circle'/>
           </TouchableOpacity>
@@ -108,7 +139,8 @@ export default class Chat extends React.Component {
               </View>
               <RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
           </View>
-      </View>
+        </View>
+			</Swipeable>
     )
   }
 
@@ -179,7 +211,7 @@ export default class Chat extends React.Component {
             extraData={this.state}
             ItemSeparatorComponent={this._renderSeparator}
             keyExtractor={this._keyExtractor}
-            renderItem={this._renderItem}
+            renderItem={this.renderItem}
             ListEmptyComponent={this.showEmptyListView}/>
           <View style={styles.footer}>
             <RkTextInput
@@ -207,7 +239,7 @@ export default class Chat extends React.Component {
             extraData={this.state}
             ItemSeparatorComponent={this._renderSeparator}
             keyExtractor={this._keyExtractor}
-            renderItem={this._renderItem}/>
+            renderItem={this.renderItem}/>
         <View style={styles.footer}>
           <RkTextInput
             onFocus={() => this._scroll(true)}
@@ -285,5 +317,11 @@ let styles = RkStyleSheet.create(theme => ({
     separator: {
       height: StyleSheet.hairlineWidth,
       backgroundColor: theme.colors.border.base
+    },
+    rightSwipeItem: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingLeft: 20,
+      backgroundColor: '#FF3B30'
     }
 }));

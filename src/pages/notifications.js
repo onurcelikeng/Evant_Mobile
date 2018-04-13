@@ -18,13 +18,23 @@ export default class Notifications extends React.Component {
 	constructor(props) {
 		super(props);
 	
+		this.currentlyOpenSwipeable = null;
+
 		this.state = {
 			isLoading: true,
 			isRefreshing: false,
-			isSwiping: false
+			isSwiping: false,
+			rightActionActivated: false,
+			toggle: false
 		};
 
 		this.renderRow = this.renderRow.bind(this);
+	}
+
+	swipeable = null;
+
+	handleUserBeganScrollingParentView() {
+		this.swipeable.recenter();
 	}
 
 	componentWillMount() {
@@ -60,7 +70,6 @@ export default class Notifications extends React.Component {
 		.then((responseJson) => {
 			if(responseJson.isSuccess) {
 				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-				this.getNotifications();
 			} else {
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
@@ -76,8 +85,8 @@ export default class Notifications extends React.Component {
 	}
 
 	renderRow(row) {
-		const {currentlyOpenSwipeable} = this.state;
-		
+		const {rightActionActivated, toggle} = this.state;
+
 		let username = `${row.user.firstName} ${row.user.lastName}`;
 		let hasAttachment = row.event !== null;
 		console.log(row)
@@ -91,19 +100,20 @@ export default class Notifications extends React.Component {
 	
 		return (
 			<Swipeable
+				onRef = {ref => this.swipe = ref}
+				rightActionActivationDistance={200}
 				rightButtons={[
-					<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.deleteNotification(row.notificationId)}}><RkText style={{color: '#ffffff'}}>Delete</RkText></TouchableHighlight>
+					<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteNotification(row.notificationId); this.getNotifications();}}><Image style={{height: 20, width: 20}} source={require('../assets/icons/delete.png')}/></TouchableHighlight>
 				]}
-				onSwipeStart={() => this.setState({isSwiping: true})}
-				onSwipeRelease={() => this.setState({isSwiping: false})}
-				onRightButtonsOpenRelease={(event, gestureState, swipeable) => {
-					if (currentlyOpenSwipeable && currentlyOpenSwipeable !== swipeable) {
-					  currentlyOpenSwipeable.recenter();
-					}
-			
-					this.setState({currentlyOpenSwipeable: swipeable});
-				  }}
-      			onRightButtonsCloseRelease={() => this.setState({currentlyOpenSwipeable: null})}>
+				onRightActionActivate={() => {this.deleteNotification(row.notificationId);this.setState({rightActionActivated: true})}}
+				onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
+				onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getNotifications(); this.setState({toggle: !toggle})}}
+				onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
+					if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
+					this.currentlyOpenSwipeable.recenter(); }
+					this.currentlyOpenSwipeable = swipe;
+					} }
+				onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
 				<TouchableOpacity activeOpacity={1} onPress={() => {
 					if(row.notificationType == 1) {
 						Actions.comments({id: row.event.eventId})
@@ -225,6 +235,6 @@ let styles = RkStyleSheet.create(theme => ({
 		flex: 1,
 		justifyContent: 'center',
 		paddingLeft: 20,
-		backgroundColor: '#4fba8a'
+		backgroundColor: '#FF3B30'
 	}
 }));

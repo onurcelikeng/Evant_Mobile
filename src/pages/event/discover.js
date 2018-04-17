@@ -114,13 +114,6 @@ export default class Discover extends React.Component {
 		})
 	}
 
-	handleIndexChange = (index) => {
-		this.setState({
-		  ...this.state,
-		  selectedIndex: index,
-		});
-	}
-
 	search(text) {
 		if(this.state.selectedIndex == 0) {
 			if(text.length == 0) {

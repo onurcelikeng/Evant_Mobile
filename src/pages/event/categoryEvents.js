@@ -25,10 +25,12 @@ export default class CategoryEvents extends React.Component {
 		super(props);
 		this.state = {
 			isLoading: true,
-            isRefreshing: false
+            isRefreshing: false,
+            selectedIndex: 0
 		}
                
-		this.renderItem = this._renderItem.bind(this);
+        this.renderItem = this._renderItem.bind(this);
+        this.handleChangeTab = this._handleChangeTab.bind(this);
 	}
 
 	componentDidMount() {
@@ -90,6 +92,36 @@ export default class CategoryEvents extends React.Component {
             this.setState({join: responseJson.isSuccess})
         })
     }
+
+    filterData() {
+        if(this.state.selectedIndex == 0) {
+			
+		} else if(this.state.selectedIndex == 1) {
+            var array = []
+			this.state.data.forEach(element => {
+                if(moment(element.start).calendar().indexOf("Today") !=-1){
+                    array.push(element);
+                }
+            });
+
+            this.setState({today: array});
+		} else if(this.state.selectedIndex == 2) {
+            var array = []
+			this.state.data.forEach(element => {
+                if(moment(element.start).calendar().indexOf("Tomorrow") !=-1){
+                    array.push(element);
+                }
+            });
+
+            this.setState({tomorrow: array});
+		}
+    }
+
+    _handleChangeTab({i, ref, from, }) {
+        this.setState({selectedIndex:i});
+        console.log(i);
+        this.filterData();
+	}
 
 	_keyExtractor(post, index) {
 		return post.eventId;
@@ -191,7 +223,7 @@ export default class CategoryEvents extends React.Component {
                 </View>
                 <View tabLabel='Today'>
                     <FlatList
-                        data={this.state.data}
+                        data={this.state.today}
                         renderItem={this.renderItem}
                         keyExtractor={this._keyExtractor}
                         style={styles.container}
@@ -206,7 +238,7 @@ export default class CategoryEvents extends React.Component {
                 </View>
                 <View tabLabel='Tomorrow'>
                     <FlatList
-                        data={this.state.data}
+                        data={this.state.tomorrow}
                         renderItem={this.renderItem}
                         keyExtractor={this._keyExtractor}
                         style={styles.container}

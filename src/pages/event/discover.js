@@ -240,7 +240,8 @@ export default class Discover extends React.Component {
 							</View>
 							<View flexDirection="row">
 								<Image style={{height: 16, width: 16, marginRight:5}} alignSelf="center" source={require('../../assets/icons/place.png')}/>
-								<RkText style={styles.time}  alignSelf="center" rkType='secondary2 inverseColor'>Buca, İzmir</RkText>
+								<RkText style={styles.time} alignSelf="center" rkType='secondary2 inverseColor'>{info.item.address.town}</RkText>
+								<RkText style={styles.time} alignSelf="center" rkType='secondary2 inverseColor'>, {info.item.address.city}</RkText>
 							</View>
 						</View>
 					</RkCard>

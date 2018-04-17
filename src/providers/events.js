@@ -33,6 +33,26 @@ export function addEvent(credentials) {
         .then(res => { console.log(res); return res; });
 }
 
+export function addPhoto(credentials) {
+    var photo = {
+        uri: credentials.uri,
+        type: 'image/jpeg',
+        name: 'photo.jpg'
+    };
+
+    var form = new FormData();
+    form.append("File", photo);
+
+    var headers = {
+        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json'
+    }
+
+    return axios.post('/events/photo', form, {headers: headers})
+    .then(res => res.data)
+    .then(res => { console.log(res); return res; });
+}
+
 export function getEvent(id) {
     return axios.get('events/' + id + '/details')
         .then(res => res.data)

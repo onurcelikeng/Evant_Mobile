@@ -26,6 +26,7 @@
     "react-native": "0.52.2",
     "react-native-animatable": "^1.2.4",
     "react-native-button": "^2.2.0",
+    "react-native-datepicker": "^1.7.1",
     "react-native-device-info": "^0.15.3",
     "react-native-dropdownalert": "^3.3.0",
     "react-native-image-header-scroll-view": "^0.8.1",

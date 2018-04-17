@@ -14,11 +14,11 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		xXQ+AizA42A1k2CwrGt8dCeV/Q0=
+		f3e1A5yV1OfYwm9apO9q0RmlNnA=
 		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		gvJpWg9TSvcrbVxZgjoE8FKHLM8=
+		wgZfudnPZ+qQZdrOTnGX6Sv2TWs=
 		</data>
 		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
 		<data>
@@ -75,11 +75,11 @@
 		</data>
 		<key>PlugIns/EvantTests.xctest.dSYM/Contents/Resources/DWARF/EvantTests</key>
 		<data>
-		/RiyYLP7lx2pxdAcBuv8/SsDa3Y=
+		IfsMh+77v7srH3/x1ziSR7iBpYE=
 		</data>
 		<key>PlugIns/EvantTests.xctest/EvantTests</key>
 		<data>
-		wgsnXXkt2d//THoP089phi7qm9I=
+		1JgenGiBCiXToFKBBL+RgxrgSwA=
 		</data>
 		<key>PlugIns/EvantTests.xctest/Info.plist</key>
 		<data>
@@ -158,22 +158,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			xXQ+AizA42A1k2CwrGt8dCeV/Q0=
+			f3e1A5yV1OfYwm9apO9q0RmlNnA=
 			</data>
 			<key>hash2</key>
 			<data>
-			WlSvqIt5Uk/3i8c3FNAOn3+k3UEd6xx9NI+aqgaMyd8=
+			salYfkau/uT3vAlBKIXBYPamMEoSWTcxeHUqe5/IQrU=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gvJpWg9TSvcrbVxZgjoE8FKHLM8=
+			wgZfudnPZ+qQZdrOTnGX6Sv2TWs=
 			</data>
 			<key>hash2</key>
 			<data>
-			FRIYJzcT6nIfuTl2t2XwK2MiPpLf/GvmNTE3tXppeHc=
+			Ix4pNzX8WguXIgzAWS9tJPe0SZ1WAhzUywD7v6fusyA=
 			</data>
 		</dict>
 		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
@@ -292,22 +292,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/RiyYLP7lx2pxdAcBuv8/SsDa3Y=
+			IfsMh+77v7srH3/x1ziSR7iBpYE=
 			</data>
 			<key>hash2</key>
 			<data>
-			dCCtxOxOmX04wpXoldm0q3IhfeDZkhRpqCUSfQZNIMQ=
+			shenbAOJiVBQy6C2KbFJ+fgH99I25y1yAX5k2eXCAXw=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/EvantTests</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wgsnXXkt2d//THoP089phi7qm9I=
+			1JgenGiBCiXToFKBBL+RgxrgSwA=
 			</data>
 			<key>hash2</key>
 			<data>
-			aykKY1aNl8ISOK+usB7CDTq5M1aakjjIezi2ikerddA=
+			OVvo70u7x38nvWoPW7hX/wUa6gZ9A/Vei9PrGdlrPRQ=
 			</data>
 		</dict>
 		<key>PlugIns/EvantTests.xctest/Info.plist</key>

@@ -92,8 +92,6 @@ export function deactivateAccount() {
 }
 
 export function photo(credentials) {
-    console.log(credentials.uri);
-
     var photo = {
         uri: credentials.uri,
         type: 'image/jpeg',

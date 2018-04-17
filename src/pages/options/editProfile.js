@@ -33,6 +33,7 @@ export default class EditProfile extends React.Component {
     }
 
     profileEdit() {
+        console.log("esd");
         credentials = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -45,18 +46,23 @@ export default class EditProfile extends React.Component {
                 Login.getCurrentUser().firstName = this.state.firstName;
                 Login.getCurrentUser().lastName = this.state.lastName;
                 Login.getCurrentUser().email = this.state.email;
-
-                accountProvider.photo(this.state.photo)
-                .then((res) => {
-                    console.log(res);
-                    if(res.isSuccess) {
-                        this.user.photo = this.state.photo;
-                        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+                if(this.state.isPhotoChanged) {
+                    accountProvider.photo(this.state.photo)
+                    .then((res) => {
+                        console.log(res);
+                        if(res.isSuccess) {
+                            this.user.photo = this.state.photo;
+                            DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                        } else {
+                            DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+                } else {
+                    DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                }
             }
             else {
                 DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -137,7 +143,7 @@ export default class EditProfile extends React.Component {
                     <RkButton rkType='medium stretch rounded' style={styles.button} onPress={() => {
                         if(this.state.firstName != '' && this.state.lastName != '' && this.state.email != '' 
                         && this.state.country != '' && this.state.phone != '') {
-                            this.profileEdit()
+                            this.profileEdit();
                         } else {
                             DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
                         }}}>SAVE</RkButton>

@@ -209,7 +209,6 @@ export default class EventDetail extends React.Component {
                 <View rkCardHeader>
                   <View>
                     <RkText style={styles.title} rkType='header4'>{this.state.data.title}</RkText>
-                    <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).fromNow()}</RkText>
                   </View>
                   <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row', marginRight: 16}} onPress={() => { if(this.state.data.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: this.state.data.user.userId}) }}>
                     <Avatar img={this.state.data.user.photoUrl} rkType='circle'/>
@@ -221,8 +220,36 @@ export default class EventDetail extends React.Component {
               <View rkCardContent>
                 <SocialBar id={this.state.data.eventId} comments={this.state.data.totalComments} goings={this.state.data.totalGoings}/>
               </View>
+              <View rkCardContent>
+                <View style={{flex:1, flexDirection: "row", marginBottom: 20}}>
+                  <Image style={{height: 25, width: 25, marginRight: 20}} source={require("../../assets/icons/calendar.png")}/>
+                  <View>
+                    <View style={{flex:1, flexDirection: "row"}}>
+                      <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('ll')}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.end).format('ll')}</RkText>
+                    </View>
+                    <View style={{flex:1, flexDirection: "row"}}>
+                      <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('LT')}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.end).format('LT')}</RkText>
+                    </View>
+                  </View>
+                </View>
+                <View style={{flex:1, flexDirection: "row"}}>
+                  <Image style={{height: 25, width: 25, marginRight: 20}} source={require("../../assets/icons/place.png")}/>
+                  <View>
+                    <View style={{flex:1, flexDirection: "row"}}>
+                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.town}, </RkText>
+                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.city}</RkText>
+                    </View>
+                    <View style={{flex:1, flexDirection: "row"}}>
+                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.latitude.toString()}, </RkText>
+                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.longitude.toString()}</RkText>
+                    </View>
+                  </View>
+                </View>
+              </View>
               <View style={{paddingHorizontal: 10, paddingVertical: 5}}>
-                <RkText rkType='primary3 bigLine'>{this.state.data.description}</RkText>
+                <RkText rkType='secondary2 bigLine'>{this.state.data.description}</RkText>
               </View>
             </RkCard>
           </HeaderImageScrollView>
@@ -232,17 +259,24 @@ export default class EventDetail extends React.Component {
               {
                 this.state.data.user.userId == Login.getCurrentUser().userId ?
                   <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard()}}>
-                    <Image style={{height: 28, width: 28}} source={require("../../assets/icons/dashboard.png")}/>
+                    <Image style={{height: 28, width: 28, marginRight: 15}} source={require("../../assets/icons/edit.png")}/>
                   </TouchableOpacity>
                 :
                 <View></View>
               }
-              
+              {
+                this.state.data.user.userId == Login.getCurrentUser().userId ?
+                  <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard()}}>
+                    <Image style={{height: 28, width: 28, marginRight: 15}} source={require("../../assets/icons/dashboard.png")}/>
+                  </TouchableOpacity>
+                :
+                <View></View>
+              }
               <TouchableOpacity activeOpacity={0.6}>
-                <Image style={{height: 28, width: 28, marginHorizontal: 5}} source={require("../../assets/icons/share.png")}/>
+                <Image style={{height: 28, width: 28, marginRight: 15}} source={require("../../assets/icons/share.png")}/>
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.comments({id: this.state.data.eventId})}}>
-                <Image style={{height: 25, width: 25, marginRight: 5}} source={require("../../assets/icons/comments.png")}/>
+                <Image style={{height: 25, width: 25, marginRight: 15}} source={require("../../assets/icons/comments.png")}/>
               </TouchableOpacity>
               {button} 
             </View>
@@ -265,6 +299,7 @@ let styles = RkStyleSheet.create(theme => ({
   },
   title: {
     fontSize: 20,
+    marginBottom: 3
   },
   name: {
     fontWeight: 'bold',

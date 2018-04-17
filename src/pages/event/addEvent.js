@@ -15,11 +15,11 @@ export default class AddEvent extends React.Component {
     constructor(props) {
         super(props);
         this.data = [
-            [{key: 1, value: 'Jun'}, {key: 2, value: 'Feb'}]
+            [{key: 1, value: 'Party'}, {key: 2, value: 'Business'}]
         ]
         this.state = {
             event: {
-                categoryId: [{key: 1, value: 'Jun'}],
+                categoryId: [{key: 1, value: 'Party'}],
                 title: "",
                 description: "",
                 isPrivate: false,
@@ -45,45 +45,8 @@ export default class AddEvent extends React.Component {
         this.createDateData();
     }
 
-    _createDateData() {
-        let date = [];
-        for(let i=2018;i<2045;i++){
-            let month = [];
-            for(let j = 1;j<13;j++){
-                let day = [];
-                if(j === 2){
-                    for(let k=1;k<29;k++){
-                        day.push(k+'日');
-                    }
-                    //Leap day for years that are divisible by 4, such as 2000, 2004
-                    if(i%4 === 0){
-                        day.push(29+'日');
-                    }
-                }
-                else if(j in {1:1, 3:1, 5:1, 7:1, 8:1, 10:1, 12:1}){
-                    for(let k=1;k<32;k++){
-                        day.push(k+'日');
-                    }
-                }
-                else{
-                    for(let k=1;k<31;k++){
-                        day.push(k+'日');
-                    }
-                }
-                let _month = {};
-                _month[j+'月'] = day;
-                month.push(_month);
-            }
-            let _date = {};
-            _date[i+'年'] = month;
-            date.push(_date);
-        }
-        console.log(date[0].item);
-        this.setState({date: date});
-    }
-
     showPicker() {
-        this.setState({pickerVisible: true})
+        this.setState({pickerVisible: true});
     };
 
     _hidePicker() {
@@ -101,61 +64,68 @@ export default class AddEvent extends React.Component {
             <ScrollView style={styles.root}>
                 <RkAvoidKeyboard>
                     <View style={styles.section}>
-                        <View style={styles.row}>
-                            <PhotoUpload onResponse={photo => { console.log(photo); this.setState({photo})}}>
+                        <View style={[{flex:1, flexDirection:'row', justifyContent: 'flex-end'}]}>
+                            <PhotoUpload onResponse={photo => { console.log(photo); this.setState({photo})}} onCancel={cancel => {this.setState({photo: ""})}}>
                                 { this.state.photo == "" ?
-                                    <Avatar img={this.state.photo} rkType='bigEdit'/>
+                                    <Image style={styles.image} source={require('../../assets/images/tolgshow.jpg')}/>
                                     :
-                                    <Avatar img={this.state.photo.uri} rkType='bigEdit'/>
+                                    <Image source={{uri: this.state.photo.uri}}/>
                                 }     
                             </PhotoUpload>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Title'
+                            <RkTextInput 
+                                label='Title'
                                 value={this.state.event.tittle}
                                 rkType='right clear'
                                 onChangeText={(title) => this.setState({event: {title}})}/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Description'
+                            <RkTextInput 
+                                label='Description'
+                                multiline={true}
                                 value={this.state.event.description}
                                 onChangeText={(description) => this.setState({event: {description}})}
                                 rkType='right clear'/>
                         </View>
-                        <View style={styles.row}>
+                        <View style={[styles.row, {marginVertical: 15}]}>
                             <TouchableOpacity onPress={() => this.showPicker()}>
                                 <RkText>
                                 {this.state.event.categoryId[0].value}
                                 </RkText>
                             </TouchableOpacity>
                             <RkPicker
-                            title='Choose Category'
-                            data={this.data}
-                            visible={this.state.pickerVisible}
-                            selectedOptions={this.state.event.categoryId}
-                            onConfirm={this.handlePickedValue}
-                            onCancel={this.hidePicker}/>                        
+                                title='Choose Category'
+                                data={this.data}
+                                visible={this.state.pickerVisible}
+                                selectedOptions={this.state.event.categoryId}
+                                onConfirm={this.handlePickedValue}
+                                onCancel={this.hidePicker}/>                        
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='City'
+                            <RkTextInput 
+                                label='City'
                                 value={this.state.event.city}
                                 onChangeText={(city) => this.setState({event: {city}})}
                                 rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Town'
+                            <RkTextInput 
+                                label='Town'
                                 value={this.state.event.town}
                                 onChangeText={(town) => this.setState({event: {town}})}
                                 rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Latitude'
+                            <RkTextInput 
+                                label='Latitude'
                                 value={this.state.event.latitude}
                                 onChangeText={(latitude) => this.setState({event: {latitude}})}
                                 rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Longitude'
+                            <RkTextInput 
+                                label='Longitude'
                                 value={this.state.event.longitude}
                                 onChangeText={(longitude) => this.setState({event: {longitude}})}
                                 rkType='right clear'/>
@@ -200,11 +170,15 @@ let styles = RkStyleSheet.create(theme => ({
         paddingHorizontal: 17.5,
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderColor: theme.colors.border.base,
-        alignItems: 'center'
     },
     button: {
         marginHorizontal: 25,
         marginBottom: 32,
         backgroundColor: '#FF5E20'
+    },
+    image: {
+        width: 110,
+        height: 110,
+        marginBottom: 19
     }
 }));

@@ -25,7 +25,8 @@ export default class Notifications extends React.Component {
 			isRefreshing: false,
 			isSwiping: false,
 			rightActionActivated: false,
-			toggle: false
+			toggle: false,
+			isArrayEmpty: false
 		};
 
 		this.renderRow = this.renderRow.bind(this);
@@ -48,19 +49,18 @@ export default class Notifications extends React.Component {
 			if(responseJson.isSuccess) {
 				this.setState({
 					data: ds.cloneWithRows(responseJson.data),
-					isLoading: false
+					isLoading: false,
+					isArrayEmpty: false
 				});
 				notificationProvider.readNotifications()
 				.then((responseJson) => {
 					console.log(responseJson)
 					if(responseJson.isSuccess) {
 						console.log(responseJson.data)
-					} else {
-						DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 					}
 				})
 			} else {
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				this.setState({isArrayEmpty: true, isLoading: false});
 			}
 		})
 	}
@@ -99,6 +99,7 @@ export default class Notifications extends React.Component {
 		}
 	
 		return (
+			
 			<Swipeable
 				onRef = {ref => this.swipe = ref}
 				rightActionActivationDistance={200}
@@ -178,7 +179,7 @@ export default class Notifications extends React.Component {
 				</ContentLoader>
 			  </View>
 			);
-		} else {
+		} else if(!this.state.isArrayEmpty){
 			return (
 				<ListView
 					scrollEnabled={!this.state.isSwiping}
@@ -192,6 +193,12 @@ export default class Notifications extends React.Component {
 						/>
 					}
 				/>
+			)
+		} else {
+			return (
+				<View style={[styles.root, {flex: 1}]}>
+				<Image style={{marginTop: 30, alignSelf: 'center', justifyContent:'center', flexDirection:'row'}} source={require('../assets/images/notfound.png')}/>
+				</View>
 			)
 		}
 	}

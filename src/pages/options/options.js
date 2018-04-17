@@ -7,6 +7,7 @@ import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account';
 import * as deviceProvider from '../../providers/devices';
 import * as userSettingsProvider from '../../providers/userSettings';
+import * as searchHistoriesProvider from '../../providers/searchHistories';
 import Login from '../login';
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
@@ -39,7 +40,9 @@ export default class Options extends React.Component {
       twitterEnabled: true,
       googleEnabled: false,
       facebookEnabled: true,
-      modalVisible: false
+      modalLogoutVisible: false,
+      modalDeactivateVisible: false,
+      modalSwitchVisible: false,
     }
   }
 
@@ -47,7 +50,7 @@ export default class Options extends React.Component {
     AsyncStorage.removeItem("token");
     AsyncStorage.removeItem("deviceId");
     Login.currentUser = {};
-    this._setModalVisible(false);
+    this._setModalVisible(false, 1);
     Actions.reset("root");
   }
 
@@ -80,13 +83,39 @@ export default class Options extends React.Component {
 		  console.log(error);
 		});
   }
+
+  clearSearchHistories() {
+    return searchHistoriesProvider.deleteAllSearchHistories()
+    .then((responseJson) => {
+      if(responseJson.isSuccess) {
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      } else {
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+      }
+    })
+  }
+
+  switchToBusiness() {
+    return accountProvider.switchToBusiness()
+    .then((responseJson) => {
+      if(responseJson.isSuccess) {
+        Login.getCurrentUser().isBusiness = !Login.getCurrentUser().isBusiness;
+        this._setModalVisible(false, 1);
+      }
+    })
+  }
   
   static getSettings() {
     return Options.userSettings;
   }
 
-  _setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+  _setModalVisible(visible, type) {
+    if(type == 1)
+    this.setState({modalLogoutVisible: visible});
+    else if(type == 2)
+    this.setState({modalDeactivateVisible: visible});
+    else if(type == 3)
+    this.setState({modalSwitchVisible: visible});
   }
 
   render() {
@@ -109,13 +138,7 @@ export default class Options extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Two-Factor Authentication</RkText>
-              <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this._setModalVisible(true, 3)}>
               <RkText rkType='header6'>Switch to Business Profile</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
@@ -196,17 +219,17 @@ export default class Options extends React.Component {
 
         <View style={styles.section}>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this.clearSearchHistories()}>
               <RkText rkType='header6'>Clear Search History</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton} onPress={() => this.deactivateAccount()}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this._setModalVisible(true, 2)}>
               <RkText rkType='header6'>Deactivate Account</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => this._setModalVisible(true)} style={styles.rowButton}>
+            <TouchableOpacity onPress={() => this._setModalVisible(true, 1)} style={styles.rowButton}>
               <RkText rkType='header6'>Log Out</RkText>
             </TouchableOpacity>
           </View>
@@ -215,8 +238,8 @@ export default class Options extends React.Component {
         <Modal
           animationType={'fade'}
           transparent={true}
-          onRequestClose={() => this._setModalVisible(false)}
-          visible={this.state.modalVisible}>
+          onRequestClose={() => this._setModalVisible(false, 1)}
+          visible={this.state.modalLogoutVisible}>
           <View style={styles.popupOverlay}>
             <View style={styles.popup}>
               <View style={styles.popupContent}>
@@ -224,13 +247,67 @@ export default class Options extends React.Component {
                 <RkText>Are you sure you want to log out? You won't be able to get any notification.</RkText>
               </View>
               <View style={styles.popupButtons}>
-                <RkButton onPress={() => this._setModalVisible(false)}
+                <RkButton onPress={() => this._setModalVisible(false, 1)}
                           style={styles.popupButton}
                           rkType='clear'>
                   <RkText rkType='light'>CANCEL</RkText>
                 </RkButton>
                 <View style={styles.separator}/>
                 <RkButton onPress={() => this.logout()}
+                          style={styles.popupButton}
+                          rkType='clear'>
+                  <RkText>OK</RkText>
+                </RkButton>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType={'fade'}
+          transparent={true}
+          onRequestClose={() => this._setModalVisible(false, 2)}
+          visible={this.state.modalDeactivateVisible}>
+          <View style={styles.popupOverlay}>
+            <View style={styles.popup}>
+              <View style={styles.popupContent}>
+                <RkText style={styles.popupHeader} rkType='header4'>DEACTIVATE ACCOUNT</RkText>
+                <RkText>WARNING! Are you sure you want to deactivate your account? You may not be able to return your account back!</RkText>
+              </View>
+              <View style={styles.popupButtons}>
+                <RkButton onPress={() => this._setModalVisible(false, 2)}
+                          style={styles.popupButton}
+                          rkType='clear'>
+                  <RkText rkType='light'>CANCEL</RkText>
+                </RkButton>
+                <View style={styles.separator}/>
+                <RkButton onPress={() => this.deactivateAccount()}
+                          style={styles.popupButton}
+                          rkType='clear'>
+                  <RkText>OK</RkText>
+                </RkButton>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType={'fade'}
+          transparent={true}
+          onRequestClose={() => this._setModalVisible(false, 3)}
+          visible={this.state.modalSwitchVisible}>
+          <View style={styles.popupOverlay}>
+            <View style={styles.popup}>
+              <View style={styles.popupContent}>
+                <RkText style={styles.popupHeader} rkType='header4'>SWITCH TO BUSINESS ACCOUNT</RkText>
+                <RkText>Do you want to switch to business account?</RkText>
+              </View>
+              <View style={styles.popupButtons}>
+                <RkButton onPress={() => this._setModalVisible(false, 3)}
+                          style={styles.popupButton}
+                          rkType='clear'>
+                  <RkText rkType='light'>CANCEL</RkText>
+                </RkButton>
+                <View style={styles.separator}/>
+                <RkButton onPress={() => this.switchToBusiness()}
                           style={styles.popupButton}
                           rkType='clear'>
                   <RkText>OK</RkText>

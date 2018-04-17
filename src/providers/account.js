@@ -91,6 +91,12 @@ export function deactivateAccount() {
     .then(res => { return res; });
 }
 
+export function switchToBusiness() {
+    return axios.get('account/switch')
+    .then(res => res.data)
+    .then(res => { return res; });
+}
+
 export function photo(credentials) {
     var photo = {
         uri: credentials.uri,

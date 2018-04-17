@@ -32,6 +32,7 @@ export default class Login extends React.Component {
     followersCount: 0,
     followingsCount: 0,
     userId: '',
+    isBusiness: false,
     settings: {
       language: '',
       theme: '',

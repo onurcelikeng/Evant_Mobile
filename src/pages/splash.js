@@ -56,6 +56,7 @@ export class SplashScreen extends React.Component {
                 Login.currentUser.lastName = responseJson.data.lastName;
                 Login.currentUser.email = responseJson.data.email;
                 Login.currentUser.photo = responseJson.data.photoUrl;
+                Login.currentUser.isBusiness = responseJson.data.isBusiness;
                 Login.currentUser.followersCount = responseJson.data.followersCount;
                 Login.currentUser.followingsCount = responseJson.data.followingsCount;
                 Login.currentUser.settings.theme = responseJson.data.settings.theme;

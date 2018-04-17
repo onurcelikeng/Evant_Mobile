@@ -29,8 +29,8 @@ export default class AddEvent extends React.Component {
             finishAt: '2016-05-05 20:00',
             city: '',
             town: '',
-            latitude: 1000,
-            longitude: 1000,
+            latitude: '',
+            longitude: '',
             photo: '',
             pickerVisible: false,
             categories: []
@@ -100,8 +100,8 @@ export default class AddEvent extends React.Component {
                 finishAt: this.state.finishAt,
                 city: this.state.city,
                 town: this.state.town,
-                latitude: this.state.latitude,
-                longitude: this.state.longitude
+                latitude: parseInt(this.state.latitude, 10),
+                longitude: parseInt(this.state.longitude, 10)
             }
 
             eventProvider.addEvent(credentials)
@@ -325,7 +325,6 @@ let styles = RkStyleSheet.create(theme => ({
     },
     date: {
         width: 200,
-        fontSize: theme.fonts.sizes.base,
         height: theme.fonts.sizes.base * 1.42,
         marginVertical: 18
     },

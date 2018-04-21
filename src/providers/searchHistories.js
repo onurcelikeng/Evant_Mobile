@@ -21,3 +21,10 @@ export function deleteSearchHistory(id) {
         return res;
     });
 }
+
+export function addSearchHistory(searchedItem) {
+    return axios.post('histories/' + searchedItem)
+    .then(res => res.data).then(res => {
+        return res;
+    });
+}

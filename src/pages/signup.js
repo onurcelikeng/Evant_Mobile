@@ -99,17 +99,7 @@ export default class Signup extends React.Component {
                     if(responseJson.isSuccess) {
                       accountProvider.getMe().then((responseJson) => {
                         if(responseJson.isSuccess) {
-                          console.log(responseJson.data)
-                          Login.currentUser.userId = responseJson.data.userId;
-                          Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
-                          Login.currentUser.firstName = responseJson.data.firstName;
-                          Login.currentUser.lastName = responseJson.data.lastName;
-                          Login.currentUser.email = responseJson.data.email;
-                          Login.currentUser.photo = responseJson.data.photoUrl;
-                          Login.currentUser.followersCount = responseJson.data.followersCount;
-                          Login.currentUser.followingsCount = responseJson.data.followingsCount;
-                          Login.currentUser.settings.theme = responseJson.data.settings.theme;
-                          Login.currentUser.settings.language = responseJson.data.settings.language;
+                          Login.setCurrentUser(responseJson.data);
                           Actions.tabbar();
                         } else {
                           DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);

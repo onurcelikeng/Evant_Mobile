@@ -38,7 +38,6 @@ export default class Profile extends React.Component {
 		
     this.onRefresh = this.onRefresh.bind(this)
 		this.onEventPress = this.onEventPress.bind(this)
-    this.renderSelected = this.renderSelected.bind(this)
     this.renderDetail = this.renderDetail.bind(this)
 	}
 
@@ -57,12 +56,6 @@ export default class Profile extends React.Component {
 		} else if(data.type == "join-event") {
 			Actions.eventDetail({id: data.customId});
 		}
-  }
-
-  renderSelected(){
-      if(this.state.selected) {
-
-			}
   }
 
   renderDetail(rowData, sectionID, rowID) {
@@ -95,6 +88,17 @@ export default class Profile extends React.Component {
 
 	componentDidMount() {
 		this.getTimeline(this.user.userId);
+	}
+
+	getMe() {
+		accountProvider.getMe().then((responseJson) => {
+			if(responseJson.isSuccess) {
+				Login.setCurrentUser(responseJson.data);
+				this.user = Login.getCurrentUser();
+			} else {
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+			}
+		});
 	}
 
 	getTimeline() {
@@ -145,6 +149,7 @@ export default class Profile extends React.Component {
 		console.log("esd");
     this.setState({
 			isRefreshing: true});
+		this.getMe();
 		this.getTimeline(this.user.userId);
 	}
 	
@@ -193,7 +198,7 @@ export default class Profile extends React.Component {
 								</View>
 								<Avatar img={this.user.photo} rkType='big'/>
 								<View style={styles.buttons}>
-									<TouchableOpacity style={[styles.navButtons, {alignSelf: "flex-end"}]} onPress={() => Actions.options()}>
+									<TouchableOpacity style={styles.navButtons} onPress={() => Actions.options()}>
 										<Image style={{height: 21, width: 21, tintColor: "#ffffff"}} source={require('../../assets/icons/settings.png')} />
 									</TouchableOpacity>
 								</View>
@@ -327,10 +332,11 @@ let styles = RkStyleSheet.create(theme => ({
 	  marginTop: 10,
 	  alignSelf: 'center',
 	  width: 140,
-	  backgroundColor: '#FF5E20',
+	  backgroundColor: '#FF5E20'
 	},
   navButtons: {
-		marginRight: 10
+		marginRight: 20,
+		alignSelf: "flex-end"
 	}, 
 	backgroundImage: {
     flex: 1,

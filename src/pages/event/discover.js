@@ -42,7 +42,8 @@ export default class Discover extends React.Component {
 			selectedIndex: 0,
 			isSwiping: false,
 			rightActionActivated: false,
-			toggle: false
+			toggle: false,
+			searchedItem: ''
 		}    
 	}
 
@@ -100,6 +101,16 @@ export default class Discover extends React.Component {
 		})
 	}
 
+	addSearchHistory() {
+		return searchHistoryProvider.addSearchHistory(this.state.searchedItem)
+		then((responseJson) => {
+			console.log(responseJson)
+			if(responseJson.isSuccess) {
+				console.log(responseJson);
+			}
+		})
+	}
+
 	searchPage() {
 		this.setState({
 			isSearchPressed: true
@@ -119,6 +130,7 @@ export default class Discover extends React.Component {
 			if(text.length == 0) {
 				this.setData([], 0)
 			} else if(text.length >= 2) {
+				this.setState({searchedItem: text});
 				userProvider.search(text).then((responseJson) => {
 					if(responseJson.isSuccess) this.setData(responseJson.data, 0)
 				})
@@ -127,6 +139,7 @@ export default class Discover extends React.Component {
 			if(text.length == 0) {
 				this.setData([], 1)
 			} else if(text.length >= 2) {
+				this.setState({searchedItem: text});
 				eventProvider.search(text).then((responseJson) => {
 					if(responseJson.isSuccess) this.setData(responseJson.data, 1)
 				})
@@ -212,7 +225,7 @@ export default class Discover extends React.Component {
 			<TouchableOpacity
 				delayPressIn={70}
 				activeOpacity={1}
-				onPress={() => { if(info.item.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: info.item.user.userId}) }}>
+				onPress={() => { this.addSearchHistory(); if(info.item.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: info.item.user.userId}) }}>
 				<View flexDirection="row" style={{flex:1, marginBottom: 5}}>
 					<Image style={{height:30, width: 30, borderRadius: 15, marginLeft: 5, marginRight: 5}} source={{uri: info.item.user.photoUrl}}/>
 					<RkText style={{fontSize: 14, alignSelf: 'center', fontWeight: 'bold'}}>{info.item.user.firstName + " " + info.item.user.lastName}</RkText>
@@ -247,7 +260,7 @@ export default class Discover extends React.Component {
 		let name = `${row.firstName} ${row.lastName}`;
 		console.log(row);
 		return (
-			<TouchableOpacity onPress={() => { if(row.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.push("otherProfile", {id: row.userId}) }}}>
+			<TouchableOpacity onPress={() => { this.addSearchHistory(); if(row.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.push("otherProfile", {id: row.userId}) }}}>
 				<View style={styles.containerUser}>
 					<Avatar img={row.photoUrl} rkType='circle'/>
 					<RkText style={{alignItems: 'center', flexDirection: 'row', marginLeft: 16}}>{name}</RkText>
@@ -388,10 +401,16 @@ export default class Discover extends React.Component {
 					<SectionList
 						renderSectionHeader = {({section}) => {
 							return <View style={styles.section}>
-										<View style={[styles.row, styles.heading]}>
-											<RkText rkType='primary header6'>{section.title}</RkText>
-										</View>
-									</View>
+							{
+								section.key == "0" && this.state.searchData.length == 0 ? 
+								<View></View>
+								:
+								<View style={[styles.row, styles.heading]}>
+									<RkText rkType='primary header6'>{section.title}</RkText>
+								</View>
+							}
+										
+							</View>
 						}}
 						sections={[
 							{data: this.state.searchData, key: "0", renderItem: this.renderHistoryItem, title: "RECENT SEARCHES"},

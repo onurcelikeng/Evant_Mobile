@@ -120,9 +120,9 @@ export default class FollowerList extends React.Component {
       var loaders = [];
       for(let i = 0; i < Login.currentUser.followersCount; i++){
         loaders.push(
-          <ContentLoader key={i} height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
+          <ContentLoader key={i} height={56}>
+            <Circle cx="30" cy="30" r="20"/>
+            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="15"/>
           </ContentLoader>
         )
       }
@@ -140,10 +140,7 @@ export default class FollowerList extends React.Component {
         dataSource={this.state.data}
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}
-        renderHeader={this.renderHeader}
         automaticallyAdjustContentInsets={false}
-        contentInset={{top:0}}
-        contentOffset={{x: 0, y: 64}}
         translucent={true}
         refreshControl={
           <RefreshControl

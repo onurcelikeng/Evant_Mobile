@@ -60,7 +60,7 @@ export default class OtherProfile extends React.Component {
 				this.setState({
 					user: responseJson.data
 				}, function() {
-					this.getTimeline(this.state.user.userId);
+					this.getTimeline(this.props.id);
 				})
 			} else {
 				console.log(responseJson.message);
@@ -206,6 +206,7 @@ export default class OtherProfile extends React.Component {
 	onRefresh(){
     this.setState({
 			isRefreshing: true});
+		this.getUserInfo(this.props.id);
 		this.getTimeline(this.props.id);
 	}
 

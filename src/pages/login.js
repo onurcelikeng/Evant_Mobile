@@ -106,17 +106,7 @@ export default class Login extends React.Component {
               if(responseJson.isSuccess) {
                 accountProvider.getMe().then((responseJson) => {
                   if(responseJson.isSuccess) {
-                    console.log(responseJson.data)
-                    Login.currentUser.userId = responseJson.data.userId;
-                    Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
-                    Login.currentUser.firstName = responseJson.data.firstName;
-                    Login.currentUser.lastName = responseJson.data.lastName;
-                    Login.currentUser.email = responseJson.data.email;
-                    Login.currentUser.photo = responseJson.data.photoUrl;
-                    Login.currentUser.followersCount = responseJson.data.followersCount;
-                    Login.currentUser.followingsCount = responseJson.data.followingsCount;
-                    Login.currentUser.settings.theme = responseJson.data.settings.theme;
-                    Login.currentUser.settings.language = responseJson.data.settings.language;
+                    Login.setCurrentUser(responseJson.data);
                     Actions.tabbar();
                   } else {
                     DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -140,6 +130,20 @@ export default class Login extends React.Component {
 
   static getCurrentUser() {
     return Login.currentUser;
+  }
+
+  static setCurrentUser(user) {
+    Login.currentUser.userId = user.userId;
+    Login.currentUser.name = user.firstName + ' ' + user.lastName;
+    Login.currentUser.firstName = user.firstName;
+    Login.currentUser.lastName = user.lastName;
+    Login.currentUser.email = user.email;
+    Login.currentUser.photo = user.photoUrl;
+    Login.currentUser.isBusiness = user.isBusiness;
+    Login.currentUser.followersCount = user.followersCount;
+    Login.currentUser.followingsCount = user.followingsCount;
+    Login.currentUser.settings.theme = user.settings.theme;
+    Login.currentUser.settings.language = user.settings.language;
   }
 
   _renderImage(image) {

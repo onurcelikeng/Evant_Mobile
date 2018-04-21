@@ -30,30 +30,30 @@ export class DoughnutChart extends RkComponent {
       data: [
         {
           x: 1,
-          y: 240,
+          y: (24/100) * 360,
           title: '24%',
-          name: 'Likes',
+          name: '0-17 Teenager',
           color: RkTheme.current.colors.charts.doughnut[0],
         },
         {
           x: 2,
-          y: 270,
+          y: (27/100) * 360,
           title: '27%',
-          name: 'Comments',
+          name: '18-65 Young',
           color: RkTheme.current.colors.charts.doughnut[1],
         },
         {
           x: 3,
-          y: 170,
+          y: (17/100) * 360,
           title: '17%',
-          name: 'Shares',
+          name: '66-79 Middle-Aged',
           color: RkTheme.current.colors.charts.doughnut[2],
         },
         {
           x: 4,
-          y: 320,
+          y: (32/100) * 360,
           title: '32%',
-          name: 'People',
+          name: '80-99 Old',
           color: RkTheme.current.colors.charts.doughnut[3],
         }
       ]

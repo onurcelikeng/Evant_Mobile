@@ -50,19 +50,9 @@ export class SplashScreen extends React.Component {
           if(route == 'tabbar') {
             accountProvider.getMe().then((responseJson) => {
               if(responseJson.isSuccess) {
-                Login.currentUser.userId = responseJson.data.userId;
-                Login.currentUser.name = responseJson.data.firstName + ' ' + responseJson.data.lastName;
-                Login.currentUser.firstName = responseJson.data.firstName;
-                Login.currentUser.lastName = responseJson.data.lastName;
-                Login.currentUser.email = responseJson.data.email;
-                Login.currentUser.photo = responseJson.data.photoUrl;
-                Login.currentUser.isBusiness = responseJson.data.isBusiness;
-                Login.currentUser.followersCount = responseJson.data.followersCount;
-                Login.currentUser.followingsCount = responseJson.data.followingsCount;
-                Login.currentUser.settings.theme = responseJson.data.settings.theme;
-                Login.currentUser.settings.language = responseJson.data.settings.language;
+                Login.setCurrentUser(responseJson.data);
 
-                if(Login.currentUser.settings.theme == "dark") {
+                if(Login.getCurrentUser().settings.theme == "dark") {
                   RkTheme.setTheme(DarkKittenTheme);
                   StatusBar.setBarStyle('light-content', true);
                   Platform.OS == 'android' && StatusBar.setBackgroundColor(DarkKittenTheme.colors.screen.base);

@@ -89,6 +89,9 @@ export default class Routes extends React.Component {
                                 title="Events"
                                 tabBarLabel="Events"
                                 icon={TabIcon}
+                                onEnter={
+                                    console.log("esd")
+                                }
                                 initial
                             >
                                 <Scene
@@ -105,18 +108,22 @@ export default class Routes extends React.Component {
                                     title="Event"
                                     hideNavBar={true}
                                     hideTabBar
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="dashboard"
                                     component={withRkTheme(Dashboard)}
                                     title="Dashboard"
+                                    hideTabBar="true"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="goingList"
                                     component={withRkTheme(GoingList)}
                                     title="Goings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -124,12 +131,14 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(OtherProfile)}
                                     title="Profile"
                                     hideNavBar={true}
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="profile"
                                     component={withRkTheme(Profile)}
                                     title="Profile"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                     hideNavBar={true}
                                 />
@@ -137,12 +146,14 @@ export default class Routes extends React.Component {
                                     key="followerList"
                                     component={withRkTheme(FollowerList)}
                                     title="Followers"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="followingList"
                                     component={withRkTheme(FollowingList)}
                                     title="Followings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -150,6 +161,7 @@ export default class Routes extends React.Component {
                                     title="Comments"
                                     component={withRkTheme(Comments)}
                                     hideTabBar="true"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                             </Stack>
@@ -172,6 +184,7 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(Events)}
                                     title="Events"
                                     panHandlers={null}
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -179,6 +192,7 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(CategoryEvents)}
                                     title="Category Events"
                                     panHandlers={null}
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -187,12 +201,14 @@ export default class Routes extends React.Component {
                                     key="eventDetail"
                                     component={withRkTheme(EventDetail)}
                                     title="Event"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="goingList"
                                     component={withRkTheme(GoingList)}
                                     title="Goings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -200,6 +216,7 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(OtherProfile)}
                                     title="Profile"
                                     hideNavBar={true}
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -207,18 +224,21 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(Profile)}
                                     title="Profile"
                                     hideNavBar={true}
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="followerList"
                                     component={withRkTheme(FollowerList)}
                                     title="Followers"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="followingList"
                                     component={withRkTheme(FollowingList)}
                                     title="Followings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -226,6 +246,7 @@ export default class Routes extends React.Component {
                                     title="Comments"
                                     component={withRkTheme(Comments)}
                                     hideTabBar="true"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                             </Stack>
@@ -235,6 +256,8 @@ export default class Routes extends React.Component {
                                 component={withRkTheme(AddEvent)}
                                 hideTabBar="true"
                                 clone
+                                direction="vertical"
+                                backToInitial
                                 icon={TabIcon}
                                 navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                             />
@@ -257,18 +280,21 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(OtherProfile)}
                                     title="Profile"
                                     hideNavBar={true}
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="followerList"
                                     component={withRkTheme(FollowerList)}
                                     title="Followers"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="followingList"
                                     component={withRkTheme(FollowingList)}
                                     title="Followings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -277,12 +303,14 @@ export default class Routes extends React.Component {
                                     key="eventDetail"
                                     component={withRkTheme(EventDetail)}
                                     title="Event"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="goingList"
                                     component={withRkTheme(GoingList)}
                                     title="Goings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -290,6 +318,7 @@ export default class Routes extends React.Component {
                                     title="Comments"
                                     component={withRkTheme(Comments)}
                                     hideTabBar="true"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                             </Stack>
@@ -312,12 +341,14 @@ export default class Routes extends React.Component {
                                     key="followerList"
                                     component={withRkTheme(FollowerList)}
                                     title="Followers"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="followingList"
                                     component={withRkTheme(FollowingList)}
                                     title="Followings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -325,6 +356,7 @@ export default class Routes extends React.Component {
                                     component={withRkTheme(OtherProfile)}
                                     title="Profile"
                                     hideNavBar={true}
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -333,48 +365,56 @@ export default class Routes extends React.Component {
                                     key="eventDetail"
                                     component={withRkTheme(EventDetail)}
                                     title="Event"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="options"
                                     component={withRkTheme(Options)}
                                     title="Options"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="themes"
                                     component={withRkTheme(Themes)}
                                     title="Themes"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="password"
                                     component={withRkTheme(ChangePassword)}
                                     title="Change Password"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="editProfile"
                                     component={withRkTheme(EditProfile)}
                                     title="Edit Profile"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="notificationSettings"
                                     component={withRkTheme(NotificationSettings)}
                                     title="Notification Settings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="timelineSettings"
                                     component={withRkTheme(TimelineSettings)}
                                     title="Timeline Settings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="goingList"
                                     component={withRkTheme(GoingList)}
                                     title="Goings"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
@@ -382,6 +422,7 @@ export default class Routes extends React.Component {
                                     title="Comments"
                                     component={withRkTheme(Comments)}
                                     hideTabBar="true"
+                                    backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                             </Stack>

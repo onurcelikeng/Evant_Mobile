@@ -60,7 +60,10 @@ export default class Notifications extends React.Component {
 					}
 				})
 			} else {
-				this.setState({isArrayEmpty: true, isLoading: false});
+				this.setState({
+					data: ds.cloneWithRows([""]),
+					isArrayEmpty: true, 
+					isLoading: false});
 			}
 		})
 	}
@@ -85,74 +88,82 @@ export default class Notifications extends React.Component {
 	}
 
 	renderRow(row) {
-		const {rightActionActivated, toggle} = this.state;
+		if(!this.state.isArrayEmpty){
+			const {rightActionActivated, toggle} = this.state;
 
-		let username = `${row.user.firstName} ${row.user.lastName}`;
-		let hasAttachment = row.event !== null;
-		console.log(row)
-		let attachment = <View/>;
-	
-		let mainContentStyle;
-		if (hasAttachment) {
-			mainContentStyle = styles.mainContent;
-			attachment = <Image style={styles.attachment} source={{uri: row.event.photoUrl}}/>
-		}
-	
-		return (
-			
-			<Swipeable
-				onRef = {ref => this.swipe = ref}
-				rightActionActivationDistance={200}
-				rightButtons={[
-					<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteNotification(row.notificationId); this.getNotifications();}}><Image style={{height: 20, width: 20}} source={require('../assets/icons/delete.png')}/></TouchableHighlight>
-				]}
-				onRightActionActivate={() => {this.deleteNotification(row.notificationId);this.setState({rightActionActivated: true})}}
-				onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
-				onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getNotifications(); this.setState({toggle: !toggle})}}
-				onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
-					if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
-					this.currentlyOpenSwipeable.recenter(); }
-					this.currentlyOpenSwipeable = swipe;
-					} }
-				onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
-				<TouchableOpacity activeOpacity={1} onPress={() => {
-					if(row.notificationType == 1) {
-						Actions.comments({id: row.event.eventId})
-					}
-					else if(row.notificationType == 2) {
-						Actions.eventDetail({id: row.event.eventId})
-					}
-					else if(row.notificationType == 3) {
-						Actions.otherProfile({id: row.user.userId})
-					}
-				}}>
-					<View style={styles.container}>
-						<TouchableHighlight style={{borderRadius: 20}} activeOpacity={0.6} onPress={() => { Actions.otherProfile({id: row.user.userId}) }}>
-							<Avatar img={row.user.photoUrl} rkType='circle' badge={row.notificationType}/>
-						</TouchableHighlight>
-						<View style={styles.content}>
-							<View style={mainContentStyle}>
-								<View style={styles.text}>
-									<RkText>
-										<RkText rkType='header6'>{username}</RkText>
-										<RkText rkType='primary2'> {row.content}</RkText>
-									</RkText>
-								</View>
-								<RkText rkType='secondary5 hintColor'>{moment().add(row.createdAt, 'seconds').fromNow()}</RkText>
-							</View>		
-							
-							{(row.notificationType == 1 || row.notificationType == 2) ? <TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {
-								if(row.notificationType == 1) {
-									Actions.comments({id: row.event.eventId})
-								} else if(row.notificationType == 2) {
-									Actions.eventDetail({id: row.event.eventId})
-								}
-							} }>{attachment}</TouchableHighlight> : null }
+			let username = `${row.user.firstName} ${row.user.lastName}`;
+			let hasAttachment = row.event !== null;
+			console.log(row)
+			let attachment = <View/>;
+		
+			let mainContentStyle;
+			if (hasAttachment) {
+				mainContentStyle = styles.mainContent;
+				attachment = <Image style={styles.attachment} source={{uri: row.event.photoUrl}}/>
+			}
+		
+			return (
+				<Swipeable
+					onRef = {ref => this.swipe = ref}
+					rightActionActivationDistance={200}
+					rightButtons={[
+						<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteNotification(row.notificationId); this.getNotifications();}}><Image style={{height: 20, width: 20}} source={require('../assets/icons/delete.png')}/></TouchableHighlight>
+					]}
+					onRightActionActivate={() => {this.deleteNotification(row.notificationId);this.setState({rightActionActivated: true})}}
+					onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
+					onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getNotifications(); this.setState({toggle: !toggle})}}
+					onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
+						if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
+						this.currentlyOpenSwipeable.recenter(); }
+						this.currentlyOpenSwipeable = swipe;
+						} }
+					onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
+					<TouchableOpacity activeOpacity={1} onPress={() => {
+						if(row.notificationType == 1) {
+							Actions.comments({id: row.event.eventId})
+						}
+						else if(row.notificationType == 2) {
+							Actions.eventDetail({id: row.event.eventId})
+						}
+						else if(row.notificationType == 3) {
+							Actions.otherProfile({id: row.user.userId})
+						}
+					}}>
+						<View style={styles.container}>
+							<TouchableHighlight style={{borderRadius: 20}} activeOpacity={0.6} onPress={() => { Actions.otherProfile({id: row.user.userId}) }}>
+								<Avatar img={row.user.photoUrl} rkType='circle' badge={row.notificationType}/>
+							</TouchableHighlight>
+							<View style={styles.content}>
+								<View style={mainContentStyle}>
+									<View style={styles.text}>
+										<RkText>
+											<RkText rkType='header6'>{username}</RkText>
+											<RkText rkType='primary2'> {row.content}</RkText>
+										</RkText>
+									</View>
+									<RkText rkType='secondary5 hintColor'>{moment().add(row.createdAt, 'seconds').fromNow()}</RkText>
+								</View>		
+								
+								{(row.notificationType == 1 || row.notificationType == 2) ? <TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {
+									if(row.notificationType == 1) {
+										Actions.comments({id: row.event.eventId})
+									} else if(row.notificationType == 2) {
+										Actions.eventDetail({id: row.event.eventId})
+									}
+								} }>{attachment}</TouchableHighlight> : null }
+							</View>
 						</View>
-					</View>
-				</TouchableOpacity>
-			</Swipeable>
-		)
+					</TouchableOpacity>
+				</Swipeable>
+			)
+		} else {
+			return (
+				<View style={[styles.root, {flex: 1}]}>
+					<Image style={{marginTop: 30, alignSelf: 'center', justifyContent:'center', flexDirection:'row'}} source={require('../assets/images/notfound.png')}/>
+				</View>
+			)
+		}
+		
 	}
 	
 	render() {
@@ -179,7 +190,7 @@ export default class Notifications extends React.Component {
 				</ContentLoader>
 			  </View>
 			);
-		} else if(!this.state.isArrayEmpty){
+		} else {
 			return (
 				<ListView
 					scrollEnabled={!this.state.isSwiping}
@@ -193,12 +204,6 @@ export default class Notifications extends React.Component {
 						/>
 					}
 				/>
-			)
-		} else {
-			return (
-				<View style={[styles.root, {flex: 1}]}>
-				<Image style={{marginTop: 30, alignSelf: 'center', justifyContent:'center', flexDirection:'row'}} source={require('../assets/images/notfound.png')}/>
-				</View>
 			)
 		}
 	}

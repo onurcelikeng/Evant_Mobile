@@ -79,7 +79,6 @@ export default class Comments extends React.Component {
           isSuccess: false,
           data: []
 				  });
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
     });
   }
@@ -111,36 +110,56 @@ export default class Comments extends React.Component {
     let name = `${info.item.user.firstName} ${info.item.user.lastName}`;
 
     return (
-      <Swipeable
-				onRef = {ref => this.swipe = ref}
-				rightActionActivationDistance={200}
-				rightButtons={[
-					<TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteComment(info.item.commentId); this.getComments(this.eventId);}}><Image style={{height: 20, width: 20}} source={require('../../assets/icons/delete.png')}/></TouchableHighlight>
-				]}
-				onRightActionActivate={() => {this.deleteComment(info.item.commentId);this.setState({rightActionActivated: true})}}
-				onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
-				onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getComments(this.eventId); this.setState({toggle: !toggle})}}
-				onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
-					if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
-					this.currentlyOpenSwipeable.recenter(); }
-					this.currentlyOpenSwipeable = swipe;
-					} }
-				onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
-        <View style={styles.item}>
-          <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}} onPress={() => {if(info.item.user.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: info.item.user.userId })} }}>
-              <Avatar img={info.item.user.photoUrl} rkType='circle'/>
-          </TouchableOpacity>
-          <View style={styles.content}>
-              <View style={styles.contentHeader}>
-                  <RkText rkType='header5'>{name}</RkText>
-                  <RkText rkType='secondary4 hintColor'>
-                  {moment(info.item.createdAt).fromNow()}
-                  </RkText>
+      <View>
+        {
+          info.item.user.userId == Login.getCurrentUser().userId ? 
+          <Swipeable
+            onRef = {ref => this.swipe = ref}
+            rightActionActivationDistance={200}
+            rightButtons={[
+              <TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteComment(info.item.commentId); this.getComments(this.eventId);}}><Image style={{height: 20, width: 20}} source={require('../../assets/icons/delete.png')}/></TouchableHighlight>
+            ]}
+            onRightActionActivate={() => {this.deleteComment(info.item.commentId);this.setState({rightActionActivated: true})}}
+            onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
+            onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getComments(this.eventId); this.setState({toggle: !toggle})}}
+            onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
+              if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
+              this.currentlyOpenSwipeable.recenter(); }
+              this.currentlyOpenSwipeable = swipe;
+              } }
+            onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
+            <View style={styles.item}>
+              <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}} onPress={() => {if(info.item.user.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: info.item.user.userId })} }}>
+                  <Avatar img={info.item.user.photoUrl} rkType='circle'/>
+              </TouchableOpacity>
+              <View style={styles.content}>
+                  <View style={styles.contentHeader}>
+                      <RkText rkType='header5'>{name}</RkText>
+                      <RkText rkType='secondary4 hintColor'>
+                      {moment(info.item.createdAt).fromNow()}
+                      </RkText>
+                  </View>
+                  <RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
               </View>
-              <RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
+            </View>
+          </Swipeable>
+          :
+          <View style={styles.item}>
+            <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}} onPress={() => {if(info.item.user.userId == Login.getCurrentUser().userId) {Actions.profile()} else {Actions.otherProfile({id: info.item.user.userId })} }}>
+                <Avatar img={info.item.user.photoUrl} rkType='circle'/>
+            </TouchableOpacity>
+            <View style={styles.content}>
+                <View style={styles.contentHeader}>
+                    <RkText rkType='header5'>{name}</RkText>
+                    <RkText rkType='secondary4 hintColor'>
+                    {moment(info.item.createdAt).fromNow()}
+                    </RkText>
+                </View>
+                <RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
+            </View>
           </View>
-        </View>
-			</Swipeable>
+        }
+      </View>
     )
   }
 

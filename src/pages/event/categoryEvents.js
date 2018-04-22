@@ -53,7 +53,6 @@ export default class CategoryEvents extends React.Component {
 					isLoading: false,
 					data: [],
 				});
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		});
     }

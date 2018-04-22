@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage, Modal } from 'react-native';
+import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage, Modal, Alert } from 'react-native';
 import { RkText, RkStyleSheet, RkTheme, RkButton } from 'react-native-ui-kitten';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
@@ -118,6 +118,28 @@ export default class Options extends React.Component {
     this.setState({modalSwitchVisible: visible});
   }
 
+  openAlert(title, message, type) {
+    Alert.alert(
+      title,
+      message,
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'OK', onPress: () => {
+          if(type == 'logout') {
+            this.logout();
+          } else if(type == 'deactivate') {
+            this.deactivateAccount();
+          } else if(type == 'business') {
+            this.switchToBusiness();
+          } else if(type == 'clear') {
+            this.clearSearchHistories();
+          }
+        }},
+      ],
+      { cancelable: false }
+    )
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -138,7 +160,7 @@ export default class Options extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton} onPress={() => this._setModalVisible(true, 3)}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert('SWITCH', 'Do you want to switch to business account?', 'business')}>
               <RkText rkType='header6'>Switch to Business Profile</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
@@ -219,103 +241,21 @@ export default class Options extends React.Component {
 
         <View style={styles.section}>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton} onPress={() => this.clearSearchHistories()}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert('CLEAR', 'All of your search histories will be deleted. Are you sure you want to continue?', 'clear')}>
               <RkText rkType='header6'>Clear Search History</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton} onPress={() => this._setModalVisible(true, 2)}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert('DEACTIVATE', 'WARNING! Are you sure you want to deactivate your account? You may not be able to return your account back!', 'deactivate')}>
               <RkText rkType='header6'>Deactivate Account</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => this._setModalVisible(true, 1)} style={styles.rowButton}>
+            <TouchableOpacity onPress={() => this.openAlert('LOGOUT', 'Are you sure you want to log out? You won\'t be able to get any notification.', 'logout')} style={styles.rowButton}>
               <RkText rkType='header6'>Log Out</RkText>
             </TouchableOpacity>
           </View>
         </View>
-
-        <Modal
-          animationType={'fade'}
-          transparent={true}
-          onRequestClose={() => this._setModalVisible(false, 1)}
-          visible={this.state.modalLogoutVisible}>
-          <View style={styles.popupOverlay}>
-            <View style={styles.popup}>
-              <View style={styles.popupContent}>
-                <RkText style={styles.popupHeader} rkType='header4'>LOGOUT</RkText>
-                <RkText>Are you sure you want to log out? You won't be able to get any notification.</RkText>
-              </View>
-              <View style={styles.popupButtons}>
-                <RkButton onPress={() => this._setModalVisible(false, 1)}
-                          style={styles.popupButton}
-                          rkType='clear'>
-                  <RkText rkType='light'>CANCEL</RkText>
-                </RkButton>
-                <View style={styles.separator}/>
-                <RkButton onPress={() => this.logout()}
-                          style={styles.popupButton}
-                          rkType='clear'>
-                  <RkText>OK</RkText>
-                </RkButton>
-              </View>
-            </View>
-          </View>
-        </Modal>
-        <Modal
-          animationType={'fade'}
-          transparent={true}
-          onRequestClose={() => this._setModalVisible(false, 2)}
-          visible={this.state.modalDeactivateVisible}>
-          <View style={styles.popupOverlay}>
-            <View style={styles.popup}>
-              <View style={styles.popupContent}>
-                <RkText style={styles.popupHeader} rkType='header4'>DEACTIVATE ACCOUNT</RkText>
-                <RkText>WARNING! Are you sure you want to deactivate your account? You may not be able to return your account back!</RkText>
-              </View>
-              <View style={styles.popupButtons}>
-                <RkButton onPress={() => this._setModalVisible(false, 2)}
-                          style={styles.popupButton}
-                          rkType='clear'>
-                  <RkText rkType='light'>CANCEL</RkText>
-                </RkButton>
-                <View style={styles.separator}/>
-                <RkButton onPress={() => this.deactivateAccount()}
-                          style={styles.popupButton}
-                          rkType='clear'>
-                  <RkText>OK</RkText>
-                </RkButton>
-              </View>
-            </View>
-          </View>
-        </Modal>
-        <Modal
-          animationType={'fade'}
-          transparent={true}
-          onRequestClose={() => this._setModalVisible(false, 3)}
-          visible={this.state.modalSwitchVisible}>
-          <View style={styles.popupOverlay}>
-            <View style={styles.popup}>
-              <View style={styles.popupContent}>
-                <RkText style={styles.popupHeader} rkType='header4'>SWITCH TO BUSINESS ACCOUNT</RkText>
-                <RkText>Do you want to switch to business account?</RkText>
-              </View>
-              <View style={styles.popupButtons}>
-                <RkButton onPress={() => this._setModalVisible(false, 3)}
-                          style={styles.popupButton}
-                          rkType='clear'>
-                  <RkText rkType='light'>CANCEL</RkText>
-                </RkButton>
-                <View style={styles.separator}/>
-                <RkButton onPress={() => this.switchToBusiness()}
-                          style={styles.popupButton}
-                          rkType='clear'>
-                  <RkText>OK</RkText>
-                </RkButton>
-              </View>
-            </View>
-          </View>
-        </Modal>
       </ScrollView>
     )
   }

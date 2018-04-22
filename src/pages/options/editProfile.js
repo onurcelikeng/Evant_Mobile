@@ -1,7 +1,8 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet, Image } from 'react-native';
-import { RkText, RkTextInput, RkAvoidKeyboard, RkTheme, RkStyleSheet, RkButton } from 'react-native-ui-kitten';
+import { RkText, RkTextInput, RkTheme, RkStyleSheet, RkButton } from 'react-native-ui-kitten';
 import PhotoUpload from 'react-native-photo-upload';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account'
@@ -70,10 +71,19 @@ export default class EditProfile extends React.Component {
         })
     }
 
+    _scrollToInput (reactNode) {
+        // Add a 'scroll' ref to your ScrollView
+        this.scroll.props.scrollToFocusedInput(reactNode)
+    }
+
     render() {
         return (
             <ScrollView style={styles.root} key={this.state}>
-                <RkAvoidKeyboard>
+                <KeyboardAwareScrollView innerRef={ref => {this.scroll = ref}}
+                    resetScrollToCoords={{ x: 0, y: 0 }}
+                    onStartShouldSetResponder={ (e) => true}
+                    contentContainerStyle={[{alignItems:"stretch"}]}
+                    onResponderRelease={ (e) => Keyboard.dismiss()}>
                     <View style={styles.header}>
                         <PhotoUpload 
                             width={300}
@@ -94,31 +104,61 @@ export default class EditProfile extends React.Component {
                             <RkText rkType='header6 primary'>INFO</RkText>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='First Name'
+                            <RkTextInput 
+                                onFocus={(event) => {
+                                    this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                                }} 
+                                autoCapitalize='none' 
+                                autoCorrect={false} 
+                                label='First Name'
                                 value={this.state.firstName}
                                 rkType='right clear'
                                 onChangeText={(text) => this.setState({firstName: text})}/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Last Name'
+                            <RkTextInput 
+                                onFocus={(event) => {
+                                    this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                                }} 
+                                autoCapitalize='none' 
+                                autoCorrect={false} 
+                                label='Last Name'
                                 value={this.state.lastName}
                                 onChangeText={(text) => this.setState({lastName: text})}
                                 rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Email'
+                            <RkTextInput 
+                                onFocus={(event) => {
+                                    this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                                }} 
+                                autoCapitalize='none' 
+                                autoCorrect={false} 
+                                label='Email'
                                 value={this.state.email}
                                 onChangeText={(text) => this.setState({email: text})}
                                 rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Country'
+                            <RkTextInput 
+                                onFocus={(event) => {
+                                    this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                                }} 
+                                autoCapitalize='none' 
+                                autoCorrect={false} 
+                                label='Country'
                                 value={this.state.country}
                                 onChangeText={(text) => this.setState({country: text})}
                                 rkType='right clear'/>
                         </View>
                         <View style={styles.row}>
-                            <RkTextInput label='Phone'
+                            <RkTextInput 
+                                onFocus={(event) => {
+                                    this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                                }} 
+                                autoCapitalize='none' 
+                                autoCorrect={false} 
+                                label='Phone'
                                 value={this.state.phone}
                                 onChangeText={(text) => this.setState({phone: text})}
                                 rkType='right clear'/>
@@ -147,7 +187,7 @@ export default class EditProfile extends React.Component {
                         } else {
                             DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
                         }}}>SAVE</RkButton>
-                </RkAvoidKeyboard>
+                </KeyboardAwareScrollView>
             </ScrollView>
         )
     }

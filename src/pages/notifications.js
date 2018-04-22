@@ -71,16 +71,13 @@ export default class Notifications extends React.Component {
 	deleteNotification(id) {
 		return notificationProvider.deleteNotification(id)
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-			} else {
+			if(!responseJson.isSuccess) {
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		});
 	}
 
 	_onRefresh() {
-		console.log("refreshing");
 		this.setState({isRefreshing: true});
 		this.getNotifications().then(() => {
 			this.setState({isRefreshing: false});
@@ -158,12 +155,11 @@ export default class Notifications extends React.Component {
 			)
 		} else {
 			return (
-				<View style={[styles.root, {flex: 1}]}>
-					<Image style={{marginTop: 30, alignSelf: 'center', justifyContent:'center', flexDirection:'row'}} source={require('../assets/images/notfound.png')}/>
+				<View style={[styles.root, {flex:1, flexDirection: 'row', alignSelf:'center', alignContent: 'center'}]}>
+					<Image style={{alignSelf: 'center'}} source={require('../assets/images/notfound.png')}/>
 				</View>
 			)
-		}
-		
+		}	
 	}
 	
 	render() {
@@ -211,7 +207,10 @@ export default class Notifications extends React.Component {
 	
 let styles = RkStyleSheet.create(theme => ({
 	root: {
-		backgroundColor: theme.colors.screen.base
+		backgroundColor: theme.colors.screen.base,
+		alignContent: 'center',
+		flex:1, 
+		flexDirection: 'row'
 	},
 	container: {
 		padding: 16,

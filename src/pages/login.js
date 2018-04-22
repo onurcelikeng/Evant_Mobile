@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View, Image, Dimensions, Keyboard, AsyncStorage } from 'react-native';
-import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
+import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 import OneSignal from 'react-native-onesignal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import DropdownHolder from '../providers/dropdownHolder';
 import * as deviceProvider from '../providers/devices';
@@ -81,47 +82,52 @@ export default class Login extends React.Component {
 
     return accountProvider.login(credentials)
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					token: responseJson.data.token,
-				}, function() {
-            console.log(this.state.token)
-            AsyncStorage.setItem("token", this.state.token);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
-
-            const brand = DeviceInfo.getBrand();
-            const model = DeviceInfo.getModel();
-            const systemName = DeviceInfo.getSystemName();
-            const systemVersion = DeviceInfo.getSystemVersion();
-
-            let deviceProperties = {
-              deviceId: playerId,
-              brand: brand,
-              model: model,
-              os: systemName + " " + systemVersion
-            }
-
-            deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
-              console.log(responseJson);
-              if(responseJson.isSuccess) {
-                accountProvider.getMe().then((responseJson) => {
-                  if(responseJson.isSuccess) {
-                    Login.setCurrentUser(responseJson.data);
-                    Actions.tabbar();
-                  } else {
-                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                  }
-                });
+      console.log(responseJson);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        if(responseJson.isSuccess) {
+          this.setState({
+            token: responseJson.data.token,
+          }, function() {
+              console.log(this.state.token)
+              AsyncStorage.setItem("token", this.state.token);
+              axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
+  
+              const brand = DeviceInfo.getBrand();
+              const model = DeviceInfo.getModel();
+              const systemName = DeviceInfo.getSystemName();
+              const systemVersion = DeviceInfo.getSystemVersion();
+  
+              let deviceProperties = {
+                deviceId: playerId,
+                brand: brand,
+                model: model,
+                os: systemName + " " + systemVersion
               }
-              else {
-                DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-              }
-            })
-            .catch(error => console.log(error));
-				});
-			} else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-			}
+  
+              deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
+                console.log(responseJson);
+                if(responseJson.isSuccess) {
+                  accountProvider.getMe().then((responseJson) => {
+                    if(responseJson.isSuccess) {
+                      Login.setCurrentUser(responseJson.data);
+                      Actions.tabbar();
+                    } else {
+                      DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                    }
+                  });
+                }
+                else {
+                  DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                }
+              })
+              .catch(error => console.log(error));
+          });
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
+      }
 		})
 		.catch((error) => {
 		  console.error(error);
@@ -160,14 +166,20 @@ export default class Login extends React.Component {
     return image;
   }
 
+  _scrollToInput (reactNode) {
+    // Add a 'scroll' ref to your ScrollView
+    this.scroll.props.scrollToFocusedInput(reactNode)
+  }
+
 	render() {
     let image = this._renderImage();
     
     return (
-      <RkAvoidKeyboard
+      <KeyboardAwareScrollView innerRef={ref => {this.scroll = ref}}
+        resetScrollToCoords={{ x: 0, y: 0 }}
         onStartShouldSetResponder={ (e) => true}
-        onResponderRelease={ (e) => Keyboard.dismiss()}
-        style={styles.screen}>
+        contentContainerStyle={[styles.screen, {alignItems:"center"}]}
+        onResponderRelease={ (e) => Keyboard.dismiss()}>
         {image}
         <View style={styles.container}>
           <View style={styles.buttons}>
@@ -181,8 +193,29 @@ export default class Login extends React.Component {
               <RkText rkType='awesome hero accentColor'>{FontAwesome.facebook}</RkText>
             </RkButton>
           </View>
-          <RkTextInput autoCapitalize='none' value={this.state.email} onChangeText={(text) => this.setState({ email: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
-          <RkTextInput autoCapitalize='none' value={this.state.password} onChangeText={(text) => this.setState({ password: text })} autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
+          <RkTextInput 
+            onFocus={(event) => {
+              this._scrollToInput(ReactNative.findNodeHandle(event.target))
+            }} 
+            autoCapitalize='none' 
+            value={this.state.email} 
+            onChangeText={(text) => this.setState({ email: text })} 
+            autoCorrect={false} 
+            style={{marginHorizontal: 10, marginBottom: -3}} 
+            rkType='rounded' 
+            placeholder='Email'/>
+          <RkTextInput 
+            onFocus={(event) => {
+              this._scrollToInput(ReactNative.findNodeHandle(event.target))
+            }} 
+            autoCapitalize='none' 
+            value={this.state.password} 
+            onChangeText={(text) => this.setState({ password: text })} 
+            autoCorrect={false} 
+            style={{marginHorizontal: 10}} 
+            rkType='rounded' 
+            placeholder='Password' 
+            secureTextEntry={true}/>
           <RkButton onPress={() => { 
               if(this.state.email != '' && this.state.password != '') {
                 this.login()
@@ -199,7 +232,7 @@ export default class Login extends React.Component {
             </View>
           </View>
         </View>
-      </RkAvoidKeyboard>
+      </KeyboardAwareScrollView>
     )
   }
 }

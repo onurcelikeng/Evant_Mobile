@@ -221,8 +221,8 @@ export default class EventDetail extends React.Component {
                 <SocialBar id={this.state.data.eventId} comments={this.state.data.totalComments} goings={this.state.data.totalGoings}/>
               </View>
               <View rkCardContent>
-                <View style={{flex:1, flexDirection: "row", marginBottom: 20}}>
-                  <Image style={{height: 25, width: 25, marginRight: 20}} source={require("../../assets/icons/calendar.png")}/>
+                <View style={{flex:1, flexDirection: "row", marginBottom: 10}}>
+                  <Image style={{height: 20, width: 20, marginRight: 10, alignSelf: 'center'}} source={require("../../assets/icons/calendar.png")}/>
                   <View>
                     <View style={{flex:1, flexDirection: "row"}}>
                       <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('ll')}</RkText>
@@ -235,16 +235,10 @@ export default class EventDetail extends React.Component {
                   </View>
                 </View>
                 <View style={{flex:1, flexDirection: "row"}}>
-                  <Image style={{height: 25, width: 25, marginRight: 20}} source={require("../../assets/icons/place.png")}/>
-                  <View>
-                    <View style={{flex:1, flexDirection: "row"}}>
-                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.town}, </RkText>
-                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.city}</RkText>
-                    </View>
-                    <View style={{flex:1, flexDirection: "row"}}>
-                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.latitude.toString()}, </RkText>
-                      <RkText rkType='secondary2 hintColor'>{this.state.data.address.longitude.toString()}</RkText>
-                    </View>
+                  <Image style={{height: 20, width: 20, marginRight: 10, alignSelf: 'center'}} source={require("../../assets/icons/place.png")}/>
+                  <View style={{flex:1, flexDirection: "row", alignSelf: 'center', alignContent: 'center'}}>
+                    <RkText rkType='secondary2 hintColor'>{this.state.data.address.town}, </RkText>
+                    <RkText rkType='secondary2 hintColor'>{this.state.data.address.city}</RkText>
                   </View>
                 </View>
               </View>

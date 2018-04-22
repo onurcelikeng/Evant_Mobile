@@ -340,6 +340,7 @@ export default class OtherProfile extends React.Component {
 								style={styles.list}
 								data={this.state.data}
 								circleSize={20}
+								separator = {true}
 								circleColor='rgba(0,0,0,0)'
 								lineColor='rgb(45,156,219)'
 								timeContainerStyle={{minWidth:70, marginTop: -5}}

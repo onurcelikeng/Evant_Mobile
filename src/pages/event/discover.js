@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, SectionList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, ScrollView, StyleSheet, Dimensions, InteractionManager, TouchableWithoutFeedback, ListView } from 'react-native';
+import { FlatList, SectionList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Dimensions, InteractionManager, TouchableWithoutFeedback, ListView } from 'react-native';
 import { RkText, RkCard, RkStyleSheet, RkTextInput, RkButton } from 'react-native-ui-kitten';
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
@@ -33,11 +33,13 @@ export default class Discover extends React.Component {
 		this.renderEventItem = this._renderEventItem.bind(this);
 		this.renderUserRow = this._renderUserRow.bind(this);
 		this.handleChangeTab = this._handleChangeTab.bind(this);
+		this.onRefresh = this._onRefresh.bind(this);
 
 		this.currentlyOpenSwipeable = null;
 
 		this.state = {
 			isLoading: true,
+			isRefreshing: false,
 			isSearchPressed: false,
 			selectedIndex: 0,
 			isSwiping: false,
@@ -53,6 +55,14 @@ export default class Discover extends React.Component {
 		});
 	}
 
+	_onRefresh() {
+		console.log("esd");
+		this.setState({isRefreshing: true});
+		this.getSearchHistories().then(() => {
+			this.setState({isRefreshing: false});
+		});
+	}
+
 	getCategories() {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
@@ -65,7 +75,6 @@ export default class Discover extends React.Component {
 				this.setState({
 					data: [],
 				});      
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
 		})
 		.catch((error) => {
@@ -397,27 +406,27 @@ export default class Discover extends React.Component {
 						placeholder='Search'/>
 				</View> 
 
-				<ScrollView style={styles.scroll}>
-					<SectionList
-						renderSectionHeader = {({section}) => {
-							return <View style={styles.section}>
-							{
-								section.key == "0" && this.state.searchData.length == 0 ? 
-								<View></View>
-								:
-								<View style={[styles.row, styles.heading]}>
-									<RkText rkType='primary header6'>{section.title}</RkText>
-								</View>
-							}
-										
+				<SectionList
+					renderSectionHeader = {({section}) => {
+						return <View style={styles.section}>
+						{
+							section.key == "0" && this.state.searchData.length == 0 ? 
+							<View></View>
+							:
+							<View style={[styles.row, styles.heading]}>
+								<RkText rkType='primary header6'>{section.title}</RkText>
 							</View>
-						}}
-						sections={[
-							{data: this.state.searchData, key: "0", renderItem: this.renderHistoryItem, title: "RECENT SEARCHES"},
-							{data: this.state.data, key: "1", renderItem: this.renderCategoryItem, title: "CATEGORIES"}
-						]}
-					/>
-				</ScrollView>
+						}
+									
+						</View>
+					}}
+					sections={[
+						{data: this.state.searchData, key: "0", renderItem: this.renderHistoryItem, title: "RECENT SEARCHES"},
+						{data: this.state.data, key: "1", renderItem: this.renderCategoryItem, title: "CATEGORIES"}
+					]}
+					onRefresh={this.onRefresh}
+					refreshing={this.state.isRefreshing}
+				/>
 			</View>
 		)
 	}
@@ -486,11 +495,10 @@ let styles = RkStyleSheet.create(theme => ({
 	scroll: {
 		backgroundColor: theme.colors.screen.base
 	},
-	section: {
-		marginTop: 25
-	},
 	heading: {
-		paddingBottom: 12.5
+		backgroundColor: theme.colors.screen.base,
+		paddingBottom: 12.5,
+		paddingTop: 25
 	},
 	row: {
 		flexDirection: 'row',

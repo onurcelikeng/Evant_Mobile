@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Image, Keyboard, AsyncStorage } from 'react-native';
-import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme, RkAvoidKeyboard } from 'react-native-ui-kitten';
+import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 import OneSignal from 'react-native-onesignal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import DropdownHolder from '../providers/dropdownHolder';
 import * as accountProvider from '../providers/account';
@@ -130,6 +131,11 @@ export default class Signup extends React.Component {
     }
   }
 
+  _scrollToInput (reactNode) {
+    // Add a 'scroll' ref to your ScrollView
+    this.scroll.props.scrollToFocusedInput(reactNode)
+  }
+
 	render() {
     let renderIcon = () => {
       if (RkTheme.current.name === 'light')
@@ -137,9 +143,10 @@ export default class Signup extends React.Component {
       return <Image style={styles.image} source={require('../assets/images/logoDark.png')}/>
     };
     return (
-      <RkAvoidKeyboard
-        style={styles.screen}
+      <KeyboardAwareScrollView innerRef={ref => {this.scroll = ref}}
+        resetScrollToCoords={{ x: 0, y: 0 }}
         onStartShouldSetResponder={ (e) => true}
+        contentContainerStyle={[styles.screen, {alignItems:"stretch"}]}
         onResponderRelease={ (e) => Keyboard.dismiss()}>
         <View style={{alignItems: 'center'}}>
           {renderIcon()}
@@ -147,11 +154,63 @@ export default class Signup extends React.Component {
         </View>
         <View style={styles.content}>
           <View>
-            <RkTextInput autoCapitalize='none' value={this.state.firstName} onChangeText={(text) => this.setState({ firstName: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Name'/>
-            <RkTextInput autoCapitalize='none' value={this.state.lastName} onChangeText={(text) => this.setState({ lastName: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Surname'/>
-            <RkTextInput autoCapitalize='none' value={this.state.email} onChangeText={(text) => this.setState({ email: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Email'/>
-            <RkTextInput autoCapitalize='none' value={this.state.password} onChangeText={(text) => this.setState({ password: text })} autoCorrect={false} style={{marginHorizontal: 10, marginBottom: -3}} rkType='rounded' placeholder='Password' secureTextEntry={true}/>
-            <RkTextInput autoCapitalize='none' value={this.state.passwordRepeat} onChangeText={(text) => this.setState({ passwordRepeat: text })} autoCorrect={false} style={{marginHorizontal: 10}} rkType='rounded' placeholder='Confirm Password' secureTextEntry={true}/>
+            <RkTextInput 
+              onFocus={(event) => {
+                this._scrollToInput(ReactNative.findNodeHandle(event.target))
+              }} 
+              autoCapitalize='none' 
+              value={this.state.firstName} 
+              onChangeText={(text) => this.setState({ firstName: text })} 
+              autoCorrect={false} 
+              style={{marginHorizontal: 10, marginBottom: -3}} 
+              rkType='rounded' 
+              placeholder='Name'/>
+            <RkTextInput 
+              onFocus={(event) => {
+                this._scrollToInput(ReactNative.findNodeHandle(event.target))
+              }} 
+              autoCapitalize='none' 
+              value={this.state.lastName} 
+              onChangeText={(text) => this.setState({ lastName: text })} 
+              autoCorrect={false} 
+              style={{marginHorizontal: 10, marginBottom: -3}} 
+              rkType='rounded' 
+              placeholder='Surname'/>
+            <RkTextInput 
+              onFocus={(event) => {
+                this._scrollToInput(ReactNative.findNodeHandle(event.target))
+              }} 
+              autoCapitalize='none' 
+              value={this.state.email} 
+              onChangeText={(text) => this.setState({ email: text })} 
+              autoCorrect={false} 
+              style={{marginHorizontal: 10, marginBottom: -3}} 
+              rkType='rounded' 
+              placeholder='Email'/>
+            <RkTextInput 
+              onFocus={(event) => {
+                this._scrollToInput(ReactNative.findNodeHandle(event.target))
+              }} 
+              autoCapitalize='none' 
+              value={this.state.password} 
+              onChangeText={(text) => this.setState({ password: text })} 
+              autoCorrect={false} 
+              style={{marginHorizontal: 10, marginBottom: -3}} 
+              rkType='rounded' 
+              placeholder='Password' 
+              secureTextEntry={true}/>
+            <RkTextInput 
+              onFocus={(event) => {
+                this._scrollToInput(ReactNative.findNodeHandle(event.target))
+              }} 
+              autoCapitalize='none' 
+              value={this.state.passwordRepeat} 
+              onChangeText={(text) => this.setState({ passwordRepeat: text })} 
+              autoCorrect={false} 
+              style={{marginHorizontal: 10}} 
+              rkType='rounded' 
+              placeholder='Confirm Password' 
+              secureTextEntry={true}/>
             <RkButton onPress={ () => this.signup() } rkType='medium stretch rounded' style={styles.save}>SIGN UP</RkButton>
           </View>
           <View style={styles.footer}>
@@ -163,7 +222,7 @@ export default class Signup extends React.Component {
             </View>
           </View>
         </View>
-      </RkAvoidKeyboard>
+      </KeyboardAwareScrollView>
     )
   }
 }

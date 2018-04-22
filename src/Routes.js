@@ -250,7 +250,7 @@ export default class Routes extends React.Component {
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                             </Stack>
-                            <Scene
+                            {/*<Scene
                                 key="addEvent"
                                 title="Add Event"
                                 component={withRkTheme(AddEvent)}
@@ -260,7 +260,7 @@ export default class Routes extends React.Component {
                                 backToInitial
                                 icon={TabIcon}
                                 navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                            />
+                            />*/}
                             <Stack
                                 key="tab4"
                                 title="Notifications"

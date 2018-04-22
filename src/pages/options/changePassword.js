@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, StatusBar, Platform, Keyboard, ScrollView, StyleSheet } from 'react-native';
 import { RkText, RkButton, RkTheme, RkStyleSheet, RkAvoidKeyboard, RkTextInput } from 'react-native-ui-kitten';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account';
@@ -29,37 +30,57 @@ export default class Themes extends React.Component {
     });
   }
 
+  _scrollToInput (reactNode) {
+    // Add a 'scroll' ref to your ScrollView
+    this.scroll.props.scrollToFocusedInput(reactNode)
+  } 
+
   render() {
     return (
-      <ScrollView style={styles.root} key={this.state}>
-        <RkAvoidKeyboard>
-            <View style={styles.section}>
+        <KeyboardAwareScrollView innerRef={ref => {this.scroll = ref}}
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          onStartShouldSetResponder={ (e) => true}
+          contentContainerStyle={[styles.root, {alignItems:"stretch"}]}
+          onResponderRelease={ (e) => Keyboard.dismiss()}>            
+              <View style={styles.section}>
                 <View style={styles.row}>
-                    <RkTextInput label='Old Password'
-                                value={this.state.oldPassword}
-                                rkType='right clear'
-                                autoCapitalize='none'
-                                secureTextEntry={true}
-                                autoCorrect={false}
-                                onChangeText={(text) => this.setState({oldPassword: text})}/>
+                    <RkTextInput 
+                      onFocus={(event) => {
+                        this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                      }} 
+                      label='Old Password'
+                      value={this.state.oldPassword}
+                      rkType='right clear'
+                      autoCapitalize='none'
+                      secureTextEntry={true}
+                      autoCorrect={false}
+                      onChangeText={(text) => this.setState({oldPassword: text})}/>
                 </View>
                 <View style={styles.row}>
-                    <RkTextInput label='New Password'
-                                value={this.state.newPassword}
-                                autoCapitalize='none'
-                                secureTextEntry={true}
-                                autoCorrect={false}
-                                onChangeText={(text) => this.setState({newPassword: text})}
-                                rkType='right clear'/>
+                    <RkTextInput 
+                      onFocus={(event) => {
+                        this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                      }} 
+                      label='New Password'
+                      value={this.state.newPassword}
+                      autoCapitalize='none'
+                      secureTextEntry={true}
+                      autoCorrect={false}
+                      onChangeText={(text) => this.setState({newPassword: text})}
+                      rkType='right clear'/>
                 </View>
                 <View style={styles.row}>
-                    <RkTextInput label='New Password (Again)'
-                                value={this.state.newPasswordRepeat}
-                                autoCapitalize='none'
-                                secureTextEntry={true}
-                                autoCorrect={false}
-                                onChangeText={(text) => this.setState({newPasswordRepeat: text})}
-                                rkType='right clear'/>
+                    <RkTextInput 
+                      onFocus={(event) => {
+                        this._scrollToInput(ReactNative.findNodeHandle(event.target))
+                      }}  
+                      label='New Password (Again)'
+                      value={this.state.newPasswordRepeat}
+                      autoCapitalize='none'
+                      secureTextEntry={true}
+                      autoCorrect={false}
+                      onChangeText={(text) => this.setState({newPasswordRepeat: text})}
+                      rkType='right clear'/>
                 </View>
             </View>
 
@@ -69,8 +90,7 @@ export default class Themes extends React.Component {
                 } else {
                     DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
                 }}}>SAVE</RkButton>
-        </RkAvoidKeyboard>
-      </ScrollView>
+        </KeyboardAwareScrollView>
     )
   }
 }

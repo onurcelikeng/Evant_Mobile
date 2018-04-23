@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './sliderEntry.style';
@@ -37,7 +38,7 @@ export default class SliderEntry extends React.Component {
     }
 
     render () {
-        const { data: { title, start }, even } = this.props;
+        const { data: { title, start, eventId }, even } = this.props;
 
         const uppercaseTitle = title ? (
             <Text
@@ -52,7 +53,7 @@ export default class SliderEntry extends React.Component {
             <TouchableOpacity
               activeOpacity={1}
               style={styles.slideInnerContainer}
-              onPress={() => { alert(`You've clicked '${title}'`); }}
+              onPress={() => { Actions.eventDetail({id: eventId, obj: this.props.data}) }}
               >
                 <View style={styles.shadow} />
                 <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>

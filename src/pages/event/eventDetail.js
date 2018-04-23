@@ -6,7 +6,11 @@ import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Po
 import * as Animatable from 'react-native-animatable';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import { Header } from 'react-navigation';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
+import style, { colors } from '../../components/slider/index.style';
+import { sliderWidth, itemWidth } from '../../components/slider/sliderEntry.style';
+import SliderEntry from '../../components/slider/sliderEntry';
 import DropdownHolder from '../../providers/dropdownHolder';
 import ContentLoader from '../../config/contentLoader'
 import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
@@ -30,7 +34,8 @@ export default class EventDetail extends React.Component {
 
     this.state = {
       join: false,
-      isLoading: true
+      isLoading: true,
+      slider1ActiveSlide: 0
     }
 
     let {params} = this.props.navigation.state;
@@ -47,6 +52,25 @@ export default class EventDetail extends React.Component {
       this.joinStatus();
   }
 
+  getSimilarEvents() {
+		return eventProvider.getSimilarEvents()
+		.then((responseJson) => {
+			if(responseJson.isSuccess) {
+				console.log(responseJson.data)
+				this.setState({
+					isLoading: false,
+					entries: responseJson.data,
+				  });
+			} else {
+				this.setState({
+					isLoading: false,
+					data: [],
+				  });
+				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+			}
+		});
+	}
+
   getEvent(id) {
     console.log(id);
     return eventProvider.getEvent(id)
@@ -54,9 +78,9 @@ export default class EventDetail extends React.Component {
       console.log(responseJson);
       if(responseJson.isSuccess) {
         this.setState({data: responseJson.data})
-        this.joinStatus().then(() =>
-          this.setState({isLoading: false})
-        );    
+        this.joinStatus().then(() => {
+          this.getSimilarEvents();
+        })   
       } else {
         DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
@@ -126,6 +150,10 @@ export default class EventDetail extends React.Component {
       </View>
     );
   }
+
+  _renderItem ({item, index}) {
+    return <SliderEntry data={item} even={(index + 1) % 2 === 0} />;
+}
 
   render() {
     if (this.state.isLoading) {
@@ -245,6 +273,41 @@ export default class EventDetail extends React.Component {
               <View style={{paddingHorizontal: 10, paddingVertical: 5}}>
                 <RkText rkType='secondary2 bigLine'>{this.state.data.description}</RkText>
               </View>
+            </RkCard>
+            <RkCard style={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}}>
+              <Text style={style.title}>{`Example 5`}</Text>
+              <Text style={style.subtitle}>Momentum | Left-aligned | Active animation</Text>
+              <Carousel
+                ref={c => this._slider1Ref = c}
+                data={this.state.entries}
+                renderItem={this._renderItem}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                inactiveSlideScale={0.94}
+                inactiveSlideOpacity={0.7}
+                containerCustomStyle={styles.slider}
+                contentContainerCustomStyle={styles.sliderContentContainer}
+                loop={true}
+                loopClonesPerSide={2}
+                onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                activeAnimationType={'spring'}
+                activeAnimationOptions={{
+                    friction: 4,
+                    tension: 40
+                }}
+              />
+              <Pagination
+                dotsLength={this.state.entries.length}
+                activeDotIndex={this.state.slider1ActiveSlide}
+                containerStyle={style.paginationContainer}
+                dotColor={'rgba(255, 255, 255, 0.92)'}
+                dotStyle={styles.paginationDot}
+                inactiveDotColor="#000"
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.6}
+                carouselRef={this._slider1Ref}
+                tappableDots={!!this._slider1Ref}
+              />
             </RkCard>
           </HeaderImageScrollView>
 

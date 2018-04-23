@@ -40,6 +40,7 @@
     "react-native-progress-bar": "^0.1.2",
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-scrollable-tab-view": "^0.8.0",
+    "react-native-snap-carousel": "^3.7.0",
     "react-native-statusbar-alert": "^0.4.0",
     "react-native-svg": "^6.2.1",
     "react-native-swipeable": "^0.6.0",

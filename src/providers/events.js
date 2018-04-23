@@ -83,3 +83,10 @@ export function search(query) {
         return res;
     })
 }
+
+export function getSimilarEvents(id) {
+    return axios.get('events/' + id + '/similar')
+    .then(res => res.data).then(res => {
+        return res;
+    })
+}

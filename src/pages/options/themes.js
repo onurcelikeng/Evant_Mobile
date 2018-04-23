@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, StatusBar, Platform } from 'react-native';
 import { RkText, RkButton, RkTheme, RkStyleSheet } from 'react-native-ui-kitten';
+import { Scene, Router, Actions, Reducer, Overlay, Tabs, Stack } from 'react-native-router-flux';
 
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as userSettingsProvider from '../../providers/userSettings';
@@ -11,11 +12,6 @@ import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 
 export default class Themes extends React.Component {
 
-  static tabBarOptions = {
-    style: {
-      backgroundColor: 'ff0000'
-    }
-  }
 
   constructor(props) {
     super(props);
@@ -27,10 +23,10 @@ export default class Themes extends React.Component {
     userSettingsProvider.updateUserSettings(Options.getSettings())
     .then((responseJson) => { 
       if(responseJson.isSuccess) { 
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.data);
+        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
       }
       else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.data);
+        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
       }
     });
   }

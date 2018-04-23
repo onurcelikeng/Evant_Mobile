@@ -363,7 +363,8 @@ let styles = RkStyleSheet.create(theme => ({
     backgroundColor: 'transparent',
 	},
 	container: {
-		flex: 1
+		flex: 1,
+		backgroundColor: theme.colors.screen.base
 	},
 	timeline: {
     flex: 1,
@@ -375,6 +376,7 @@ let styles = RkStyleSheet.create(theme => ({
   list: {
     flex: 1,
     marginTop:20,
+    backgroundColor: theme.colors.screen.base
   },
   titleTimeline:{
     fontSize:16,

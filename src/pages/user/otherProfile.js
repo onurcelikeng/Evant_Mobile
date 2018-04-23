@@ -88,6 +88,7 @@ export default class OtherProfile extends React.Component {
 				});
 				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
 				this.getUserInfo();
+				Login.getCurrentUser().followingList += 1;
 			} else {
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}
@@ -102,6 +103,7 @@ export default class OtherProfile extends React.Component {
 				});
 				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
 				this.getUserInfo();
+				Login.getCurrentUser().followingList -= 1;
 			} else {
 				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
 			}

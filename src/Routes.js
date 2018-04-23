@@ -40,7 +40,7 @@ const styles =  RkStyleSheet.create(theme => ({
       width: 40
     },
     tabBarStyle: {
-        backgroundColor: theme.colors.screen.base
+        backgroundColor: theme.colors.screen.base,
     }
 }));
 
@@ -59,9 +59,9 @@ const getSceneStyle = () => ({
 });
 
 let ThemedNavigationBar = withRkTheme(NavBar);
-let ThemedTabBar = withRkTheme(RkTabView);
 
 export default class Routes extends React.Component {
+
 	render() {
 		return(
 			<Router
@@ -81,8 +81,8 @@ export default class Routes extends React.Component {
                             showLabel={false}
                             lazy
                             hideNavBar
-                            headerMode="screen"
                             tabBarStyle={styles.tabBarStyle}
+                            headerMode="screen"
                         >
                             <Stack
                                 key="tab1"

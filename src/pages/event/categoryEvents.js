@@ -194,9 +194,8 @@ export default class CategoryEvents extends React.Component {
 		}
 
 		return (
-            <View style={{flex: 1, flexDirection: "column", justifyContent: "space-between"}}>
             <ScrollableTabView
-                style={{backgroundColor: "#fff"}}
+                style={styles.container}
                 initialPage={0}
                 tabBarUnderlineStyle={{height: 1}}
                 tabBarBackgroundColor="#da6954"
@@ -251,14 +250,13 @@ export default class CategoryEvents extends React.Component {
                     />
                 </View>
             </ScrollableTabView>
-            </View>
 		)
 	}
 }
 	
 let styles = RkStyleSheet.create(theme => ({
 	container: {
-        backgroundColor: theme.colors.screen.base
+        backgroundColor: theme.colors.screen.base,
 	},
 	card: {
 		marginBottom: 15,

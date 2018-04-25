@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListView, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { ListView, View, StyleSheet, TouchableOpacity, Image, RefreshControl } from 'react-native';
 import _ from 'lodash';
 import { RkStyleSheet, RkText, RkTextInput } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
@@ -33,15 +33,12 @@ export default class GoingList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.users = data.getUsers();
-
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      data: ds.cloneWithRows(this.users),
       isLoading: true,
-      refreshing: false
+      isRefreshing: false
     };
 
+    this.onRefresh = this._onRefresh.bind(this)
     this.filter = this._filter.bind(this);
     this.setData = this._setData.bind(this);
     this.renderHeader = this._renderHeader.bind(this);
@@ -49,28 +46,44 @@ export default class GoingList extends React.Component {
   }
 
   componentWillMount() {   
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    eventOperationProvider.followers(this.props.id).then(responseJson => {
-      if(responseJson.isSuccess) {
-        this.setState({
-          isLoading: false,
-          data: ds.cloneWithRows(responseJson.data),
-          users: responseJson.data
-        })
+    this.getGoings().then(() => {
+      this.setState({
+        isLoading: false
+      })
+    })
+	}
+
+  getGoings() {
+    return eventOperationProvider.getGoings(this.props.id).then(responseJson => {
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        this.setState({
-          isLoading: false,
-          data: ds.cloneWithRows([]),
-          users: []
-        })
+        if(responseJson.isSuccess) {
+          this.setData(responseJson.data)
+        } else {
+          this.setData([]);
+        }
       }
+    }).catch((err) => {console.log(err)});
+  }
+
+  _onRefresh(){
+		console.log("esd");
+    this.setState({
+      isRefreshing: true
+    });
+    this.getGoings().then(() => {
+      this.setState({
+        isRefreshing: false
+      })
     });
 	}
 
   _setData(data) {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({
-      data: ds.cloneWithRows(data)
+      data: ds.cloneWithRows(data),
+      users: data
     })
   }
 
@@ -143,6 +156,10 @@ export default class GoingList extends React.Component {
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}
         renderHeader={this.renderHeader}
+        refreshControl={<RefreshControl
+          refreshing={this.state.isRefreshing}
+          onRefresh={this.onRefresh}
+        />}
         enableEmptySections={true}/>
     )
   }

@@ -66,15 +66,18 @@ export default class Discover extends React.Component {
 	getCategories() {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				console.log(responseJson.data);
-				this.setState({
-					data: responseJson.data,
-				});
-			} else {  
-				this.setState({
-					data: [],
-				});      
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+			} else {
+				if(responseJson.isSuccess) {
+					this.setState({
+						data: responseJson.data,
+					});
+				} else {  
+					this.setState({
+						data: [],
+					});      
+				}
 			}
 		})
 		.catch((error) => {
@@ -85,39 +88,50 @@ export default class Discover extends React.Component {
 	getSearchHistories() {
 		return searchHistoryProvider.getSearchHistories()
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					isLoading: false,
-					searchData: responseJson.data.slice(0, 5)
-				})
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				this.setState({
-					isLoading: false,
-					searchData: []
-				})
+				if(responseJson.isSuccess) {
+					this.setState({
+						isLoading: false,
+						searchData: responseJson.data.slice(0, 5)
+					})
+				} else {
+					this.setState({
+						isLoading: false,
+						searchData: []
+					})
+				}
 			}
-		})
+		}).catch((err) => {console.log(err)});
 	}
 
 	deleteSearchHistory(id) {
 		return searchHistoryProvider.deleteSearchHistory(id)
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				if(responseJson.isSuccess) {
+					DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+				} else {
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		})
+		}).catch((err) => {console.log(err)});
 	}
 
 	addSearchHistory() {
 		return searchHistoryProvider.addSearchHistory(this.state.searchedItem)
 		then((responseJson) => {
-			console.log(responseJson)
-			if(responseJson.isSuccess) {
-				console.log(responseJson);
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+			} else {
+				if(responseJson.isSuccess) {
+					console.log(responseJson);
+				}
 			}
-		})
+		}).catch((err) => {console.log(err)});
 	}
 
 	searchPage() {

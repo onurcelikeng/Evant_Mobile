@@ -61,23 +61,30 @@ export default class Options extends React.Component {
   deactivateAccount() {
     return accountProvider.deactivateAccount()
     .then((responseJson) => {
-      if(responseJson.isSuccess) {
-        this.logout();
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          this.logout();
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    })
+    }).catch((err) => {console.log(err)});
   }
   
   getUserSettings() {
 		return userSettingsProvider.getUserSettings()
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-        console.log(responseJson.data)
-        Options.userSettings = responseJson.data;
-			} else {
-				console.log(responseJson.message);
-			}
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        if(responseJson.isSuccess) {
+          Options.userSettings = responseJson.data;
+        } else {
+          console.log(responseJson.message);
+        }
+      }
 		})
 		.catch((error) => {
 		  console.log(error);
@@ -87,22 +94,30 @@ export default class Options extends React.Component {
   clearSearchHistories() {
     return searchHistoriesProvider.deleteAllSearchHistories()
     .then((responseJson) => {
-      if(responseJson.isSuccess) {
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    })
+    }).catch((err) => {console.log(err)});
   }
 
   switchToBusiness() {
     return accountProvider.switchToBusiness()
     .then((responseJson) => {
-      if(responseJson.isSuccess) {
-        Login.getCurrentUser().isBusiness = !Login.getCurrentUser().isBusiness;
-        this._setModalVisible(false, 1);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        if(responseJson.isSuccess) {
+          Login.getCurrentUser().isBusiness = !Login.getCurrentUser().isBusiness;
+          this._setModalVisible(false, 1);
+        }
       }
-    })
+    }).catch((err) => {console.log(err)});
   }
   
   static getSettings() {

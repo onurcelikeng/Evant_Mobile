@@ -27,13 +27,17 @@ export default class NotificationSettings extends React.Component {
   updateUserSettings() {
     userSettingsProvider.updateUserSettings(Options.getSettings())
     .then((responseJson) => { 
-      if(responseJson.isSuccess) { 
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        if(responseJson.isSuccess) { 
+          DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        }
+        else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-      else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-      }
-    });
+    }).catch((err) => {console.log(err)});
   }
 
   render() {

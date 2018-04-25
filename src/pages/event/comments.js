@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, Platform, Image, TouchableOpacity, Keyboard, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import { FlatList, View, Platform, Image, TouchableOpacity, Keyboard, StyleSheet, Dimensions, TouchableHighlight, RefreshControl } from 'react-native';
 import {InteractionManager} from 'react-native';
 import { RkButton, RkText, RkTextInput, RkAvoidKeyboard, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import _ from 'lodash';
@@ -28,6 +28,7 @@ export default class Comments extends React.Component {
     this.eventId = this.props.id;
 
     this.renderItem = this._renderItem.bind(this);
+    this.onRefresh = this._onRefresh.bind(this);
 
     this.currentlyOpenSwipeable = null;
 
@@ -36,7 +37,8 @@ export default class Comments extends React.Component {
       isSuccess: false,
 			isSwiping: false,
 			rightActionActivated: false,
-			toggle: false
+      toggle: false,
+      isRefreshing: false
     }; 
   }
 
@@ -44,55 +46,75 @@ export default class Comments extends React.Component {
     this.getComments(this.props.id);
   }
 
+  _onRefresh(){
+    this.setState({
+      isRefreshing: true
+    });
+    this.getComments(this.props.id).then(() => {
+      this.setState({
+        isRefreshing: false
+      })
+    });
+	}
+
   addComment(credentials) {
     console.log(credentials);
     return commentProvider.addComment(credentials) 
     .then((responseJson) => {
-      console.log(responseJson);
-      if(responseJson.isSuccess) {
-        this.setState({
-          isSuccess: true
-        })
-        this.getComments(this.eventId);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          this.setState({
+            isSuccess: true
+          })
+          this.getComments(this.eventId);
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    })
+    }).catch((err) => {console.log(err)});
   }
 
   getComments(id) {
     return commentProvider.getComments(id)
     .then((responseJson) => {
-      if(responseJson.isSuccess) {
-        console.log(responseJson);
-        this.setState({
-					isLoading: false,
-          data: responseJson.data,
-          isSuccess:true
-				});
-        InteractionManager.runAfterInteractions(() => {
-          this.refs.list.scrollToEnd();
-        });
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        this.setState({
-					isLoading: false,
-          isSuccess: false,
-          data: []
-				  });
+        if(responseJson.isSuccess) {
+          this.setState({
+            isLoading: false,
+            data: responseJson.data,
+            isSuccess:true
+          });
+          InteractionManager.runAfterInteractions(() => {
+            this.refs.list.scrollToEnd();
+          });
+        } else {
+          this.setState({
+            isLoading: false,
+            isSuccess: false,
+            data: []
+          });
+        }
       }
-    });
+    }).catch((err) => {console.log(err)});
   }
 
   deleteComment(id) {
     return commentProvider.deleteComment(id)
     .then((responseJson) => {
-      console.log(responseJson);
-      if(responseJson.isSuccess) {
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    })
+    }).catch((err) => {console.log(err)});
   }
 
   _keyExtractor(post, index) {
@@ -230,6 +252,10 @@ export default class Comments extends React.Component {
             extraData={this.state}
             ItemSeparatorComponent={this._renderSeparator}
             keyExtractor={this._keyExtractor}
+            refreshControl={<RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+            />}
             renderItem={this.renderItem}
             ListEmptyComponent={this.showEmptyListView}/>
           <View style={styles.footer}>
@@ -257,6 +283,10 @@ export default class Comments extends React.Component {
             data={this.state.data}
             extraData={this.state}
             ItemSeparatorComponent={this._renderSeparator}
+            refreshControl={<RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+            />}
             keyExtractor={this._keyExtractor}
             renderItem={this.renderItem}/>
         <View style={styles.footer}>

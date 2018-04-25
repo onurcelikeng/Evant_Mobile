@@ -89,9 +89,6 @@ export default class Routes extends React.Component {
                                 title="Events"
                                 tabBarLabel="Events"
                                 icon={TabIcon}
-                                onEnter={
-                                    console.log("esd")
-                                }
                                 initial
                             >
                                 <Scene

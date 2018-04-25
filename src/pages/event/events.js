@@ -38,38 +38,45 @@ export default class Events extends React.Component {
 	getCategoryEvents(id) {
 		return eventProvider.getCategoryEvents(id)
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					isLoading: false,
-					data: responseJson.data,
-				  });
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				this.setState({
-					isLoading: false,
-					data: [],
-				  });
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				if(responseJson.isSuccess) {
+					this.setState({
+						isLoading: false,
+						data: responseJson.data,
+						});
+				} else {
+					this.setState({
+						isLoading: false,
+						data: [],
+						});
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		});
+		}).catch((err) => {console.log(err)});
 	}
 
 	getEvents() {
 		return eventProvider.getEvents()
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				console.log(responseJson.data)
-				this.setState({
-					isLoading: false,
-					data: responseJson.data,
-				  });
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				this.setState({
-					isLoading: false,
-					data: [],
-				  });
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				if(responseJson.isSuccess) {
+					this.setState({
+						isLoading: false,
+						data: responseJson.data,
+						});
+				} else {
+					this.setState({
+						isLoading: false,
+						data: [],
+						});
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		});
+		}).catch((err) => {console.log(err)});
 	}
 
 	_keyExtractor(post, index) {
@@ -150,7 +157,9 @@ export default class Events extends React.Component {
 				renderItem={this.renderItem}
 				keyExtractor={this._keyExtractor}
 				style={styles.container}
-				enableEmptySections={true}
+				ListEmptyComponent={<View style={{flex:1, flexDirection: 'row', justifyContent: 'center', alignSelf:'center', alignContent: 'center'}}>
+															<Image style={{alignSelf: 'center'}} source={require('../../assets/images/notfound.png')}/>
+														</View>}
 				refreshControl={
           <RefreshControl
             refreshing={this.state.isRefreshing}

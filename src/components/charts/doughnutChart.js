@@ -1,63 +1,75 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  Dimensions
-} from 'react-native';
-import {
-  RkComponent,
-  RkText,
-  RkTheme,
-  RkStyleSheet
-} from 'react-native-ui-kitten';
+import { View, Image, Dimensions } from 'react-native';
+import { RkComponent, RkText, RkTheme, RkStyleSheet } from 'react-native-ui-kitten';
 
-import {
-  VictoryPie,
-} from "victory-native";
+import { VictoryPie } from "victory-native";
 
-import {Svg, Text as SvgText} from 'react-native-svg';
-import {scale} from '../../utils/scale';
-
+import { Svg, Text as SvgText } from 'react-native-svg';
+import { scale } from '../../utils/scale';
+import DropdownHolder from '../../providers/dropdownHolder';
+import * as dashboardProvider from '../../providers/dashboard';
 
 export class DoughnutChart extends RkComponent {
 
   constructor(props) {
     super(props);
+
     this.size = 300;
     this.fontSize = 40;
     this.state = {
       selected: 0,
-      data: [
-        {
-          x: 1,
-          y: (24/100) * 360,
-          title: '24%',
-          name: '0-17 Teenager',
-          color: RkTheme.current.colors.charts.doughnut[0],
-        },
-        {
-          x: 2,
-          y: (27/100) * 360,
-          title: '27%',
-          name: '18-65 Young',
-          color: RkTheme.current.colors.charts.doughnut[1],
-        },
-        {
-          x: 3,
-          y: (17/100) * 360,
-          title: '17%',
-          name: '66-79 Middle-Aged',
-          color: RkTheme.current.colors.charts.doughnut[2],
-        },
-        {
-          x: 4,
-          y: (32/100) * 360,
-          title: '32%',
-          name: '80-99 Old',
-          color: RkTheme.current.colors.charts.doughnut[3],
-        }
-      ]
+      isLoading: true
     }
+  }
+
+  componentDidMount() {
+    this.getRange();
+  }
+
+  getRange() {
+    dashboardProvider.getRanges(this.props.eventId).then((responseJson) => {
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+			} else {
+				if(responseJson.isSuccess) {
+					this.setState({
+						data: [
+              {
+                x: 1,
+                y: (responseJson.data.teenager.value / 100) * 360,
+                title: responseJson.data.teenager.value + '%',
+                name: responseJson.data.teenager.range + " " + responseJson.data.teenager.name,
+                color: RkTheme.current.colors.charts.doughnut[0]
+              },
+              {
+                x: 1,
+                y: (responseJson.data.young.value / 100) * 360,
+                title: responseJson.data.young.value + '%',
+                name: responseJson.data.young.range + " " + responseJson.data.young.name,
+                color: RkTheme.current.colors.charts.doughnut[1]
+              },
+              {
+                x: 1,
+                y: (responseJson.data.middle.value / 100) * 360,
+                title: responseJson.data.middle.value + '%',
+                name: responseJson.data.middle.range + " " + responseJson.data.middle.name,
+                color: RkTheme.current.colors.charts.doughnut[2]
+              },
+              {
+                x: 1,
+                y: (responseJson.data.old.value / 100) * 360,
+                title: responseJson.data.old.value + '%',
+                name: responseJson.data.old.range + " " + responseJson.data.old.name,
+                color: RkTheme.current.colors.charts.doughnut[3]
+              }
+            ],
+            isLoading: false
+					});
+				} else {
+					console.log(responseJson.message);
+				}
+			}
+    }).catch((err) => { console.log(err) });
   }
 
   computeColors() {
@@ -71,6 +83,13 @@ export class DoughnutChart extends RkComponent {
   }
 
   render() {
+    if(this.state.isLoading) {
+      return (
+        <View>
+          <RkText rkType='header4'>AUDIENCE OVERVIEW</RkText>
+        </View>
+      )
+    }
     return (
       <View>
         <RkText rkType='header4'>AUDIENCE OVERVIEW</RkText>

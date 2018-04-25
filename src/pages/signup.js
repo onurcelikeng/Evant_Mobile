@@ -70,56 +70,66 @@ export default class Signup extends React.Component {
     if(this.state.password == this.state.passwordRepeat) {
       return accountProvider.register(credentials)
       .then((responseJson) => {
-        if(responseJson.isSuccess) {
-          var loginCredentials = {
-            email: this.state.email,
-            password: this.state.password
-          }
-          accountProvider.login(loginCredentials).then((responseJson) => {
-            if(responseJson.isSuccess) {
-              this.setState({
-                token: responseJson.data.token,
-                }, function() {
-                  AsyncStorage.setItem('token', this.state.token);
-                  axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
-                  
-                  const brand = DeviceInfo.getBrand();
-                  const model = DeviceInfo.getModel();
-                  const systemName = DeviceInfo.getSystemName();
-                  const systemVersion = DeviceInfo.getSystemVersion();
-
-                  let deviceProperties = {
-                    deviceId: playerId,
-                    brand: brand,
-                    model: model,
-                    os: systemName + " " + systemVersion
-                  }
-                  
-                  deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
-                    console.log(responseJson);
-                    if(responseJson.isSuccess) {
-                      accountProvider.getMe().then((responseJson) => {
-                        if(responseJson.isSuccess) {
-                          Login.setCurrentUser(responseJson.data);
-                          Actions.tabbar();
-                        } else {
-                          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                        }
-                      });
-                    }
-                    else {
-                      DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                    }
-                  })
-                  .catch(error => console.log(error));
-              });
-            }
-            else {
-              DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-            }
-          }) 
+        if(responseJson == null || responseJson == "" || responseJson == undefined) {
+          DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
         } else {
-          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+          if(responseJson.isSuccess) {
+            var loginCredentials = {
+              email: this.state.email,
+              password: this.state.password
+            }
+            accountProvider.login(loginCredentials).then((responseJson) => {
+              if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+              } else {
+                if(responseJson.isSuccess) {
+                  this.setState({
+                    token: responseJson.data.token,
+                    }, function() {
+                      AsyncStorage.setItem('token', this.state.token);
+                      axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.token}`;
+                      
+                      const brand = DeviceInfo.getBrand();
+                      const model = DeviceInfo.getModel();
+                      const systemName = DeviceInfo.getSystemName();
+                      const systemVersion = DeviceInfo.getSystemVersion();
+
+                      let deviceProperties = {
+                        deviceId: playerId,
+                        brand: brand,
+                        model: model,
+                        os: systemName + " " + systemVersion
+                      }
+                      
+                      deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
+                        if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                          DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                        } else {
+                          if(responseJson.isSuccess) {
+                            accountProvider.getMe().then((responseJson) => {
+                              if(responseJson.isSuccess) {
+                                Login.setCurrentUser(responseJson.data);
+                                Actions.tabbar();
+                              } else {
+                                DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                              }
+                            });
+                          }
+                          else {
+                            DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                          }
+                        }
+                      }).catch(error => console.log(error));
+                  });
+                }
+                else {
+                  DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                }
+              }
+            }) 
+          } else {
+            DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+          }
         }
       })
       .catch((error) => {

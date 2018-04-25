@@ -63,7 +63,7 @@ export default class Dashboard extends React.Component {
                     {this.data.statItems.map(item => this.renderStatItem(item))}
                 </View>
                 <View style={chartBlockStyles}>
-                    <DoughnutChart/>
+                    <DoughnutChart eventId={this.props.eventId}/>
                 </View>
                 <View style={chartBlockStyles}>
                     <AreaChart/>

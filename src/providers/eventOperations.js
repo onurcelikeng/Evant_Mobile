@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export function followers(id) {
+export function getGoings(id) {
     return axios.get('eventoperations/' + id)
     .then(res => res.data).then(res => {
         return res;

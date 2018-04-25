@@ -47,27 +47,31 @@ export default class AddEvent extends React.Component {
     getCategories() {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				console.log(responseJson.data);
-				this.setState({
-					categories: responseJson.data,
-                });
-                var i = 0;
-                responseJson.data.forEach(element => {
-                    this.data[0].push({
-                        key: ++i,
-                        value: element.name
-                    })
-                });
-                this.categories = responseJson.data;
-                
-                console.log(this.data[0][4 - 1]);
-			} else {  
-				this.setState({
-					categories: [],
-				});      
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-			}
+            if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+            } else {
+                if(responseJson.isSuccess) {
+                    console.log(responseJson.data);
+                    this.setState({
+                        categories: responseJson.data,
+                    });
+                    var i = 0;
+                    responseJson.data.forEach(element => {
+                        this.data[0].push({
+                            key: ++i,
+                            value: element.name
+                        })
+                    });
+                    this.categories = responseJson.data;
+                    
+                    console.log(this.data[0][4 - 1]);
+                } else {  
+                    this.setState({
+                        categories: [],
+                    });      
+                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                }
+            }
 		})
 		.catch((error) => {
 		  console.log(error);
@@ -106,25 +110,29 @@ export default class AddEvent extends React.Component {
 
             eventProvider.addEvent(credentials)
             .then((responseJson) => {
-                if(responseJson.isSuccess) { 
-                    eventProvider.addPhoto(this.state.photo)
-                    .then((res) => {
-                        console.log(res);
-                        if(res.isSuccess) {
-                            this.user.photo = this.state.photo;
-                            DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-                        } else {
-                            DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                    DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                } else {
+                    if(responseJson.isSuccess) { 
+                        eventProvider.addPhoto(this.state.photo)
+                        .then((res) => {
+                            console.log(res);
+                            if(res.isSuccess) {
+                                this.user.photo = this.state.photo;
+                                DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                            } else {
+                                DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                    }
+                    else {
+                        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                    }
                 }
-                else {
-                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                }
-            });
+            }).catch((err) => {console.log(err)});
         } else {
             DropdownHolder.getDropDown().alertWithType("error", "", "Please fill up all the spaces.");
         }   

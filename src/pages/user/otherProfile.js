@@ -55,65 +55,68 @@ export default class OtherProfile extends React.Component {
 			})
 		});
 
-		userProvider.getUserInfo(this.props.id).then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					user: responseJson.data
-				}, function() {
-					this.getTimeline(this.props.id);
-				})
-			} else {
-				console.log(responseJson.message);
-			}
-		});
+		this.getUserInfo();
 	}
 
 	getUserInfo() {
 		userProvider.getUserInfo(this.props.id).then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					user: responseJson.data
-				})
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				console.log(responseJson.message);
+				if(responseJson.isSuccess) {
+					this.setState({
+						user: responseJson.data
+					}, function() {
+						this.getTimeline(this.props.id);
+					})
+				} else {
+					console.log(responseJson.message);
+				}
 			}
-		});
+		}).catch((err) => {console.log(err)});
 	}
 
 	follow() {
 		friendProvider.follow(this.props.id).then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					isFollowing: true
-				});
-				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-				this.getUserInfo();
-				Login.getCurrentUser().followingList += 1;
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				if(responseJson.isSuccess) {
+					this.setState({
+						isFollowing: true
+					});
+					DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+					this.getUserInfo();
+					Login.getCurrentUser().followingList += 1;
+				} else {
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		})
+		}).catch((err) => {console.log(err)});
 	}
 
 	unfollow() {
 		friendProvider.unfollow(this.props.id).then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					isFollowing: false
-				});
-				DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-				this.getUserInfo();
-				Login.getCurrentUser().followingList -= 1;
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				if(responseJson.isSuccess) {
+					this.setState({
+						isFollowing: false
+					});
+					DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+					this.getUserInfo();
+					Login.getCurrentUser().followingList -= 1;
+				} else {
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		})
+		}).catch((err) => {console.log(err)});
 	}
 
 	onEventPress(data){
     this.setState({selected: data});
 		
-		console.log(data);
 		if(data.type == "following") {
 			Actions.otherProfile({id: data.customId});
 		} else if(data.type == "follower") {

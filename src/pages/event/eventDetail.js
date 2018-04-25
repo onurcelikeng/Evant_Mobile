@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image, View, TouchableOpacity, Dimensions, StatusBar, StyleSheet } from 'react-native';
+import { ScrollView, Image, View, TouchableOpacity, Dimensions, RefreshControl, StatusBar, StyleSheet } from 'react-native';
 import { RkCard, RkText, RkStyleSheet, RkButton, RkModalImg } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
@@ -8,6 +8,7 @@ import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header
 import { Header } from 'react-navigation';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
+import {FontAwesome} from '../../assets/icon';
 import style, { colors } from '../../components/slider/index.style';
 import { sliderWidth, itemWidth } from '../../components/slider/sliderEntry.style';
 import SliderEntry from '../../components/slider/sliderEntry';
@@ -34,10 +35,12 @@ export default class EventDetail extends React.Component {
 
     this.state = {
       join: false,
+      isRefreshing: false,
       isLoading: true,
       slider1ActiveSlide: 0
     }
 
+    this.onRefresh = this._onRefresh.bind(this);
     let {params} = this.props.navigation.state;
     this.id = params ? params.id : 1;
     console.log(this.id);
@@ -55,92 +58,125 @@ export default class EventDetail extends React.Component {
   getSimilarEvents() {
 		return eventProvider.getSimilarEvents()
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				console.log(responseJson.data)
-				this.setState({
-					isLoading: false,
-					entries: responseJson.data,
-				  });
-			} else {
-				this.setState({
-					isLoading: false,
-					data: [],
-				  });
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-			}
-		});
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        if(responseJson.isSuccess) {
+          this.setState({
+            isLoading: false,
+            entries: responseJson.data,
+            });
+        } else {
+          this.setState({
+            isLoading: false,
+            data: [],
+            });
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
+      }
+		}).catch((err) => {console.log(err)});
 	}
 
   getEvent(id) {
     console.log(id);
     return eventProvider.getEvent(id)
     .then((responseJson) => {
-      console.log(responseJson);
-      if(responseJson.isSuccess) {
-        this.setState({data: responseJson.data})
-        this.joinStatus().then(() => {
-          this.getSimilarEvents();
-        })   
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          this.setState({data: responseJson.data})
+          this.joinStatus().then(() => {
+            this.getSimilarEvents();
+          })   
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    });
+    }).catch((err) => {console.log(err)});
   }
 
   deleteEvent() {
     return eventProvider.deleteEvent(this.state.data.eventId)
     .then((responseJson) => {
-      console.log(responseJson);
-      if(responseJson.isSuccess) {
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    });
+    }).catch((err) => {console.log(err)});
   }
 
   joinEvent() {
     console.log(this.state.data);
     return eventOperationProvider.joinEvent(this.state.data.eventId)
     .then((responseJson) => {
-      console.log(responseJson);
-      if(responseJson.isSuccess) {
-        this.setState({join: true});
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          this.setState({join: true});
+          DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    });
+    }).catch((err) => {console.log(err)});
   }
 
   leaveEvent() {
     return eventOperationProvider.leaveEvent(this.state.data.eventId)
     .then((responseJson) => {
-      console.log(responseJson);
-      if(responseJson.isSuccess) {
-        this.setState({join: false});
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        if(responseJson.isSuccess) {
+          this.setState({join: false});
+          DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        } else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-    });
+    }).catch((err) => {console.log(err)});
   }
 
   joinStatus() {
     console.log(this.state.data)
     return eventOperationProvider.joinStatus(this.state.data.eventId)
     .then((responseJson) => {
-      this.setState({join: responseJson.isSuccess})
-    })
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        this.setState({join: responseJson.isSuccess})
+      }
+    }).catch((err) => {console.log(err)});
   }
 
   followers() {
     return eventOperationProvider.followers(this.state.data.eventId)
     .then((responseJson) => {
-      console.log(responseJson);
-      this.setState({status: responseJson.data});
-    });
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        this.setState({status: responseJson.data});
+      }
+    }).catch((err) => {console.log(err)});
   }
+
+  _onRefresh(){
+		console.log("esd");
+    this.setState({
+			isRefreshing: true});
+		this.getEvent(this.state.data.eventId).then(() => {
+      this.setState({
+        isRefreshing: false
+      });
+    });
+	}
 
   _renderFooter(options) {
     return (
@@ -182,19 +218,22 @@ export default class EventDetail extends React.Component {
 		} else {
       console.log(this.state.data)
       let button = null;
+
       if (this.state.data.user.userId == Login.getCurrentUser().userId) {
         button = <TouchableOpacity onPress={() => { this.deleteEvent()}} activeOpacity={0.6}>
-                  <Image style={{height: 25, width: 25, tintColor: "#707070"}} source={require("../../assets/icons/delete_outline.png")}/>
+                  <Image style={{height: 25, width: 25, tintColor: "#707070", marginLeft: 15}} source={require("../../assets/icons/delete_outline.png")}/>
                 </TouchableOpacity>;
-      } else if(this.state.join == true){
-        button = <TouchableOpacity onPress={() => { this.leaveEvent()}} activeOpacity={0.6}>
-                  <Image style={{height: 25, width: 25}} source={require("../../assets/icons/heart.png")}/>
-                </TouchableOpacity>;
-      } else {
-        button = <TouchableOpacity onPress={() => { this.joinEvent()}} activeOpacity={0.6}>
-                  <Image style={{height: 25, width: 25}} source={require("../../assets/icons/heart_outline.png")}/>
-                </TouchableOpacity>;
-      }
+      } else if(moment(this.state.data.finish).fromNow().toString().indexOf("ago") == -1) {
+        if(this.state.join == true){
+          button = <TouchableOpacity onPress={() => { this.leaveEvent()}} activeOpacity={0.6}>
+                    <Image style={{height: 25, width: 25, marginLeft: 15}} source={require("../../assets/icons/heart.png")}/>
+                  </TouchableOpacity>;
+        } else {
+          button = <TouchableOpacity onPress={() => { this.joinEvent()}} activeOpacity={0.6}>
+                    <Image style={{height: 25, width: 25, marginLeft: 15}} source={require("../../assets/icons/heart_outline.png")}/>
+                  </TouchableOpacity>;
+        }
+      } 
 
       return (
         <View style={{ flex: 1 }}>
@@ -204,6 +243,10 @@ export default class EventDetail extends React.Component {
             maxOverlayOpacity={0.6}
             minOverlayOpacity={0.3}
             fadeOutForeground
+            refreshControl={<RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+            />}
             renderHeader={() => <Image rkCardImg style={styles.image} source={{uri: this.state.data.photoUrl}}/>}
             renderFixedForeground={() => (
               <Animatable.View
@@ -218,10 +261,16 @@ export default class EventDetail extends React.Component {
               </Animatable.View>
             )}
             renderTouchableFixedForeground={() => (
-              <RkModalImg
-                  style={{width: width, height: MAX_HEIGHT}}
-                  renderFooter={this._renderFooter}
-                  source={this.user.images}/>
+              <View>
+                <TouchableOpacity style={{width:40, height:40, marginTop:20, marginLeft: 10}} onPress={() => { Actions.pop(); }}>
+                  <RkText rkType='awesome hero' style={styles.backButton}>{FontAwesome.chevronLeft}</RkText>
+                </TouchableOpacity>
+                
+                <RkModalImg
+                    style={{width: width, height: MAX_HEIGHT}}
+                    renderFooter={this._renderFooter}
+                    source={this.user.images}/>
+              </View>
             )}
             renderForeground={() => (
               <View style={styles.titleContainer}>
@@ -254,11 +303,11 @@ export default class EventDetail extends React.Component {
                   <View>
                     <View style={{flex:1, flexDirection: "row"}}>
                       <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('ll')}</RkText>
-                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.end).format('ll')}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.finish).format('ll')}</RkText>
                     </View>
                     <View style={{flex:1, flexDirection: "row"}}>
                       <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('LT')}</RkText>
-                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.end).format('LT')}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.finish).format('LT')}</RkText>
                     </View>
                   </View>
                 </View>
@@ -314,26 +363,26 @@ export default class EventDetail extends React.Component {
           <View style={{backgroundColor: "#ffffff", height: 45, borderTopWidth: 1, borderTopColor: "#f2f2f2"}}>
             <View style={styles.buttons}>
               {
-                this.state.data.user.userId == Login.getCurrentUser().userId ?
+                this.state.data.user.userId == Login.getCurrentUser().userId && moment(this.state.data.finish).fromNow().toString().indexOf("ago") == -1 ?
                   <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard()}}>
-                    <Image style={{height: 28, width: 28, marginRight: 15}} source={require("../../assets/icons/edit.png")}/>
+                    <Image style={{height: 28, width: 28, marginLeft: 15}} source={require("../../assets/icons/edit.png")}/>
                   </TouchableOpacity>
                 :
                 <View></View>
               }
               {
                 this.state.data.user.userId == Login.getCurrentUser().userId ?
-                  <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard()}}>
-                    <Image style={{height: 28, width: 28, marginRight: 15}} source={require("../../assets/icons/dashboard.png")}/>
+                  <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard({eventId: this.state.data.eventId})}}>
+                    <Image style={{height: 28, width: 28, marginLeft: 15}} source={require("../../assets/icons/dashboard.png")}/>
                   </TouchableOpacity>
                 :
                 <View></View>
               }
               <TouchableOpacity activeOpacity={0.6}>
-                <Image style={{height: 28, width: 28, marginRight: 15}} source={require("../../assets/icons/share.png")}/>
+                <Image style={{height: 28, width: 28, marginLeft: 15}} source={require("../../assets/icons/share.png")}/>
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.comments({id: this.state.data.eventId})}}>
-                <Image style={{height: 25, width: 25, marginRight: 15}} source={require("../../assets/icons/comments.png")}/>
+                <Image style={{height: 25, width: 25, marginLeft: 15}} source={require("../../assets/icons/comments.png")}/>
               </TouchableOpacity>
               {button} 
             </View>
@@ -442,5 +491,8 @@ let styles = RkStyleSheet.create(theme => ({
     alignItems: 'center',
     flex:1,
     marginHorizontal: 10
+  },
+  backButton: {
+    color: theme.colors.text.nav
   }
 }));

@@ -43,53 +43,66 @@ export default class CategoryEvents extends React.Component {
 	getCategoryEvents(id) {
 		return eventProvider.getCategoryEvents(id)
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					isLoading: false,
-					data: responseJson.data,
-				  });
-			} else {
-				this.setState({
-					isLoading: false,
-					data: [],
-				});
-			}
-		});
+            if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+            } else {
+                if(responseJson.isSuccess) {
+                    this.setState({
+                        isLoading: false,
+                        data: responseJson.data,
+                    });
+                } else {
+                    this.setState({
+                        isLoading: false,
+                        data: [],
+                    });
+                }
+            }
+		}).catch((err) => {console.log(err)});
     }
     
     joinEvent() {
         console.log(this.state.data);
         return eventOperationProvider.joinEvent(this.state.data.eventId)
         .then((responseJson) => {
-          console.log(responseJson);
-          if(responseJson.isSuccess) {
-            this.setState({join: true});
-            DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-          } else {
-            DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-          }
-        });
+            if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+            } else {
+                if(responseJson.isSuccess) {
+                    this.setState({join: true});
+                    DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                } else {
+                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                }
+            }
+        }).catch((err) => {console.log(err)});
     }
 
     leaveEvent() {
         return eventOperationProvider.leaveEvent(this.state.data.eventId)
         .then((responseJson) => {
-            console.log(responseJson);
-            if(responseJson.isSuccess) {
-            this.setState({join: false});
-            DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+            if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
             } else {
-            DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                if(responseJson.isSuccess) {
+                this.setState({join: false});
+                DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                } else {
+                DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                }
             }
-        });
+        }).catch((err) => {console.log(err)});
     }
 
     joinStatus() {
         return eventOperationProvider.joinStatus(this.state.data.eventId)
         .then((responseJson) => {
-            console.log(responseJson);
-            this.setState({join: responseJson.isSuccess})
-        })
+            if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+            } else {
+                this.setState({join: responseJson.isSuccess})
+            }
+        }).catch((err) => {console.log(err)});
     }
 
     filterData() {
@@ -156,7 +169,6 @@ export default class CategoryEvents extends React.Component {
                             <RkText rkType='secondary5 hintColor'>{username}</RkText>
                         </View>
                     </View>
-                    {button}
                 </View>
             </TouchableOpacity>
 		)
@@ -195,7 +207,7 @@ export default class CategoryEvents extends React.Component {
 
 		return (
             <ScrollableTabView
-                style={styles.container}
+                style={styles.root}
                 initialPage={0}
                 tabBarUnderlineStyle={{height: 1}}
                 tabBarBackgroundColor="#da6954"
@@ -209,7 +221,7 @@ export default class CategoryEvents extends React.Component {
                         data={this.state.data}
                         renderItem={this.renderItem}
                         keyExtractor={this._keyExtractor}
-                        style={styles.container}
+                        style={styles.root}
                         enableEmptySections={true}
                         refreshControl={
                             <RefreshControl
@@ -224,7 +236,7 @@ export default class CategoryEvents extends React.Component {
                         data={this.state.today}
                         renderItem={this.renderItem}
                         keyExtractor={this._keyExtractor}
-                        style={styles.container}
+                        style={styles.root}
                         enableEmptySections={true}
                         refreshControl={
                             <RefreshControl
@@ -239,7 +251,7 @@ export default class CategoryEvents extends React.Component {
                         data={this.state.tomorrow}
                         renderItem={this.renderItem}
                         keyExtractor={this._keyExtractor}
-                        style={styles.container}
+                        style={styles.root}
                         enableEmptySections={true}
                         refreshControl={
                             <RefreshControl
@@ -255,8 +267,15 @@ export default class CategoryEvents extends React.Component {
 }
 	
 let styles = RkStyleSheet.create(theme => ({
-	container: {
+	root: {
         backgroundColor: theme.colors.screen.base,
+    },
+    container: {
+		padding: 16,
+		flexDirection: 'row',
+		borderBottomWidth: 1,
+		borderColor: theme.colors.border.base,
+		alignItems: 'flex-start'
 	},
 	card: {
 		marginBottom: 15,

@@ -54,20 +54,24 @@ export default class FollowingList extends React.Component {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		return friendProvider.getFollowings(id)
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					isLoading: false,
-          data: ds.cloneWithRows(responseJson.data),
-          users: responseJson.data
-				  });
-			} else {
-        this.setState({
-					isLoading: false,
-          data: ds.cloneWithRows([]),
-          users: []
-				  });
-				console.log(responseJson.message);
-			}
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        if(responseJson.isSuccess) {
+          this.setState({
+            isLoading: false,
+            data: ds.cloneWithRows(responseJson.data),
+            users: responseJson.data
+            });
+        } else {
+          this.setState({
+            isLoading: false,
+            data: ds.cloneWithRows([]),
+            users: []
+            });
+          console.log(responseJson.message);
+        }
+      }
 		})
 		.catch((error) => {
 		  console.log(error);

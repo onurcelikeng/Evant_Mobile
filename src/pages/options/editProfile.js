@@ -43,32 +43,39 @@ export default class EditProfile extends React.Component {
 
         accountProvider.profileEdit(credentials)
         .then((responseJson) => {
-            if(responseJson.isSuccess) { 
-                Login.getCurrentUser().firstName = this.state.firstName;
-                Login.getCurrentUser().lastName = this.state.lastName;
-                Login.getCurrentUser().email = this.state.email;
-                if(this.state.isPhotoChanged) {
-                    accountProvider.photo(this.state.photo)
-                    .then((res) => {
-                        console.log(res);
-                        if(res.isSuccess) {
-                            this.user.photo = this.state.photo;
-                            DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
-                        } else {
-                            DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                } else {
-                    DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+            if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+            } else {
+                if(responseJson.isSuccess) { 
+                    Login.getCurrentUser().firstName = this.state.firstName;
+                    Login.getCurrentUser().lastName = this.state.lastName;
+                    Login.getCurrentUser().email = this.state.email;
+                    if(this.state.isPhotoChanged) {
+                        accountProvider.photo(this.state.photo)
+                        .then((res) => {
+                            if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                            } else {
+                                if(res.isSuccess) {
+                                    this.user.photo = this.state.photo;
+                                    DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                                } else {
+                                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                                }
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                    } else {
+                        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+                    }
+                }
+                else {
+                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
                 }
             }
-            else {
-                DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-            }
-        })
+        }).catch((err) => {console.log(err)});
     }
 
     _scrollToInput (reactNode) {

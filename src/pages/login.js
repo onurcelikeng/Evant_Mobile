@@ -82,7 +82,6 @@ export default class Login extends React.Component {
 
     return accountProvider.login(credentials)
 		.then((responseJson) => {
-      console.log(responseJson);
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
         DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
@@ -107,22 +106,24 @@ export default class Login extends React.Component {
               }
   
               deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
-                console.log(responseJson);
-                if(responseJson.isSuccess) {
-                  accountProvider.getMe().then((responseJson) => {
-                    if(responseJson.isSuccess) {
-                      Login.setCurrentUser(responseJson.data);
-                      Actions.tabbar();
-                    } else {
-                      DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                    }
-                  });
+                if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                  DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                } else {
+                  if(responseJson.isSuccess) {
+                    accountProvider.getMe().then((responseJson) => {
+                      if(responseJson.isSuccess) {
+                        Login.setCurrentUser(responseJson.data);
+                        Actions.tabbar();
+                      } else {
+                        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                      }
+                    });
+                  }
+                  else {
+                    DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+                  }
                 }
-                else {
-                  DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-                }
-              })
-              .catch(error => console.log(error));
+              }).catch(error => console.log(error));
           });
         } else {
           DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);

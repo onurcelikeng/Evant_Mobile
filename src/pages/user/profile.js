@@ -36,7 +36,7 @@ export default class Profile extends React.Component {
 			data: []
 		}
 		
-    this.onRefresh = this.onRefresh.bind(this)
+    this.onRefresh = this._onRefresh.bind(this)
 		this.onEventPress = this.onEventPress.bind(this)
     this.renderDetail = this.renderDetail.bind(this)
 	}
@@ -44,7 +44,6 @@ export default class Profile extends React.Component {
 	onEventPress(data){
 		this.setState({selected: data});
 		
-		console.log(data);
 		if(data.type == "following") {
 			Actions.otherProfile({id: data.customId});
 		} else if(data.type == "follower") {
@@ -92,60 +91,68 @@ export default class Profile extends React.Component {
 
 	getMe() {
 		accountProvider.getMe().then((responseJson) => {
-			if(responseJson.isSuccess) {
-				Login.setCurrentUser(responseJson.data);
-				this.user = Login.getCurrentUser();
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				if(responseJson.isSuccess) {
+					Login.setCurrentUser(responseJson.data);
+					this.user = Login.getCurrentUser();
+				} else {
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		});
+		}).catch((err) => {console.log(err)});
 	}
 
 	getTimeline() {
 		accountProvider.getTimeline().then((responseJson) => {
 			let icon = require("../../assets/icons/comment.png");
-			if(responseJson.isSuccess) {
-				this.setState({data: []});
-				responseJson.data.forEach(element => {
-					if(element.type == "comment-event") {
-						icon = require("../../assets/icons/comment.png");
-					} else if(element.type == "create-event") {
-						icon = require("../../assets/icons/create_event.png");
-					} else if(element.type == "follower") {
-						icon = require("../../assets/icons/new_follower.png");
-					} else if(element.type == "following") {
-						icon = require("../../assets/icons/new_following.png");
-					} else if(element.type == "join-event") {
-						icon = require("../../assets/icons/join_event.png");
-					}
-					var model = {
-						body: element.body,
-						customId: element.customId,
-						header: element.header,
-						image: element.image,
-						icon: icon,
-						lineColor: element.lineColor,
-						type: element.type,
-						createAt: element.createAt
-					};
-					
-					this.state.data.push(model);
-					this.setState(
-						this.state
-					)
-				});
-				
-				this.setState({
-					isLoading: false,
-					isRefreshing: false
-				})
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				if(responseJson.isSuccess) {
+					this.setState({data: []});
+					responseJson.data.forEach(element => {
+						if(element.type == "comment-event") {
+							icon = require("../../assets/icons/comment.png");
+						} else if(element.type == "create-event") {
+							icon = require("../../assets/icons/create_event.png");
+						} else if(element.type == "follower") {
+							icon = require("../../assets/icons/new_follower.png");
+						} else if(element.type == "following") {
+							icon = require("../../assets/icons/new_following.png");
+						} else if(element.type == "join-event") {
+							icon = require("../../assets/icons/join_event.png");
+						}
+						var model = {
+							body: element.body,
+							customId: element.customId,
+							header: element.header,
+							image: element.image,
+							icon: icon,
+							lineColor: element.lineColor,
+							type: element.type,
+							createAt: element.createAt
+						};
+						
+						this.state.data.push(model);
+						this.setState(
+							this.state
+						)
+					});
+					
+					this.setState({
+						isLoading: false,
+						isRefreshing: false
+					})
+				} else {
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		})
+		}).catch((err) => {console.log(err)});
 	}
 
-	onRefresh(){
+	_onRefresh(){
 		console.log("esd");
     this.setState({
 			isRefreshing: true});

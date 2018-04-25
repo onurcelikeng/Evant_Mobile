@@ -46,35 +46,42 @@ export default class Notifications extends React.Component {
 		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		return notificationProvider.getNotifications()
 		.then((responseJson) => {
-			if(responseJson.isSuccess) {
-				this.setState({
-					data: ds.cloneWithRows(responseJson.data),
-					isLoading: false,
-					isArrayEmpty: false
-				});
-				notificationProvider.readNotifications()
-				.then((responseJson) => {
-					console.log(responseJson)
-					if(responseJson.isSuccess) {
-						console.log(responseJson.data)
-					}
-				})
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
-				this.setState({
-					data: ds.cloneWithRows([""]),
-					isArrayEmpty: true, 
-					isLoading: false});
+				if(responseJson.isSuccess) {
+					this.setState({
+						data: ds.cloneWithRows(responseJson.data),
+						isLoading: false,
+						isArrayEmpty: false
+					});
+					notificationProvider.readNotifications()
+					.then((responseJson) => {
+						if(responseJson.isSuccess) {
+							console.log(responseJson.data)
+						}
+					}).catch((err) => {console.log(err)});
+				} else {
+					this.setState({
+						data: ds.cloneWithRows([""]),
+						isArrayEmpty: true, 
+						isLoading: false});
+				}
 			}
-		})
+		}).catch((err) => {console.log(err)});
 	}
 
 	deleteNotification(id) {
 		return notificationProvider.deleteNotification(id)
 		.then((responseJson) => {
-			if(!responseJson.isSuccess) {
-				DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+			if(responseJson == null || responseJson == "" || responseJson == undefined) {
+				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+			} else {
+				if(!responseJson.isSuccess) {
+					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+				}
 			}
-		});
+		}).catch((err) => {console.log(err)});
 	}
 
 	_onRefresh() {
@@ -207,10 +214,7 @@ export default class Notifications extends React.Component {
 	
 let styles = RkStyleSheet.create(theme => ({
 	root: {
-		backgroundColor: theme.colors.screen.base,
-		alignContent: 'center',
-		flex:1, 
-		flexDirection: 'row'
+		backgroundColor: theme.colors.screen.base
 	},
 	container: {
 		padding: 16,

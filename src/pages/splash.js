@@ -49,28 +49,32 @@ export class SplashScreen extends React.Component {
           StatusBar.setHidden(false, 'slide');
           if(route == 'tabbar') {
             accountProvider.getMe().then((responseJson) => {
-              if(responseJson.isSuccess) {
-                Login.setCurrentUser(responseJson.data);
+              if(responseJson == null || responseJson == "" || responseJson == undefined) {
+                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+              } else {
+                if(responseJson.isSuccess) {
+                  Login.setCurrentUser(responseJson.data);
 
-                if(Login.getCurrentUser().settings.theme == "dark") {
-                  RkTheme.setTheme(DarkKittenTheme);
-                  StatusBar.setBarStyle('light-content', true);
-                  Platform.OS == 'android' && StatusBar.setBackgroundColor(DarkKittenTheme.colors.screen.base);
-                } else {
-                  StatusBar.setBarStyle('dark-content', true);
-                  Platform.OS == 'android' && StatusBar.setBackgroundColor(KittenTheme.colors.screen.base);
-                  RkTheme.setTheme(KittenTheme);
+                  if(Login.getCurrentUser().settings.theme == "dark") {
+                    RkTheme.setTheme(DarkKittenTheme);
+                    StatusBar.setBarStyle('light-content', true);
+                    Platform.OS == 'android' && StatusBar.setBackgroundColor(DarkKittenTheme.colors.screen.base);
+                  } else {
+                    StatusBar.setBarStyle('dark-content', true);
+                    Platform.OS == 'android' && StatusBar.setBackgroundColor(KittenTheme.colors.screen.base);
+                    RkTheme.setTheme(KittenTheme);
+                  }
+                  Actions.tabbar();
                 }
-                Actions.tabbar();
+                else {
+                  let toHome = NavigationActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({routeName: 'root'})]
+                  });
+                  this.props.navigation.dispatch(toHome)
+                }
               }
-              else {
-                let toHome = NavigationActions.reset({
-                  index: 0,
-                  actions: [NavigationActions.navigate({routeName: 'root'})]
-                });
-                this.props.navigation.dispatch(toHome)
-              }
-            })
+            }).catch((err) => {console.log(err)});
           }
           else if(route == 'login') {
             

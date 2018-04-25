@@ -21,13 +21,17 @@ export default class Themes extends React.Component {
   changePassword() {
     accountProvider.changePassword(this.state)
     .then((responseJson) => { 
-      if(responseJson.isSuccess) { 
-        DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+      } else {
+        if(responseJson.isSuccess) { 
+          DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
+        }
+        else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
       }
-      else {
-        DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-      }
-    });
+    }).catch((err) => {console.log(err)});
   }
 
   _scrollToInput (reactNode) {

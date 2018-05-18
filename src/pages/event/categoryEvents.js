@@ -1,11 +1,10 @@
 import React from 'react';
 import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl, TouchableHighlight } from 'react-native';
-import { RkText, RkCard, RkStyleSheet, withRkTheme, RkImage } from 'react-native-ui-kitten';
+import { RkText, RkCard, RkStyleSheet, withRkTheme, RkImage, RkTabView, Tab, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
 import Svg, { Circle, Ellipse, G, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 
 import {Avatar} from '../../components/avatar';
 import Login from '../login';
@@ -129,9 +128,9 @@ export default class CategoryEvents extends React.Component {
 		}
     }
 
-    _handleChangeTab({i, ref, from, }) {
-        this.setState({selectedIndex:i});
-        console.log(i);
+    _handleChangeTab(index) {
+        this.setState({selectedIndex:index});
+        console.log(index);
         this.filterData();
 	}
 
@@ -206,62 +205,61 @@ export default class CategoryEvents extends React.Component {
 		}
 
 		return (
-            <ScrollableTabView
-                style={styles.root}
-                initialPage={0}
-                tabBarUnderlineStyle={{height: 1}}
-                tabBarBackgroundColor="#da6954"
-                tabBarInactiveTextColor="#ffffff"
-                tabBarActiveTextColor="#ffffff"
-                onChangeTab={this.handleChangeTab}
-                renderTabBar={() => <DefaultTabBar />}
-            >
-                <View tabLabel='All'>
-                    <FlatList
-                        data={this.state.data}
-                        renderItem={this.renderItem}
-                        keyExtractor={this._keyExtractor}
-                        style={styles.root}
-                        enableEmptySections={true}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.state.isRefreshing}
-                                onRefresh={this._onRefresh.bind(this)}
-                            />
-                        }
-                    />
-                </View>
-                <View tabLabel='Today'>
-                    <FlatList
-                        data={this.state.today}
-                        renderItem={this.renderItem}
-                        keyExtractor={this._keyExtractor}
-                        style={styles.root}
-                        enableEmptySections={true}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.state.isRefreshing}
-                                onRefresh={this._onRefresh.bind(this)}
-                            />
-                        }
-                    />
-                </View>
-                <View tabLabel='Tomorrow'>
-                    <FlatList
-                        data={this.state.tomorrow}
-                        renderItem={this.renderItem}
-                        keyExtractor={this._keyExtractor}
-                        style={styles.root}
-                        enableEmptySections={true}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.state.isRefreshing}
-                                onRefresh={this._onRefresh.bind(this)}
-                            />
-                        }
-                    />
-                </View>
-            </ScrollableTabView>
+            <View style={styles.root}>
+                <RkTabView rkType='rounded' maxVisibleTabs={3} onTabChanged={(index) => this.handleChangeTab(index)} style={{borderColor: "#ffffff", backgroundColor: '#da6954'}}>
+                    <RkTabView.Tab title={'All'} style={{backgroundColor: '#da6954'}}>
+                        <FlatList
+                            data={this.state.data}
+                            renderItem={this.renderItem}
+                            keyExtractor={this._keyExtractor}
+                            style={styles.root}
+                            enableEmptySections={true}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                />
+                            }
+                        />
+                    </RkTabView.Tab>
+                    <RkTabView.Tab title={'Today'} style={{backgroundColor: '#da6954'}}>
+                        <FlatList
+                            data={this.state.today}
+                            renderItem={this.renderItem}
+                            keyExtractor={this._keyExtractor}
+                            style={styles.root}
+                            enableEmptySections={true}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                />
+                            }
+                        />
+                    </RkTabView.Tab>
+                    <RkTabView.Tab title={'Tomorrow'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
+                        <FlatList
+                            data={this.state.tomorrow}
+                            renderItem={this.renderItem}
+                            keyExtractor={this._keyExtractor}
+                            style={styles.root}
+                            enableEmptySections={true}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                />
+                            }
+                        />
+                    </RkTabView.Tab>
+                    <RkTabView.Tab title={'This Week'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
+                    
+                    </RkTabView.Tab>
+                    <RkTabView.Tab title={'This Weekend'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
+                    
+                    </RkTabView.Tab>
+                </RkTabView>
+            </View>
 		)
 	}
 }
@@ -269,6 +267,7 @@ export default class CategoryEvents extends React.Component {
 let styles = RkStyleSheet.create(theme => ({
 	root: {
         backgroundColor: theme.colors.screen.base,
+        flex:1
     },
     container: {
 		padding: 16,
@@ -276,7 +275,16 @@ let styles = RkStyleSheet.create(theme => ({
 		borderBottomWidth: 1,
 		borderColor: theme.colors.border.base,
 		alignItems: 'flex-start'
-	},
+    },
+    tabbarInactive: {
+        backgroundColor: "#da6954",
+        color: "#ffffff",
+        borderWidth: 0
+    },
+    tabbarActive: {
+        backgroundColor: "#da6954",
+        color: "#ffffff"
+    },
 	card: {
 		marginBottom: 15,
 	},
@@ -315,3 +323,27 @@ let styles = RkStyleSheet.create(theme => ({
         marginRight: 0
     },
 }));
+
+RkTheme.setType('RkTabView', 'rounded', {
+    backgroundColor: 'transparent',
+    color: 'white',
+    borderWidth: 0,
+    tabContainer: {
+      overflow: 'hidden',
+      borderWidth: 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+    },
+    content: {
+      padding: 7
+    }
+});
+
+RkTheme.setType('RkTabView', 'roundedSelected', {
+    tabContainer: {
+        overflow: 'hidden',
+        borderWidth: 0,
+        borderBottomColor: 'black',
+        borderBottomWidth: 1
+      }
+});

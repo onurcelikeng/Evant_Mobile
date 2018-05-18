@@ -36,30 +36,30 @@ export class DoughnutChart extends RkComponent {
 						data: [
               {
                 x: 1,
-                y: (responseJson.data.teenager.value / 100) * 360,
-                title: responseJson.data.teenager.value + '%',
-                name: responseJson.data.teenager.range + " " + responseJson.data.teenager.name,
+                y: (responseJson.data.teenager.ratio / 100) * 360,
+                title: responseJson.data.teenager.ratio + '%',
+                name: responseJson.data.teenager.min + "-" + responseJson.data.teenager.max + " " + responseJson.data.teenager.name,
                 color: RkTheme.current.colors.charts.doughnut[0]
               },
               {
                 x: 1,
-                y: (responseJson.data.young.value / 100) * 360,
-                title: responseJson.data.young.value + '%',
-                name: responseJson.data.young.range + " " + responseJson.data.young.name,
+                y: (responseJson.data.young.ratio / 100) * 360,
+                title: responseJson.data.young.ratio + '%',
+                name: responseJson.data.young.min + "-" + responseJson.data.young.max + " " + responseJson.data.young.name,
                 color: RkTheme.current.colors.charts.doughnut[1]
               },
               {
                 x: 1,
-                y: (responseJson.data.middle.value / 100) * 360,
-                title: responseJson.data.middle.value + '%',
-                name: responseJson.data.middle.range + " " + responseJson.data.middle.name,
+                y: (responseJson.data.middle.ratio / 100) * 360,
+                title: responseJson.data.middle.ratio + '%',
+                name: responseJson.data.middle.min + "-" + responseJson.data.middle.max + " " + responseJson.data.middle.name,
                 color: RkTheme.current.colors.charts.doughnut[2]
               },
               {
                 x: 1,
-                y: (responseJson.data.old.value / 100) * 360,
-                title: responseJson.data.old.value + '%',
-                name: responseJson.data.old.range + " " + responseJson.data.old.name,
+                y: (responseJson.data.old.ratio / 100) * 360,
+                title: responseJson.data.old.ratio + '%',
+                name: responseJson.data.old.min + "-" + responseJson.data.old.max + " " + responseJson.data.old.name,
                 color: RkTheme.current.colors.charts.doughnut[3]
               }
             ],

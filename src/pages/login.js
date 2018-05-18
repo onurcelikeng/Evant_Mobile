@@ -8,7 +8,7 @@ import OneSignal from 'react-native-onesignal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import DropdownHolder from '../providers/dropdownHolder';
-import * as deviceProvider from '../providers/devices';
+import * as deviceProvider from '../providers/userDevices';
 import * as accountProvider from '../providers/account';
 import { FontAwesome } from '../assets/icon';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';

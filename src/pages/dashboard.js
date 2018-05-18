@@ -8,17 +8,19 @@ import DropdownHolder from '../providers/dropdownHolder';
 import ContentLoader from '../config/contentLoader'
 import {FontAwesome} from '../assets/icon';
 import { ProgressChart, DoughnutChart, AreaChart, AreaSmoothedChart } from '../components/charts';
+import { CommentStatistics } from '../components/commentStatistics';
 
 let moment = require('moment');
 
 export default class Dashboard extends React.Component {
-
-	static navigationOptions = {
-        title: 'Dashboard'.toUpperCase()
-    };
     
     constructor(props) {
         super(props);
+        this.state = {
+            isLoading: true,
+            isSuccess: false,
+        }
+
         this.data = {
             statItems: [
                 {
@@ -64,6 +66,9 @@ export default class Dashboard extends React.Component {
                 </View>
                 <View style={chartBlockStyles}>
                     <DoughnutChart eventId={this.props.eventId}/>
+                </View>
+                <View style={chartBlockStyles}>
+                    <CommentStatistics eventId={this.props.eventId}/>
                 </View>
                 <View style={chartBlockStyles}>
                     <AreaChart/>

@@ -9,9 +9,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import DropdownHolder from '../providers/dropdownHolder';
 import * as accountProvider from '../providers/account';
-import * as deviceProvider from '../providers/devices';
+import * as deviceProvider from '../providers/userDevices';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 import Login from './login'
+
+let zxcvbn = require('zxcvbn');
 
 export default class Signup extends React.Component {
 
@@ -215,7 +217,9 @@ export default class Signup extends React.Component {
               }} 
               autoCapitalize='none' 
               value={this.state.passwordRepeat} 
-              onChangeText={(text) => this.setState({ passwordRepeat: text })} 
+              onChangeText={(text) => { 
+                console.log(zxcvbn(text));
+                this.setState({ passwordRepeat: text })} }
               autoCorrect={false} 
               style={{marginHorizontal: 10}} 
               rkType='rounded' 

@@ -7,3 +7,15 @@ export function getRanges(id) {
         .then(res => res.data)
         .then(res => { return res; });
 }
+
+export function getCommentStatistics(id) {
+    return axios.get('dashboard/' + id + '/comments')
+        .then(res => res.data)
+        .then(res => { return res; });
+}
+
+export function getDate(id) {
+    return axios.get('dashboard/' + id + '/date')
+        .then(res => res.data)
+        .then(res => { return res; });
+}

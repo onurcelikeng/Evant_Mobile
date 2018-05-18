@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image, View, Dimensions, StatusBar, AsyncStorage, Platform  } from 'react-native';
+import { StyleSheet, Image, View, Dimensions, StatusBar, AsyncStorage, Platform, Modal, Text, TouchableHighlight, NetInfo  } from 'react-native';
 import { RkText, RkTheme } from 'react-native-ui-kitten'
 import { NavigationActions } from 'react-navigation';
 import {Actions} from 'react-native-router-flux';
@@ -20,8 +20,13 @@ export class SplashScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      progress: 0
+      progress: 0,
+      modalVisible: false,
     }
+  }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   }
 
   componentDidMount() {
@@ -74,7 +79,10 @@ export class SplashScreen extends React.Component {
                   this.props.navigation.dispatch(toHome)
                 }
               }
-            }).catch((err) => {console.log(err)});
+            }).catch((err) => {
+              this.setModalVisible(true);
+              console.log(err)
+            });
           }
           else if(route == 'login') {
             
@@ -103,6 +111,26 @@ export class SplashScreen extends React.Component {
         <View>
           <Image style={[styles.image]} source={require('../assets/images/evant_logo.png')}/>
         </View>
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text>Hello World!</Text>
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
       </View>
     )
   }

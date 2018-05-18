@@ -8,13 +8,6 @@ export function getUserInfo(userId) {
     });
 }
 
-export function getUsers() {
-    return axios.get('users')
-    .then(res => res.data).then(users => {
-        return users;
-    });
-}
-
 export function getTimeline(userId) {
     return axios.get('users/timeline/' + userId)
     .then(res => res.data).then(timeline => {

@@ -10,8 +10,7 @@ import ContentLoader from '../config/contentLoader'
 import * as notificationProvider from '../providers/notifications';
 import { Avatar } from '../components/avatar';
 import { data } from '../data';
-
-let moment = require('moment');
+import {formatDate} from '../utils/momentjs';
 
 export default class Notifications extends React.Component {
 
@@ -145,7 +144,7 @@ export default class Notifications extends React.Component {
 											<RkText rkType='primary2'> {row.content}</RkText>
 										</RkText>
 									</View>
-									<RkText rkType='secondary5 hintColor'>{moment().add(row.createdAt, 'seconds').fromNow()}</RkText>
+									<RkText rkType='secondary5 hintColor'>{formatDate(row.createdAt)}</RkText>
 								</View>		
 								
 								{(row.notificationType == 1 || row.notificationType == 2) ? <TouchableHighlight activeOpacity={0.6} style={styles.attachment} onPress={() => {

@@ -43,7 +43,6 @@ export default class EventDetail extends React.Component {
     this.onRefresh = this._onRefresh.bind(this);
     let {params} = this.props.navigation.state;
     this.id = params ? params.id : 1;
-    console.log(this.id);
     if(this.id == 1) this.setState({data: this.props.obj});
     else this.getEvent(this.id);
 
@@ -78,7 +77,6 @@ export default class EventDetail extends React.Component {
 	}
 
   getEvent(id) {
-    console.log(id);
     return eventProvider.getEvent(id)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
@@ -112,7 +110,6 @@ export default class EventDetail extends React.Component {
   }
 
   joinEvent() {
-    console.log(this.state.data);
     return eventOperationProvider.joinEvent(this.state.data.eventId)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
@@ -145,7 +142,6 @@ export default class EventDetail extends React.Component {
   }
 
   joinStatus() {
-    console.log(this.state.data)
     return eventOperationProvider.joinStatus(this.state.data.eventId)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
@@ -168,7 +164,6 @@ export default class EventDetail extends React.Component {
   }
 
   _onRefresh(){
-		console.log("esd");
     this.setState({
 			isRefreshing: true});
 		this.getEvent(this.state.data.eventId).then(() => {
@@ -216,7 +211,6 @@ export default class EventDetail extends React.Component {
 			  </View>
 			);
 		} else {
-      console.log(this.state.data)
       let button = null;
 
       if (this.state.data.user.userId == Login.getCurrentUser().userId) {
@@ -286,6 +280,7 @@ export default class EventDetail extends React.Component {
                 <View rkCardHeader>
                   <View>
                     <RkText style={styles.title} rkType='header4'>{this.state.data.title}</RkText>
+                    <RkText rkType='secondary2 hintColor'>{"by " + this.state.data.user.firstName + " " + this.state.data.user.lastName}</RkText>
                   </View>
                   <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row', marginRight: 16}} onPress={() => { if(this.state.data.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: this.state.data.user.userId}) }}>
                     <Avatar img={this.state.data.user.photoUrl} rkType='circle'/>

@@ -5,7 +5,7 @@ import {Actions, ActionConst} from 'react-native-router-flux';
 
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account';
-import * as deviceProvider from '../../providers/devices';
+import * as deviceProvider from '../../providers/userDevices';
 import * as userSettingsProvider from '../../providers/userSettings';
 import * as searchHistoriesProvider from '../../providers/searchHistories';
 import Login from '../login';

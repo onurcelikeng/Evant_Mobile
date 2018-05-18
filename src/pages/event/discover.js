@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, SectionList, Image, View, TouchableOpacity, TouchableHighlight, ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Dimensions, InteractionManager, TouchableWithoutFeedback, ListView } from 'react-native';
-import { RkText, RkCard, RkStyleSheet, RkTextInput, RkButton } from 'react-native-ui-kitten';
+import { RkText, RkCard, RkStyleSheet, RkTextInput, RkButton, RkTabView, RkTheme } from 'react-native-ui-kitten';
 import {withRkTheme} from 'react-native-ui-kitten'
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
@@ -170,8 +170,9 @@ export default class Discover extends React.Component {
 		}
 	}
 
-	_handleChangeTab({i, ref, from, }) {
-		this.setState({selectedIndex:i});
+	_handleChangeTab(index) {
+		console.log(index);
+		this.setState({selectedIndex:index});
 		if(this._searchInput.refs.input._lastNativeText !== undefined)
 			this.search(this._searchInput.refs.input._lastNativeText);
 	}
@@ -357,50 +358,48 @@ export default class Discover extends React.Component {
 						<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>Cancel</RkText></TouchableWithoutFeedback>
 					</View> 
 					
-					<ScrollableTabView
-						style={{height: 5, }}
-						initialPage={0}
-						tabStyle={{height: 4}}
-						tabBarStyle={{height: 5}}
-						tabBarUnderlineStyle={{height: 1}}
-						onChangeTab={this.handleChangeTab}
-						renderTabBar={() => <DefaultTabBar />}
-					>
-						<View tabLabel='Users'>
-						{
-							this.state.searchUserData != null ?
-							<ListView
-								dataSource={this.state.searchUserData}
-								renderRow={this.renderUserRow}
-								renderSeparator={this.renderSeparator}
-								enableEmptySections={true}/>
-							:
-							<View></View>
+					<RkTabView rkType='discover' maxVisibleTabs={3} onTabChanged={(index) => this.handleChangeTab(index)}>
+						<RkTabView.Tab title={'Users'} style={{backgroundColor: '#ffffff'}}>
+							{
+								this.state.searchUserData != null ?
+								<ListView
+									dataSource={this.state.searchUserData}
+									renderRow={this.renderUserRow}
+									renderSeparator={this.renderSeparator}
+									enableEmptySections={true}/>
+								:
+								<View></View>
 							}
-						</View>
-						<View tabLabel='Events'>
-						{
-							this.state.searchEventData != null ?
-							<FlatList
-								data={this.state.searchEventData}
-								renderItem={this.renderEventItem}
-								keyExtractor={this._keyExtractor}
-								style={styles.containerEvent}
-								enableEmptySections={true}
-							/>
-							:
-							<View></View>
+						</RkTabView.Tab>
+						<RkTabView.Tab title={'Events'} style={{backgroundColor: '#ffffff'}}>
+							{
+								this.state.searchEventData != null ?
+								<FlatList
+									data={this.state.searchEventData}
+									renderItem={this.renderEventItem}
+									keyExtractor={this._keyExtractor}
+									style={styles.containerEvent}
+									enableEmptySections={true}
+								/>
+								:
+								<View></View>
 							}
-						</View>
-						<View tabLabel='Tags'>
-						{
-							this.state.searchData != null ?
-							<View></View>
-							:
-							<View></View>
+						</RkTabView.Tab>
+						<RkTabView.Tab title={'Tags'} style={{backgroundColor: '#ffffff'}}>
+							{
+								this.state.searchData != null ?
+								<FlatList
+									data={this.state.searchEventData}
+									renderItem={this.renderEventItem}
+									keyExtractor={this._keyExtractor}
+									style={styles.containerEvent}
+									enableEmptySections={true}
+								/>
+								:
+								<View></View>
 							}
-						</View>
-					</ScrollableTabView>
+						</RkTabView.Tab>
+					</RkTabView>
 				</View>
 			)
 		}
@@ -553,3 +552,29 @@ let styles = RkStyleSheet.create(theme => ({
 		backgroundColor: '#FF3B30'
 	}
 }));
+
+RkTheme.setType('RkTabView', 'discover', {
+    backgroundColor: 'transparent',
+    color: 'navy',
+    borderWidth: 0,
+    tabContainer: {
+      overflow: 'hidden',
+      borderWidth: 0,
+      borderLeftWidth: 0,
+	  borderRightWidth: 0,
+	  borderBottomWidth: 1,
+	  borderBottomColor: '#d8d8d8'
+    },
+    content: {
+      padding: 14
+    }
+});
+
+RkTheme.setType('RkTabView', 'discoverSelected', {
+    tabContainer: {
+        overflow: 'hidden',
+        borderWidth: 0,
+        borderBottomColor: 'black',
+        borderBottomWidth: 1
+      }
+});

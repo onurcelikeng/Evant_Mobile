@@ -9,6 +9,7 @@ import ContentLoader from '../config/contentLoader'
 import {FontAwesome} from '../assets/icon';
 import { ProgressChart, DoughnutChart, AreaChart, AreaSmoothedChart } from '../components/charts';
 import { CommentStatistics } from '../components/commentStatistics';
+import Login from './login';
 
 let moment = require('moment');
 
@@ -59,26 +60,54 @@ export default class Dashboard extends React.Component {
 
     render() {
         let chartBlockStyles = [styles.chartBlock, {backgroundColor: RkTheme.current.colors.control.background}];
+
         return (
             <ScrollView style={styles.screen}>
-                <View style={styles.statItems}>
-                    {this.data.statItems.map(item => this.renderStatItem(item))}
-                </View>
-                <View style={chartBlockStyles}>
+            {
+                Login.getCurrentUser().business.isAgeAnalysis 
+                ? 
+                <View style={[chartBlockStyles, {marginTop: 15}]}>
                     <DoughnutChart eventId={this.props.eventId}/>
                 </View>
-                <View style={chartBlockStyles}>
-                    <CommentStatistics eventId={this.props.eventId}/>
-                </View>
-                <View style={chartBlockStyles}>
-                    <AreaChart/>
-                </View>
+                :
+                null
+            }
+            {
+                Login.getCurrentUser().business.isSendNotificationUsers 
+                ? 
                 <View style={chartBlockStyles}>
                     <ProgressChart/>
                 </View>
+                :
+                null
+            }
+            {
+                Login.getCurrentUser().business.isCommentAnalysis 
+                ? 
+                <View style={chartBlockStyles}>
+                    <CommentStatistics eventId={this.props.eventId}/>
+                </View>
+                :
+                null
+            }
+            {
+                Login.getCurrentUser().business.isAttendedUserAnalysis 
+                ? 
+                <View style={chartBlockStyles}>
+                    <AreaChart/>
+                </View>
+                :
+                null
+            } 
+            {
+                Login.getCurrentUser().business.isChatBotSupport 
+                ? 
                 <View style={chartBlockStyles}>
                     <AreaSmoothedChart/>
                 </View>
+                :
+                null
+            }    
             </ScrollView>
         )
     }

@@ -38,6 +38,15 @@ export default class Login extends React.Component {
       language: '',
       theme: '',
       
+    },
+    business: {
+      expireAt: '',
+      isAgeAnalysis: false,
+      isAttendedUserAnalysis: false,
+      isChatBotSupport: false,
+      isCommentAnalysis: false,
+      isSendNotificationUsers: false,
+      type: null
     }
   };
 
@@ -151,6 +160,13 @@ export default class Login extends React.Component {
     Login.currentUser.followingsCount = user.followingsCount;
     Login.currentUser.settings.theme = user.settings.theme;
     Login.currentUser.settings.language = user.settings.language;
+    Login.currentUser.business.type = user.business.type;
+    Login.currentUser.business.expireAt = user.business.expireAt;
+    Login.currentUser.business.isAgeAnalysis = user.business.isAgeAnalysis;
+    Login.currentUser.business.isAttendedUserAnalysis = user.business.isAttendedUserAnalysis;
+    Login.currentUser.business.isChatBotSupport = user.business.isChatBotSupport;
+    Login.currentUser.business.isCommentAnalysis = user.business.isCommentAnalysis;
+    Login.currentUser.business.isSendNotificationUsers = user.business.isSendNotificationUsers;
   }
 
   _renderImage(image) {

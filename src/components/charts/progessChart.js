@@ -52,7 +52,7 @@ export class ProgressChart extends RkComponent {
   render() {
     return (
       <View>
-        <RkText rkType='header4'>FOLLOWERS</RkText>
+        <RkText rkType='header4'>SEND NOTIFICATION</RkText>
         <View style={styles.chartContainer}>
           <Svg width={scale(this.size)} height={scale(this.size)}>
             <VictoryPie

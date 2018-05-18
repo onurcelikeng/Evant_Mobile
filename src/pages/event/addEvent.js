@@ -1,16 +1,19 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { RkText, RkTextInput, RkAvoidKeyboard, RkTheme, RkStyleSheet, RkButton, RkPicker } from 'react-native-ui-kitten';
 import PhotoUpload from 'react-native-photo-upload';
 import { Actions } from 'react-native-router-flux';
 import { Pages } from 'react-native-pages';
 import DatePicker from 'react-native-datepicker';
 
+import {FontAwesome} from '../../assets/icon';
 import { RkSwitch } from '../../components/switch';
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as eventProvider from '../../providers/events';
 import * as categoryProvider from '../../providers/category';
 import {Avatar} from '../../components/avatar';
+
+const {width} = Dimensions.get('window');
 
 export default class AddEvent extends React.Component {
 
@@ -153,144 +156,152 @@ export default class AddEvent extends React.Component {
 
     render() {
         return(
-            <ScrollView style={styles.root}>
-                <RkAvoidKeyboard>
-                    <View style={styles.section}>
-                        <View style={[{flex:1, flexDirection:'row', justifyContent: 'flex-end'}]}>
-                            <PhotoUpload 
-                                width={300}
-                                height={300}
-                                quality={50}
-                                onResizedImageUri={photo => {console.log(photo); this.setState({photo})}} onCancel={cancel => {this.setState({photo: ""})}}>
-                                { this.state.photo == "" ?
-                                    <Image style={styles.image} source={require('../../assets/images/tolgshow.jpg')}/>
+            <View style={{flex: 1, paddingTop: 20}}>
+                <View style={styles.navbar}>
+                    <TouchableOpacity onPress={this.props.onPress}>
+                        <RkText rkType='awesome hero' style={styles.backButton}>{FontAwesome.chevronLeft}</RkText>
+                    </TouchableOpacity>
+                    <RkText style={{alignSelf: "center", textAlign: "center", flex:1, flexDirection:'row', }}>Add Event</RkText>
+                </View>
+                <ScrollView style={styles.root}>
+                    <RkAvoidKeyboard>
+                        <View style={styles.section}>
+                            <View style={[{flex:1, flexDirection:'row', justifyContent: 'flex-end'}]}>
+                                <PhotoUpload 
+                                    width={300}
+                                    height={300}
+                                    quality={50}
+                                    onResizedImageUri={photo => {console.log(photo); this.setState({photo})}} onCancel={cancel => {this.setState({photo: ""})}}>
+                                    { this.state.photo == "" ?
+                                        <Image style={styles.image} source={require('../../assets/images/tolgshow.jpg')}/>
+                                        :
+                                        <Image style={styles.image} source={{uri: this.state.photo.uri}}/>
+                                    }     
+                                </PhotoUpload>
+                            </View>
+                            <View style={styles.row}>
+                                <RkTextInput 
+                                    label='Title'
+                                    value={this.state.tittle}
+                                    rkType='right clear'
+                                    onChangeText={(title) => this.setState({title})}/>
+                            </View>
+                            <View style={styles.row}>
+                                <RkTextInput 
+                                    label='Description'
+                                    multiline={true}
+                                    numberOfLines={3}
+                                    value={this.state.description}
+                                    onChangeText={(description) => this.setState({description})}
+                                    rkType='right clear'/>
+                            </View>
+                            <View style={[styles.row]}>
+                                <RkText rkType='secondary2 hintColor' style={styles.label}>Start Date</RkText>
+                                <DatePicker
+                                    style={styles.date}
+                                    date={this.state.startAt}
+                                    mode="datetime"
+                                    placeholder="select date"
+                                    format="YYYY-MM-DD HH:mm"
+                                    minDate="2016-05-01"
+                                    maxDate="2016-06-01"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    showIcon={false}
+                                    customStyles={{
+                                        dateInput: {
+                                            marginLeft: 36
+                                        }
+                                    }}
+                                    onDateChange={(date) => {this.setState({startAt: date})}}
+                                />               
+                            </View>
+                            <View style={[styles.row]}>
+                                <RkText rkType='secondary2 hintColor' style={styles.label}>Finish Date</RkText>
+                                <DatePicker
+                                    style={styles.date}
+                                    date={this.state.finishAt}
+                                    mode="datetime"
+                                    placeholder="select date"
+                                    format="YYYY-MM-DD HH:mm"
+                                    minDate="2016-05-01"
+                                    maxDate="2016-06-01"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    showIcon={false}
+                                    customStyles={{
+                                        dateInput: {
+                                            marginLeft: 36
+                                        }
+                                    }}
+                                    onDateChange={(date) => {this.setState({finishAt: date})}}
+                                />               
+                            </View>
+                            <View style={[styles.row]}>
+                                <RkText rkType='secondary2 hintColor' style={[styles.category, styles.label]}>Category</RkText>
+                                {
+                                    this.data[0].length > 0 ?
+                                    <RkPicker
+                                    title='Choose Category'
+                                    data={this.data}
+                                    visible={this.state.pickerVisible}
+                                    selectedOptions={this.state.categoryId}
+                                    onConfirm={this.handlePickedValue}
+                                    onCancel={this.hidePicker}/>      
                                     :
-                                    <Image style={styles.image} source={{uri: this.state.photo.uri}}/>
-                                }     
-                            </PhotoUpload>
+                                    <View></View>
+                                }
+                                <TouchableOpacity onPress={() => this.showPicker()} style={styles.categoryView}>
+                                    <RkText style={styles.input}>{this.state.categoryId[0].value}</RkText>
+                                    <Image style={{width: 15, height: 15, marginLeft: 10}} source={require('../../assets/icons/arrow.png')}/>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.row}>
+                                <RkTextInput 
+                                    label='City'
+                                    value={this.state.city}
+                                    onChangeText={(city) => this.setState({city})}
+                                    rkType='right clear'/>
+                            </View>
+                            <View style={styles.row}>
+                                <RkTextInput 
+                                    label='Town'
+                                    value={this.state.town}
+                                    onChangeText={(town) => this.setState({town})}
+                                    rkType='right clear'/>
+                            </View>
+                            <View style={styles.row}>
+                                <RkTextInput 
+                                    label='Latitude'
+                                    value={this.state.latitude}
+                                    onChangeText={(latitude) => this.setState({latitude})}
+                                    rkType='right clear'/>
+                            </View>
+                            <View style={styles.row}>
+                                <RkTextInput 
+                                    label='Longitude'
+                                    value={this.state.longitude}
+                                    onChangeText={(longitude) => this.setState({longitude})}
+                                    rkType='right clear'/>
+                            </View>
+                            <View style={styles.row}>
+                                <RkText rkType='secondary2 hintColor' style={styles.label}>Is Private</RkText>
+                                <RkSwitch
+                                style={styles.switch}
+                                    value={this.state.isPrivate}
+                                    name="Push"
+                                    onValueChange={(isPrivate) => {
+                                        this.setState({isPrivate});
+                                    }}/>
+                            </View>
                         </View>
-                        <View style={styles.row}>
-                            <RkTextInput 
-                                label='Title'
-                                value={this.state.tittle}
-                                rkType='right clear'
-                                onChangeText={(title) => this.setState({title})}/>
-                        </View>
-                        <View style={styles.row}>
-                            <RkTextInput 
-                                label='Description'
-                                multiline={true}
-                                numberOfLines={3}
-                                value={this.state.description}
-                                onChangeText={(description) => this.setState({description})}
-                                rkType='right clear'/>
-                        </View>
-                        <View style={[styles.row]}>
-                            <RkText rkType='secondary2 hintColor' style={styles.label}>Start Date</RkText>
-                            <DatePicker
-                                style={styles.date}
-                                date={this.state.startAt}
-                                mode="datetime"
-                                placeholder="select date"
-                                format="YYYY-MM-DD HH:mm"
-                                minDate="2016-05-01"
-                                maxDate="2016-06-01"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                showIcon={false}
-                                customStyles={{
-                                    dateInput: {
-                                        marginLeft: 36
-                                    }
-                                }}
-                                onDateChange={(date) => {this.setState({startAt: date})}}
-                            />               
-                        </View>
-                        <View style={[styles.row]}>
-                            <RkText rkType='secondary2 hintColor' style={styles.label}>Finish Date</RkText>
-                            <DatePicker
-                                style={styles.date}
-                                date={this.state.finishAt}
-                                mode="datetime"
-                                placeholder="select date"
-                                format="YYYY-MM-DD HH:mm"
-                                minDate="2016-05-01"
-                                maxDate="2016-06-01"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                showIcon={false}
-                                customStyles={{
-                                    dateInput: {
-                                        marginLeft: 36
-                                    }
-                                }}
-                                onDateChange={(date) => {this.setState({finishAt: date})}}
-                            />               
-                        </View>
-                        <View style={[styles.row]}>
-                            <RkText rkType='secondary2 hintColor' style={[styles.category, styles.label]}>Category</RkText>
-                            {
-                                this.data[0].length > 0 ?
-                                <RkPicker
-                                title='Choose Category'
-                                data={this.data}
-                                visible={this.state.pickerVisible}
-                                selectedOptions={this.state.categoryId}
-                                onConfirm={this.handlePickedValue}
-                                onCancel={this.hidePicker}/>      
-                                :
-                                <View></View>
-                            }
-                            <TouchableOpacity onPress={() => this.showPicker()} style={styles.categoryView}>
-                                <RkText style={styles.input}>{this.state.categoryId[0].value}</RkText>
-                                <Image style={{width: 15, height: 15, marginLeft: 10}} source={require('../../assets/icons/arrow.png')}/>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.row}>
-                            <RkTextInput 
-                                label='City'
-                                value={this.state.city}
-                                onChangeText={(city) => this.setState({city})}
-                                rkType='right clear'/>
-                        </View>
-                        <View style={styles.row}>
-                            <RkTextInput 
-                                label='Town'
-                                value={this.state.town}
-                                onChangeText={(town) => this.setState({town})}
-                                rkType='right clear'/>
-                        </View>
-                        <View style={styles.row}>
-                            <RkTextInput 
-                                label='Latitude'
-                                value={this.state.latitude}
-                                onChangeText={(latitude) => this.setState({latitude})}
-                                rkType='right clear'/>
-                        </View>
-                        <View style={styles.row}>
-                            <RkTextInput 
-                                label='Longitude'
-                                value={this.state.longitude}
-                                onChangeText={(longitude) => this.setState({longitude})}
-                                rkType='right clear'/>
-                        </View>
-                        <View style={styles.row}>
-                            <RkText rkType='secondary2 hintColor' style={styles.label}>Is Private</RkText>
-                            <RkSwitch
-                            style={styles.switch}
-                                value={this.state.isPrivate}
-                                name="Push"
-                                onValueChange={(isPrivate) => {
-                                    this.setState({isPrivate});
-                                }}/>
-                        </View>
-                    </View>
-                    
-                    <RkButton rkType='medium stretch rounded' style={styles.button} onPress={() => {
-                            this.addEvent();
-                        }}>SAVE</RkButton>
-                </RkAvoidKeyboard>
-            </ScrollView>
+                        
+                        <RkButton rkType='medium stretch rounded' style={styles.button} onPress={() => {
+                                this.addEvent();
+                            }}>SAVE</RkButton>
+                    </RkAvoidKeyboard>
+                </ScrollView>
+            </View>
         )
     }
 }
@@ -357,5 +368,14 @@ let styles = RkStyleSheet.create(theme => ({
     input: {
         fontSize: theme.fonts.sizes.base,
         color: theme.colors.input.text
+    },
+    navbar: {
+        width: width,
+        backgroundColor: "#ffffff",
+        padding: 10, 
+        flexDirection: 'row', 
+        alignItems: 'center',
+        borderBottomColor: 'grey', 
+        borderBottomWidth: 0.7
     }
 }));

@@ -9,7 +9,6 @@ import Signup from './pages/signup';
 import { SplashScreen } from './pages/splash';
 import Dashboard from './pages/dashboard';
 import Gameboard from './pages/gameboard';
-import CreditCard from './pages/creditCard';
 import Events from './pages/event/events';
 import CategoryEvents from './pages/event/categoryEvents';
 import EventDetail from './pages/event/eventDetail';
@@ -28,11 +27,12 @@ import FollowerList from './pages/user/followerList';
 import FollowingList from './pages/user/followingList';
 import GoingList from './pages/user/goingList';
 import OtherProfile from './pages/user/otherProfile';
+import Business from './pages/business/business';
+import CreditCard from './pages/business/creditCard';
 
 import TabIcon from './components/tabIcon';
 import { NavBar } from './components/navBar';
 import { FontAwesome } from './assets/icon';
-import { AddToCardForm } from './pages/addToCardForm';
 
 const styles =  RkStyleSheet.create(theme => ({
     container: {
@@ -384,16 +384,16 @@ export default class Routes extends React.Component {
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
-                                    key="creditCard"
-                                    component={withRkTheme(CreditCard)}
-                                    title="Credit Cards"
+                                    key="business"
+                                    component={withRkTheme(Business)}
+                                    title="Evant Business"
                                     backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
-                                    key="addCard"
-                                    component={withRkTheme(AddToCardForm)}
-                                    title="Add Cards"
+                                    key="creditCard"
+                                    component={withRkTheme(CreditCard)}
+                                    title="Credit Cards"
                                     backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />

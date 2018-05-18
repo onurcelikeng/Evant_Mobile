@@ -38,7 +38,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>We need to reach your camera to add new pictures for your profile or event detail.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to reach your photos to add new pictures for your profile or event detail.</string>
 	<key>UIAppFonts</key>
@@ -53,6 +53,17 @@
 		<string>Roboto-Light.ttf</string>
 		<string>Roboto-Medium.ttf</string>
 		<string>Roboto-Regular.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

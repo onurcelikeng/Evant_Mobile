@@ -1,16 +1,19 @@
 import React from 'react';
-import { ListView, View, Image, TouchableOpacity, TouchableHighlight, RefreshControl } from 'react-native';
+import { ListView, View, Image, TouchableOpacity, TouchableHighlight, RefreshControl, Dimensions, ActivityIndicator } from 'react-native';
 import { RkStyleSheet, RkText } from 'react-native-ui-kitten';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import { Actions } from 'react-native-router-flux';
 import Swipeable from 'react-native-swipeable';
+import { Header } from 'react-navigation';
 
 import DropdownHolder from '../providers/dropdownHolder';
-import ContentLoader from '../config/contentLoader'
 import * as notificationProvider from '../providers/notifications';
 import { Avatar } from '../components/avatar';
 import { data } from '../data';
 import {formatDate} from '../utils/momentjs';
+
+let {height, width} = Dimensions.get('window');
+const navbar = Header.HEIGHT;
 
 export default class Notifications extends React.Component {
 
@@ -160,9 +163,10 @@ export default class Notifications extends React.Component {
 				</Swipeable>
 			)
 		} else {
+			var imageHeight = height - navbar*2;
 			return (
-				<View style={[styles.root, {flex:1, flexDirection: 'row', alignSelf:'center', alignContent: 'center'}]}>
-					<Image style={{alignSelf: 'center'}} source={require('../assets/images/notfound.png')}/>
+				<View style={[styles.root, {height: imageHeight}]}>
+					<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../assets/images/notFoundNotif.jpeg')}/>
 				</View>
 			)
 		}	
@@ -171,26 +175,15 @@ export default class Notifications extends React.Component {
 	render() {
 		if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
-
+			const animating = this.state.isLoading;
 			return (
-			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-				<ContentLoader height={70}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-				</ContentLoader>
-				<ContentLoader height={70}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-				</ContentLoader>
-				<ContentLoader height={70}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-				</ContentLoader>
-				<ContentLoader height={70}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-				</ContentLoader>
-			  </View>
+				<View style = {styles.indContainer}>
+					<ActivityIndicator
+					animating = {animating}
+					color = '#bc2b78'
+					size = "large"
+					style = {styles.activityIndicator}/>
+			 	</View>
 			);
 		} else {
 			return (
@@ -221,6 +214,18 @@ let styles = RkStyleSheet.create(theme => ({
 		borderBottomWidth: 1,
 		borderColor: theme.colors.border.base,
 		alignItems: 'flex-start'
+	},
+	indContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 70
+	 },
+	 activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 30
 	},
 	avatar: {},
 	text: {

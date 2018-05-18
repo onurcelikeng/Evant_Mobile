@@ -149,6 +149,7 @@ export default class Discover extends React.Component {
 	}
 
 	search(text) {
+		console.log(text)
 		if(this.state.selectedIndex == 0) {
 			if(text.length == 0) {
 				this.setData([], 0)
@@ -164,6 +165,7 @@ export default class Discover extends React.Component {
 			} else if(text.length >= 2) {
 				this.setState({searchedItem: text});
 				eventProvider.search(text).then((responseJson) => {
+					console.log(responseJson)
 					if(responseJson.isSuccess) this.setData(responseJson.data, 1)
 				})
 			}
@@ -235,7 +237,7 @@ export default class Discover extends React.Component {
 					} }
 				onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
 				<View style={styles.row}>
-					<TouchableOpacity style={styles.rowButton}>
+					<TouchableOpacity style={styles.rowButton} onPress={() => {this._searchInput.refs.input._lastNativeText = info.item.keyword; this.search(this._searchInput.refs.input._lastNativeText); this.searchPage()}}>
 						<RkText style={styles.recentSearch}>{info.item.keyword}</RkText>
 					</TouchableOpacity>
 				</View>

@@ -16,7 +16,7 @@ import {Gallery} from '../../components/gallery';
 import {FontIcons} from '../../assets/icon';
 import formatNumber from '../../utils/textUtils';
 import {data} from '../../data';
-import Login from '../login'
+import Login from '../login';
 
 let moment = require('moment');
 

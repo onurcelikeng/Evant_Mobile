@@ -67,7 +67,7 @@ export class AreaSmoothedChart extends RkComponent {
   render() {
     return (
       <View>
-        <RkText rkType='header4'>NEW FOLLOWERS</RkText>
+        <RkText rkType='header4'>CHAT BOT</RkText>
         <VictoryChart padding={{top: 20, left: 40, right: 15, bottom: 40}} width={this.size - 60}>
           <VictoryAxis
             tickValues={['Sun', 'Mon', 'Tue', ' Wed', 'Thu', 'Fri', 'Sat']}

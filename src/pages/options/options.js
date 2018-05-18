@@ -175,7 +175,7 @@ export default class Options extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert('SWITCH', 'Do you want to switch to business account?', 'business')}>
+            <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.business()}}>
               <RkText rkType='header6'>Switch to Business Profile</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>

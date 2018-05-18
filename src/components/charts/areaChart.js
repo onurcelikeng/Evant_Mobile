@@ -71,7 +71,7 @@ export class AreaChart extends RkComponent {
   render() {
     return (
       <View>
-        <RkText rkType='header4'>REAL TIME VISITORS</RkText>
+        <RkText rkType='header4'>VISITORS BY DATE</RkText>
         <VictoryChart padding={{top: 20, left: 40, right: 5, bottom: 5}} width={this.size - 60}>
           <VictoryAxis
             tickValues={[]}

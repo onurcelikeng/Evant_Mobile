@@ -1,11 +1,13 @@
 import React from 'react';
-import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl } from 'react-native';
+import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl, Modal } from 'react-native';
 import { RkText, RkCard, RkStyleSheet, withRkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
 import Svg, { Circle, Ellipse, G, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
+import ActionButton from 'react-native-action-button';
 
+import AddEvent from './addEvent';
 import {Avatar} from '../../components/avatar';
 import Login from '../login';
 import DropdownHolder from '../../providers/dropdownHolder';
@@ -21,7 +23,8 @@ export default class Events extends React.Component {
 		super(props);
 		this.state = {
 			isLoading: true,
-      isRefreshing: false
+			isRefreshing: false,
+			modal: false
 		}
 	
 		this.renderItem = this._renderItem.bind(this);
@@ -33,6 +36,19 @@ export default class Events extends React.Component {
 		} else {
 			this.getEvents();
 		}
+	}
+
+	renderModal() {
+		return (
+				<Modal
+						animationType={"slide"}
+						transparent={false}
+						visible={this.state.modal}
+						onRequestClose={() => {}}
+				>
+						<AddEvent onPress={() => this.setState({modal: false})} />
+				</Modal>
+		)
 	}
 
 	getCategoryEvents(id) {
@@ -129,6 +145,8 @@ export default class Events extends React.Component {
   }
 	
 	render() {
+		const {modal} = this.state;
+
 		if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
 			var loaders = [];
@@ -152,21 +170,30 @@ export default class Events extends React.Component {
 		}
 
 		return (
-			<FlatList
-				data={this.state.data}
-				renderItem={this.renderItem}
-				keyExtractor={this._keyExtractor}
-				style={styles.container}
-				ListEmptyComponent={<View style={{flex:1, flexDirection: 'row', justifyContent: 'center', alignSelf:'center', alignContent: 'center'}}>
-															<Image style={{alignSelf: 'center'}} source={require('../../assets/images/notfound.png')}/>
-														</View>}
-				refreshControl={
-          <RefreshControl
-            refreshing={this.state.isRefreshing}
-            onRefresh={this._onRefresh.bind(this)}
-          />
-        }
-			/>
+			<View>
+				<FlatList
+					data={this.state.data}
+					renderItem={this.renderItem}
+					keyExtractor={this._keyExtractor}
+					style={styles.container}
+					ListEmptyComponent={<View style={{flex:1, flexDirection: 'row', justifyContent: 'center', alignSelf:'center', alignContent: 'center'}}>
+																<Image style={{alignSelf: 'center'}} source={require('../../assets/images/notfound.png')}/>
+															</View>}
+					refreshControl={
+						<RefreshControl
+							refreshing={this.state.isRefreshing}
+							onRefresh={this._onRefresh.bind(this)}
+						/>
+					}
+				/>
+				<ActionButton
+					offsetY={15}
+					offsetX={15}
+					buttonColor="rgba(218,105,84,1)"
+					onPress={() => { this.setState({modal: true}) }}
+				/>
+				{this.renderModal()}
+			</View>
 		)
 	}
 }

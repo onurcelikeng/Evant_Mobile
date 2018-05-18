@@ -54,6 +54,7 @@ export class SplashScreen extends React.Component {
           StatusBar.setHidden(false, 'slide');
           if(route == 'tabbar') {
             accountProvider.getMe().then((responseJson) => {
+              console.log(responseJson);
               if(responseJson == null || responseJson == "" || responseJson == undefined) {
                 DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
               } else {

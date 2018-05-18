@@ -8,6 +8,8 @@ import Login from './pages/login';
 import Signup from './pages/signup';
 import { SplashScreen } from './pages/splash';
 import Dashboard from './pages/dashboard';
+import Gameboard from './pages/gameboard';
+import CreditCard from './pages/creditCard';
 import Events from './pages/event/events';
 import CategoryEvents from './pages/event/categoryEvents';
 import EventDetail from './pages/event/eventDetail';
@@ -30,6 +32,7 @@ import OtherProfile from './pages/user/otherProfile';
 import TabIcon from './components/tabIcon';
 import { NavBar } from './components/navBar';
 import { FontAwesome } from './assets/icon';
+import { AddToCardForm } from './pages/addToCardForm';
 
 const styles =  RkStyleSheet.create(theme => ({
     container: {
@@ -357,6 +360,14 @@ export default class Routes extends React.Component {
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
+                                    key="gameboard"
+                                    component={withRkTheme(Gameboard)}
+                                    title="Gameboard"
+                                    hideTabBar="true"
+                                    backToInitial={true}
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                                <Scene
                                     hideNavBar={true}
                                     hideTabBar
                                     key="eventDetail"
@@ -369,6 +380,20 @@ export default class Routes extends React.Component {
                                     key="options"
                                     component={withRkTheme(Options)}
                                     title="Options"
+                                    backToInitial={true}
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                                <Scene
+                                    key="creditCard"
+                                    component={withRkTheme(CreditCard)}
+                                    title="Credit Cards"
+                                    backToInitial={true}
+                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
+                                />
+                                <Scene
+                                    key="addCard"
+                                    component={withRkTheme(AddToCardForm)}
+                                    title="Add Cards"
                                     backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />

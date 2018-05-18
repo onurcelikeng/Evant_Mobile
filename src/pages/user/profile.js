@@ -202,6 +202,9 @@ export default class Profile extends React.Component {
 						<View style={styles.header}>
 							<View style={styles.row}>
 								<View style={styles.buttons}>
+									<TouchableOpacity style={styles.gameButton} onPress={() => Actions.gameboard()}>
+										<Image style={{height: 30, width: 30, tintColor: "#ffffff"}} source={require('../../assets/icons/gameboard.png')} />
+									</TouchableOpacity>
 								</View>
 								<Avatar img={this.user.photo} rkType='big'/>
 								<View style={styles.buttons}>
@@ -345,6 +348,9 @@ let styles = RkStyleSheet.create(theme => ({
 		marginRight: 20,
 		alignSelf: "flex-end"
 	}, 
+	gameButton: {
+		alignSelf: "flex-start"
+	},
 	backgroundImage: {
     flex: 1,
     resizeMode: 'cover', // or 'stretch'

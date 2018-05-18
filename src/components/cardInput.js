@@ -5,7 +5,7 @@ import {
   RkText,
   RkStyleSheet
 } from 'react-native-ui-kitten';
-import {FontAwesome} from '../assets/icons';
+import {FontAwesome} from '../assets/icon';
 
 export class CardInput extends React.Component {
 

@@ -366,7 +366,7 @@ export default class EventDetail extends React.Component {
                 <View></View>
               }
               {
-                this.state.data.user.userId == Login.getCurrentUser().userId ?
+                this.state.data.user.userId == Login.getCurrentUser().userId && Login.getCurrentUser().isBusiness ?
                   <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard({eventId: this.state.data.eventId})}}>
                     <Image style={{height: 28, width: 28, marginLeft: 15}} source={require("../../assets/icons/dashboard.png")}/>
                   </TouchableOpacity>

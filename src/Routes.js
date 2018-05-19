@@ -15,6 +15,7 @@ import EventDetail from './pages/event/eventDetail';
 import Discover from './pages/event/discover';
 import Comments from './pages/event/comments'; 
 import AddEvent from './pages/event/addEvent'; 
+import UpdateEvent from './pages/event/updateEvent'; 
 import Notifications from './pages/notifications';
 import Options from './pages/options/options';
 import Themes from './pages/options/themes';
@@ -250,15 +251,15 @@ export default class Routes extends React.Component {
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                             </Stack>
-                            {/*<Scene
-                                key="addEvent"
-                                title="Add Event"
-                                component={withRkTheme(AddEvent)}
+                            {/*
+                            <Scene
+                                key="updateEvent"
+                                title="Update Event"
+                                component={withRkTheme(UpdateEvent)}
                                 hideTabBar="true"
                                 clone
                                 direction="vertical"
                                 backToInitial
-                                icon={TabIcon}
                                 navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                             />*/}
                             <Stack

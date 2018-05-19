@@ -191,10 +191,6 @@ export default class Discover extends React.Component {
 			this.setState({
 				searchEventData: data
 			})
-		} else if(type == 2) {
-			this.setState({
-				searchTagData: ds.cloneWithRows(data)
-			})
 		}
 	}
 
@@ -379,20 +375,6 @@ export default class Discover extends React.Component {
 						<RkTabView.Tab title={'Events'} style={{backgroundColor: '#ffffff'}}>
 							{
 								this.state.searchEventData != null ?
-								<FlatList
-									data={this.state.searchEventData}
-									renderItem={this.renderEventItem}
-									keyExtractor={this._keyExtractor}
-									style={styles.containerEvent}
-									enableEmptySections={true}
-								/>
-								:
-								<View></View>
-							}
-						</RkTabView.Tab>
-						<RkTabView.Tab title={'Tags'} style={{backgroundColor: '#ffffff'}}>
-							{
-								this.state.searchData != null ?
 								<FlatList
 									data={this.state.searchEventData}
 									renderItem={this.renderEventItem}

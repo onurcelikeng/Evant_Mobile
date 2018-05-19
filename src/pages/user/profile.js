@@ -17,6 +17,7 @@ import {FontIcons} from '../../assets/icon';
 import formatNumber from '../../utils/textUtils';
 import {data} from '../../data';
 import Login from '../login';
+import Gameboard from '../gameboard';
 
 let moment = require('moment');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListView, View, Image, TouchableOpacity, TouchableHighlight, RefreshControl, Dimensions, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
-import { RkStyleSheet, RkText, RkTextInput } from 'react-native-ui-kitten';
+import { RkStyleSheet, RkText, RkTextInput, RkTabView } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 
 import {data} from '../data';
@@ -9,8 +9,10 @@ import {FontAwesome} from '../assets/icon';
 import * as gameboardProvider from '../providers/gameboard';
 import Login from './login';
 
+const {width} = Dimensions.get('window');
+
 export default class Gameboard extends React.Component {
-    
+
     constructor(props) {
         super(props);
     
@@ -18,50 +20,95 @@ export default class Gameboard extends React.Component {
     
         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-          isLoading: true
+          isLoading: true,
+          isRefreshing: false,
+          selectedIndex: 1
         };
 
         this.index = 0;
     
         this.setData = this._setData.bind(this);
         this.renderRow = this._renderRow.bind(this);
+        this.handleChangeTab = this._handleChangeTab.bind(this);
     }
 
     componentDidMount() {
-        this.getGameboard();
+        this.getGameboard(this.state.selectedIndex);
     }
 
-    getGameboard() {
-        gameboardProvider.getGameboard()
+    getGameboard(type) {
+        console.log(type)
+
+        this.setState({isLoading: true});
+        return gameboardProvider.getGameboard(type)
         .then((responseJson) => {
             if(responseJson.isSuccess) {
-                this.setData(responseJson.data);
+                console.log(responseJson)
+                this.index = 0;
+                this.setData(responseJson.data, type);
                 this.setState({isLoading: false});
-                console.log(responseJson.data);
             }
-        });
+        }).catch((err) => {console.log(err)});
     }
 
-    _setData(data) {
-        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.setState({
-          data: ds.cloneWithRows(data)
-        })
+    _handleChangeTab(current) {
+        this.index = 0;
+        this.setState({selectedIndex:current});
+        this.getGameboard(current);
     }
+    
+    _setData(data, type) {
+		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		if(type == 0) {
+			this.setState({
+				dailyData: ds.cloneWithRows(data)
+			})
+		} else if(type == 1) {
+			this.setState({
+				weeklyData: ds.cloneWithRows(data)
+			})
+		} else if(type == 2) {
+			this.setState({
+				monthlyData: ds.cloneWithRows(data)
+			})
+		}
+	}
+
+    _onRefresh() {
+        this.index = 0;
+		this.setState({isRefreshing: true});
+		this.getGameboard(this.state.selectedIndex).then(() => {
+			this.setState({isRefreshing: false});
+		});
+	}
 
     _renderRow(row) {
         let name = `${row.firstName} ${row.lastName}`;
-        this.index++;
+        if(!this.state.isRefreshing) this.index += 1;
         return (
         <TouchableOpacity onPress={() => {if(row.userId != Login.getCurrentUser().userId) Actions.otherProfile({id: row.userId}); else Actions.profile();}}>
-            <View style={styles.container}>
-                <RkText style={{marginLeft: 16, marginRight: 16, alignItems: 'center', flexDirection: 'row'}}>{this.index + "."}</RkText>
-                <Avatar img={row.photoUrl} rkType='circle'/>
-                <RkText style={{marginLeft: 16, alignItems: 'center', flexDirection: 'row'}}>{name}</RkText>
-                <View style={{flex: 1}}>
+            {
+                row.userId == Login.getCurrentUser().userId 
+                ?
+                <View style={[styles.container, {backgroundColor: "#f5ea92"}]}>
+                    <RkText style={{marginLeft: 16, marginRight: 16, alignItems: 'center', flexDirection: 'row'}}>{this.index + "."}</RkText>
+                    <Avatar img={row.photoUrl} rkType='circle'/>
+                    <RkText style={{marginLeft: 16, alignItems: 'center', flexDirection: 'row'}}>{name}</RkText>
+                    <View style={{flex: 1}}>
+                    </View>
+                    <RkText style={{alignItems: 'flex-end', flexDirection: 'row'}}>{row.score + " puan"}</RkText>
                 </View>
-                <RkText style={{alignItems: 'flex-end', flexDirection: 'row'}}>{row.score + " puan"}</RkText>
-            </View>
+                :
+                <View style={styles.container}>
+                    <RkText style={{marginLeft: 16, marginRight: 16, alignItems: 'center', flexDirection: 'row'}}>{this.index + "."}</RkText>
+                    <Avatar img={row.photoUrl} rkType='circle'/>
+                    <RkText style={{marginLeft: 16, alignItems: 'center', flexDirection: 'row'}}>{name}</RkText>
+                    <View style={{flex: 1}}>
+                    </View>
+                    <RkText style={{alignItems: 'flex-end', flexDirection: 'row'}}>{row.score + " puan"}</RkText>
+                </View>
+            }
+            
         </TouchableOpacity>
         )
     }
@@ -91,14 +138,62 @@ export default class Gameboard extends React.Component {
         }
         else {
             return (
-                <ListView
-                    style={styles.root}
-                    dataSource={this.state.data}
-                    keyExtractor={this._keyExtractor}
-                    renderRow={this.renderRow}
-                    renderSeparator={this.renderSeparator}
-                    automaticallyAdjustContentInsets={false}
-                    enableEmptySections={true}/>
+                <RkTabView index={this.state.selectedIndex} rkType='rounded' maxVisibleTabs={3} onTabChanged={(index) => this.handleChangeTab(index)}  style={{borderColor: "#ffffff", backgroundColor: '#da6954'}}>
+                    <RkTabView.Tab title={'Daily'} style={{backgroundColor: '#da6954'}}>
+                        {
+                            <ListView
+                                style={styles.root}
+                                dataSource={this.state.dailyData}
+                                keyExtractor={this._keyExtractor}
+                                renderRow={this.renderRow}
+                                renderSeparator={this.renderSeparator}
+                                automaticallyAdjustContentInsets={false}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.state.isRefreshing}
+                                        onRefresh={this._onRefresh.bind(this)}
+                                    />
+                                }
+                                enableEmptySections={true}/>
+                        }
+                    </RkTabView.Tab>
+                    <RkTabView.Tab title={'Weekly'} style={{backgroundColor: '#da6954'}}>
+                        {
+                            <ListView
+                                style={styles.root}
+                                dataSource={this.state.weeklyData}
+                                keyExtractor={this._keyExtractor}
+                                renderRow={this.renderRow}
+                                renderSeparator={this.renderSeparator}
+                                automaticallyAdjustContentInsets={false}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.state.isRefreshing}
+                                        onRefresh={this._onRefresh.bind(this)}
+                                    />
+                                }
+                                enableEmptySections={true}/>
+                        }
+                    </RkTabView.Tab>
+                    <RkTabView.Tab title={'Monthly'} style={{backgroundColor: '#da6954'}}>
+                        {
+                            <ListView
+                                style={styles.root}
+                                dataSource={this.state.monthlyData}
+                                keyExtractor={this._keyExtractor}
+                                renderRow={this.renderRow}
+                                renderSeparator={this.renderSeparator}
+                                automaticallyAdjustContentInsets={false}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.state.isRefreshing}
+                                        onRefresh={this._onRefresh.bind(this)}
+                                    />
+                                }
+                                enableEmptySections={true}/>
+                        }
+                    </RkTabView.Tab>
+                </RkTabView>
             )
         }
     }
@@ -148,5 +243,18 @@ let styles = RkStyleSheet.create(theme => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: 70
-	 },
+    },
+    navbar: {
+        width: width,
+        backgroundColor: theme.colors.screen.nav,
+        padding: 10, 
+        flexDirection: 'row', 
+        alignItems: 'center',
+        borderBottomColor: 'grey', 
+        borderBottomWidth: 0.7
+    },
+    backButton: {
+        color: theme.colors.text.nav,
+        fontSize: 20
+    }
   }));

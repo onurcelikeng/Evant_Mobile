@@ -36,28 +36,28 @@ export class DoughnutChart extends RkComponent {
 						data: [
               {
                 x: 1,
-                y: (responseJson.data.teenager.ratio / 100) * 360,
+                y: responseJson.data.teenager.ratio,
                 title: responseJson.data.teenager.ratio + '%',
                 name: responseJson.data.teenager.min + "-" + responseJson.data.teenager.max + " " + responseJson.data.teenager.name,
                 color: RkTheme.current.colors.charts.doughnut[0]
               },
               {
                 x: 1,
-                y: (responseJson.data.young.ratio / 100) * 360,
+                y: responseJson.data.young.ratio,
                 title: responseJson.data.young.ratio + '%',
                 name: responseJson.data.young.min + "-" + responseJson.data.young.max + " " + responseJson.data.young.name,
                 color: RkTheme.current.colors.charts.doughnut[1]
               },
               {
                 x: 1,
-                y: (responseJson.data.middle.ratio / 100) * 360,
+                y: responseJson.data.middle.ratio,
                 title: responseJson.data.middle.ratio + '%',
                 name: responseJson.data.middle.min + "-" + responseJson.data.middle.max + " " + responseJson.data.middle.name,
                 color: RkTheme.current.colors.charts.doughnut[2]
               },
               {
                 x: 1,
-                y: (responseJson.data.old.ratio / 100) * 360,
+                y: responseJson.data.old.ratio,
                 title: responseJson.data.old.ratio + '%',
                 name: responseJson.data.old.min + "-" + responseJson.data.old.max + " " + responseJson.data.old.name,
                 color: RkTheme.current.colors.charts.doughnut[3]

@@ -97,28 +97,28 @@ export default class Business extends React.Component {
                 price='₺0'
                 info={['Unlimited', 'For Everyone', 'User Analysis']}
                 button={{ title: 'GET STARTED', icon: 'flight-takeoff', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Free") this.openAlert('SWITCH', 'Do you want to switch to free business account?', 'business', 'Free')}}/>
+                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Free") this.openAlert('SWITCH', 'Do you want to switch to Free Business account?', 'business', 'Free')}}/>
                 <PricingCard
                 color='#a72ce9'
                 title='Basic'
                 price='₺19'
                 info={['Per Year', 'Basic Support', 'All Core Features']}
                 button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Basic") this.openAlert('SWITCH', 'Do you want to switch to basic business account?', 'business', 'Basic')}}/>
+                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Basic") this.openAlert('SWITCH', 'Do you want to switch to Basic Business account?', 'business', 'Basic')}}/>
                 <PricingCard
                 color='#f9b632'
                 title='Gold'
                 price='₺79'
                 info={['Per Year', 'Basic Support', 'All Core Features']}
                 button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Gold") this.openAlert('SWITCH', 'Do you want to switch to gold business account?', 'business', 'Gold')}}/>
+                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Gold") this.openAlert('SWITCH', 'Do you want to switch to Gold Business account?', 'business', 'Gold')}}/>
                 <PricingCard
                 color='#cdcbc7'
                 title='Platinum'
                 price='₺99'
                 info={['Per Year', 'Basic Support', 'All Core Features']}
                 button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Platinum") this.openAlert('SWITCH', 'Do you want to switch to platinum business account?', 'business', 'Platinum')}}/>
+                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Platinum") this.openAlert('SWITCH', 'Do you want to switch to Platinum Business account?', 'business', 'Platinum')}}/>
                 {
                     Login.getCurrentUser().isBusiness ?
                     <View style={{flex: 1, justifyContent:"center", alignContent: "center"}}>

@@ -32,5 +32,6 @@ export const FontAwesome = {
   notification: String.fromCharCode(61602),
   profile: String.fromCharCode(62144),
   setting: String.fromCharCode(61459),
-  commentOpen: String.fromCharCode(61669)
+  commentOpen: String.fromCharCode(61669),
+  cross: String.fromCharCode(61453)
 };

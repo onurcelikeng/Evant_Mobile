@@ -28,7 +28,6 @@ import FollowingList from './pages/user/followingList';
 import GoingList from './pages/user/goingList';
 import OtherProfile from './pages/user/otherProfile';
 import Business from './pages/business/business';
-import CreditCard from './pages/business/creditCard';
 
 import TabIcon from './components/tabIcon';
 import { NavBar } from './components/navBar';
@@ -387,13 +386,6 @@ export default class Routes extends React.Component {
                                     key="business"
                                     component={withRkTheme(Business)}
                                     title="Evant Business"
-                                    backToInitial={true}
-                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                                />
-                                <Scene
-                                    key="creditCard"
-                                    component={withRkTheme(CreditCard)}
-                                    title="Credit Cards"
                                     backToInitial={true}
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />

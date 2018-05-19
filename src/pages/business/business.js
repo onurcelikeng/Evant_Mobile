@@ -3,9 +3,13 @@ import { ListView, View, Image, TouchableOpacity, TouchableHighlight, RefreshCon
 import { PricingCard, Button } from 'react-native-elements';
 import { RkButton, RkTextInput, RkText, RkStyleSheet } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
+
+import DropdownHolder from '../../providers/dropdownHolder';
 import Login from '../login';
 import * as businessProvider from '../../providers/business';
 import * as accountProvider from '../../providers/account';
+
+let moment = require('moment');
 
 export default class Business extends React.Component {
     
@@ -18,8 +22,20 @@ export default class Business extends React.Component {
         }
     }
 
-    switchToBusiness(type) {
-        return businessProvider.switchToBusiness(type)
+    componentDidMount() {
+        businessProvider.getBusiness().then((responseJson) => {
+            if(responseJson.isSuccess) {
+                this.setState({business: {type: responseJson.data.businessType, expire: responseJson.data.expireAt}})
+
+            console.log(this.state.business.expire);
+            console.log(moment().format());
+            console.log(this.state.business.expire > moment().format());
+            }
+        })
+    }
+
+    switchToBusiness(type, payment) {
+        return businessProvider.switchToBusiness(type, payment)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
                 DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
@@ -71,6 +87,7 @@ export default class Business extends React.Component {
     }
 
     openAlert(title, message, type, businessType) {
+        var payment = null;
         Alert.alert(
             title,
             message,
@@ -78,7 +95,17 @@ export default class Business extends React.Component {
                 {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {text: 'OK', onPress: () => {
                 if(type == 'business') {
-                    this.switchToBusiness(businessType);
+                    var product = businessType + " Business Üyelik";
+                    if(businessType == "Free")
+                        this.switchToBusiness(businessType, null);
+                    else if(!Login.getCurrentUser().isBusiness && this.state.business.type == businessType && this.state.business.expire > moment().format())
+                        this.switchToBusiness(businessType, null);
+                    else if(Login.getCurrentUser().isBusiness && this.state.business.type != businessType)
+                        Actions.push("addCard", {product: product, type: businessType});
+                    else if(!Login.getCurrentUser().isBusiness && this.state.business.type == businessType && this.state.business.expire < moment().format())
+                    Actions.push("addCard", {product: product, type: businessType});
+                    else if(!Login.getCurrentUser().isBusiness && this.state.business.type != businessType)
+                    Actions.push("addCard", {product: product, type: businessType});
                 } else if(type == 'cancel') {
                     this.cancelBusiness();
                 }
@@ -95,30 +122,38 @@ export default class Business extends React.Component {
                 color='#4f9deb'
                 title='Free'
                 price='₺0'
-                info={['Unlimited', 'For Everyone', 'User Analysis']}
+                info={['Unlimited', 'For Everyone', 'User Age Analysis of Events']}
                 button={{ title: 'GET STARTED', icon: 'flight-takeoff', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Free") this.openAlert('SWITCH', 'Do you want to switch to Free Business account?', 'business', 'Free')}}/>
+                onButtonPress={() => {  if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Free") 
+                                            this.openAlert('SWITCH', 'Do you want to switch to Free Business account?', 'business', 'Free') 
+                                    }}/>
                 <PricingCard
                 color='#a72ce9'
                 title='Basic'
                 price='₺19'
-                info={['Per Year', 'Basic Support', 'All Core Features']}
+                info={['Per Year', 'For Small Businesses', 'User Age Analysis of Events', 'Notifications to Different Age Groups']}
                 button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Basic") this.openAlert('SWITCH', 'Do you want to switch to Basic Business account?', 'business', 'Basic')}}/>
+                onButtonPress={() => { if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Basic") 
+                                            this.openAlert('SWITCH', 'Do you want to switch to Basic Business account?', 'business', 'Basic')
+                                    }}/>
                 <PricingCard
                 color='#f9b632'
                 title='Gold'
                 price='₺79'
-                info={['Per Year', 'Basic Support', 'All Core Features']}
+                info={['Per Year', 'For Larger Businesses', 'All Core Features', 'Comment Analysis of Events', 'Daily Attendees of Events']}
                 button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Gold") this.openAlert('SWITCH', 'Do you want to switch to Gold Business account?', 'business', 'Gold')}}/>
+                onButtonPress={() => { if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Gold") 
+                                            this.openAlert('SWITCH', 'Do you want to switch to Gold Business account?', 'business', 'Gold')
+                                        }}/>
                 <PricingCard
                 color='#cdcbc7'
                 title='Platinum'
                 price='₺99'
-                info={['Per Year', 'Basic Support', 'All Core Features']}
+                info={['Per Year', 'For Larger Businesses', 'All Features', 'Chat Bot Support for FAQ']}
                 button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
-                onButtonPress={() => { if(Login.getCurrentUser().business.type != "Platinum") this.openAlert('SWITCH', 'Do you want to switch to Platinum Business account?', 'business', 'Platinum')}}/>
+                onButtonPress={() => { if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Platinum") 
+                                            this.openAlert('SWITCH', 'Do you want to switch to Platinum Business account?', 'business', 'Platinum')
+                                        }}/>
                 {
                     Login.getCurrentUser().isBusiness ?
                     <View style={{flex: 1, justifyContent:"center", alignContent: "center"}}>

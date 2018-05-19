@@ -19,6 +19,7 @@ export class CommentStatistics extends RkComponent {
         this.renderItem = this._renderItem.bind(this);
 		this.onRefresh = this._onRefresh.bind(this);
         this.renderGridItem = this._renderGridItem.bind(this);
+        this.renderFooter = this._renderFooter.bind(this);
 
 		this.currentlyOpenSwipeable = null;
         this.size = 300;
@@ -86,15 +87,28 @@ export class CommentStatistics extends RkComponent {
         )
     }
 
+    _renderFooter() {
+        console.log(this.state.comments)
+        if(this.state.comments.length == 0) {
+            return (
+                <View style={{maxHeight: 50}}>
+                    <RkText rkType='primary3 mediumLine'>No Comments</RkText>
+                </View>
+            )
+        }
+
+        return null;
+    }
+
     _renderItem(info) {
         const {rightActionActivated, toggle} = this.state;
         var color = 'grey';
-        console.log(info.item.sentiment);
-        if(info.sentiment >= 0.75) {
+        
+        if((info.item.sentiment * 100).toFixed(2) >= 75) {
             color = 'green';
-        } else if(info.item.sentiment >= 0.50) {
-            color = "yellow";
-        } else if(info.item.sentiment >= 0.25) {
+        } else if((info.item.sentiment * 100).toFixed(2) >= 50) {
+            color = "#d7d700";
+        } else if((info.item.sentiment * 100).toFixed(2) >= 25) {
             color = "orange";
         } else {
             color = "red";
@@ -121,10 +135,16 @@ export class CommentStatistics extends RkComponent {
                     <View style={styles.content}>
                         <View style={styles.contentHeader}>
                             <RkText rkType='secondary4 hintColor'>
-                            {moment(info.item.createdAt).fromNow()}
+                            {moment(info.item.createdAt).format('lll')}
                             </RkText>
                         </View>
                         <RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
+                        <RkText rkType='secondary4 mediumLine'>Language: {info.item.language}</RkText>
+                        <View style={{flexDirection: 'row'}}>
+                            <RkText rkType='secondary4 mediumLine'>Sentiment Score: </RkText>
+                            <RkText style={{color: color}} rkType='secondary4 mediumLine'>{(info.item.sentiment * 100).toFixed(2)}/100</RkText>
+                        </View>
+                        
                         <View>
                             <FlatList 
                             ref="list"
@@ -142,7 +162,7 @@ export class CommentStatistics extends RkComponent {
         if(this.state.isLoading) {
             return (
                 <View>
-                <RkText rkType='header4'>COMMENT OVERVIEW</RkText>
+                    <RkText rkType='header4'>COMMENT OVERVIEW</RkText>
                 </View>
             )
         }
@@ -155,6 +175,7 @@ export class CommentStatistics extends RkComponent {
                         data={this.state.comments}
                         extraData={this.state}
                         ItemSeparatorComponent={this._renderSeparator}
+                        ListFooterComponent={this.renderFooter}
                         refreshControl={<RefreshControl
                             refreshing={this.state.isRefreshing}
                             onRefresh={this.onRefresh}

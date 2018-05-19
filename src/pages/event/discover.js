@@ -57,10 +57,10 @@ export default class Discover extends React.Component {
 
 	_onRefresh() {
 		console.log("esd");
-		this.setState({isRefreshing: true});
+		this.setState({isRefreshing: true}, () =>
 		this.getSearchHistories().then(() => {
 			this.setState({isRefreshing: false});
-		});
+		}));
 	}
 
 	getCategories() {
@@ -122,6 +122,7 @@ export default class Discover extends React.Component {
 	}
 
 	addSearchHistory() {
+		console.log(this.state.searchedItem);
 		return searchHistoryProvider.addSearchHistory(this.state.searchedItem)
 		then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
@@ -141,6 +142,7 @@ export default class Discover extends React.Component {
 	}
 
 	discoverPage() {
+		console.log(this._searchInput)
 		this._searchInput.refs.input.clear(); 
 		this._searchInput.refs.input.blur(); 
 		this.setState({
@@ -149,34 +151,34 @@ export default class Discover extends React.Component {
 	}
 
 	search(text) {
-		console.log(text)
 		if(this.state.selectedIndex == 0) {
 			if(text.length == 0) {
 				this.setData([], 0)
 			} else if(text.length >= 2) {
-				this.setState({searchedItem: text});
+				this.setState({searchedItem: text}, () =>
 				userProvider.search(text).then((responseJson) => {
 					if(responseJson.isSuccess) this.setData(responseJson.data, 0)
-				})
+					else this.setData([], 0)
+				}));
 			}
 		} else if(this.state.selectedIndex == 1) {
 			if(text.length == 0) {
 				this.setData([], 1)
 			} else if(text.length >= 2) {
-				this.setState({searchedItem: text});
+				this.setState({searchedItem: text}, () =>
 				eventProvider.search(text).then((responseJson) => {
-					console.log(responseJson)
 					if(responseJson.isSuccess) this.setData(responseJson.data, 1)
-				})
+					else this.setData([], 1)
+				}));
 			}
 		}
 	}
 
 	_handleChangeTab(index) {
-		console.log(index);
-		this.setState({selectedIndex:index});
-		if(this._searchInput.refs.input._lastNativeText !== undefined)
-			this.search(this._searchInput.refs.input._lastNativeText);
+		this.setState({selectedIndex:index}, () => {
+			if(this.state.searchedItem !== undefined)
+				this.search(this.state.searchedItem);
+		});
 	}
 
 	_setData(data, type) {
@@ -237,7 +239,7 @@ export default class Discover extends React.Component {
 					} }
 				onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
 				<View style={styles.row}>
-					<TouchableOpacity style={styles.rowButton} onPress={() => {this._searchInput.refs.input._lastNativeText = info.item.keyword; this.search(this._searchInput.refs.input._lastNativeText); this.searchPage()}}>
+					<TouchableOpacity style={styles.rowButton} onPress={() => {this.setState({searchedItem: info.item.keyword}, () => { this.search(info.item.keyword); this.searchPage();})}}>
 						<RkText style={styles.recentSearch}>{info.item.keyword}</RkText>
 					</TouchableOpacity>
 				</View>
@@ -260,7 +262,7 @@ export default class Discover extends React.Component {
 				<TouchableOpacity
 					delayPressIn={70}
 					activeOpacity={1}
-					onPress={() => { Actions.eventDetail({id: info.item.eventId, obj: info.item}) }}>
+					onPress={() => { this.addSearchHistory(); Actions.eventDetail({id: info.item.eventId, obj: info.item}) }}>
 					<RkCard rkType='backImg2' style={styles.card}>
 						<Image rkCardImg style={{resizeMode:"stretch"}} source={{uri: info.item.photoUrl}}/>
 						<View rkCardImgOverlay rkCardContent alignItems="baseline" style={styles.overlay}>
@@ -352,10 +354,11 @@ export default class Discover extends React.Component {
 							inputStyle={{fontSize: 16}}
 							autoCapitalize='none'
 							autoCorrect={false}
-							onChange={(event) => {this.search(event.nativeEvent.text)}}
+							onChange={(event) => {this.setState({searchedItem: event.nativeEvent.text}); this.search(event.nativeEvent.text)}}
 							onFocus={() => {this.searchPage()}}
 							label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
 							rkType='row'
+							value={this.state.searchedItem}
 							placeholder='Search'/>
 						<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>Cancel</RkText></TouchableWithoutFeedback>
 					</View> 

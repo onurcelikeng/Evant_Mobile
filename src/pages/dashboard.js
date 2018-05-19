@@ -10,6 +10,7 @@ import {FontAwesome} from '../assets/icon';
 import { ProgressChart, DoughnutChart, AreaChart, AreaSmoothedChart } from '../components/charts';
 import { CommentStatistics } from '../components/commentStatistics';
 import Login from './login';
+import { SendNotification } from '../components/sendNotification';
 
 let moment = require('moment');
 
@@ -76,7 +77,7 @@ export default class Dashboard extends React.Component {
                 Login.getCurrentUser().business.isSendNotificationUsers 
                 ? 
                 <View style={chartBlockStyles}>
-                    <ProgressChart/>
+                    <SendNotification eventId={this.props.eventId}/>
                 </View>
                 :
                 null
@@ -94,7 +95,7 @@ export default class Dashboard extends React.Component {
                 Login.getCurrentUser().business.isAttendedUserAnalysis 
                 ? 
                 <View style={chartBlockStyles}>
-                    <AreaChart/>
+                    <AreaChart eventId={this.props.eventId}/>
                 </View>
                 :
                 null

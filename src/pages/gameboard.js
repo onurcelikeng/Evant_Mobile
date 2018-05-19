@@ -33,31 +33,29 @@ export default class Gameboard extends React.Component {
     }
 
     componentDidMount() {
-        this.getGameboard(this.state.selectedIndex);
+        this.getGameboard(this.state.selectedIndex).then(() => {
+            this.setState({isLoading: false});
+        });
     }
 
     getGameboard(type) {
-        console.log(type)
-
-        this.setState({isLoading: true});
         return gameboardProvider.getGameboard(type)
         .then((responseJson) => {
             if(responseJson.isSuccess) {
-                console.log(responseJson)
+                console.log(responseJson);
                 this.index = 0;
                 this.setData(responseJson.data, type);
-                this.setState({isLoading: false});
             }
         }).catch((err) => {console.log(err)});
     }
 
     _handleChangeTab(current) {
         this.index = 0;
-        this.setState({selectedIndex:current});
-        this.getGameboard(current);
+        this.getGameboard(current).then(() => this.setState({selectedIndex:current}));
     }
     
     _setData(data, type) {
+        this.index = 0;
 		let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		if(type == 0) {
 			this.setState({
@@ -137,10 +135,12 @@ export default class Gameboard extends React.Component {
 			);
         }
         else {
+            this.index = 0;
             return (
                 <RkTabView index={this.state.selectedIndex} rkType='rounded' maxVisibleTabs={3} onTabChanged={(index) => this.handleChangeTab(index)}  style={{borderColor: "#ffffff", backgroundColor: '#da6954'}}>
                     <RkTabView.Tab title={'Daily'} style={{backgroundColor: '#da6954'}}>
                         {
+							this.state.dailyData != null ?
                             <ListView
                                 style={styles.root}
                                 dataSource={this.state.dailyData}
@@ -155,10 +155,13 @@ export default class Gameboard extends React.Component {
                                     />
                                 }
                                 enableEmptySections={true}/>
+                            :
+                            <View style={[styles.root, {flex:1}]}></View>
                         }
                     </RkTabView.Tab>
                     <RkTabView.Tab title={'Weekly'} style={{backgroundColor: '#da6954'}}>
                         {
+                            this.state.weeklyData != null ?
                             <ListView
                                 style={styles.root}
                                 dataSource={this.state.weeklyData}
@@ -173,10 +176,13 @@ export default class Gameboard extends React.Component {
                                     />
                                 }
                                 enableEmptySections={true}/>
+                            :
+                            <View style={[styles.root, {flex:1}]}></View>
                         }
                     </RkTabView.Tab>
                     <RkTabView.Tab title={'Monthly'} style={{backgroundColor: '#da6954'}}>
                         {
+                            this.state.monthlyData != null ?
                             <ListView
                                 style={styles.root}
                                 dataSource={this.state.monthlyData}
@@ -191,6 +197,8 @@ export default class Gameboard extends React.Component {
                                     />
                                 }
                                 enableEmptySections={true}/>
+                            :
+                            <View style={[styles.root, {flex:1}]}></View>
                         }
                     </RkTabView.Tab>
                 </RkTabView>

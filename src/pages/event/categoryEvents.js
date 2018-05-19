@@ -104,34 +104,52 @@ export default class CategoryEvents extends React.Component {
         }).catch((err) => {console.log(err)});
     }
 
-    filterData() {
-        if(this.state.selectedIndex == 0) {
+    filterData(index) {
+        if(index == 0) {
 			
-		} else if(this.state.selectedIndex == 1) {
+		} else if(index == 1) {
             var array = []
 			this.state.data.forEach(element => {
-                if(moment(element.start).calendar().indexOf("Today") !=-1){
+                if(moment(element.start).calendar().toLocaleLowerCase().indexOf("Today") !=-1 || moment(element.start).calendar().toLocaleLowerCase().indexOf("bugün") !=-1){
                     array.push(element);
                 }
             });
 
             this.setState({today: array});
-		} else if(this.state.selectedIndex == 2) {
+		} else if(index == 2) {
             var array = []
 			this.state.data.forEach(element => {
-                if(moment(element.start).calendar().indexOf("Tomorrow") !=-1){
+                console.log(moment(element.start));
+                if(moment(element.start).calendar().toLocaleLowerCase().indexOf("Tomorrow") !=-1 || moment(element.start).calendar().toLocaleLowerCase().indexOf("yarın") !=-1){
                     array.push(element);
                 }
             });
 
             this.setState({tomorrow: array});
-		}
+		} else if(index == 3) {
+            var array = []
+			this.state.data.forEach(element => {
+                if(moment(element.start) >= moment().startOf('week').subtract(1, 'days') && moment(element.start) <= moment().startOf('week').add(4, 'days')){
+                    array.push(element);
+                }
+            });
+
+            this.setState({week: array});
+        } else if(index == 4) {
+            var array = []
+			this.state.data.forEach(element => {
+                if(moment(element.start).format() >= moment().endOf('week').subtract(2, 'days').format() && moment(element.start).format() <= moment().endOf('week').format()){
+                    array.push(element);
+                }
+            });
+
+            this.setState({weekend: array});
+        }
     }
 
     _handleChangeTab(index) {
         this.setState({selectedIndex:index});
-        console.log(index);
-        this.filterData();
+        this.filterData(index);
 	}
 
 	_keyExtractor(post, index) {
@@ -253,10 +271,34 @@ export default class CategoryEvents extends React.Component {
                         />
                     </RkTabView.Tab>
                     <RkTabView.Tab title={'This Week'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
-                    
+                        <FlatList
+                            data={this.state.week}
+                            renderItem={this.renderItem}
+                            keyExtractor={this._keyExtractor}
+                            style={styles.root}
+                            enableEmptySections={true}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                />
+                            }
+                        />
                     </RkTabView.Tab>
                     <RkTabView.Tab title={'This Weekend'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
-                    
+                        <FlatList
+                            data={this.state.weekend}
+                            renderItem={this.renderItem}
+                            keyExtractor={this._keyExtractor}
+                            style={styles.root}
+                            enableEmptySections={true}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                />
+                            }
+                        />
                     </RkTabView.Tab>
                 </RkTabView>
             </View>

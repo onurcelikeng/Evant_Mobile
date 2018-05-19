@@ -180,18 +180,6 @@ export default class Options extends React.Component {
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
-          {
-            Login.getCurrentUser().isBusiness ?
-            <View style={styles.row}>
-              <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.creditCard()}}>
-                <RkText rkType='header6'>Credit Cards</RkText>
-                <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
-              </TouchableOpacity>
-            </View>
-            :
-            null
-          }
-          
         </View>
 
         <View style={styles.section}>

@@ -31,6 +31,7 @@ export class DoughnutChart extends RkComponent {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
 				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
+        console.log(responseJson)
 				if(responseJson.isSuccess) {
 					this.setState({
 						data: [

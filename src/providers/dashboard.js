@@ -19,3 +19,19 @@ export function getDate(id) {
         .then(res => res.data)
         .then(res => { return res; });
 }
+
+export function getAnnouncement(credentials) {
+    var body = {
+        eventId: credentials.eventId,
+        message: credentials.message
+    };
+
+    var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    return axios.post('dashboard/announcement', body, {headers: headers})
+        .then(res => res.data)
+        .then(res => { return res; });
+}

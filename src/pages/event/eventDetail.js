@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image, View, TouchableOpacity, Dimensions, RefreshControl, StatusBar, StyleSheet } from 'react-native';
+import { ScrollView, Image, View, TouchableOpacity, Dimensions, RefreshControl, StatusBar, StyleSheet, Modal } from 'react-native';
 import { RkCard, RkText, RkStyleSheet, RkButton, RkModalImg } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
@@ -8,6 +8,7 @@ import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header
 import { Header } from 'react-navigation';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
+import UpdateEvent from './updateEvent';
 import {FontAwesome} from '../../assets/icon';
 import style, { colors } from '../../components/slider/index.style';
 import { sliderWidth, itemWidth } from '../../components/slider/sliderEntry.style';
@@ -21,6 +22,7 @@ import Login from '../login';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {SocialBar} from '../../components/socialBar';
+import { formatDate } from '../../utils/momentjs';
 
 let moment = require('moment');
 
@@ -37,7 +39,8 @@ export default class EventDetail extends React.Component {
       join: false,
       isRefreshing: false,
       isLoading: true,
-      slider1ActiveSlide: 0
+      slider1ActiveSlide: 0,
+      modal: false,
     }
 
     this.onRefresh = this._onRefresh.bind(this);
@@ -54,26 +57,43 @@ export default class EventDetail extends React.Component {
       this.joinStatus();
   }
 
+  renderModal() {
+		return (
+				<Modal
+					animationType={"slide"}
+					transparent={false}
+					visible={this.state.modal}
+					onRequestClose={() => {}}
+				>
+					<UpdateEvent data={this.state.data} onPress={() => this.setState({modal: false})} />
+				</Modal>
+		)
+	}
+
   getSimilarEvents() {
-		return eventProvider.getSimilarEvents()
+		return eventProvider.getSimilarEvents(this.state.data.eventId)
 		.then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
         DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
+        console.log(responseJson);
         if(responseJson.isSuccess) {
           this.setState({
             isLoading: false,
             entries: responseJson.data,
-            });
+          });
         } else {
           this.setState({
             isLoading: false,
-            data: [],
+            entries: [],
             });
-          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
         }
       }
-		}).catch((err) => {console.log(err)});
+		}).catch((err) => { this.setState({
+      isLoading: false,
+      entries: [],
+      }); 
+      console.log(err)});
 	}
 
   getEvent(id) {
@@ -83,6 +103,7 @@ export default class EventDetail extends React.Component {
         DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
       } else {
         if(responseJson.isSuccess) {
+          console.log(responseJson.data);
           this.setState({data: responseJson.data})
           this.joinStatus().then(() => {
             this.getSimilarEvents();
@@ -187,6 +208,8 @@ export default class EventDetail extends React.Component {
 }
 
   render() {
+    const {modal} = this.state;
+
     if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
 
@@ -210,7 +233,7 @@ export default class EventDetail extends React.Component {
           </ContentLoader>
 			  </View>
 			);
-		} else {
+		} else if(this.state.data.length != 0) {
       let button = null;
 
       if (this.state.data.user.userId == Login.getCurrentUser().userId) {
@@ -259,11 +282,6 @@ export default class EventDetail extends React.Component {
                 <TouchableOpacity style={{width:40, height:40, marginTop:20, marginLeft: 10}} onPress={() => { Actions.pop(); }}>
                   <RkText rkType='awesome hero' style={styles.backButton}>{FontAwesome.chevronLeft}</RkText>
                 </TouchableOpacity>
-                
-                <RkModalImg
-                    style={{width: width, height: MAX_HEIGHT}}
-                    renderFooter={this._renderFooter}
-                    source={this.user.images}/>
               </View>
             )}
             renderForeground={() => (
@@ -297,20 +315,26 @@ export default class EventDetail extends React.Component {
                   <Image style={{height: 20, width: 20, marginRight: 10, alignSelf: 'center'}} source={require("../../assets/icons/calendar.png")}/>
                   <View>
                     <View style={{flex:1, flexDirection: "row"}}>
-                      <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('ll')}</RkText>
-                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.finish).format('ll')}</RkText>
+                      <RkText rkType='secondary2 hintColor'>{formatDate(this.state.data.start)}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {formatDate(this.state.data.finish)}</RkText>
                     </View>
                     <View style={{flex:1, flexDirection: "row"}}>
-                      <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('LT')}</RkText>
-                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.finish).format('LT')}</RkText>
+                      <RkText rkType='secondary2 hintColor'>{formatDate(this.state.data.start)}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {formatDate(this.state.data.finish)}</RkText>
                     </View>
                   </View>
                 </View>
-                <View style={{flex:1, flexDirection: "row"}}>
+                <View style={{flex:1, flexDirection: "row", marginBottom: 10}}>
                   <Image style={{height: 20, width: 20, marginRight: 10, alignSelf: 'center'}} source={require("../../assets/icons/place.png")}/>
                   <View style={{flex:1, flexDirection: "row", alignSelf: 'center', alignContent: 'center'}}>
                     <RkText rkType='secondary2 hintColor'>{this.state.data.address.town}, </RkText>
                     <RkText rkType='secondary2 hintColor'>{this.state.data.address.city}</RkText>
+                  </View>
+                </View>
+                <View style={{flex:1, flexDirection: "row"}}>
+                  <Image style={{height: 20, width: 20, marginRight: 10, alignSelf: 'center'}} source={{uri: this.state.data.category.iconUrl}}/>
+                  <View style={{flex:1, flexDirection: "row", alignSelf: 'center', alignContent: 'center'}}>
+                    <RkText rkType='secondary2 hintColor'>{this.state.data.category.name}</RkText>
                   </View>
                 </View>
               </View>
@@ -359,7 +383,7 @@ export default class EventDetail extends React.Component {
             <View style={styles.buttons}>
               {
                 this.state.data.user.userId == Login.getCurrentUser().userId && moment(this.state.data.finish).fromNow().toString().indexOf("ago") == -1 ?
-                  <TouchableOpacity activeOpacity={0.6} onPress={() => {Actions.dashboard()}}>
+                  <TouchableOpacity activeOpacity={0.6} onPress={() => { this.setState({modal: true}) }}>
                     <Image style={{height: 28, width: 28, marginLeft: 15}} source={require("../../assets/icons/edit.png")}/>
                   </TouchableOpacity>
                 :
@@ -382,6 +406,7 @@ export default class EventDetail extends React.Component {
               {button} 
             </View>
           </View>
+          {this.renderModal()}
         </View>
       )
     }  

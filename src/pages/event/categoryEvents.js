@@ -15,6 +15,7 @@ import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
 import { NavBar } from '../../components/navBar';
 import {FontAwesome} from '../../assets/icon';
+import { formatDate } from '../../utils/momentjs';
 
 let moment = require('moment');
 
@@ -182,7 +183,7 @@ export default class CategoryEvents extends React.Component {
                                     <RkText rkType='primary2'> {info.item.content}</RkText>
                                 </RkText>
                             </View>
-                            <RkText rkType='secondary5 hintColor'>{moment(info.item.start).format('lll')}</RkText>
+                            <RkText rkType='secondary5 hintColor'>{formatDate(info.item.start)}</RkText>
                             <RkText rkType='secondary5 hintColor'>{username}</RkText>
                         </View>
                     </View>

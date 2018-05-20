@@ -96,6 +96,7 @@ export default class Profile extends React.Component {
 				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
 			} else {
 				if(responseJson.isSuccess) {
+					console.log(responseJson)
 					Login.setCurrentUser(responseJson.data);
 					this.user = Login.getCurrentUser();
 				} else {

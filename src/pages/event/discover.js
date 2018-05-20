@@ -50,13 +50,17 @@ export default class Discover extends React.Component {
 	}
 
 	componentDidMount() {
+		if(this.props.search != null) {
+			this.state.searchedItem = this.props.search;
+			this.searchPage();
+		}
+
 		this.getCategories().then(() => {
 			this.getSearchHistories();
 		});
 	}
 
 	_onRefresh() {
-		console.log("esd");
 		this.setState({isRefreshing: true}, () =>
 		this.getSearchHistories().then(() => {
 			this.setState({isRefreshing: false});
@@ -122,7 +126,6 @@ export default class Discover extends React.Component {
 	}
 
 	addSearchHistory() {
-		console.log(this.state.searchedItem);
 		return searchHistoryProvider.addSearchHistory(this.state.searchedItem)
 		then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
@@ -142,7 +145,6 @@ export default class Discover extends React.Component {
 	}
 
 	discoverPage() {
-		console.log(this._searchInput)
 		this._searchInput.refs.input.clear(); 
 		this._searchInput.refs.input.blur(); 
 		this.setState({
@@ -246,14 +248,14 @@ export default class Discover extends React.Component {
 	_renderEventItem(info) {
 		return (
 			<View>
-			<TouchableOpacity
-				delayPressIn={70}
-				activeOpacity={1}
-				onPress={() => { this.addSearchHistory(); if(info.item.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: info.item.user.userId}) }}>
-				<View flexDirection="row" style={{flex:1, marginBottom: 5}}>
-					<Image style={{height:30, width: 30, borderRadius: 15, marginLeft: 5, marginRight: 5}} source={{uri: info.item.user.photoUrl}}/>
-					<RkText style={{fontSize: 14, alignSelf: 'center', fontWeight: 'bold'}}>{info.item.user.firstName + " " + info.item.user.lastName}</RkText>
-				</View>
+				<TouchableOpacity
+					delayPressIn={70}
+					activeOpacity={1}
+					onPress={() => { this.addSearchHistory(); if(info.item.user.userId == Login.getCurrentUser().userId) Actions.profile(); else Actions.otherProfile({id: info.item.user.userId}) }}>
+					<View flexDirection="row" style={{flex:1, marginBottom: 5}}>
+						<Image style={{height:30, width: 30, borderRadius: 15, marginLeft: 5, marginRight: 5}} source={{uri: info.item.user.photoUrl}}/>
+						<RkText style={{fontSize: 14, alignSelf: 'center', fontWeight: 'bold'}}>{info.item.user.firstName + " " + info.item.user.lastName}</RkText>
+					</View>
 				</TouchableOpacity>
 				<TouchableOpacity
 					delayPressIn={70}
@@ -359,7 +361,7 @@ export default class Discover extends React.Component {
 						<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>Cancel</RkText></TouchableWithoutFeedback>
 					</View> 
 					
-					<RkTabView rkType='discover' maxVisibleTabs={3} onTabChanged={(index) => this.handleChangeTab(index)}>
+					<RkTabView rkType='discover' onTabChanged={(index) => this.handleChangeTab(index)}>
 						<RkTabView.Tab title={'Users'} style={{backgroundColor: '#ffffff'}}>
 							{
 								this.state.searchUserData != null ?

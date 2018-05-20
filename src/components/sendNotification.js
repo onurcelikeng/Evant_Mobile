@@ -46,12 +46,13 @@ export class SendNotification extends RkComponent {
     render() {
         return (
             <View>
-                <RkText rkType='header4'>SEND NOTIFICATION</RkText>
+                <RkText rkType='header4'>SEND ANNOUNCEMENT</RkText>
                 <View style={{maxHeight: 500, flexDirection: 'row', flex: 1, justifyContent: "space-between"}}>
                     <RkTextInput
                         style={{flex: 1}}
                         autoCapitalize='none'
                         autoCorrect={false}
+                        placeholder="Your message"
                         secureTextEntry={this.state.hidden}
                         onChangeText={(message) => {
                             this.setState({message: message})

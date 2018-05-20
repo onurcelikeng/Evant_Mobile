@@ -96,12 +96,12 @@ export default class Routes extends React.Component {
                                 initial
                             >
                                 <Scene
+                                hideNavBar
                                     key="events"
                                     component={withRkTheme(Events)}
                                     title="Events"
                                     initial={true}
                                     panHandlers={null}
-                                    navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                                 <Scene
                                     key="eventDetail"
@@ -251,17 +251,6 @@ export default class Routes extends React.Component {
                                     navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
                                 />
                             </Stack>
-                            {/*
-                            <Scene
-                                key="updateEvent"
-                                title="Update Event"
-                                component={withRkTheme(UpdateEvent)}
-                                hideTabBar="true"
-                                clone
-                                direction="vertical"
-                                backToInitial
-                                navBar={(headerProps) => { return <ThemedNavigationBar headerProps={headerProps}/> }}
-                            />*/}
                             <Stack
                                 key="tab4"
                                 title="Notifications"

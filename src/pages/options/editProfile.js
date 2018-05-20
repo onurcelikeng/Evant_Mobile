@@ -18,7 +18,7 @@ export default class EditProfile extends React.Component {
         super(props);
         this.data = data.getUser();
         this.user = Login.getCurrentUser();
-        console.log(this.user);
+
         this.state = {
             firstName: this.user.firstName,
             lastName: this.user.lastName,
@@ -34,7 +34,6 @@ export default class EditProfile extends React.Component {
     }
 
     profileEdit() {
-        console.log("esd");
         credentials = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,

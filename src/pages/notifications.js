@@ -107,7 +107,7 @@ export default class Notifications extends React.Component {
 				mainContentStyle = styles.mainContent;
 				attachment = <Image style={styles.attachment} source={{uri: row.event.photoUrl}}/>
 			}
-		
+
 			return (
 				<Swipeable
 					onRef = {ref => this.swipe = ref}

@@ -14,6 +14,7 @@ import * as commentProvider from '../../providers/comments';
 import {FontAwesome} from '../../assets/icon';
 import {Avatar} from '../../components/avatar';
 import {scale} from '../../utils/scale';
+import { formatDate } from '../../utils/momentjs';
 
 let moment = require('moment');
 
@@ -158,7 +159,7 @@ export default class Comments extends React.Component {
 					<View style={styles.contentHeader}>
 						<RkText rkType='header5'>{name}</RkText>
 						<RkText rkType='secondary4 hintColor'>
-						{moment(info.item.createdAt).fromNow()}
+						{formatDate(info.item.createdAt)}
 						</RkText>
 					</View>
 					<RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
@@ -174,7 +175,7 @@ export default class Comments extends React.Component {
 					<View style={styles.contentHeader}>
 						<RkText rkType='header5'>{name}</RkText>
 						<RkText rkType='secondary4 hintColor'>
-						{moment(info.item.createdAt).fromNow()}
+						{formatDate(info.item.createdAt)}
 						</RkText>
 					</View>
 					<RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>

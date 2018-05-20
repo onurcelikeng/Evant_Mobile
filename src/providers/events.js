@@ -10,7 +10,7 @@ export function getEvents() {
 
 export function addEvent(credentials) {
     var body = {
-        eventId: "0",
+        eventId: credentials.eventId,
         categoryId: credentials.categoryId,
         title: credentials.title,
         description: credentials.description,
@@ -23,12 +23,39 @@ export function addEvent(credentials) {
         longitude: credentials.longitude
     };
 
+    console.log(body);
+
     var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }
 
     return axios.post('events', body, {headers: headers})
+        .then(res => res.data)
+        .then(res => { console.log(res); return res; });
+}
+
+export function updateEvent(credentials) {
+    var body = {
+        eventId: credentials.eventId,
+        categoryId: credentials.categoryId,
+        title: credentials.title,
+        description: credentials.description,
+        isPrivate: credentials.isPrivate,
+        startAt: credentials.startAt,
+        finishAt: credentials.finishAt,
+        city: credentials.city,
+        town: credentials.town
+    };
+
+    console.log(body);
+
+    var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    return axios.put('events', body, {headers: headers})
         .then(res => res.data)
         .then(res => { console.log(res); return res; });
 }
@@ -50,7 +77,7 @@ export function addPhoto(credentials) {
 
     return axios.post('/events/photo', form, {headers: headers})
     .then(res => res.data)
-    .then(res => { console.log(res); return res; });
+    .then(res => {return res; });
 }
 
 export function getEvent(id) {

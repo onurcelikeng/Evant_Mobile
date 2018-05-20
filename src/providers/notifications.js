@@ -9,7 +9,7 @@ export function getNotifications() {
 }
 
 export function readNotifications() {
-    return axios.get('notifications/read')
+    return axios.put('notifications')
     .then(res => res.data).then(res => {
         return res;
     });

@@ -135,6 +135,8 @@ export default class UpdateEvent extends React.Component {
                                     <RkText rkType='subtitle'>City</RkText>
                                 </View>
                                 <RkTextInput 
+                                    autoCapitalize='none'
+									autoCorrect={false}
                                     value={this.state.city}
                                     onChangeText={(city) => this.setState({city})}
                                     rkType='bordered rounded iconRight'/>
@@ -144,6 +146,8 @@ export default class UpdateEvent extends React.Component {
                                     <RkText rkType='subtitle'>Town</RkText>
                                 </View>
                                 <RkTextInput 
+                                    autoCapitalize='none'
+									autoCorrect={false}
                                     value={this.state.town}
                                     onChangeText={(town) => this.setState({town})}
                                     rkType='bordered rounded iconRight'/>

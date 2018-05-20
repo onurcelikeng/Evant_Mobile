@@ -11,6 +11,8 @@ import { ProgressChart, DoughnutChart, AreaChart, AreaSmoothedChart } from '../c
 import { CommentStatistics } from '../components/commentStatistics';
 import Login from './login';
 import { SendNotification } from '../components/sendNotification';
+import { UserDistribution } from '../components/userDist';
+import { ChatBot } from '../components/chatBot';
 
 let moment = require('moment');
 
@@ -94,7 +96,8 @@ export default class Dashboard extends React.Component {
             {
                 Login.getCurrentUser().business.isAttendedUserAnalysis 
                 ? 
-                <View style={{justifyContent: 'center'}}>
+                <View style={chartBlockStyles}>
+                    <UserDistribution eventId={this.props.eventId}/>
                 </View>
                 :
                 null
@@ -103,7 +106,7 @@ export default class Dashboard extends React.Component {
                 Login.getCurrentUser().business.isChatBotSupport 
                 ? 
                 <View style={chartBlockStyles}>
-                    <AreaSmoothedChart/>
+                    <ChatBot eventId={this.props.eventId}/>
                 </View>
                 :
                 null

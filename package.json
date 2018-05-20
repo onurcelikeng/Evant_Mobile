@@ -41,6 +41,7 @@
     "react-native-pages": "^0.6.1",
     "react-native-photo-upload": "^1.2.0",
     "react-native-progress-bar": "^0.1.2",
+    "react-native-pure-chart": "0.0.21",
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-snap-carousel": "^3.7.0",

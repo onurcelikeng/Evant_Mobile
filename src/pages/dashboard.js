@@ -11,7 +11,6 @@ import { ProgressChart, DoughnutChart, AreaChart, AreaSmoothedChart } from '../c
 import { CommentStatistics } from '../components/commentStatistics';
 import Login from './login';
 import { SendNotification } from '../components/sendNotification';
-import { UserDistribution } from '../components/userDist';
 
 let moment = require('moment');
 
@@ -96,7 +95,6 @@ export default class Dashboard extends React.Component {
                 Login.getCurrentUser().business.isAttendedUserAnalysis 
                 ? 
                 <View style={{justifyContent: 'center'}}>
-                    <UserDistribution eventId={this.props.eventId}/>
                 </View>
                 :
                 null

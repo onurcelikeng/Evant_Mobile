@@ -170,16 +170,13 @@ export default class Login extends React.Component {
   }
 
   _renderImage(image) {
-    let contentHeight = scaleModerate(375, 1);
-    let height = Dimensions.get('window').height - contentHeight;
-    let width = Dimensions.get('window').width;
 
     if (RkTheme.current.name === 'light')
-      image = (<Image style={[styles.image, {height, width}]}
-        source={require('../assets/images/backgroundLoginV1.png')}/>);
+      image = (<Image style={[styles.image]}
+        source={require('../assets/images/evant_logo.png')}/>);
     else
-      image = (<Image style={[styles.image, {height, width}]}
-        source={require('../assets/images/backgroundLoginV1DarkTheme.png')}/>);
+      image = (<Image style={[styles.image]}
+        source={require('../assets/images/evant_logo.png')}/>);
     return image;
   }
 
@@ -190,6 +187,9 @@ export default class Login extends React.Component {
 
 	render() {
     let image = this._renderImage();
+    let contentHeight = scaleModerate(275, 1);
+    let height = Dimensions.get('window').height - contentHeight;
+    let width = Dimensions.get('window').width;
     
     return (
       <KeyboardAwareScrollView innerRef={ref => {this.scroll = ref}}
@@ -197,19 +197,10 @@ export default class Login extends React.Component {
         onStartShouldSetResponder={ (e) => true}
         contentContainerStyle={[styles.screen, {alignItems:"center"}]}
         onResponderRelease={ (e) => Keyboard.dismiss()}>
+        <View style={{alignItems: 'center', justifyContent: 'center', height: height, width: width}}>
         {image}
+        </View>
         <View style={styles.container}>
-          <View style={styles.buttons}>
-            <RkButton style={styles.button} rkType='social'>
-              <RkText rkType='awesome hero accentColor'>{FontAwesome.twitter}</RkText>
-            </RkButton>
-            <RkButton style={styles.button} rkType='social'>
-              <RkText rkType='awesome hero accentColor'>{FontAwesome.google}</RkText>
-            </RkButton>
-            <RkButton style={styles.button} rkType='social'>
-              <RkText rkType='awesome hero accentColor'>{FontAwesome.facebook}</RkText>
-            </RkButton>
-          </View>
           <RkTextInput 
             onFocus={(event) => {
               this._scrollToInput(ReactNative.findNodeHandle(event.target))
@@ -262,7 +253,9 @@ let styles = RkStyleSheet.create(theme => ({
   },
   image: {
     resizeMode: 'cover',
-    marginBottom: scaleVertical(10),
+    marginVertical: scaleVertical(10),
+    height:scaleVertical(200),
+    width:scale(200)
   },
   container: {
     paddingHorizontal: 17,
@@ -283,7 +276,7 @@ let styles = RkStyleSheet.create(theme => ({
   },
   save: {
     marginVertical: 9,
-    backgroundColor: '#FF5E20',
+    backgroundColor: '#da6954',
     marginHorizontal: 10
   },
   textRow: {

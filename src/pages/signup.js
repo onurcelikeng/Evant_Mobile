@@ -162,7 +162,6 @@ export default class Signup extends React.Component {
         onResponderRelease={ (e) => Keyboard.dismiss()}>
         <View style={{alignItems: 'center'}}>
           {renderIcon()}
-          <RkText rkType='h1'>Registration</RkText>
         </View>
         <View style={styles.content}>
           <View>
@@ -250,7 +249,7 @@ let styles = RkStyleSheet.create(theme => ({
   },
   image: {
     marginBottom: 10,
-    height:scaleVertical(77),
+    height:scaleVertical(150),
     resizeMode:'contain'
   },
   content: {
@@ -258,7 +257,7 @@ let styles = RkStyleSheet.create(theme => ({
   },
   save: {
     marginVertical: 20,
-    backgroundColor: '#FF5E20',
+    backgroundColor: '#da6954',
     marginHorizontal: 10
   },
   buttons: {

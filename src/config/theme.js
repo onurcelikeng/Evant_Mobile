@@ -1,7 +1,7 @@
 import {scale, scaleVertical} from '../utils/scale'
 
 const Colors = {
-  accent: '#ff2824',
+  accent: '#da6954',
   primary: '#f64e59',
   success: '#3bd555',
   disabled: '#cacaca',

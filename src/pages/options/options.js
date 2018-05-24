@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View, TouchableOpacity, StyleSheet, AsyncStorage, Modal, Alert } from 'react-native';
 import { RkText, RkStyleSheet, RkTheme, RkButton } from 'react-native-ui-kitten';
 import {Actions, ActionConst} from 'react-native-router-flux';
+import I18n from 'react-native-i18n';
 
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account';
@@ -14,6 +15,7 @@ import { FindFriends } from '../../components/findFriends';
 import { FontAwesome } from '../../assets/icon';
 import {scale, scaleModerate, scaleVertical} from '../../utils/scale';
 import {UIConstants} from '../../config/appConstants';
+import {strings} from '../../locales/i18n'
 
 export default class Options extends React.Component {
 
@@ -62,7 +64,7 @@ export default class Options extends React.Component {
     return accountProvider.deactivateAccount()
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           this.logout();
@@ -77,7 +79,7 @@ export default class Options extends React.Component {
 		return userSettingsProvider.getUserSettings()
 		.then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           Options.userSettings = responseJson.data;
@@ -95,7 +97,7 @@ export default class Options extends React.Component {
     return searchHistoriesProvider.deleteAllSearchHistories()
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -110,7 +112,7 @@ export default class Options extends React.Component {
     return accountProvider.switchToBusiness()
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           Login.getCurrentUser().isBusiness = !Login.getCurrentUser().isBusiness;
@@ -138,8 +140,8 @@ export default class Options extends React.Component {
       title,
       message,
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => {
+        {text: strings("options.cancel"), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: strings("options.ok"), onPress: () => {
           if(type == 'logout') {
             this.logout();
           } else if(type == 'deactivate') {
@@ -155,28 +157,64 @@ export default class Options extends React.Component {
     )
   }
 
+  changeLanguage(language) {
+    Options.getSettings().language = language;
+
+    userSettingsProvider.updateUserSettings(Options.getSettings())
+    .then((responseJson) => { 
+      if(responseJson == null || responseJson == "" || responseJson == undefined) {
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
+      } else {
+        if(responseJson.isSuccess) { 
+          I18n.locale = language;
+          Actions.reset("splashScreen");
+        }
+        else {
+          DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+        }
+      }
+    }).catch((err) => {console.log(err)});
+  }
+
+  openLanguageAlert(title, message) {
+    Alert.alert(
+      title,
+      message,
+      [
+        {text: strings("options.cancel"), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: strings("options.english"), onPress: () => {
+          this.changeLanguage('en');
+        }},
+        {text: strings("options.turkish"), onPress: () => {
+          this.changeLanguage('tr');
+        }},
+      ],
+      { cancelable: false }
+    )
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>ACCOUNT</RkText>
+            <RkText rkType='primary header6'>{strings("options.account")}</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.editProfile()} }>
-              <RkText rkType='header6'>Edit Profile</RkText>
+              <RkText rkType='header6'>{strings("options.edit_profile")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.password()} }>
-              <RkText rkType='header6'>Change Password</RkText>
+              <RkText rkType='header6'>{strings("options.change_password")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.business()}}>
-              <RkText rkType='header6'>Switch to Business Profile</RkText>
+              <RkText rkType='header6'>{strings("options.switch_to_business")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
@@ -184,23 +222,23 @@ export default class Options extends React.Component {
 
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>SETTINGS</RkText>
+            <RkText rkType='primary header6'>{strings("options.settings")}</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.timelineSettings()} }>
-              <RkText rkType='header6'>Timeline</RkText>
+              <RkText rkType='header6'>{strings("options.timeline")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Language</RkText>
+            <TouchableOpacity style={styles.rowButton} onPress={() => {this.openLanguageAlert(strings("options.title_language"), strings("options.language_message"))}}>
+              <RkText rkType='header6'>{strings("options.language")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton} onPress={() => {Actions.notificationSettings()} }>
-              <RkText rkType='header6'>Push Notification Settings</RkText>
+              <RkText rkType='header6'>{strings("options.push_notification")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
@@ -208,17 +246,17 @@ export default class Options extends React.Component {
 
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>SUPPORT</RkText>
+            <RkText rkType='primary header6'>{strings("options.support")}</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Help Center</RkText>
+              <RkText rkType='header6'>{strings("options.help")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Report a Problem</RkText>
+              <RkText rkType='header6'>{strings("options.report")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
@@ -226,23 +264,23 @@ export default class Options extends React.Component {
 
         <View style={styles.section}>
           <View style={[styles.row, styles.heading]}>
-            <RkText rkType='primary header6'>ABOUT</RkText>
+            <RkText rkType='primary header6'>{strings("options.about")}</RkText>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Privacy Policy</RkText>
+              <RkText rkType='header6'>{strings("options.privacy")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Terms & Conditions</RkText>
+              <RkText rkType='header6'>{strings("options.terms")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity style={styles.rowButton}>
-              <RkText rkType='header6'>Open Source Libraries</RkText>
+              <RkText rkType='header6'>{strings("options.open_source")}</RkText>
               <RkText rkType='awesome' style={{opacity: .70}}>{FontAwesome.chevronRight}</RkText>
             </TouchableOpacity>
           </View>
@@ -250,18 +288,18 @@ export default class Options extends React.Component {
 
         <View style={styles.section}>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert('CLEAR', 'All of your search histories will be deleted. Are you sure you want to continue?', 'clear')}>
-              <RkText rkType='header6'>Clear Search History</RkText>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert(strings("options.title_clear"), strings("options.clear_message"), 'clear')}>
+              <RkText rkType='header6'>{strings("options.clear")}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert('DEACTIVATE', 'WARNING! Are you sure you want to deactivate your account? You may not be able to return your account back!', 'deactivate')}>
-              <RkText rkType='header6'>Deactivate Account</RkText>
+            <TouchableOpacity style={styles.rowButton} onPress={() => this.openAlert(strings("options.title_deactivate"), strings("options.deactivate_message"), 'deactivate')}>
+              <RkText rkType='header6'>{strings("options.deactivate")}</RkText>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => this.openAlert('LOGOUT', 'Are you sure you want to log out? You won\'t be able to get any notification.', 'logout')} style={styles.rowButton}>
-              <RkText rkType='header6'>Log Out</RkText>
+            <TouchableOpacity onPress={() => this.openAlert(strings("options.title_logout"), strings("options.logout_message"), 'logout')} style={styles.rowButton}>
+              <RkText rkType='header6'>{strings("options.logout")}</RkText>
             </TouchableOpacity>
           </View>
         </View>

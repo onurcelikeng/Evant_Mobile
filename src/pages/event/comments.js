@@ -15,6 +15,7 @@ import {FontAwesome} from '../../assets/icon';
 import {Avatar} from '../../components/avatar';
 import {scale} from '../../utils/scale';
 import { formatDate } from '../../utils/momentjs';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -63,7 +64,7 @@ export default class Comments extends React.Component {
 		return commentProvider.addComment(credentials) 
 		.then((responseJson) => {
 		if(responseJson == null || responseJson == "" || responseJson == undefined) {
-			DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+			DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 		} else {
 			if(responseJson.isSuccess) {
 			this.setState({
@@ -81,7 +82,7 @@ export default class Comments extends React.Component {
 		return commentProvider.getComments(id)
 		.then((responseJson) => {
 		if(responseJson == null || responseJson == "" || responseJson == undefined) {
-			DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+			DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 		} else {
 			if(responseJson.isSuccess) {
 			this.setState({
@@ -107,7 +108,7 @@ export default class Comments extends React.Component {
 		return commentProvider.deleteComment(id)
 		.then((responseJson) => {
 		if(responseJson == null || responseJson == "" || responseJson == undefined) {
-			DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+			DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 		} else {
 			if(responseJson.isSuccess) {
 			DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -267,7 +268,7 @@ export default class Comments extends React.Component {
 				value={this.state.message}
 				autoCorrect={false}
 				rkType='row sticker'
-				placeholder="Add a comment..."/>
+				placeholder={strings("comments.comment")}/>
 
 				<RkButton onPress={() => {this._pushMessage(); Keyboard.dismiss();}} style={styles.send} rkType='circle highlight'>
 				<Image source={require('../../assets/icons/sendIcon.png')}/>
@@ -298,7 +299,7 @@ export default class Comments extends React.Component {
 				value={this.state.message}
 				autoCorrect={false}
 				rkType='row sticker'
-				placeholder="Add a comment..."/>
+				placeholder={strings("comments.comment")}/>
 
 			<RkButton onPress={() => {this._pushMessage(); Keyboard.dismiss();}} style={styles.send} rkType='circle highlight'>
 				<Image source={require('../../assets/icons/sendIcon.png')}/>

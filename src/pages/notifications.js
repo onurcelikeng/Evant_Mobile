@@ -11,6 +11,7 @@ import * as notificationProvider from '../providers/notifications';
 import { Avatar } from '../components/avatar';
 import { data } from '../data';
 import {formatDate} from '../utils/momentjs';
+import {strings} from '../locales/i18n'
 
 let {height, width} = Dimensions.get('window');
 const navbar = Header.HEIGHT;
@@ -49,7 +50,7 @@ export default class Notifications extends React.Component {
 		return notificationProvider.getNotifications()
 		.then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -77,7 +78,7 @@ export default class Notifications extends React.Component {
 		return notificationProvider.deleteNotification(id)
 		.then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(!responseJson.isSuccess) {
 					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);

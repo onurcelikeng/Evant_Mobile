@@ -8,6 +8,7 @@ import { Svg, Text as SvgText } from 'react-native-svg';
 import { scale } from '../../utils/scale';
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as dashboardProvider from '../../providers/dashboard';
+import {strings} from '../../locales/i18n';
 
 export class DoughnutChart extends RkComponent {
 
@@ -29,7 +30,7 @@ export class DoughnutChart extends RkComponent {
   getRange() {
     dashboardProvider.getRanges(this.props.eventId).then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
         console.log(responseJson)
 				if(responseJson.isSuccess) {
@@ -87,13 +88,13 @@ export class DoughnutChart extends RkComponent {
     if(this.state.isLoading) {
       return (
         <View>
-          <RkText rkType='header4'>AUDIENCE OVERVIEW</RkText>
+          <RkText rkType='header4'>{strings("doughnut.audience_overview")}</RkText>
         </View>
       )
     }
     return (
       <View>
-        <RkText rkType='header4'>AUDIENCE OVERVIEW</RkText>
+        <RkText rkType='header4'>{strings("doughnut.audience_overview")}</RkText>
         <View style={{alignSelf: 'center'}}>
           <Svg width={scale(this.size)} height={scale(this.size)}>
             <VictoryPie

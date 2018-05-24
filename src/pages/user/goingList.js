@@ -28,6 +28,7 @@ import * as eventOperationProvider from '../../providers/eventOperations';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
+import {strings} from '../../locales/i18n'
 
 export default class GoingList extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ export default class GoingList extends React.Component {
   getGoings() {
     return eventOperationProvider.getGoings(this.props.id).then(responseJson => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           this.setData(responseJson.data)
@@ -68,7 +69,6 @@ export default class GoingList extends React.Component {
   }
 
   _onRefresh(){
-		console.log("esd");
     this.setState({
       isRefreshing: true
     });
@@ -113,7 +113,7 @@ export default class GoingList extends React.Component {
                      onChange={(event) => this._filter(event.nativeEvent.text)}
                      label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
                      rkType='row'
-                     placeholder='Search'/>
+                     placeholder={strings("goingList.search")}/>
       </View>
     )
   }

@@ -8,6 +8,7 @@ import Options from './options';
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
 import { FontAwesome } from '../../assets/icon';
+import {strings} from '../../locales/i18n'
 
 export default class NotificationSettings extends React.Component {
 
@@ -28,7 +29,7 @@ export default class NotificationSettings extends React.Component {
     userSettingsProvider.updateUserSettings(Options.getSettings())
     .then((responseJson) => { 
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) { 
           DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -44,7 +45,7 @@ export default class NotificationSettings extends React.Component {
     return (
       <ScrollView style={styles.container}>
           <View style={styles.row}>
-            <RkText rkType='header6'>Comment Notifications</RkText>
+            <RkText rkType='header6'>{strings("notificationSettings.comment_notifications")}</RkText>
             <RkSwitch style={styles.switch}
                       value={this.state.comment}
                       name="Push"
@@ -53,10 +54,9 @@ export default class NotificationSettings extends React.Component {
                         Options.getSettings().isCommentNotif = comment;
                         this.updateUserSettings();
                       }}/>
-            {/* <RkText rkType='secondary5 hintColor'>seray</RkText> */}
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>Follow Notifications</RkText>
+            <RkText rkType='header6'>{strings("notificationSettings.follow_notifications")}</RkText>
             <RkSwitch style={styles.switch}
                       value={this.state.follow}
                       name="Refresh"
@@ -67,7 +67,7 @@ export default class NotificationSettings extends React.Component {
                       }}/>
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>Attend Notifications</RkText>
+            <RkText rkType='header6'>{strings("notificationSettings.attend_notifications")}</RkText>
                 <RkSwitch style={styles.switch}
                       value={this.state.attend}
                       name="Push"
@@ -78,7 +78,7 @@ export default class NotificationSettings extends React.Component {
                       }}/>
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>Event Update Notifications</RkText>
+            <RkText rkType='header6'>{strings("notificationSettings.event_update_notifications")}</RkText>
                 <RkSwitch style={styles.switch}
                       value={this.state.update}
                       name="Push"

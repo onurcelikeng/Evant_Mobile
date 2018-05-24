@@ -19,6 +19,7 @@ import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -71,7 +72,7 @@ export default class Discover extends React.Component {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -93,7 +94,7 @@ export default class Discover extends React.Component {
 		return searchHistoryProvider.getSearchHistories()
 		.then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -114,7 +115,7 @@ export default class Discover extends React.Component {
 		return searchHistoryProvider.deleteSearchHistory(id)
 		.then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -129,7 +130,7 @@ export default class Discover extends React.Component {
 		return searchHistoryProvider.addSearchHistory(this.state.searchedItem)
 		then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					console.log(responseJson);
@@ -332,7 +333,7 @@ export default class Discover extends React.Component {
 						label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
 						rkType='row'
 						placeholder='Search'/>
-					<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>Cancel</RkText></TouchableWithoutFeedback>
+					<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>{strings("discover.cancel")}</RkText></TouchableWithoutFeedback>
 				</View> 
 				<View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
 					{loaders}
@@ -357,12 +358,12 @@ export default class Discover extends React.Component {
 							label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
 							rkType='row'
 							value={this.state.searchedItem}
-							placeholder='Search'/>
-						<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>Cancel</RkText></TouchableWithoutFeedback>
+							placeholder={strings("discover.search")}/>
+						<TouchableWithoutFeedback onPress={() => {this.discoverPage()}}><RkText style={styles.cancelButton}>{strings("discover.cancel")}</RkText></TouchableWithoutFeedback>
 					</View> 
 					
 					<RkTabView rkType='discover' onTabChanged={(index) => this.handleChangeTab(index)}>
-						<RkTabView.Tab title={'Users'} style={{backgroundColor: '#ffffff'}}>
+						<RkTabView.Tab title={strings("discover.users")} style={{backgroundColor: '#ffffff'}}>
 							{
 								this.state.searchUserData != null ?
 								<ListView
@@ -374,7 +375,7 @@ export default class Discover extends React.Component {
 								<View></View>
 							}
 						</RkTabView.Tab>
-						<RkTabView.Tab title={'Events'} style={{backgroundColor: '#ffffff'}}>
+						<RkTabView.Tab title={strings("discover.events")} style={{backgroundColor: '#ffffff'}}>
 							{
 								this.state.searchEventData != null ?
 								<FlatList
@@ -405,7 +406,7 @@ export default class Discover extends React.Component {
 						onFocus={() => {this.searchPage()}}
 						label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
 						rkType='row'
-						placeholder='Search'/>
+						placeholder={strings("discover.search")}/>
 				</View> 
 
 				<SectionList
@@ -423,8 +424,8 @@ export default class Discover extends React.Component {
 						</View>
 					}}
 					sections={[
-						{data: this.state.searchData, key: "0", renderItem: this.renderHistoryItem, title: "RECENT SEARCHES"},
-						{data: this.state.data, key: "1", renderItem: this.renderCategoryItem, title: "CATEGORIES"}
+						{data: this.state.searchData, key: "0", renderItem: this.renderHistoryItem, title: strings("discover.recent")},
+						{data: this.state.data, key: "1", renderItem: this.renderCategoryItem, title: strings("discover.categories")}
 					]}
 					onRefresh={this.onRefresh}
 					refreshing={this.state.isRefreshing}

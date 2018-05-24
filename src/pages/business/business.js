@@ -8,6 +8,7 @@ import DropdownHolder from '../../providers/dropdownHolder';
 import Login from '../login';
 import * as businessProvider from '../../providers/business';
 import * as accountProvider from '../../providers/account';
+import {strings} from '../../locales/i18n';
 
 let moment = require('moment');
 
@@ -38,7 +39,7 @@ export default class Business extends React.Component {
         return businessProvider.switchToBusiness(type, payment)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     this.getMe();
@@ -53,7 +54,7 @@ export default class Business extends React.Component {
         accountProvider.getMe()
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     console.log(responseJson);
@@ -68,7 +69,7 @@ export default class Business extends React.Component {
         return businessProvider.cancelBusiness()
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     this.getMe();
@@ -92,8 +93,8 @@ export default class Business extends React.Component {
             title,
             message,
             [
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {text: 'OK', onPress: () => {
+                {text: strings("business.cancel"), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: strings("business.ok"), onPress: () => {
                 if(type == 'business') {
                     var product = businessType + " Business Üyelik";
                     if(businessType == "Free")
@@ -120,46 +121,46 @@ export default class Business extends React.Component {
             <ScrollView style={styles.root}>
                 <PricingCard
                 color='#4f9deb'
-                title='Free'
+                title={strings("business.title_free")}
                 price='₺0'
-                info={['Unlimited', 'For Everyone', 'User Age Analysis of Events']}
-                button={{ title: 'GET STARTED', icon: 'flight-takeoff', buttonStyle: {borderRadius: 22} }}
+                info={[strings("business.unlimited"), strings("business.everyone"), strings("business.age")]}
+                button={{ title: strings("business.start"), icon: 'flight-takeoff', buttonStyle: {borderRadius: 22} }}
                 onButtonPress={() => {  if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Free") 
-                                            this.openAlert('SWITCH', 'Do you want to switch to Free Business account?', 'business', 'Free') 
+                                            this.openAlert(strings("business.switch"), strings("business.free"), 'business', 'Free') 
                                     }}/>
                 <PricingCard
                 color='#a72ce9'
-                title='Basic'
+                title={strings("business.title_basic")}
                 price='₺19'
-                info={['Per Year', 'For Small Businesses', 'User Age Analysis of Events', 'Notifications to Different Age Groups']}
-                button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
+                info={[strings("business.per_year"), strings("business.small"), strings("business.age"), strings("business.notifications")]}
+                button={{ title: strings("business.buy"), icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
                 onButtonPress={() => { if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Basic") 
-                                            this.openAlert('SWITCH', 'Do you want to switch to Basic Business account?', 'business', 'Basic')
+                                            this.openAlert(strings("business.switch"), strings("business.basic"), 'business', 'Basic')
                                     }}/>
                 <PricingCard
                 color='#f9b632'
                 title='Gold'
                 price='₺79'
-                info={['Per Year', 'For Larger Businesses', 'All Core Features', 'Comment Analysis of Events', 'Daily Attendees of Events']}
-                button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
+                info={[strings("business.per_year"), strings("business.large"), strings("business.core"), strings("business.comment"), strings("business.daily")]}
+                button={{ title: strings("business.buy"), icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
                 onButtonPress={() => { if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Gold") 
-                                            this.openAlert('SWITCH', 'Do you want to switch to Gold Business account?', 'business', 'Gold')
+                                            this.openAlert(strings("business.switch"), strings("business.gold"), 'business', 'Gold')
                                         }}/>
                 <PricingCard
                 color='#cdcbc7'
                 title='Platinum'
                 price='₺99'
-                info={['Per Year', 'For Larger Businesses', 'All Features', 'Chat Bot Support for FAQ']}
-                button={{ title: 'BUY NOW', icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
+                info={[strings("business.per_year"), strings("business.large"), strings("business.all"), strings("business.chatbot")]}
+                button={{ title: strings("business.buy"), icon: 'shopping-cart', buttonStyle: {borderRadius: 22} }}
                 onButtonPress={() => { if(!Login.getCurrentUser().isBusiness || this.state.business.type != "Platinum") 
-                                            this.openAlert('SWITCH', 'Do you want to switch to Platinum Business account?', 'business', 'Platinum')
+                                            this.openAlert(strings("business.switch"), strings("business.platinum"), 'business', 'Platinum')
                                         }}/>
                 {
                     Login.getCurrentUser().isBusiness ?
                     <View style={{flex: 1, justifyContent:"center", alignContent: "center"}}>
-                        <TouchableOpacity onPress={() => this.openAlert('CANCEL', 'Do you want to cancel your' + " " + Login.getCurrentUser().business.type + " " + 'business account?', 'cancel', null)} style={styles.button}>
-                            <RkText rkType='primary3' style={{textAlign: "center"}}>Switch to </RkText>
-                            <RkText rkType='header6' style={{textAlign: "center"}}>Normal Account</RkText>
+                        <TouchableOpacity onPress={() => this.openAlert(strings("business.cancel"), strings("business.cancel_question") + " " + Login.getCurrentUser().business.type + " " + strings("business.business_account"), 'cancel', null)} style={styles.button}>
+                            <RkText rkType='primary3' style={{textAlign: "center"}}>{strings("business.switch_to")}</RkText>
+                            <RkText rkType='header6' style={{textAlign: "center"}}>{strings("business.normal_account")}</RkText>
                         </TouchableOpacity>
                     </View>
                     :

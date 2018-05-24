@@ -8,6 +8,7 @@ import Options from './options';
 import { RkSwitch } from '../../components/switch';
 import { FindFriends } from '../../components/findFriends';
 import { FontAwesome } from '../../assets/icon';
+import {strings} from '../../locales/i18n'
 
 export default class TimelineSettings extends React.Component {
 
@@ -28,7 +29,7 @@ export default class TimelineSettings extends React.Component {
     userSettingsProvider.updateUserSettings(Options.getSettings())
     .then((responseJson) => { 
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) { 
           DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -44,7 +45,7 @@ export default class TimelineSettings extends React.Component {
     return (
       <ScrollView style={styles.container}>
           <View style={styles.row}>
-            <RkText rkType='header6'>Comments Visible in Timeline?</RkText>
+            <RkText rkType='header6'>{strings("timelineSettings.comments_visible")}</RkText>
             <RkSwitch style={styles.switch}
                       value={this.state.comment}
                       name="Push"
@@ -54,10 +55,9 @@ export default class TimelineSettings extends React.Component {
                         Options.getSettings().isCommentVisibleTimeline = comment;
                         this.updateUserSettings();
                       }}/>
-            {/* <RkText rkType='secondary5 hintColor'>seray</RkText> */}
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>New Followers Visible in Timeline?</RkText>
+            <RkText rkType='header6'>{strings("timelineSettings.followers_visible")}</RkText>
             <RkSwitch style={styles.switch}
                       value={this.state.follower}
                       name="Refresh"
@@ -69,7 +69,7 @@ export default class TimelineSettings extends React.Component {
                       }}/>
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>New Followings Visible in Timeline?</RkText>
+            <RkText rkType='header6'>{strings("timelineSettings.followings_visible")}</RkText>
                 <RkSwitch style={styles.switch}
                       value={this.state.following}
                       name="Push"
@@ -81,7 +81,7 @@ export default class TimelineSettings extends React.Component {
                       }}/>
           </View>
           <View style={styles.row}>
-            <RkText rkType='header6'>Joined Events Visible in Timeline?</RkText>
+            <RkText rkType='header6'>{strings("timelineSettings.events_visible")}</RkText>
                 <RkSwitch style={styles.switch}
                       value={this.state.event}
                       name="Push"

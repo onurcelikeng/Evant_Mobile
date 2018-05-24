@@ -1,0 +1,243 @@
+{
+    "common": {
+        "error_occured": "An error occured, please try again.",
+        "fill_error": "Please fill out all the spaces."
+    },
+    "login": {
+        "login_button": "LOGIN",
+        "ask_account": "Don't have an account?",
+        "signup_button": " Sign up now ",
+        "email": "Email",
+        "password": "Password"
+    },
+    "signup": {
+        "signup_button": "SIGN UP",
+        "ask_account": "Already have an account?",
+        "login_button": " Sign in now ",
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "password": "Password",
+        "confirm_password": "Confirm Password"
+    },
+    "events": {
+        "events_title": "Events"
+    },
+    "categoryEvents": {
+        "all": "All",
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "this_week": "This Week",
+        "this_weekend": "This Weekend"
+    },
+    "gameboard": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+    },
+    "doughnut": {
+        "audience_overview": "AUDIENCE OVERVIEW"
+    },
+    "sendNotification": {
+        "successfull": "Notification sent successfully.",
+        "send_announcement": "SEND ANNOUNCEMENT",
+        "message": "Your message"
+    },
+    "commentStatistics": {
+        "footer": "No Comments",
+        "language": "Language:",
+        "score": "Sentiment Score: ",
+        "comment_overview": "COMMENT OVERVIEW"
+    },
+    "userDist": {
+        "attendee_distribution": "ATTENDEE DISTRIBUTION",
+        "footer": "No Attendees"
+    },
+    "chatBot": {
+        "footer": "No FAQ",
+        "Q": "Q:",
+        "A": "A:",
+        "question": "Question",
+        "answer": "Answer",
+        "add": "Add FAQ",
+        "save": "Save",
+        "chat_bot": "CHAT BOT",
+        "success": "The FAQ is successfully added."
+    },
+    "newCard": {
+        "card_no": "Card Number",
+        "exp_date": "Expire date",
+        "name": "Name On Card",
+        "cvc": "CVC",
+        "buy": "BUY"
+    },
+    "business": {
+        "cancel": "CANCEL",
+        "ok": "OK",
+        "title_free": "Free",
+        "title_basic": "Basic",
+        "title_gold": "Gold",
+        "title_platinum": "Platinum",
+        "unlimited": "Unlimited",
+        "everyone": "For Everyone",
+        "age": "User Age Analysis of Events",
+        "per_year": "Per Year",
+        "small": "For Small Businesses",
+        "notifications": "Notifications to Different Age Groups",
+        "start": "GET STARTED",
+        "buy": "BUY NOW",
+        "switch": "SWITCH",
+        "basic": "Do you want to switch to Basic Business account?",
+        "large": "For Larger Businesses",
+        "core": "All Core Features",
+        "comment": "Comment Analysis of Events",
+        "daily": "Daily Attendees of Events",
+        "gold": "Do you want to switch to Gold Business account?",
+        "all": "All Features",
+        "chatbot": "Chat Bot Support for FAQ",
+        "platinum": "Do you want to switch to Platinum Business account?",
+        "cancel_question": "Do you want to cancel your",
+        "business_account": "business account?",
+        "switch_to": "Switch to ",
+        "normal_account": "Normal Account"
+    },
+    "addEvent": {
+        "add_event": "Add Event",
+        "title": "Title",
+        "description": "Description",
+        "category": "Category",
+        "city": "City",
+        "town": "Town",
+        "start_date": "Start Date",
+        "finish_date": "Finish Date",
+        "is_private": "Is Private",
+        "save_button": "SAVE"
+    },
+    "comments": {
+        "comment": "Add a comment..."
+    },
+    "discover": {
+        "cancel": "Cancel",
+        "recent": "RECENT SEARCHES",
+        "categories": "CATEGORIES",
+        "search": "Search",
+        "users": "Users",
+        "events": "Events"
+    },
+    "detail": {
+        "close": "Close"
+    },
+    "update": {
+        "update": "Update Event",
+        "title": "Title",
+        "description": "Description",
+        "city": "City",
+        "town": "Town",
+        "start_date": "Start Date",
+        "finish_date": "Finish Date",
+        "is_private": "Is Private",
+        "save_button": "SAVE"
+    },
+    "changePassword": {
+        "old_password": "Old Password",
+        "new_password": "New Password",
+        "re_new_password": "New Password (Again)"
+    },
+    "editProfile": {
+        "info": "INFO",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "email": "Email",
+        "country": "Country",
+        "phone": "Phone",
+        "connect": "CONNECT YOUR ACCOUNT",
+        "save_button": "SAVE"
+    },
+    "notificationSettings": {
+        "comment_notifications": "Comment Notifications",
+        "follow_notifications": "Follow Notifications",
+        "attend_notifications": "Attend Notifications",
+        "event_update_notifications": "Event Update Notifications"
+    },
+    "options": {
+        "cancel": "Cancel",
+        "ok": "OK",
+        "english": "English",
+        "turkish": "Turkish",
+        "account": "ACCOUNT",
+        "edit_profile": "Edit Profile",
+        "change_password": "Change Password",
+        "switch_to_business": "Switch to Business Account",
+        "settings": "SETTINGS",
+        "timeline": "Timeline",
+        "language": "Language",
+        "push_notification": "Push Notification Settings",
+        "support": "SUPPORT",
+        "help": "Help Center",
+        "report": "Report a Problem",
+        "about": "ABOUT",
+        "privacy": "Privacy Policy",
+        "terms": "Terms & Conditions",
+        "open_source": "Open Source Libraries",
+        "clear": "Clear Search Histories",
+        "deactivate": "Deactivate Account",
+        "logout": "Log Out",
+        "title_clear": "CLEAR",
+        "clear_message": "All of your search histories will be deleted. Are you sure you want to continue?",
+        "title_deactivate": "DEACTIVATE",
+        "deactivate_message": "WARNING! Are you sure you want to deactivate your account? You may not be able to return your account back!",
+        "title_logout": "LOGOUT",
+        "logout_message": "Are you sure you want to log out? You won't be able to get any notification.",
+        "language_message": "Touch the language you want to select.",
+        "title_language": "CHANGE"
+    },
+    "timelineSettings": {
+        "comments_visible": "Comments Visible in Timeline?",
+        "followers_visible": "New Followers Visible in Timeline?",
+        "followings_visible": "New Followings Visible in Timeline?",
+        "events_visible": "Joined Events Visible in Timeline?"
+    },
+    "goingList": {
+        "search": "Search"
+    },
+    "profile": {
+        "followers": "Followers",
+        "followings": "Followings"
+    },
+    "otherProfile": {
+        "selected_event": "Selected Event:",
+        "at": "at ",
+        "followers": "Followers",
+        "followings": "Followings"
+    },
+    "followingList": {
+        "search": "Search"
+    },
+    "followerList": {
+        "search": "Search"
+    },
+    "routes": {
+        "login": "Login",
+        "register": "Register",
+        "events": "Events",
+        "event": "Event",
+        "dashboard": "Dashboard",
+        "goings": "Goings",
+        "profile": "Profile",
+        "followers": "Followers",
+        "followings": "Followings",
+        "comments": "Comments",
+        "discover": "Discover",
+        "category_events": "Category Events",
+        "event_detail": "Event Detail",
+        "notifications": "Notifications",
+        "gameboard": "Gameboard",
+        "options": "Options",
+        "business": "Evant Business",
+        "add_card": "Add Card",
+        "change": "Change Password",
+        "edit": "Edit Profile",
+        "notification_settings": "Notification Settings",
+        "timeline_settings": "Timeline Settings"
+    }
+}

@@ -9,7 +9,8 @@ import { Svg, Text as SvgText } from 'react-native-svg';
 import { scale } from '../utils/scale';
 import DropdownHolder from '../providers/dropdownHolder';
 import * as dashboardProvider from '../providers/dashboard';
-import * as commentProvider from '../providers/comments';
+import {strings} from '../locales/i18n';
+
 let moment = require('moment');
 
 export class CommentStatistics extends RkComponent {
@@ -62,7 +63,7 @@ export class CommentStatistics extends RkComponent {
         return commentProvider.deleteComment(id)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-            DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+            DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
             if(responseJson.isSuccess) {
                 DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -92,7 +93,7 @@ export class CommentStatistics extends RkComponent {
         if(this.state.comments.length == 0) {
             return (
                 <View style={{maxHeight: 50}}>
-                    <RkText rkType='primary3 mediumLine'>No Comments</RkText>
+                    <RkText rkType='primary3 mediumLine'>{strings("commentStatistics.footer")}</RkText>
                 </View>
             )
         }
@@ -119,10 +120,21 @@ export class CommentStatistics extends RkComponent {
                 onRef = {ref => this.swipe = ref}
                 rightActionActivationDistance={200}
                 rightButtons={[
-                    <TouchableHighlight style={styles.rightSwipeItem} onPress={() => {this.currentlyOpenSwipeable.recenter(); this.deleteComment(info.item.commentId); this.getComments(this.eventId);}}><Image style={{height: 20, width: 20}} source={require('../assets/icons/delete.png')}/></TouchableHighlight>
+                    <TouchableHighlight style={styles.rightSwipeItem} 
+                                        onPress={() => { 
+                                            this.currentlyOpenSwipeable.recenter(); 
+                                            this.deleteComment(info.item.commentId); 
+                                            this.getComments(this.eventId);}}>
+                                            <Image style={{height: 20, width: 20}} source={require('../assets/icons/delete.png')}/>
+                                        </TouchableHighlight>
                 ]}
                 onRightActionActivate={() => {this.deleteComment(info.item.commentId);this.setState({rightActionActivated: true})}}
-                onRightActionDeactivate={(event, gestureState, swipe) => {this.currentlyOpenSwipeable = swipe; this.currentlyOpenSwipeable.recenter();this.currentlyOpenSwipeable = null; this.setState({rightActionActivated: false})}}
+                onRightActionDeactivate={(event, gestureState, swipe) => {
+                                            this.currentlyOpenSwipeable = swipe; 
+                                            this.currentlyOpenSwipeable.recenter();
+                                            this.currentlyOpenSwipeable = null; 
+                                            this.setState({rightActionActivated: false})
+                                        }}
                 onRightActionComplete={() => {this.currentlyOpenSwipeable = null; this.getComments(this.eventId); this.setState({toggle: !toggle})}}
                 onRightButtonsOpenRelease = { (event, gestureState, swipe) => {
                     if (this.currentlyOpenSwipeable && this.currentlyOpenSwipeable !== swipe) {
@@ -139,9 +151,9 @@ export class CommentStatistics extends RkComponent {
                             </RkText>
                         </View>
                         <RkText rkType='primary3 mediumLine'>{info.item.content}</RkText>
-                        <RkText rkType='secondary4 mediumLine'>Language: {info.item.language}</RkText>
+                        <RkText rkType='secondary4 mediumLine'>{strings("commentStatistics.language")} {info.item.language}</RkText>
                         <View style={{flexDirection: 'row'}}>
-                            <RkText rkType='secondary4 mediumLine'>Sentiment Score: </RkText>
+                            <RkText rkType='secondary4 mediumLine'>{strings("commentStatistics.score")}</RkText>
                             <RkText style={{color: color}} rkType='secondary4 mediumLine'>{(info.item.sentiment * 100).toFixed(2)}/100</RkText>
                         </View>
                         
@@ -162,13 +174,13 @@ export class CommentStatistics extends RkComponent {
         if(this.state.isLoading) {
             return (
                 <View>
-                    <RkText rkType='header4'>COMMENT OVERVIEW</RkText>
+                    <RkText rkType='header4'>{strings("commentStatistics.comment_overview")}</RkText>
                 </View>
             )
         }
         return (
             <View>
-                <RkText rkType='header4'>COMMENT OVERVIEW</RkText>
+                <RkText rkType='header4'>{strings("commentStatistics.comment_overview")}</RkText>
                 <View style={{maxHeight: 300}}>
                     <FlatList 
                         ref="list"

@@ -18,6 +18,7 @@ import formatNumber from '../../utils/textUtils';
 import {data} from '../../data';
 import Login from '../login';
 import Gameboard from '../gameboard';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -93,7 +94,7 @@ export default class Profile extends React.Component {
 	getMe() {
 		accountProvider.getMe().then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					console.log(responseJson)
@@ -110,7 +111,7 @@ export default class Profile extends React.Component {
 		accountProvider.getTimeline().then((responseJson) => {
 			let icon = require("../../assets/icons/comment.png");
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({data: []});
@@ -155,7 +156,6 @@ export default class Profile extends React.Component {
 	}
 
 	_onRefresh(){
-		console.log("esd");
     this.setState({
 			isRefreshing: true});
 		this.getMe();
@@ -225,13 +225,13 @@ export default class Profile extends React.Component {
 							{this.user.followersCount != 0 ?
 							<TouchableOpacity onPress={() => {Actions.followerList({id: this.user.userId})}} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("profile.followers")}</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							:
 							<TouchableOpacity activeOpacity={1} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("profile.followers")}</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							}
@@ -239,13 +239,13 @@ export default class Profile extends React.Component {
 							{this.user.followingsCount != 0 ?
 							<TouchableOpacity onPress={() => {Actions.followingList({id: this.user.userId})}} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("profile.followings")}</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							:
 							<TouchableOpacity activeOpacity={1} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("profile.followings")}</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							}

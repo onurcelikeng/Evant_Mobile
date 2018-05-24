@@ -23,6 +23,7 @@ import {scale} from '../../utils/scale';
 import Login from '../login';
 import * as businessProvider from '../../providers/business';
 import * as accountProvider from '../../providers/account';
+import {strings} from '../../locales/i18n';
 
 export default class AddNewCard extends React.Component {
 
@@ -58,7 +59,7 @@ export default class AddNewCard extends React.Component {
         accountProvider.getMe()
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     console.log(responseJson);
@@ -99,7 +100,7 @@ export default class AddNewCard extends React.Component {
         return businessProvider.switchToBusiness(this.state.type, payment)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     this.getMe();
@@ -136,7 +137,7 @@ export default class AddNewCard extends React.Component {
             <View>
                 <View>
                 <View style={[styles.textRow]}>
-                    <RkText rkType='subtitle'>Card Number</RkText>
+                    <RkText rkType='subtitle'>{strings("newCard.card_no")}</RkText>
                 </View>
                 <RkTextInput
                     autoCapitalize='none'
@@ -155,7 +156,7 @@ export default class AddNewCard extends React.Component {
 
                 <View style={[styles.content]}>
                 <View style={[styles.textRow]}>
-                    <RkText rkType='subtitle'>Expire date</RkText>
+                    <RkText rkType='subtitle'>{strings("newCard.exp_date")}</RkText>
                 </View>
                 <View style={[styles.expireDateBlock]}>
                     <DatePicker
@@ -185,7 +186,7 @@ export default class AddNewCard extends React.Component {
 
                 <View style={[styles.content]}>
                 <View style={[styles.textRow]}>
-                    <RkText rkType='subtitle'>Name On Card</RkText>
+                    <RkText rkType='subtitle'>{strings("newCard.name")}</RkText>
                 </View>
                 <RkTextInput rkType='rounded'
                             onChangeText={(nameOnCard) => this.setState({nameOnCard})}
@@ -194,7 +195,7 @@ export default class AddNewCard extends React.Component {
 
                 <View style={[styles.content]}>
                 <View style={[styles.textRow]}>
-                    <RkText rkType='subtitle'>CVC</RkText>
+                    <RkText rkType='subtitle'>{strings("newCard.cvc")}</RkText>
                 </View>
                 <PasswordTextInput maxLength={3}
                                     keyboardType='numeric'
@@ -205,7 +206,7 @@ export default class AddNewCard extends React.Component {
             <View>
                 <RkButton rkType='medium stretch rounded' style={styles.save} text='ADD TO CARD' onPress={() => {
                     this.switchToBusiness();
-                }}>BUY</RkButton>
+                }}>{strings("newCard.buy")}</RkButton>
             </View>
             </View>
             </KeyboardAwareScrollView>

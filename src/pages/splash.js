@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Image, View, Dimensions, StatusBar, AsyncStorage, Platform, Modal, Text, TouchableHighlight, NetInfo  } from 'react-native';
+import { StyleSheet, Image, View, Dimensions, StatusBar, AsyncStorage, Platform, Text, TouchableHighlight  } from 'react-native';
 import { RkText, RkTheme } from 'react-native-ui-kitten'
 import { NavigationActions } from 'react-navigation';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
+import I18n from 'react-native-i18n';
 
 import {ProgressBar} from '../components/progressBar';
 import { DarkKittenTheme } from '../config/darkTheme';
@@ -21,12 +22,7 @@ export class SplashScreen extends React.Component {
     super(props);
     this.state = {
       progress: 0,
-      modalVisible: false,
     }
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
   }
 
   componentDidMount() {
@@ -60,7 +56,8 @@ export class SplashScreen extends React.Component {
               } else {
                 if(responseJson.isSuccess) {
                   Login.setCurrentUser(responseJson.data);
-
+                  if(responseJson.data.settings.language != "")
+                    I18n.locale = responseJson.data.settings.language;
                   if(Login.getCurrentUser().settings.theme == "dark") {
                     RkTheme.setTheme(DarkKittenTheme);
                     StatusBar.setBarStyle('light-content', true);
@@ -81,7 +78,6 @@ export class SplashScreen extends React.Component {
                 }
               }
             }).catch((err) => {
-              this.setModalVisible(true);
               console.log(err)
             });
           }
@@ -112,26 +108,6 @@ export class SplashScreen extends React.Component {
         <View>
           <Image style={[styles.image]} source={require('../assets/images/evant_logo.png')}/>
         </View>
-
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Hello World!</Text>
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
       </View>
     )
   }

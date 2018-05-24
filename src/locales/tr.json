@@ -1,0 +1,245 @@
+{
+    "common": {
+        "error_occured": "Bir hata oluştu, lütfen tekrar deneyin.",
+        "fill_error": "Lütfen bütün boşlukları doldurun."
+    },   
+    "login": {
+        "login_button": "GİRİŞ YAP",
+        "ask_account": "Hesabın yok mu?",
+        "signup_button": " Şimdi kayıt ol ",
+        "email": "Eposta",
+        "password": "Şifre"
+    },
+    "signup": {
+        "signup_button": "KAYIT OL",
+        "ask_account": "Zaten hesabın var mı?",
+        "login_button": " Şimdi giriş yap ",
+        "error_occured": "Bir hata oluştu, lütfen tekrar deneyin.",
+        "fill_error": "Lütfen bütün boşlukları doldurun.",
+        "name": "Ad",
+        "surname": "Soyad",
+        "email": "Eposta",
+        "password": "Şifre",
+        "confirm_password": "Şifre (Tekrar)"
+    },
+    "events": {
+        "events_title": "Etkinlikler"
+    },
+    "categoryEvents": {
+        "all": "All",
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "this_week": "This Week",
+        "this_weekend": "This Weekend"
+    },
+    "gameboard": {
+        "daily": "Günlük",
+        "weekly": "Haftalık",
+        "monthly": "Aylık"
+    },
+    "doughnut": {
+        "audience_overview": "KATILIMCI ÖZETİ"
+    },
+    "sendNotification": {
+        "successfull": "Bildirim başarıyla gönderildi.",
+        "send_announcement": "DUYURU GÖNDER",
+        "message": "Mesajın"
+    },
+    "commentStatistics": {
+        "footer": "Hiç Yorum Yok",
+        "language": "Dil:",
+        "score": "Hassaslık Puanı: ",
+        "comment_overview": "YORUM ÖZETİ"
+    },
+    "userDist": {
+        "attendee_distribution": "KATILIMCI DAĞILIMI",
+        "footer": "Hiç Katılımcı Yok"
+    },
+    "chatBot": {
+        "footer": "Hiç SSS Yok",
+        "Q": "S:",
+        "A": "C:",
+        "question": "Soru",
+        "answer": "Cevap",
+        "add": "SSS Ekle",
+        "save": "Kaydet",
+        "chat_bot": "CHAT BOT",
+        "success": "SSS başarıyla eklendi."
+    },
+    "newCard": {
+        "card_no": "Kart Numarası",
+        "exp_date": "Son Kullanma Tarihi",
+        "name": "Kart Üzerindeki İsim",
+        "cvc": "CVC",
+        "buy": "SATIN AL"
+    },
+    "business": {
+        "cancel": "İPTAL",
+        "ok": "TAMAM",
+        "title_free": "ÜCRETSİZ",
+        "title_basic": "Basit",
+        "title_gold": "Altın",
+        "title_platinum": "Platin",
+        "unlimited": "Sınırsız",
+        "everyone": "Herkes İçin",
+        "age": "Etkinlik Katılımcı Yaş Analizi",
+        "per_year": "Yıllık",
+        "small": "Küçük İşletmeler İçin",
+        "notifications": "Farklı Yaş Grupları İçin Bildirimler",
+        "start": "BAŞLA",
+        "buy": "ŞİMDİ SATIN AL",
+        "switch": "DEĞİŞTİR",
+        "basic": "Basit İş Hesabı'na geçiş yapmak istediğinize emin misiniz?",
+        "large": "Daha Büyük İşletmeler İçin",
+        "core": "Tüm Temel Özellikler",
+        "comment": "Etkinlik Yorum Analizi",
+        "daily": "Etkinliklerin Günlük Katılımcı Sayıları",
+        "gold": "Altın İş Hesabı'na geçiş yapmak istediğinize emin misiniz?",
+        "all": "Bütün Özellikler",
+        "chatbot": "SSS için Chat Bot Desteği",
+        "platinum": "Platin İş Hesabı'na geçiş yapmak istediğinize emin misiniz?",
+        "cancel_question": "",
+        "business_account": "İş Hesabınızı iptal etmek istediğinize emin misiniz?",
+        "switch_to": "Normal Hesaba ",
+        "normal_account": "Geçiş Yap"
+    },
+    "addEvent": {
+        "add_event": "Etkinlik Ekle",
+        "title": "Başlık",
+        "description": "Açıklama",
+        "category": "Kategori",
+        "city": "İl",
+        "town": "İlçe",
+        "start_date": "Başlangıç Tarihi",
+        "finish_date": "Bitiş Tarihi",
+        "is_private": "Gizli Etkinlik",
+        "save_button": "KAYDET"
+    },
+    "comments": {
+        "comment": "Yorum ekle..."
+    },
+    "discover": {
+        "cancel": "İptal",
+        "recent": "SON ARAMALAR",
+        "categories": "KATEGORİLER",
+        "search": "Ara",
+        "users": "Kullanıcılar",
+        "events": "Etkinlikler"
+    },
+    "detail": {
+        "close": "Kapat"
+    },
+    "update": {
+        "update": "Etkinlik Güncelle",
+        "title": "Başlık",
+        "description": "Açıklama",
+        "city": "İl",
+        "town": "İlçe",
+        "start_date": "Başlangıç Tarihi",
+        "finish_date": "Bitiş Tarihi",
+        "is_private": "Gizli Etkinlik",
+        "save_button": "KAYDET"
+    },
+    "changePassword": {
+        "old_password": "Eski Şifre",
+        "new_password": "Yeni Şifre",
+        "re_new_password": "Yeni Şifre (Tekrar)"
+    },
+    "editProfile": {
+        "info": "BİLGİ",
+        "first_name": "Ad",
+        "last_name": "Soyad",
+        "email": "Eposta",
+        "country": "Ülke",
+        "phone": "Telefon",
+        "connect": "HESABINI BAĞLA",
+        "save_button": "KAYDET"
+    },
+    "notificationSettings": {
+        "comment_notifications": "Yorum Bildirimleri",
+        "follow_notifications": "Takip Bildirimleri",
+        "attend_notifications": "Katılımcı Bildirimleri",
+        "event_update_notifications": "Etkinlik Değişiklik Bildirimleri"
+    },
+    "options": {
+        "cancel": "İptal",
+        "ok": "TAMAM",
+        "english": "İngilizce",
+        "turkish": "Türkçe",
+        "account": "HESAP",
+        "edit_profile": "Profil Düzenle",
+        "change_password": "Şifre Değiştir",
+        "switch_to_business": "İş Hesabına Geç",
+        "settings": "AYARLAR",
+        "timeline": "Akış",
+        "language": "Dil",
+        "push_notification": "Bildirim Ayarları",
+        "support": "DESTEK",
+        "help": "Yardım Merkezi",
+        "report": "Sorun Bildir",
+        "about": "HAKKINDA",
+        "privacy": "Gizlilik Politikası",
+        "terms": "Şartlar & Koşullar",
+        "open_source": "Açık Kaynak Kütüphaneler",
+        "clear": "Arama Geçmişini Temizle",
+        "deactivate": "Hesap Dondur",
+        "logout": "Çıkış Yap",
+        "title_clear": "TEMİZLE",
+        "clear_message": "Bütün arama geçmişin silinecek. Devam etmek istediğine emin misin?",
+        "title_deactivate": "DEAKTİF",
+        "deactivate_message": "DİKKAT! Hesabını dondurmak istediğine emin misin? Hesabını geri alamayacaksın!",
+        "title_logout": "ÇIKIŞ",
+        "logout_message": "Çıkış yapmak istediğine emin misin? Bildirim almaya devam edemeyeceksin.",
+        "language_message": "Seçmek istediğin dilin üstüne dokun.",
+        "title_language": "DEĞİŞTİR"
+    },
+    "timelineSettings": {
+        "comments_visible": "Yorumlar Akışta Görünsün Mü?",
+        "followers_visible": "Yeni Takipçiler Akışta Görünsün Mü?",
+        "followings_visible": "Yeni Takip Ettiklerin Akışta Görünsün Mü?",
+        "events_visible": "Katıldığın Etkinlikler Akışta Görünsün Mü?"
+    },
+    "goingList": {
+        "search": "Ara"
+    },
+    "profile": {
+        "followers": "Takipçi",
+        "followings": "Takip"
+    },
+    "otherProfile": {
+        "selected_event": "Seçilen Etkinlik:",
+        "at": "",
+        "followers": "Takipçi",
+        "followings": "Takip"
+    },
+    "followingList": {
+        "search": "Ar"
+    },
+    "followerList": {
+        "search": "Ara"
+    },
+    "routes": {
+        "login": "Giriş Yap",
+        "register": "Üye Ol",
+        "events": "Etkinlikler",
+        "event": "Etkinlik",
+        "dashboard": "Kontrol Paneli",
+        "goings": "Gidenler",
+        "profile": "Profil",
+        "followers": "Takipçiler",
+        "followings": "Takip Edilenler",
+        "comments": "Yorumlar",
+        "discover": "Keşfet",
+        "category_events": "Kategori Etkinlikleri",
+        "event_detail": "Etkinlik Detayı",
+        "notifications": "Bildirimler",
+        "gameboard": "Puan Tablosu",
+        "options": "Ayarlar",
+        "business": "Evant İş",
+        "add_card": "Kart Ekle",
+        "change": "Şifre Değiştir",
+        "edit": "Profil Düzenle",
+        "notification_settings": "Bildirim Ayarları",
+        "timeline_settings": "Akış Ayarları"
+    }
+}

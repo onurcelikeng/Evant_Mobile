@@ -16,6 +16,7 @@ import {data} from '../../data';
 import { NavBar } from '../../components/navBar';
 import {FontAwesome} from '../../assets/icon';
 import { formatDate } from '../../utils/momentjs';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -44,7 +45,7 @@ export default class CategoryEvents extends React.Component {
 		return eventProvider.getCategoryEvents(id)
 		.then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     this.setState({
@@ -66,7 +67,7 @@ export default class CategoryEvents extends React.Component {
         return eventOperationProvider.joinEvent(this.state.data.eventId)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     this.setState({join: true});
@@ -82,7 +83,7 @@ export default class CategoryEvents extends React.Component {
         return eventOperationProvider.leaveEvent(this.state.data.eventId)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                 this.setState({join: false});
@@ -98,7 +99,7 @@ export default class CategoryEvents extends React.Component {
         return eventOperationProvider.joinStatus(this.state.data.eventId)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 this.setState({join: responseJson.isSuccess})
             }
@@ -226,7 +227,7 @@ export default class CategoryEvents extends React.Component {
 		return (
             <View style={styles.root}>
                 <RkTabView rkType='rounded' maxVisibleTabs={3} onTabChanged={(index) => this.handleChangeTab(index)} style={{borderColor: "#ffffff", backgroundColor: '#da6954'}}>
-                    <RkTabView.Tab title={'All'} style={{backgroundColor: '#da6954'}}>
+                    <RkTabView.Tab title={strings("categoryEvents.all")} style={{backgroundColor: '#da6954'}}>
                         <FlatList
                             data={this.state.data}
                             renderItem={this.renderItem}
@@ -241,7 +242,7 @@ export default class CategoryEvents extends React.Component {
                             }
                         />
                     </RkTabView.Tab>
-                    <RkTabView.Tab title={'Today'} style={{backgroundColor: '#da6954'}}>
+                    <RkTabView.Tab title={strings("categoryEvents.today")} style={{backgroundColor: '#da6954'}}>
                         <FlatList
                             data={this.state.today}
                             renderItem={this.renderItem}
@@ -256,7 +257,7 @@ export default class CategoryEvents extends React.Component {
                             }
                         />
                     </RkTabView.Tab>
-                    <RkTabView.Tab title={'Tomorrow'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
+                    <RkTabView.Tab title={strings("categoryEvents.tomorrow")} style={{backgroundColor: '#da6954', borderWidth: 0}}>
                         <FlatList
                             data={this.state.tomorrow}
                             renderItem={this.renderItem}
@@ -271,7 +272,7 @@ export default class CategoryEvents extends React.Component {
                             }
                         />
                     </RkTabView.Tab>
-                    <RkTabView.Tab title={'This Week'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
+                    <RkTabView.Tab title={strings("categoryEvents.this_week")} style={{backgroundColor: '#da6954', borderWidth: 0}}>
                         <FlatList
                             data={this.state.week}
                             renderItem={this.renderItem}
@@ -286,7 +287,7 @@ export default class CategoryEvents extends React.Component {
                             }
                         />
                     </RkTabView.Tab>
-                    <RkTabView.Tab title={'This Weekend'} style={{backgroundColor: '#da6954', borderWidth: 0}}>
+                    <RkTabView.Tab title={strings("categoryEvents.this_weekend")} style={{backgroundColor: '#da6954', borderWidth: 0}}>
                         <FlatList
                             data={this.state.weekend}
                             renderItem={this.renderItem}

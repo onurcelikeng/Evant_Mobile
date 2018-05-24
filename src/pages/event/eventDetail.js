@@ -23,6 +23,7 @@ import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {SocialBar} from '../../components/socialBar';
 import { formatDate } from '../../utils/momentjs';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -74,7 +75,7 @@ export default class EventDetail extends React.Component {
 		return eventProvider.getSimilarEvents(this.state.data.eventId)
 		.then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         console.log(responseJson);
         if(responseJson.isSuccess) {
@@ -100,7 +101,7 @@ export default class EventDetail extends React.Component {
     return eventProvider.getEvent(id)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           console.log(responseJson.data);
@@ -119,7 +120,7 @@ export default class EventDetail extends React.Component {
     return eventProvider.deleteEvent(this.state.data.eventId)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -134,7 +135,7 @@ export default class EventDetail extends React.Component {
     return eventOperationProvider.joinEvent(this.state.data.eventId)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           this.setState({join: true});
@@ -150,7 +151,7 @@ export default class EventDetail extends React.Component {
     return eventOperationProvider.leaveEvent(this.state.data.eventId)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           this.setState({join: false});
@@ -166,7 +167,7 @@ export default class EventDetail extends React.Component {
     return eventOperationProvider.joinStatus(this.state.data.eventId)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         this.setState({join: responseJson.isSuccess})
       }
@@ -177,7 +178,7 @@ export default class EventDetail extends React.Component {
     return eventOperationProvider.followers(this.state.data.eventId)
     .then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         this.setState({status: responseJson.data});
       }
@@ -197,7 +198,7 @@ export default class EventDetail extends React.Component {
   _renderFooter(options) {
     return (
       <View style={styles.footer}>
-        <RkButton rkType='clear contrast' onPress={options.closeImage}>Close</RkButton>
+        <RkButton rkType='clear contrast' onPress={options.closeImage}>{strings("detail.close")}</RkButton>
         <RkText rkType='header4'>{`${options.pageNumber}/${options.totalPages}`}</RkText>
       </View>
     );
@@ -343,8 +344,6 @@ export default class EventDetail extends React.Component {
               </View>
             </RkCard>
             <RkCard style={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}}>
-              <Text style={style.title}>{`Example 5`}</Text>
-              <Text style={style.subtitle}>Momentum | Left-aligned | Active animation</Text>
               <Carousel
                 ref={c => this._slider1Ref = c}
                 data={this.state.entries}

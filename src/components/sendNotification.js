@@ -11,6 +11,7 @@ import * as dashboardProvider from '../providers/dashboard';
 import * as commentProvider from '../providers/comments';
 import { FontAwesome } from '../assets/icon';
 import DropDownHolder from '../providers/dropdownHolder';
+import {strings} from '../locales/i18n';
 
 let moment = require('moment');
 
@@ -35,10 +36,10 @@ export class SendNotification extends RkComponent {
         }
         dashboardProvider.getAnnouncement(credentials).then((responseJson) => {
             if(responseJson.isSuccess) {
-                DropDownHolder.getDropDown().alertWithType("success", "", "Notification sent successfully.");
+                DropDownHolder.getDropDown().alertWithType("success", "", strings("sendNotification.success"));
                 this.setState({message: ""})
             } else {
-                DropDownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropDownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             }
         })
     }
@@ -46,13 +47,13 @@ export class SendNotification extends RkComponent {
     render() {
         return (
             <View>
-                <RkText rkType='header4'>SEND ANNOUNCEMENT</RkText>
+                <RkText rkType='header4'>{strings("sendNotification.send_announcement")}</RkText>
                 <View style={{maxHeight: 500, flexDirection: 'row', flex: 1, justifyContent: "space-between"}}>
                     <RkTextInput
                         style={{flex: 1}}
                         autoCapitalize='none'
                         autoCorrect={false}
-                        placeholder="Your message"
+                        placeholder={strings("sendNotification.message")}
                         secureTextEntry={this.state.hidden}
                         onChangeText={(message) => {
                             this.setState({message: message})

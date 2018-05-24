@@ -8,6 +8,7 @@ import {Avatar} from '../components/avatar';
 import {FontAwesome} from '../assets/icon';
 import * as gameboardProvider from '../providers/gameboard';
 import Login from './login';
+import {strings} from '../locales/i18n'
 
 const {width} = Dimensions.get('window');
 
@@ -138,7 +139,7 @@ export default class Gameboard extends React.Component {
             this.index = 0;
             return (
                 <RkTabView index={this.state.selectedIndex} rkType='rounded' maxVisibleTabs={3} onTabChanged={(index) => this.handleChangeTab(index)}  style={{borderColor: "#ffffff", backgroundColor: '#da6954'}}>
-                    <RkTabView.Tab title={'Daily'} style={{backgroundColor: '#da6954'}}>
+                    <RkTabView.Tab title={strings("gameboard.daily")} style={{backgroundColor: '#da6954'}}>
                         {
 							this.state.dailyData != null ?
                             <ListView
@@ -159,7 +160,7 @@ export default class Gameboard extends React.Component {
                             <View style={[styles.root, {flex:1}]}></View>
                         }
                     </RkTabView.Tab>
-                    <RkTabView.Tab title={'Weekly'} style={{backgroundColor: '#da6954'}}>
+                    <RkTabView.Tab title={strings("gameboard.weekly")} style={{backgroundColor: '#da6954'}}>
                         {
                             this.state.weeklyData != null ?
                             <ListView
@@ -180,7 +181,7 @@ export default class Gameboard extends React.Component {
                             <View style={[styles.root, {flex:1}]}></View>
                         }
                     </RkTabView.Tab>
-                    <RkTabView.Tab title={'Monthly'} style={{backgroundColor: '#da6954'}}>
+                    <RkTabView.Tab title={strings("gameboard.monthly")} style={{backgroundColor: '#da6954'}}>
                         {
                             this.state.monthlyData != null ?
                             <ListView

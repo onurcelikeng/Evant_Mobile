@@ -7,6 +7,7 @@ import DropdownHolder from '../../providers/dropdownHolder';
 import * as accountProvider from '../../providers/account';
 import Options from './options'; 
 import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
+import {strings} from '../../locales/i18n'
 
 export default class Themes extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class Themes extends React.Component {
     accountProvider.changePassword(this.state)
     .then((responseJson) => { 
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) { 
           DropdownHolder.getDropDown().alertWithType("success", "", responseJson.message);
@@ -52,7 +53,7 @@ export default class Themes extends React.Component {
                       onFocus={(event) => {
                         this._scrollToInput(ReactNative.findNodeHandle(event.target))
                       }} 
-                      label='Old Password'
+                      label={strings("changePassword.old_password")}
                       value={this.state.oldPassword}
                       rkType='right clear'
                       autoCapitalize='none'
@@ -65,7 +66,7 @@ export default class Themes extends React.Component {
                       onFocus={(event) => {
                         this._scrollToInput(ReactNative.findNodeHandle(event.target))
                       }} 
-                      label='New Password'
+                      label={strings("changePassword.new_password")}
                       value={this.state.newPassword}
                       autoCapitalize='none'
                       secureTextEntry={true}
@@ -78,7 +79,7 @@ export default class Themes extends React.Component {
                       onFocus={(event) => {
                         this._scrollToInput(ReactNative.findNodeHandle(event.target))
                       }}  
-                      label='New Password (Again)'
+                      label={strings("changePassword.re_new_password")}
                       value={this.state.newPasswordRepeat}
                       autoCapitalize='none'
                       secureTextEntry={true}
@@ -92,7 +93,7 @@ export default class Themes extends React.Component {
                 if(this.state.oldPassword != '' && this.state.newPassword != '' && this.state.newPasswordRepeat != '') {
                     this.changePassword()
                 } else {
-                    DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
+                    DropdownHolder.getDropDown().alertWithType("warn", "", strings("common.fill_error"));
                 }}}>SAVE</RkButton>
         </KeyboardAwareScrollView>
     )

@@ -17,7 +17,8 @@ import {Gallery} from '../../components/gallery';
 import {FontIcons} from '../../assets/icon';
 import formatNumber from '../../utils/textUtils';
 import {data} from '../../data';
-import Login from '../login'
+import Login from '../login';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -61,7 +62,7 @@ export default class OtherProfile extends React.Component {
 	getUserInfo() {
 		userProvider.getUserInfo(this.props.id).then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -79,7 +80,7 @@ export default class OtherProfile extends React.Component {
 	follow() {
 		friendProvider.follow(this.props.id).then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -98,7 +99,7 @@ export default class OtherProfile extends React.Component {
 	unfollow() {
 		friendProvider.unfollow(this.props.id).then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -133,7 +134,7 @@ export default class OtherProfile extends React.Component {
 
   renderSelected(){
 		if(this.state.selected)
-			return <RkText style={{marginTop:10}}>Selected event: {this.state.selected.title} at {this.state.selected.time}</RkText>
+			return <RkText style={{marginTop:10}}>{strings("otherProfile.selected_event")} {this.state.selected.title}{strings("otherProfile.at")} {this.state.selected.time}</RkText>
 	}
 	
 	renderDetail(rowData, sectionID, rowID) {
@@ -297,13 +298,13 @@ export default class OtherProfile extends React.Component {
 							{this.state.user.followersCount != 0 ?
 							<TouchableOpacity onPress={() => {Actions.followerList({id: this.state.user.userId})}} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("otherProfile.followers")}</RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							:
 							<TouchableOpacity activeOpacity={1} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followers</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followersCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("otherProfile.followers")} </RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							}
@@ -311,13 +312,13 @@ export default class OtherProfile extends React.Component {
 							{this.state.user.followingsCount != 0 ?
 							<TouchableOpacity onPress={() => {Actions.followingList({id: this.state.user.userId})}} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("otherProfile.followings")} </RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							:
 							<TouchableOpacity activeOpacity={1} style={styles.section}>
 									<View style={styles.section}>
-											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>Followings</RkText></RkText>
+											<RkText rkType='header3' style={styles.space}>{formatNumber(this.state.user.followingsCount)} <RkText style={styles.title} rkType='secondary1 hintColor'>{strings("otherProfile.followings")} </RkText></RkText>
 									</View>
 							</TouchableOpacity>
 							}

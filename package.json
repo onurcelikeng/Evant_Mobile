@@ -33,6 +33,7 @@
     "react-native-dropdownalert": "^3.3.0",
     "react-native-elements": "^0.19.1",
     "react-native-gesture-handler": "^1.0.0-alpha.43",
+    "react-native-i18n": "^2.0.12",
     "react-native-image-header-scroll-view": "^0.8.1",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-keyboard-spacer": "^0.4.1",

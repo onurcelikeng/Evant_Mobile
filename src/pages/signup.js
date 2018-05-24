@@ -6,12 +6,14 @@ import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 import OneSignal from 'react-native-onesignal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import I18n from 'react-native-i18n';
 
 import DropdownHolder from '../providers/dropdownHolder';
 import * as accountProvider from '../providers/account';
 import * as deviceProvider from '../providers/userDevices';
 import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 import Login from './login'
+import {strings} from '../locales/i18n'
 
 let zxcvbn = require('zxcvbn');
 
@@ -73,7 +75,7 @@ export default class Signup extends React.Component {
       return accountProvider.register(credentials)
       .then((responseJson) => {
         if(responseJson == null || responseJson == "" || responseJson == undefined) {
-          DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+          DropdownHolder.getDropDown().alertWithType("error", "", strings('common.error_occured'));
         } else {
           if(responseJson.isSuccess) {
             var loginCredentials = {
@@ -82,7 +84,7 @@ export default class Signup extends React.Component {
             }
             accountProvider.login(loginCredentials).then((responseJson) => {
               if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings('common.error_occured'));
               } else {
                 if(responseJson.isSuccess) {
                   this.setState({
@@ -105,11 +107,13 @@ export default class Signup extends React.Component {
                       
                       deviceProvider.addUserDevice(deviceProperties).then((responseJson) => {
                         if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                          DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                          DropdownHolder.getDropDown().alertWithType("error", "", strings('common.error_occured'));
                         } else {
                           if(responseJson.isSuccess) {
                             accountProvider.getMe().then((responseJson) => {
                               if(responseJson.isSuccess) {
+                                if(responseJson.data.settings.language != "")
+                                  I18n.locale = responseJson.data.settings.language;
                                 Login.setCurrentUser(responseJson.data);
                                 Actions.tabbar();
                               } else {
@@ -175,7 +179,7 @@ export default class Signup extends React.Component {
               autoCorrect={false} 
               style={{marginHorizontal: 10, marginBottom: -3}} 
               rkType='rounded' 
-              placeholder='Name'/>
+              placeholder={strings('signup.name')}/>
             <RkTextInput 
               onFocus={(event) => {
                 this._scrollToInput(ReactNative.findNodeHandle(event.target))
@@ -186,7 +190,7 @@ export default class Signup extends React.Component {
               autoCorrect={false} 
               style={{marginHorizontal: 10, marginBottom: -3}} 
               rkType='rounded' 
-              placeholder='Surname'/>
+              placeholder={strings('signup.surname')}/>
             <RkTextInput 
               onFocus={(event) => {
                 this._scrollToInput(ReactNative.findNodeHandle(event.target))
@@ -197,7 +201,7 @@ export default class Signup extends React.Component {
               autoCorrect={false} 
               style={{marginHorizontal: 10, marginBottom: -3}} 
               rkType='rounded' 
-              placeholder='Email'/>
+              placeholder={strings('signup.email')}/>
             <RkTextInput 
               onFocus={(event) => {
                 this._scrollToInput(ReactNative.findNodeHandle(event.target))
@@ -208,7 +212,7 @@ export default class Signup extends React.Component {
               autoCorrect={false} 
               style={{marginHorizontal: 10, marginBottom: -3}} 
               rkType='rounded' 
-              placeholder='Password' 
+              placeholder={strings('signup.password')} 
               secureTextEntry={true}/>
             <RkTextInput 
               onFocus={(event) => {
@@ -222,15 +226,15 @@ export default class Signup extends React.Component {
               autoCorrect={false} 
               style={{marginHorizontal: 10}} 
               rkType='rounded' 
-              placeholder='Confirm Password' 
+              placeholder={strings('signup.confirm_password')}
               secureTextEntry={true}/>
-            <RkButton onPress={ () => this.signup() } rkType='medium stretch rounded' style={styles.save}>SIGN UP</RkButton>
+            <RkButton onPress={ () => this.signup() } rkType='medium stretch rounded' style={styles.save}>{strings('signup.signup_button')}</RkButton>
           </View>
           <View style={styles.footer}>
             <View style={styles.textRow}>
-              <RkText rkType='primary3'>Already have an account?</RkText>
+              <RkText rkType='primary3'>{strings('signup.ask_account')}</RkText>
               <RkButton rkType='clear'  onPress={() => Actions.pop() }>
-                <RkText rkType='header6'> Sign in now </RkText>
+                <RkText rkType='header6'>{strings('signup.login_button')}</RkText>
               </RkButton>
             </View>
           </View>

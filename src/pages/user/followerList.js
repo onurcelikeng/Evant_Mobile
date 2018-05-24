@@ -11,6 +11,7 @@ import Login from '../login';
 import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {FontAwesome} from '../../assets/icon';
+import {strings} from '../../locales/i18n'
 
 export default class FollowerList extends React.Component {
   constructor(props) {
@@ -38,7 +39,7 @@ export default class FollowerList extends React.Component {
 		return friendProvider.getFollowers(id)
 		.then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
-        DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+        DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
       } else {
         if(responseJson.isSuccess) {
           this.users = responseJson.data
@@ -95,7 +96,7 @@ export default class FollowerList extends React.Component {
                      onChange={(event) => this._filter(event.nativeEvent.text)}
                      label={<RkText rkType='awesome'>{FontAwesome.search}</RkText>}
                      rkType='row'
-                     placeholder='Search'/>
+                     placeholder={strings("followerList.search")}/>
       </View>
     )
   }
@@ -144,6 +145,7 @@ export default class FollowerList extends React.Component {
         dataSource={this.state.data}
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}
+        renderHeader={this.renderHeader}
         automaticallyAdjustContentInsets={false}
         translucent={true}
         refreshControl={

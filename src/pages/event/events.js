@@ -20,6 +20,7 @@ import * as weatherProvider from '../../providers/weather';
 import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
 import { formatDate } from '../../utils/momentjs';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -121,7 +122,7 @@ export default class Events extends React.Component {
 		return eventProvider.getCategoryEvents(id)
 		.then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -143,7 +144,7 @@ export default class Events extends React.Component {
 		return eventProvider.getEvents()
 		.then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({
@@ -245,7 +246,7 @@ export default class Events extends React.Component {
 								this.navTitleView = navTitleView;
 							}}
 						>
-							<RkText style={styles.navTitle}>Events</RkText>
+							<RkText style={styles.navTitle}>{strings("events.events_title")}</RkText>
 						</Animatable.View>
 					)}
           			renderForeground={() => (

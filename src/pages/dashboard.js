@@ -24,41 +24,6 @@ export default class Dashboard extends React.Component {
             isLoading: true,
             isSuccess: false,
         }
-
-        this.data = {
-            statItems: [
-                {
-                    name: 'Stars',
-                    value: '4,512',
-                    icon: 'github',
-                    background: RkTheme.current.colors.dashboard.stars
-                },
-                {
-                    name: 'Tweets',
-                    value: '2,256',
-                    icon: 'twitter',
-                    background: RkTheme.current.colors.dashboard.tweets
-                },
-                {
-                    name: 'Likes',
-                    value: '1,124',
-                    icon: 'facebook',
-                    background: RkTheme.current.colors.dashboard.likes
-                },
-            ]
-        };
-    }
-    
-    renderStatItem(item) {
-        return (
-            <View style={[styles.statItemContainer, {backgroundColor: item.background}]} key={item.name}>
-                <View>
-                    <RkText rkType='header6' style={styles.statItemValue}>{item.value}</RkText>
-                    <RkText rkType='secondary7' style={styles.statItemName}>{item.name}</RkText>
-                </View>
-                <RkText rkType='awesome hero' style={styles.statItemIcon}>{FontAwesome[item.icon]}</RkText>
-            </View>
-        )
     }
 
     render() {

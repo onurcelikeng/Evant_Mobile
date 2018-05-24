@@ -8,6 +8,7 @@ import { scale, scaleVertical } from '../utils/scale';
 import DropdownHolder from '../providers/dropdownHolder';
 import * as faqProvider from '../providers/faq';
 import { FontAwesome } from '../assets/icon';
+import {strings} from '../locales/i18n';
 
 let moment = require('moment');
 let {height, width} = Dimensions.get('window');
@@ -44,7 +45,7 @@ export class ChatBot extends RkComponent {
         faqProvider.getFAQ(this.props.eventId).then((responseJson) => {
 			console.log(responseJson);
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setState({faqs: responseJson.data, isLoading: false})
@@ -62,11 +63,11 @@ export class ChatBot extends RkComponent {
 
         faqProvider.addFAQ(body).then((responseJson) => {
 			if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
 					this.setModalVisible(!this.state.modalVisible)
-					DropdownHolder.getDropDown().alertWithType("success", "", "The FAQ is successfully added.");
+					DropdownHolder.getDropDown().alertWithType("success", "", strings("chatBot.success"));
 					this.getFAQ(this.props.eventId);
 				} else {
 					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -78,10 +79,10 @@ export class ChatBot extends RkComponent {
     deleteFAQ(id) {
         faqProvider.deleteFAQ(id).then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-				DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+				DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
 			} else {
 				if(responseJson.isSuccess) {
-					DropdownHolder.getDropDown().alertWithType("success", "", "The FAQ is successfully added.");
+					DropdownHolder.getDropDown().alertWithType("success", "", strings("chatBot.success"));
 					this.getFAQ(this.props.eventId);
 				} else {
 					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -111,7 +112,7 @@ export class ChatBot extends RkComponent {
         if(this.state.faqs.length == 0) {
             return (
                 <View style={{maxHeight: 50}}>
-                    <RkText rkType='primary3 mediumLine'>No FAQ</RkText>
+                    <RkText rkType='primary3 mediumLine'>{strings("chatBot.footer")}</RkText>
                 </View>
             )
         }
@@ -139,8 +140,8 @@ export class ChatBot extends RkComponent {
 			onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
 			<View style={styles.item}>
 				<View style={styles.content}>
-					<RkText rkType='secondary4 mediumLine'>Q: {info.item.question}</RkText>
-					<RkText rkType='secondary4 mediumLine'>A: {info.item.answer}</RkText>
+					<RkText rkType='secondary4 mediumLine'>{strings("chatBot.Q")} {info.item.question}</RkText>
+					<RkText rkType='secondary4 mediumLine'>{strings("chatBot.A")} {info.item.answer}</RkText>
 				</View>
 			</View>
 		</Swipeable>)
@@ -154,21 +155,20 @@ export class ChatBot extends RkComponent {
 						animationType="slide"
 						visible={this.state.modalVisible}
 						onRequestClose={() => {
-							alert('Modal has been closed.');
 						}}>
 						<View style={{marginTop: 22}}>
 							<View style={styles.navbar}>
 								<TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
 									<RkText rkType='awesome hero' style={styles.backButton}>{FontAwesome.chevronLeft}</RkText>
 								</TouchableOpacity>
-								<RkText style={{alignSelf: "center", textAlign: "center", flex:1, flexDirection:'row'}}>Add FAQ</RkText>
+								<RkText style={{alignSelf: "center", textAlign: "center", flex:1, flexDirection:'row'}}>{strings("chatBot.add")}</RkText>
 							</View>
 							<View style={{marginHorizontal: 15}}>
 								<View>
 									<RkTextInput 
 										autoCapitalize='none'
 										autoCorrect={false}
-										placeholder='Question' 
+										placeholder={strings("chatBot.question")}
 										value={this.state.question}
 										rkType='rounded'
 										onChangeText={(question) => this.setState({question})}/>
@@ -177,19 +177,19 @@ export class ChatBot extends RkComponent {
 									<RkTextInput 
 										autoCapitalize='none'
 										autoCorrect={false}
-										placeholder='Answer' 
+										placeholder={strings("chatBot.answer")}
 										value={this.state.answer}
 										rkType='rounded'
 										onChangeText={(answer) => this.setState({answer})}/>
 								</View>
 							</View>
 							<View>
-								<RkButton  rkType='medium stretch rounded' style={styles.save} onPress={() => this.addFAQ()}>Save</RkButton>
+								<RkButton  rkType='medium stretch rounded' style={styles.save} onPress={() => this.addFAQ()}>{strings("chatBot.save")}</RkButton>
 							</View>
 						</View>
 					</Modal>
 					<View style={{flex:1, flexDirection: "row", justifyContent:"space-between"}}>
-						<RkText rkType='header4'>CHAT BOT</RkText>
+						<RkText rkType='header4'>{strings("chatBot.chat_bot")}</RkText>
 						<View style={{}}>
 							<RkButton rkType="roundedIcon" style={{backgroundColor: "#ff0000"}} onPress={() => this.setModalVisible(!this.state.modalVisible)}>+</RkButton>
 						</View>
@@ -203,21 +203,20 @@ export class ChatBot extends RkComponent {
 					animationType="slide"
 					visible={this.state.modalVisible}
 					onRequestClose={() => {
-						alert('Modal has been closed.');
 					}}>
 					<View style={{marginTop: 22}}>
 						<View style={styles.navbar}>
 							<TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
 								<RkText rkType='awesome hero' style={styles.backButton}>{FontAwesome.chevronLeft}</RkText>
 							</TouchableOpacity>
-							<RkText style={{alignSelf: "center", textAlign: "center", flex:1, flexDirection:'row'}}>Add FAQ</RkText>
+							<RkText style={{alignSelf: "center", textAlign: "center", flex:1, flexDirection:'row'}}>{strings("chatBot.add")}</RkText>
 						</View>
 						<View style={{marginHorizontal: 15}}>
 							<View>
 								<RkTextInput 
 									autoCapitalize='none'
 									autoCorrect={false}
-									placeholder='Question' 
+									placeholder={strings("chatBot.question")}
 									value={this.state.question}
 									rkType='rounded'
 									onChangeText={(question) => this.setState({question})}/>
@@ -226,20 +225,20 @@ export class ChatBot extends RkComponent {
 								<RkTextInput 
 									autoCapitalize='none'
 									autoCorrect={false}
-									placeholder='Answer' 
+									placeholder={strings("chatBot.answer")}
 									value={this.state.answer}
 									rkType='rounded'
 									onChangeText={(answer) => this.setState({answer})}/>
 							</View>
 						</View>
 						<View>
-							<RkButton  rkType='medium stretch rounded' style={styles.save} onPress={() => this.addFAQ()}>Save</RkButton>
+							<RkButton  rkType='medium stretch rounded' style={styles.save} onPress={() => this.addFAQ()}>{strings("chatBot.save")}</RkButton>
 						</View>
 					</View>
 				</Modal>
 				<View>
                 	<View style={{flex:1, flexDirection: "row", justifyContent:"space-between"}}>
-						<RkText rkType='header4'>CHAT BOT</RkText>
+						<RkText rkType='header4'>{strings("chatBot.chat_bot")}</RkText>
 						<View style={{}}>
 							<RkButton rkType="roundedIcon" style={{backgroundColor: "#ff0000"}} onPress={() => this.setModalVisible(!this.state.modalVisible)}>+</RkButton>
 						</View>

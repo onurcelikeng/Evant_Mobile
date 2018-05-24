@@ -15,6 +15,7 @@ import * as categoryProvider from '../../providers/category';
 import {Avatar} from '../../components/avatar';
 import {scale, scaleVertical} from '../../utils/scale';
 import Events from './events';
+import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
 
@@ -56,7 +57,7 @@ export default class AddEvent extends React.Component {
 		return categoryProvider.getCategories()
 		.then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) {
                     this.setState({
@@ -109,7 +110,7 @@ export default class AddEvent extends React.Component {
                     eventProvider.addEvent(credentials)
                     .then((responseJson) => {
                         if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                            DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                            DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
                         } else {
                             if(responseJson.isSuccess) { 
                                 this.props.onPress();
@@ -128,7 +129,7 @@ export default class AddEvent extends React.Component {
             });
             
         } else {
-            DropdownHolder.getDropDown().alertWithType("error", "", "Please fill up all the spaces.");
+            DropdownHolder.getDropDown().alertWithType("error", "", strings("common.fill_error"));
         }   
     }
 
@@ -152,7 +153,7 @@ export default class AddEvent extends React.Component {
                     <TouchableOpacity onPress={this.props.onPress}>
                         <RkText rkType='awesome hero' style={styles.backButton}>{FontAwesome.chevronLeft}</RkText>
                     </TouchableOpacity>
-                    <RkText style={{alignSelf: "center", textAlign: "center", flex:1, flexDirection:'row'}}>Add Event</RkText>
+                    <RkText style={{alignSelf: "center", textAlign: "center", flex:1, flexDirection:'row'}}>{strings("addEvent.add_event")}</RkText>
                 </View>
                 <KeyboardAwareScrollView innerRef={ref => {this.scroll = ref}}
                     resetScrollToCoords={{ x: 0, y: 0 }}
@@ -175,7 +176,7 @@ export default class AddEvent extends React.Component {
                             </View>
                             <View>
                                 <View style={[styles.textRow]}>
-                                    <RkText rkType='subtitle'>Title</RkText>
+                                    <RkText rkType='subtitle'>{strings("addEvent.title")}</RkText>
                                 </View>
                                 <RkTextInput 
                                     autoCapitalize='none'
@@ -186,7 +187,7 @@ export default class AddEvent extends React.Component {
                             </View>
                             <View>
                                 <View style={[styles.textRow]}>
-                                    <RkText rkType='subtitle'>Description</RkText>
+                                    <RkText rkType='subtitle'>{strings("addEvent.description")}</RkText>
                                 </View>
                                 <RkTextInput 
                                     autoCapitalize='none'
@@ -199,7 +200,7 @@ export default class AddEvent extends React.Component {
                             </View>
                             <View>
                                 <View style={[styles.textRow]}>
-                                    <RkText rkType='subtitle'>Category</RkText>
+                                    <RkText rkType='subtitle'>{strings("addEvent.category")}</RkText>
                                 </View>                                
                                 {
                                     this.data[0].length > 0 ?
@@ -223,7 +224,7 @@ export default class AddEvent extends React.Component {
                             </View>
                             <View>
                                 <View style={[styles.textRow]}>
-                                    <RkText rkType='subtitle'>City</RkText>
+                                    <RkText rkType='subtitle'>{strings("addEvent.city")}</RkText>
                                 </View>
                                 <RkTextInput 
                                     autoCapitalize='none'
@@ -234,7 +235,7 @@ export default class AddEvent extends React.Component {
                             </View>
                             <View>
                                 <View style={[styles.textRow]}>
-                                    <RkText rkType='subtitle'>Town</RkText>
+                                    <RkText rkType='subtitle'>{strings("addEvent.town")}</RkText>
                                 </View>
                                 <RkTextInput 
                                     autoCapitalize='none'
@@ -246,7 +247,7 @@ export default class AddEvent extends React.Component {
 
                             <View>
                                 <View style={[styles.textRow]}>
-                                    <RkText rkType='subtitle'>Start Date</RkText>
+                                    <RkText rkType='subtitle'>{strings("addEvent.start_date")}</RkText>
                                 </View>
                                 <DatePicker
                                     style={styles.date}
@@ -273,7 +274,7 @@ export default class AddEvent extends React.Component {
                             </View>
                             <View>
                                 <View style={[styles.textRow]}>
-                                    <RkText rkType='subtitle'>Finish Date</RkText>
+                                    <RkText rkType='subtitle'>{strings("addEvent.finish_date")}</RkText>
                                 </View>
                                 <DatePicker
                                     style={styles.date}
@@ -300,7 +301,7 @@ export default class AddEvent extends React.Component {
                             </View>
 
                             <View style={styles.row}>
-                                <RkText rkType='subtitle' >Is Private</RkText>
+                                <RkText rkType='subtitle' >{strings("addEvent.is_private")}</RkText>
                                 <RkSwitch
                                 style={styles.switch}
                                     value={this.state.isPrivate}
@@ -313,7 +314,7 @@ export default class AddEvent extends React.Component {
                         
                         <RkButton rkType='medium stretch rounded' style={styles.button} onPress={() => {
                                 this.addEvent();
-                            }}>SAVE</RkButton>
+                            }}>{strings("addEvent.save_button")}</RkButton>
                 </KeyboardAwareScrollView>
             </View>
         )

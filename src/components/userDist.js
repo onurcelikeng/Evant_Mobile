@@ -7,6 +7,8 @@ import PureChart from 'react-native-pure-chart';
 import { scale } from '../utils/scale';
 import DropdownHolder from '../providers/dropdownHolder';
 import * as dashboardProvider from '../providers/dashboard';
+import {strings} from '../locales/i18n';
+
 let moment = require('moment');
 
 export class UserDistribution extends RkComponent {
@@ -49,23 +51,23 @@ export class UserDistribution extends RkComponent {
         if(this.state.isLoading) {
             return (
                 <View>
-                    <RkText rkType='header4'>ATTENDEE DISTRIBUTION</RkText>
+                    <RkText rkType='header4'>{strings("userDist.attendee_distribution")}</RkText>
                 </View>
             )
         } else if(this.state.data.length == 0){
             console.log(this.state.data)
             return (
                 <View>
-                    <RkText rkType='header4'>ATTENDEE DISTRIBUTION</RkText>
+                    <RkText rkType='header4'>{strings("userDist.attendee_distribution")}</RkText>
                     <View style={{maxHeight: 50}}>
-                        <RkText rkType='primary3 mediumLine'>No Attendees</RkText>
+                        <RkText rkType='primary3 mediumLine'>{strings("userDist.footer")}</RkText>
                     </View>
                 </View>   
             )
         }
         return (
             <View>
-                <RkText rkType='header4'>ATTENDEE DISTRIBUTION</RkText>
+                <RkText rkType='header4'>{strings("userDist.attendee_distribution")}</RkText>
                 <View style={{marginVertical: 20}}>
                     <PureChart data={this.state.data} type='line' />
                 </View>

@@ -11,6 +11,7 @@ import {data} from '../../data';
 import {Avatar} from '../../components/avatar';
 import {SocialSetting} from '../../components/socialSetting';
 import { FontAwesome } from '../../assets/icon';
+import {strings} from '../../locales/i18n'
 
 export default class EditProfile extends React.Component {
 
@@ -43,7 +44,7 @@ export default class EditProfile extends React.Component {
         accountProvider.profileEdit(credentials)
         .then((responseJson) => {
             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
             } else {
                 if(responseJson.isSuccess) { 
                     Login.getCurrentUser().firstName = this.state.firstName;
@@ -53,7 +54,7 @@ export default class EditProfile extends React.Component {
                         accountProvider.photo(this.state.photo)
                         .then((res) => {
                             if(responseJson == null || responseJson == "" || responseJson == undefined) {
-                                DropdownHolder.getDropDown().alertWithType("error", "", "An error occured, please try again.");
+                                DropdownHolder.getDropDown().alertWithType("error", "", strings("common.error_occured"));
                             } else {
                                 if(res.isSuccess) {
                                     this.user.photo = this.state.photo;
@@ -107,7 +108,7 @@ export default class EditProfile extends React.Component {
                     </View>
                     <View style={styles.section}>
                         <View style={[styles.row, styles.heading]}>
-                            <RkText rkType='header6 primary'>INFO</RkText>
+                            <RkText rkType='header6 primary'>{strings("editProfile.info")}</RkText>
                         </View>
                         <View style={styles.row}>
                             <RkTextInput 
@@ -116,7 +117,7 @@ export default class EditProfile extends React.Component {
                                 }} 
                                 autoCapitalize='none' 
                                 autoCorrect={false} 
-                                label='First Name'
+                                label={strings("editProfile.first_name")}
                                 value={this.state.firstName}
                                 rkType='right clear'
                                 onChangeText={(text) => this.setState({firstName: text})}/>
@@ -128,7 +129,7 @@ export default class EditProfile extends React.Component {
                                 }} 
                                 autoCapitalize='none' 
                                 autoCorrect={false} 
-                                label='Last Name'
+                                label={strings("editProfile.last_name")}
                                 value={this.state.lastName}
                                 onChangeText={(text) => this.setState({lastName: text})}
                                 rkType='right clear'/>
@@ -140,7 +141,7 @@ export default class EditProfile extends React.Component {
                                 }} 
                                 autoCapitalize='none' 
                                 autoCorrect={false} 
-                                label='Email'
+                                label={strings("editProfile.email")}
                                 value={this.state.email}
                                 onChangeText={(text) => this.setState({email: text})}
                                 rkType='right clear'/>
@@ -152,7 +153,7 @@ export default class EditProfile extends React.Component {
                                 }} 
                                 autoCapitalize='none' 
                                 autoCorrect={false} 
-                                label='Country'
+                                label={strings("editProfile.country")}
                                 value={this.state.country}
                                 onChangeText={(text) => this.setState({country: text})}
                                 rkType='right clear'/>
@@ -164,7 +165,7 @@ export default class EditProfile extends React.Component {
                                 }} 
                                 autoCapitalize='none' 
                                 autoCorrect={false} 
-                                label='Phone'
+                                label={strings("editProfile.phone")}
                                 value={this.state.phone}
                                 onChangeText={(text) => this.setState({phone: text})}
                                 rkType='right clear'/>
@@ -173,7 +174,7 @@ export default class EditProfile extends React.Component {
 
                     <View style={styles.section}>
                         <View style={[styles.row, styles.heading]}>
-                            <RkText rkType='primary header6'>CONNECT YOUR ACCOUNT</RkText>
+                            <RkText rkType='primary header6'>{strings("editProfile.connect")}</RkText>
                         </View>
                         <View style={styles.row}>
                             <SocialSetting name='Twitter' icon={FontAwesome.twitter} tintColor={RkTheme.current.colors.twitter}/>
@@ -191,8 +192,8 @@ export default class EditProfile extends React.Component {
                         && this.state.country != '' && this.state.phone != '') {
                             this.profileEdit();
                         } else {
-                            DropdownHolder.getDropDown().alertWithType("warn", "", "Please fill out all the spaces.");
-                        }}}>SAVE</RkButton>
+                            DropdownHolder.getDropDown().alertWithType("warn", "", strings("common.fill_error"));
+                        }}}>{strings("editProfile.save_button")}</RkButton>
                 </KeyboardAwareScrollView>
             </ScrollView>
         )

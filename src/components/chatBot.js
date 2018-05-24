@@ -140,8 +140,14 @@ export class ChatBot extends RkComponent {
 			onRightButtonsCloseRelease = {() => this.currentlyOpenSwipeable = null}>
 			<View style={styles.item}>
 				<View style={styles.content}>
-					<RkText rkType='secondary4 mediumLine'>{strings("chatBot.Q")} {info.item.question}</RkText>
-					<RkText rkType='secondary4 mediumLine'>{strings("chatBot.A")} {info.item.answer}</RkText>
+					<View style={{flex:1, flexDirection: "row"}}>
+						<RkText style={{fontWeight: "bold"}} rkType='secondary4 mediumLine'>{strings("chatBot.Q")} </RkText>
+						<RkText rkType='secondary4 mediumLine'>{info.item.question}</RkText>
+					</View>
+					<View style={{flex:1, flexDirection: "row"}}>
+						<RkText style={{fontWeight: "bold"}} rkType='secondary4 mediumLine'>{strings("chatBot.A")} </RkText>
+						<RkText rkType='secondary4 mediumLine'>{info.item.answer}</RkText>
+					</View>
 				</View>
 			</View>
 		</Swipeable>)

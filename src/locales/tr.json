@@ -114,7 +114,7 @@
         "start_date": "Başlangıç Tarihi",
         "finish_date": "Bitiş Tarihi",
         "is_private": "Gizli Etkinlik",
-        "save_button": "KAYDET"
+        "save_button": "PAYLAŞ"
     },
     "comments": {
         "comment": "Yorum ekle..."
@@ -214,7 +214,7 @@
         "followings": "Takip"
     },
     "followingList": {
-        "search": "Ar"
+        "search": "Ara"
     },
     "followerList": {
         "search": "Ara"

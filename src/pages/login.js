@@ -131,8 +131,7 @@ export default class Login extends React.Component {
                         Login.setCurrentUser(responseJson.data);
                         this.setState({
                           isLoading: false
-                        });
-                        Actions.tabbar();
+                        }, () => Actions.tabbar());
                       } else {
                         DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
                       }

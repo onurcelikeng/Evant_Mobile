@@ -90,9 +90,11 @@ export default class Comments extends React.Component {
 				data: responseJson.data,
 				isSuccess:true
 			});
+			/*
 			InteractionManager.runAfterInteractions(() => {
 				this.refs.list.scrollToEnd();
 			});
+			*/
 			} else {
 			this.setState({
 				isLoading: false,
@@ -189,11 +191,11 @@ export default class Comments extends React.Component {
 
 	_scroll() {
 		if(this.state.isSuccess) {
-		if (Platform.OS === 'ios') {
-			this.refs.list.scrollToEnd();
-		} else {
-			_.delay(() => this.refs.list.scrollToEnd(), 100);
-		}
+			if (Platform.OS === 'ios') {
+				this.refs.list.scrollToEnd();
+			} else {
+				_.delay(() => this.refs.list.scrollToEnd(), 100);
+			}
 		}  
 	}
 
@@ -237,45 +239,45 @@ export default class Comments extends React.Component {
 		}
 		
 		if(this.state.isSuccess == false) {
-		const data = []
+			const data = []
+			
+			renderFooter = () => {
+				return (
+				<View>
+					<Text>No messages found.</Text>
+				</View>
+				);
+			};
+			return(
+				<RkAvoidKeyboard style={styles.container} onResponderRelease={(event) => { Keyboard.dismiss(); }}>
+				<FlatList 
+					ref="list"
+					data={this.state.data}
+					extraData={this.state}
+					ItemSeparatorComponent={this._renderSeparator}
+					keyExtractor={this._keyExtractor}
+					refreshControl={<RefreshControl
+					refreshing={this.state.isRefreshing}
+					onRefresh={this.onRefresh}
+					/>}
+					renderItem={this.renderItem}
+					ListEmptyComponent={this.showEmptyListView}/>
+				<View style={styles.footer}>
+					<RkTextInput
+					onFocus={() => this._scroll(true)}
+					onBlur={() => this._scroll(true)}
+					onChangeText={(message) => this.setState({message})}
+					value={this.state.message}
+					autoCorrect={false}
+					rkType='row sticker'
+					placeholder={strings("comments.comment")}/>
 
-		renderFooter = () => {
-			return (
-			<View>
-				<Text>No messages found.</Text>
-			</View>
-			);
-		};
-		return(
-			<RkAvoidKeyboard style={styles.container} onResponderRelease={(event) => { Keyboard.dismiss(); }}>
-			<FlatList 
-				ref="list"
-				data={this.state.data}
-				extraData={this.state}
-				ItemSeparatorComponent={this._renderSeparator}
-				keyExtractor={this._keyExtractor}
-				refreshControl={<RefreshControl
-				refreshing={this.state.isRefreshing}
-				onRefresh={this.onRefresh}
-				/>}
-				renderItem={this.renderItem}
-				ListEmptyComponent={this.showEmptyListView}/>
-			<View style={styles.footer}>
-				<RkTextInput
-				onFocus={() => this._scroll(true)}
-				onBlur={() => this._scroll(true)}
-				onChangeText={(message) => this.setState({message})}
-				value={this.state.message}
-				autoCorrect={false}
-				rkType='row sticker'
-				placeholder={strings("comments.comment")}/>
-
-				<RkButton onPress={() => {this._pushMessage(); Keyboard.dismiss();}} style={styles.send} rkType='circle highlight'>
-				<Image source={require('../../assets/icons/sendIcon.png')}/>
-				</RkButton>
-			</View>
-			</RkAvoidKeyboard>
-		)
+					<RkButton onPress={() => {this._pushMessage(); Keyboard.dismiss();}} style={styles.send} rkType='circle highlight'>
+					<Image source={require('../../assets/icons/sendIcon.png')}/>
+					</RkButton>
+				</View>
+				</RkAvoidKeyboard>
+			)
 		}
 
 		return (

@@ -112,7 +112,7 @@
         "start_date": "Start Date",
         "finish_date": "Finish Date",
         "is_private": "Is Private",
-        "save_button": "SAVE"
+        "save_button": "SHARE"
     },
     "comments": {
         "comment": "Add a comment..."

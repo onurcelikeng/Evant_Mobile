@@ -17,6 +17,7 @@ import Login from '../login';
 import DropdownHolder from '../../providers/dropdownHolder';
 import * as eventProvider from '../../providers/events';
 import * as weatherProvider from '../../providers/weather';
+import * as weathersProvider from '../../providers/weathers';
 import {SocialBar} from '../../components/socialBar';
 import {data} from '../../data';
 import { formatDate } from '../../utils/momentjs';
@@ -45,6 +46,8 @@ export default class Events extends React.Component {
 	}
 
 	componentDidMount() {
+		this.getWeathers()
+
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				console.log(position)
@@ -74,9 +77,22 @@ export default class Events extends React.Component {
 					visible={this.state.modal}
 					onRequestClose={() => {}}
 				>
-					<AddEvent lat={this.state.latitude} long={this.state.longitude} onPress={() => this.setState({modal: false})} />
+					<AddEvent lat={this.state.latitude} long={this.state.longitude} onPress={() => {this.setState({modal: false}); this.getEvents();}} />
 				</Modal>
 		)
+	}
+
+	getWeathers() {
+		return weathersProvider.getWeather()
+		.then((responseJson) => {
+			if(responseJson.isSuccess) {
+				console.log(responseJson)
+				var icon = responseJson.data.status;
+				if(icon < 10) icon = "0" + icon;
+				this.setState({icon: "https://developer.accuweather.com/sites/default/files/" + icon + "-s.png"})
+				console.log(this.state.icon)
+			}
+		})
 	}
 	
 	getCity(lat, long) {
@@ -258,11 +274,12 @@ export default class Events extends React.Component {
 																							if (buttonIndex === 2) { this.setState({url: "https://t.me/beamoredevbot"}, () => Linking.openURL(this.state.url).catch(err => console.error('An error occurred', err))) }
 																						});
 																				}}>
-								<Image style={{height: 30, width: 30, marginLeft: 15, marginTop: 5, alignContent:"flex-start", alignSelf: "flex-start"}} source={require("../../assets/icons/chatbot.png")} />
+								<Image style={{height: 25, width: 25, marginLeft: 15, marginTop: 10, alignContent:"flex-start", alignSelf: "flex-start"}} source={require("../../assets/icons/chatbot.png")} />
 							</TouchableOpacity>
 							<View style={{alignContent: "center", justifyContent:'center', flexDirection: "row", flex:1}}>
 								<RkText style={styles.navTitle}>{strings("events.events_title")}</RkText>
 							</View>
+							<View style={{height: 25, width: 25, marginLeft: 15, marginTop: 10, alignContent:"flex-start", alignSelf: "flex-start"}}/>
 						</Animatable.View>
 					)}
           			renderForeground={() => (

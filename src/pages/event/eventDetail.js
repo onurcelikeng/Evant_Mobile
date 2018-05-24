@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image, View, TouchableOpacity, Dimensions, RefreshControl, StatusBar, StyleSheet, Modal } from 'react-native';
+import { ScrollView, Image, View, TouchableOpacity, Dimensions, RefreshControl, StatusBar, StyleSheet, Modal, ActivityIndicator } from 'react-native';
 import { RkCard, RkText, RkStyleSheet, RkButton, RkModalImg } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
@@ -210,29 +210,19 @@ export default class EventDetail extends React.Component {
 
   render() {
     const {modal} = this.state;
+    const animating = this.state.isLoading;
 
     if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
 
 			return (
-			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-			  </View>
+			  <View style = {styles.indContainer}>
+            <ActivityIndicator
+            animating = {animating}
+            color = '#bc2b78'
+            size = "large"
+            style = {styles.activityIndicator}/>
+          </View>
 			);
 		} else if(this.state.data.length != 0) {
       let button = null;
@@ -316,12 +306,12 @@ export default class EventDetail extends React.Component {
                   <Image style={{height: 20, width: 20, marginRight: 10, alignSelf: 'center'}} source={require("../../assets/icons/calendar.png")}/>
                   <View>
                     <View style={{flex:1, flexDirection: "row"}}>
-                      <RkText rkType='secondary2 hintColor'>{formatDate(this.state.data.start)}</RkText>
-                      <RkText rkType='secondary2 hintColor'> - {formatDate(this.state.data.finish)}</RkText>
+                      <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('ll')}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.finish).format('ll')}</RkText>
                     </View>
                     <View style={{flex:1, flexDirection: "row"}}>
-                      <RkText rkType='secondary2 hintColor'>{formatDate(this.state.data.start)}</RkText>
-                      <RkText rkType='secondary2 hintColor'> - {formatDate(this.state.data.finish)}</RkText>
+                      <RkText rkType='secondary2 hintColor'>{moment(this.state.data.start).format('LT')}</RkText>
+                      <RkText rkType='secondary2 hintColor'> - {moment(this.state.data.finish).format('LT')}</RkText>
                     </View>
                   </View>
                 </View>
@@ -471,6 +461,23 @@ let styles = RkStyleSheet.create(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  indContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+    marginTop: 70,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+	 },
+	 activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 30
+	},
   imageTitle: {
     color: 'white',
     backgroundColor: 'transparent',

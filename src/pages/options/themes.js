@@ -12,7 +12,6 @@ import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 
 export default class Themes extends React.Component {
 
-
   constructor(props) {
     super(props);
 

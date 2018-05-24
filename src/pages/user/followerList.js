@@ -14,6 +14,7 @@ import {FontAwesome} from '../../assets/icon';
 import {strings} from '../../locales/i18n'
 
 export default class FollowerList extends React.Component {
+
   constructor(props) {
     super(props);
 

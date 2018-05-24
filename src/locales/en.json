@@ -21,7 +21,8 @@
         "confirm_password": "Confirm Password"
     },
     "events": {
-        "events_title": "Events"
+        "events_title": "Events",
+        "cancel_button": "Cancel"
     },
     "categoryEvents": {
         "all": "All",

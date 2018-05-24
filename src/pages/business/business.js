@@ -13,7 +13,7 @@ import {strings} from '../../locales/i18n';
 let moment = require('moment');
 
 export default class Business extends React.Component {
-    
+
     constructor(props) {
         super(props);
 

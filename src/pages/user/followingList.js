@@ -30,6 +30,7 @@ import {FontAwesome} from '../../assets/icon';
 import {strings} from '../../locales/i18n'
 
 export default class FollowingList extends React.Component {
+
   constructor(props) {
     super(props);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl, Modal, Geolocation } from 'react-native';
+import { FlatList, Image, View, TouchableOpacity, Dimensions, ActionSheetIOS, RefreshControl, Modal, Geolocation, Linking } from 'react-native';
 import { RkText, RkCard, RkStyleSheet, withRkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
@@ -246,7 +246,22 @@ export default class Events extends React.Component {
 								this.navTitleView = navTitleView;
 							}}
 						>
-							<RkText style={styles.navTitle}>{strings("events.events_title")}</RkText>
+							<TouchableOpacity style={[{alignContent:"flex-start"}]} onPress={() => {ActionSheetIOS.showActionSheetWithOptions({
+																							options: [strings("events.cancel_button"), 'Skype', 'Telegram'],
+																							telegramButtonIndex: 2,
+																							skypeButtonIndex: 1,
+																							cancelButtonIndex: 0,
+																							},
+																							(buttonIndex) => {
+																							if (buttonIndex === 1) { this.setState({url: "https://join.skype.com/bot/a00a6e69-e4a0-4aa8-a96b-6aaace8bd7c4?add"}, () => Linking.openURL(this.state.url).catch(err => console.error('An error occurred', err))); }
+																							if (buttonIndex === 2) { this.setState({url: "https://t.me/beamoredevbot"}, () => Linking.openURL(this.state.url).catch(err => console.error('An error occurred', err))) }
+																						});
+																				}}>
+								<Image style={{height: 30, width: 30, marginLeft: 15, marginTop: 5, alignContent:"flex-start", alignSelf: "flex-start"}} source={require("../../assets/icons/chatbot.png")} />
+							</TouchableOpacity>
+							<View style={{alignContent: "center", justifyContent:'center', flexDirection: "row", flex:1}}>
+								<RkText style={styles.navTitle}>{strings("events.events_title")}</RkText>
+							</View>
 						</Animatable.View>
 					)}
           			renderForeground={() => (
@@ -347,6 +362,7 @@ let styles = RkStyleSheet.create(theme => ({
 		color: 'white',
 		fontSize: 21,
 		backgroundColor: 'transparent',
+		alignSelf: "center"
 	},
 	containerHeader: {
 		flex: 1,
@@ -386,10 +402,8 @@ let styles = RkStyleSheet.create(theme => ({
 	navTitleView: {
 	  	flexDirection: 'row',
 		height: MIN_HEIGHT,
-		justifyContent: 'center',
-		alignItems: 'center',
 		paddingTop: 16,
-		opacity: 0
+		opacity: 0,
 	},
 	navTitle: {
 		color: 'white',

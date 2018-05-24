@@ -27,7 +27,7 @@ const MAX_HEIGHT = 280;
 let {height, width} = Dimensions.get('window');
 
 export default class OtherProfile extends React.Component {
-
+	
 	goSettings() {
 		Actions.settings()
 	}

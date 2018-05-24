@@ -13,6 +13,7 @@ import Login from './login';
 import { SendNotification } from '../components/sendNotification';
 import { UserDistribution } from '../components/userDist';
 import { ChatBot } from '../components/chatBot';
+import {strings} from '../locales/i18n'
 
 let moment = require('moment');
 

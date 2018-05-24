@@ -10,6 +10,7 @@ import { scale, scaleModerate, scaleVertical } from '../../utils/scale';
 import {strings} from '../../locales/i18n'
 
 export default class Themes extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {

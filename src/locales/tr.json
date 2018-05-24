@@ -23,7 +23,8 @@
         "confirm_password": "Şifre (Tekrar)"
     },
     "events": {
-        "events_title": "Etkinlikler"
+        "events_title": "Etkinlikler",
+        "cancel_button": "İptal"
     },
     "categoryEvents": {
         "all": "All",

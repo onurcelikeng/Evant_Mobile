@@ -27,6 +27,7 @@ let moment = require('moment');
 const MIN_HEIGHT = Header.HEIGHT;
 const MAX_HEIGHT = 150;
 let {height, width} = Dimensions.get('window');
+const navbar = Header.HEIGHT;
 
 export default class Events extends React.Component {
 
@@ -36,8 +37,8 @@ export default class Events extends React.Component {
 			isLoading: true,
 			isRefreshing: false,
 			modal: false,
-			city: 'Buca',
-			icon: 'https://developer.accuweather.com/sites/default/files/01-s.png'
+			city: 'Bornova',
+			icon: 'https://developer.accuweather.com/sites/default/files/03-s.png'
 		}
 		this.onRefresh = this._onRefresh.bind(this);
 		this.renderItem = this._renderItem.bind(this);
@@ -156,8 +157,7 @@ export default class Events extends React.Component {
 						isLoading: false,
 						data: [],
 						});
-					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
-				}
+					}
 			}
 		}).catch((err) => {console.log(err)});
 	}
@@ -212,6 +212,7 @@ export default class Events extends React.Component {
 	}
 	
 	render() {
+		var imageHeight = height - MAX_HEIGHT - navbar;
 		const {modal} = this.state;
 
 		var width = require('Dimensions').get('window').width - 50;
@@ -293,8 +294,8 @@ export default class Events extends React.Component {
 							renderItem={this.renderItem}
 							keyExtractor={this._keyExtractor}
 							style={styles.container}
-							ListEmptyComponent={<View style={{flex:1, flexDirection: 'row', justifyContent: 'center', alignSelf:'center', alignContent: 'center'}}>
-													<Image style={{alignSelf: 'center'}} source={require('../../assets/images/notfound.png')}/>
+							ListEmptyComponent={<View style={[{height: imageHeight}]}>
+													<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
 												</View>}
 							refreshControl={
 								<RefreshControl

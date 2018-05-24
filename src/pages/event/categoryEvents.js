@@ -1,10 +1,11 @@
 import React from 'react';
-import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl, TouchableHighlight } from 'react-native';
+import { FlatList, Image, View, TouchableOpacity, Dimensions, RefreshControl, TouchableHighlight, ActivityIndicator } from 'react-native';
 import { RkText, RkCard, RkStyleSheet, withRkTheme, RkImage, RkTabView, Tab, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import ContentLoader from '../../config/contentLoader'
 import Svg, { Circle, Ellipse, G, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
+import { Header } from 'react-navigation';
 
 import {Avatar} from '../../components/avatar';
 import Login from '../login';
@@ -19,6 +20,8 @@ import { formatDate } from '../../utils/momentjs';
 import {strings} from '../../locales/i18n'
 
 let moment = require('moment');
+let {height, width} = Dimensions.get('window');
+const navbar = Header.HEIGHT;
 
 export default class CategoryEvents extends React.Component {
 
@@ -121,7 +124,6 @@ export default class CategoryEvents extends React.Component {
 		} else if(index == 2) {
             var array = []
 			this.state.data.forEach(element => {
-                console.log(moment(element.start));
                 if(moment(element.start).calendar().toLocaleLowerCase().indexOf("Tomorrow") !=-1 || moment(element.start).calendar().toLocaleLowerCase().indexOf("yarın") !=-1){
                     array.push(element);
                 }
@@ -202,25 +204,19 @@ export default class CategoryEvents extends React.Component {
     }
 	
 	render() {
+        var width = require('Dimensions').get('window').width - 50;
+        var imageHeight = height - navbar*2;
+        
 		if (this.state.isLoading) {
-			var width = require('Dimensions').get('window').width - 50;
-			var loaders = [];
-			for(let i = 0; i < 10; i++){
-			  loaders.push(
-				<ContentLoader key={i} height={150}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-					<Rect x="80" y="40" rx="3" ry="3" width={width - 80} height="10"/>
-					<Rect x="0" y="80" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="100" rx="3" ry="3" width={width} height="10"/>
-					<Rect x="0" y="120" rx="3" ry="3" width={width} height="10"/>
-				</ContentLoader>
-			  )
-			}
+			const animating = this.state.isLoading;
 			return (
-			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-				{loaders}
-			  </View>
+				<View style = {styles.indContainer}>
+					<ActivityIndicator
+					animating = {animating}
+					color = '#bc2b78'
+					size = "large"
+					style = {styles.activityIndicator}/>
+			 	</View>
 			);
 		}
 
@@ -234,6 +230,9 @@ export default class CategoryEvents extends React.Component {
                             keyExtractor={this._keyExtractor}
                             style={styles.root}
                             enableEmptySections={true}
+                            ListEmptyComponent={<View style={[{height: imageHeight}]}>
+													<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
+												</View>}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={this.state.isRefreshing}
@@ -249,6 +248,9 @@ export default class CategoryEvents extends React.Component {
                             keyExtractor={this._keyExtractor}
                             style={styles.root}
                             enableEmptySections={true}
+                            ListEmptyComponent={<View style={[{height: imageHeight}]}>
+													<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
+												</View>}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={this.state.isRefreshing}
@@ -264,6 +266,9 @@ export default class CategoryEvents extends React.Component {
                             keyExtractor={this._keyExtractor}
                             style={styles.root}
                             enableEmptySections={true}
+                            ListEmptyComponent={<View style={[{height: imageHeight}]}>
+													<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
+												</View>}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={this.state.isRefreshing}
@@ -279,6 +284,9 @@ export default class CategoryEvents extends React.Component {
                             keyExtractor={this._keyExtractor}
                             style={styles.root}
                             enableEmptySections={true}
+                            ListEmptyComponent={<View style={[{height: imageHeight}]}>
+													<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
+												</View>}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={this.state.isRefreshing}
@@ -294,6 +302,9 @@ export default class CategoryEvents extends React.Component {
                             keyExtractor={this._keyExtractor}
                             style={styles.root}
                             enableEmptySections={true}
+                            ListEmptyComponent={<View style={[{height: imageHeight}]}>
+													<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
+												</View>}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={this.state.isRefreshing}
@@ -337,6 +348,18 @@ let styles = RkStyleSheet.create(theme => ({
 	},
 	overlay: {
 		justifyContent: 'flex-end'
+    },
+    indContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 70
+	 },
+	 activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 30
 	},
 	linearGradient: {
         flex: 1,

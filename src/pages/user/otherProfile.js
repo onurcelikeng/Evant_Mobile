@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, Platform, FlatList, RefreshControl, Image, Dimensions } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Platform, FlatList, RefreshControl, Image, Dimensions, ActivityIndicator } from 'react-native';
 import { RkText, RkButton, RkStyleSheet } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import Svg, { Circle, Ellipse, G, LinearGradient, RadialGradient, Line, Path, Polygon, Polyline, Rect, Symbol, Text, Use, Defs, Stop } from 'react-native-svg';
@@ -25,6 +25,7 @@ let moment = require('moment');
 const MIN_HEIGHT = Header.HEIGHT;
 const MAX_HEIGHT = 280;
 let {height, width} = Dimensions.get('window');
+const navbar = Header.HEIGHT;
 
 export default class OtherProfile extends React.Component {
 	
@@ -204,7 +205,11 @@ export default class OtherProfile extends React.Component {
 					isRefreshing: false
 				})
 			} else {
-				DropdownHolder.getDropDown().alertWithType("alert", "", responseJson.message);
+				this.setState({
+					data: [],
+					isLoading: false,
+					isRefreshing: false
+				})
 			}
 		})
 	}
@@ -225,30 +230,20 @@ export default class OtherProfile extends React.Component {
 		if (this.state.isLoading) {
 			var width = require('Dimensions').get('window').width - 50;
 
+			const animating = this.state.isLoading;
 			return (
-			  <View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-          <ContentLoader height={70}>
-            <Circle cx="30" cy="30" r="30"/>
-            <Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-          </ContentLoader>
-			  </View>
+				<View style = {styles.indContainer}>
+					<ActivityIndicator
+					animating = {animating}
+					color = '#bc2b78'
+					size = "large"
+					style = {styles.activityIndicator}/>
+			 	</View>
 			);
 		}
 
 		let name = `${this.state.user.firstName} ${this.state.user.lastName}`;
-
+		var imageHeight = height - navbar - MAX_HEIGHT;
 		return (
 			<View style={styles.container}>
         <HeaderImageScrollView
@@ -342,6 +337,8 @@ export default class OtherProfile extends React.Component {
 						</View>
 						:
 						<View style={styles.timeline}>
+						{
+							this.state.data.length != 0 ?
 							<Timeline 
 								style={styles.list}
 								data={this.state.data}
@@ -366,6 +363,11 @@ export default class OtherProfile extends React.Component {
 								onEventPress={this.onEventPress}
 								renderDetail={this.renderDetail}
 							/>
+							:
+							<View style={[styles.root, {height: imageHeight}]}>
+								<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
+							</View>
+						}
 						</View>
 					} 
         </HeaderImageScrollView>
@@ -435,6 +437,18 @@ let styles = RkStyleSheet.create(theme => ({
 		borderWidth:1.5,
 		marginTop:30
 	},  
+	indContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 70
+	 },
+	 activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 30
+	},
 	backgroundImage: {
     flex: 1,
     resizeMode: 'cover', // or 'stretch'

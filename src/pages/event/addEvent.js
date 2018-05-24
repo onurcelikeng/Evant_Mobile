@@ -168,7 +168,7 @@ export default class AddEvent extends React.Component {
                                     quality={50}
                                     onResizedImageUri={photo => {console.log(photo); this.setState({photo})}} onCancel={cancel => {this.setState({photo: ""})}}>
                                     { this.state.photo == "" ?
-                                        <Image style={styles.image} source={require('../../assets/images/tolgshow.jpg')}/>
+                                        <Image style={styles.image} source={require('../../assets/icons/add_square.png')}/>
                                         :
                                         <Image style={styles.image} source={{uri: this.state.photo.uri}}/>
                                     }     

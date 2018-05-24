@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Dimensions, Keyboard, AsyncStorage } from 'react-native';
+import { View, Image, Dimensions, Keyboard, AsyncStorage, ActivityIndicator } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import DeviceInfo from 'react-native-device-info';
@@ -22,7 +22,8 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
         email: '',
-        password: ''
+        password: '',
+        isLoading: false
     };
   }
 
@@ -90,7 +91,9 @@ export default class Login extends React.Component {
       email: this.state.email,
       password: this.state.password
     };
-
+    this.setState({
+      isLoading: true
+    }, () => {
     return accountProvider.login(credentials)
 		.then((responseJson) => {
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
@@ -126,6 +129,9 @@ export default class Login extends React.Component {
                         if(responseJson.data.settings.language != "")
                           I18n.locale = responseJson.data.settings.language;
                         Login.setCurrentUser(responseJson.data);
+                        this.setState({
+                          isLoading: false
+                        });
                         Actions.tabbar();
                       } else {
                         DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -145,7 +151,7 @@ export default class Login extends React.Component {
 		})
 		.catch((error) => {
 		  console.error(error);
-		});
+    })});
   }
 
   static getCurrentUser() {
@@ -194,13 +200,15 @@ export default class Login extends React.Component {
     let contentHeight = scaleModerate(275, 1);
     let height = Dimensions.get('window').height - contentHeight;
     let width = Dimensions.get('window').width;
-    
+    const animating = this.state.isLoading;
+
     return (
       <KeyboardAwareScrollView innerRef={ref => {this.scroll = ref}}
         resetScrollToCoords={{ x: 0, y: 0 }}
         onStartShouldSetResponder={ (e) => true}
         contentContainerStyle={[styles.screen, {alignItems:"center"}]}
         onResponderRelease={ (e) => Keyboard.dismiss()}>
+        
         <View style={{alignItems: 'center', justifyContent: 'center', height: height, width: width}}>
         {image}
         </View>
@@ -244,6 +252,18 @@ export default class Login extends React.Component {
             </View>
           </View>
         </View>
+        {
+          this.state.isLoading ? 
+          <View style = {styles.indContainer}>
+            <ActivityIndicator
+            animating = {animating}
+            color = '#bc2b78'
+            size = "large"
+            style = {styles.activityIndicator}/>
+          </View>
+          :
+          null
+        }
       </KeyboardAwareScrollView>
     )
   }
@@ -261,6 +281,23 @@ let styles = RkStyleSheet.create(theme => ({
     height:scaleVertical(200),
     width:scale(200)
   },
+  indContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+    marginTop: 70,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+	 },
+	 activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 30
+	},
   container: {
     paddingHorizontal: 17,
     paddingBottom: scaleVertical(22),

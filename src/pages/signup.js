@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Keyboard, AsyncStorage } from 'react-native';
+import { View, Image, Keyboard, AsyncStorage, ActivityIndicator } from 'react-native';
 import { RkButton, RkText, RkTextInput, RkStyleSheet, RkTheme } from 'react-native-ui-kitten';
 import {Actions} from 'react-native-router-flux';
 import DeviceInfo from 'react-native-device-info';
@@ -26,7 +26,8 @@ export default class Signup extends React.Component {
         lastName: '',
         email: '',
         password: '',
-        passwordRepeat: ''
+        passwordRepeat: '',
+        isLoading: false
     };
   }
 
@@ -72,6 +73,9 @@ export default class Signup extends React.Component {
     };
 
     if(this.state.password == this.state.passwordRepeat) {
+      this.setState({
+        isLoading: true
+      }, () => {
       return accountProvider.register(credentials)
       .then((responseJson) => {
         if(responseJson == null || responseJson == "" || responseJson == undefined) {
@@ -115,6 +119,9 @@ export default class Signup extends React.Component {
                                 if(responseJson.data.settings.language != "")
                                   I18n.locale = responseJson.data.settings.language;
                                 Login.setCurrentUser(responseJson.data);
+                                this.setState({
+                                  isLoading: false
+                                });
                                 Actions.tabbar();
                               } else {
                                 DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -140,7 +147,7 @@ export default class Signup extends React.Component {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })});
     }
     else {
       DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
@@ -153,6 +160,8 @@ export default class Signup extends React.Component {
   }
 
 	render() {
+    const animating = this.state.isLoading;
+
     let renderIcon = () => {
       if (RkTheme.current.name === 'light')
         return <Image style={styles.image} source={require('../assets/images/evant_logo.png')}/>;
@@ -239,6 +248,18 @@ export default class Signup extends React.Component {
             </View>
           </View>
         </View>
+        {
+          this.state.isLoading ? 
+          <View style = {styles.indContainer}>
+            <ActivityIndicator
+            animating = {animating}
+            color = '#bc2b78'
+            size = "large"
+            style = {styles.activityIndicator}/>
+          </View>
+          :
+          null
+        }
       </KeyboardAwareScrollView>
     )
   }
@@ -256,6 +277,23 @@ let styles = RkStyleSheet.create(theme => ({
     height:scaleVertical(150),
     resizeMode:'contain'
   },
+  indContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+    marginTop: 70,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+	 },
+	 activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 30
+	},
   content: {
     justifyContent: 'space-between'
   },

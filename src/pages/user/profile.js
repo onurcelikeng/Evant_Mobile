@@ -25,6 +25,7 @@ let moment = require('moment');
 const MIN_HEIGHT = Header.HEIGHT;
 const MAX_HEIGHT = 280;
 let {height, width} = Dimensions.get('window');
+const navbar = Header.HEIGHT;
 
 export default class Profile extends React.Component {
 
@@ -149,7 +150,11 @@ export default class Profile extends React.Component {
 						isRefreshing: false
 					})
 				} else {
-					DropdownHolder.getDropDown().alertWithType("error", "", responseJson.message);
+					this.setState({
+						data: [],
+						isLoading: false,
+						isRefreshing: false
+					})
 				}
 			}
 		}).catch((err) => {console.log(err)});
@@ -169,14 +174,19 @@ export default class Profile extends React.Component {
 	render() {
 		let name = this.user.name;
 		var width = require('Dimensions').get('window').width - 50;
-		var loaders = [];
-		for(let i = 0; i < 10; i++){
-			loaders.push(
-				<ContentLoader key={i} height={70}>
-					<Circle cx="30" cy="30" r="30"/>
-					<Rect x="80" y="17" rx="4" ry="4" width={width - 80} height="13"/>
-				</ContentLoader>
-			)
+		var imageHeight = height - navbar - MAX_HEIGHT;
+
+		if (this.state.isLoading) {
+			const animating = this.state.isLoading;
+			return (
+				<View style = {styles.indContainer}>
+					<ActivityIndicator
+					animating = {animating}
+					color = '#bc2b78'
+					size = "large"
+					style = {styles.activityIndicator}/>
+			 	</View>
+			);
 		}
 
 		return (
@@ -260,12 +270,10 @@ export default class Profile extends React.Component {
           >
             <RkText style={{color: '#ffffff'}}>{name}</RkText>
           </TriggeringView>
-					{this.state.isLoading ?
-						<View style={{flex: 1, paddingTop: 20, backgroundColor: "#ffffff", alignItems: "center"}}>
-							{loaders}
-						</View>
-						:
-						<View style={styles.timeline}>
+
+					<View style={styles.timeline}>
+						{
+							this.state.data.length != 0 ?
 							<Timeline 
 								style={styles.list}
 								data={this.state.data}
@@ -290,8 +298,12 @@ export default class Profile extends React.Component {
 								onEventPress={this.onEventPress}
 								renderDetail={this.renderDetail}
 							/>
-						</View>
-					}
+							:
+							<View style={[styles.root, {height: imageHeight}]}>
+								<Image style={{ flex:1, width: undefined, height: undefined}} resizeMode="center" source={require('../../assets/images/notFoundNotif.jpeg')}/>
+							</View>
+						}
+					</View>
           
         </HeaderImageScrollView>
       </View>
@@ -380,6 +392,18 @@ let styles = RkStyleSheet.create(theme => ({
 	container: {
 		flex: 1,
 		backgroundColor: theme.colors.screen.base
+	},
+	indContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 70
+	},
+	activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 30
 	},
 	timeline: {
     flex: 1,

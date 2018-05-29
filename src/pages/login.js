@@ -96,6 +96,7 @@ export default class Login extends React.Component {
     }, () => {
     return accountProvider.login(credentials)
 		.then((responseJson) => {
+      console.log(responseJson)
       if(responseJson == null || responseJson == "" || responseJson == undefined) {
         DropdownHolder.getDropDown().alertWithType("error", "", strings('common.error_occured'));
       } else {

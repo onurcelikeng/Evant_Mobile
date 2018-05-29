@@ -38,8 +38,8 @@ export default class Events extends React.Component {
 			isLoading: true,
 			isRefreshing: false,
 			modal: false,
-			city: 'Bornova',
-			icon: 'https://developer.accuweather.com/sites/default/files/03-s.png'
+			city: 'Buca',
+			icon: 'https://developer.accuweather.com/sites/default/files/01-s.png'
 		}
 		this.onRefresh = this._onRefresh.bind(this);
 		this.renderItem = this._renderItem.bind(this);
@@ -88,7 +88,6 @@ export default class Events extends React.Component {
 			if(responseJson.isSuccess) {
 				console.log(responseJson)
 				var icon = responseJson.data.status;
-				if(icon < 10) icon = "0" + icon;
 				this.setState({icon: "https://developer.accuweather.com/sites/default/files/" + icon + "-s.png"})
 				console.log(this.state.icon)
 			}

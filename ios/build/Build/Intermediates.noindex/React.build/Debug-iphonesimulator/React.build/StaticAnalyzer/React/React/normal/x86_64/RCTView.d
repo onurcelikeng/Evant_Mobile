@@ -1,20 +1,20 @@
 dependencies: \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTView.m \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTView.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTBorderStyle.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTComponent.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTPointerEvents.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTAutoInsetsProtocol.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTBorderDrawing.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Base/RCTConvert.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTAnimationType.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Base/RCTDefines.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Base/RCTLog.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Base/RCTAssert.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Base/RCTUtils.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Views/UIView+React.h \
-  /Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native/React/Modules/RCTI18nUtil.h
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTView.m \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTView.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTComponent.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTAutoInsetsProtocol.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTBorderDrawing.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTAnimationType.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Views/UIView+React.h \
+  /Users/peacecwz/Documents/ReactNative/Projects/Evant_Mobile/node_modules/react-native/React/Modules/RCTI18nUtil.h

@@ -1,6 +1,0 @@
-version: "Apple Swift version 4.0.3 (swiftlang-900.0.74.1 clang-900.0.39.2)"
-options: "1d5a1264ef444f4cb2ba6dd90aed4066"
-build_time: [1519743496, 772158000]
-inputs:
-  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shape-image-view/ios/RNHexagonView.swift": !dirty [1486745542, 0]
-  "/Users/onurcelikeng/Documents/Evant_Mobile/node_modules/react-native-shape-image-view/ios/RNHexagonViewManager.swift": !dirty [1519742963, 0]

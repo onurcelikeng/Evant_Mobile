@@ -1,4 +1,0 @@
-framework module WCLShineButton {
-    header "WCLShineButton-Swift.h"
-    requires objc
-}

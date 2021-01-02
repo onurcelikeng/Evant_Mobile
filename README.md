@@ -15,3 +15,5 @@
 
 * Globally installed [react-native CLI](https://facebook.github.io/react-native/docs/getting-started.html)
 
+![](https://im3.ezgif.com/tmp/ezgif-3-0eca57007608.gif)
+

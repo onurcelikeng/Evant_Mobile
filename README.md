@@ -15,5 +15,7 @@
 
 * Globally installed [react-native CLI](https://facebook.github.io/react-native/docs/getting-started.html)
 
+### 2. Demo
+
 ![](demo-1.gif)
 

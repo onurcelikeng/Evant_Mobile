@@ -20,7 +20,7 @@
     "hoist-non-react-statics": "^2.5.0",
     "image-header-scroll": "github:EvantApp/image-header-scroll",
     "lodash": "^4.17.5",
-    "moment": "^2.20.1",
+    "moment": "^2.29.2",
     "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-native": "0.52.2",

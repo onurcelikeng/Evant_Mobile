@@ -16,7 +16,7 @@
     "appcenter-analytics": "^1.2.0",
     "appcenter-crashes": "^1.2.0",
     "axios": "^0.21.2",
-    "d3-interpolate": "^1.1.6",
+    "d3-interpolate": "^3.0.1",
     "hoist-non-react-statics": "^2.5.0",
     "image-header-scroll": "github:EvantApp/image-header-scroll",
     "lodash": "^4.17.21",
@@ -56,7 +56,7 @@
     "react-native-ui-kitten": "github:EvantApp/react-native-ui-kitten",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^1.0.0-beta.29",
-    "victory-native": "^0.17.2",
+    "victory-native": "^36.6.8",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
